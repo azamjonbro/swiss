@@ -1,0 +1,7 @@
+node_modules
+dist
+.env
+src/uploads/images/*
+src/uploads/videos/*
+!src/uploads/images/.gitkeep
+!src/uploads/videos/.gitkeep
