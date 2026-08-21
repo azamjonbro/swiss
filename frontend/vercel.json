@@ -1,0 +1,10 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "rewrites": [
+    { "source": "/api/:path*", "destination": "https://YOUR-BACKEND-DOMAIN/api/:path*" },
+    { "source": "/uploads/:path*", "destination": "https://YOUR-BACKEND-DOMAIN/uploads/:path*" },
+    { "source": "/sitemap.xml", "destination": "https://YOUR-BACKEND-DOMAIN/sitemap.xml" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}

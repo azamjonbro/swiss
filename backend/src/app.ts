@@ -8,6 +8,7 @@ import { env } from './config/env';
 import { notFoundHandler, errorHandler } from './middleware/error';
 
 import authRoutes from './routes/authRoutes';
+import accountRoutes from './routes/accountRoutes';
 import watchRoutes from './routes/watchRoutes';
 import categoryRoutes from './routes/categoryRoutes';
 import brandRoutes from './routes/brandRoutes';
@@ -43,6 +44,7 @@ app.get('/api/health', (_req, res) => res.json({ status: 'ok', service: 'swisswa
 app.get('/sitemap.xml', getSitemap);
 
 app.use('/api/auth', authRoutes);
+app.use('/api/account', accountRoutes);
 app.use('/api/watches', watchRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/brands', brandRoutes);
