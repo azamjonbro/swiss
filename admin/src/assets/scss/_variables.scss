@@ -1,0 +1,29 @@
+:root {
+  --admin-bg: #f6f5f3;
+  --admin-surface: #ffffff;
+  --admin-border: #e4e1da;
+  --admin-text: #171614;
+  --admin-text-muted: #767066;
+  --admin-accent: #2e5f8a;
+  --admin-sidebar-w: 240px;
+
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  --ease-luxury: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 0.3s;
+  --dur-mid: 0.6s;
+
+  --radius-sm: 0px;
+  --radius-md: 2px;
+  --radius-lg: 4px;
+}
+
+:root[data-theme='dark'] {
+  --admin-bg: #171613;
+  --admin-surface: #201e1a;
+  --admin-border: #37342c;
+  --admin-text: #f3efe7;
+  --admin-text-muted: #a29a8c;
+  --admin-accent: #4f8fc4;
+}

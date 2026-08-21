@@ -1,0 +1,36 @@
+@mixin container {
+  width: 100%;
+  padding-left: var(--container-pad);
+  padding-right: var(--container-pad);
+}
+
+@mixin link-underline($color: currentColor) {
+  position: relative;
+  display: inline-block;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 1px;
+    background: $color;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform var(--dur-mid) var(--ease-luxury);
+  }
+
+  &:hover::after,
+  &:focus-visible::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+@mixin focus-ring {
+  &:focus-visible {
+    outline: 1px solid var(--accent);
+    outline-offset: 4px;
+  }
+}

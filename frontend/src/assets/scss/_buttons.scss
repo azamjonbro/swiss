@@ -1,0 +1,55 @@
+@use 'mixins' as *;
+
+.sw-btn {
+  @include focus-ring;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 16px 0;
+  background: none;
+  border: none;
+  border-bottom: 1px solid currentColor;
+  transition: gap var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out);
+
+  &:hover {
+    gap: 18px;
+    opacity: 0.75;
+  }
+
+  .sw-btn__arrow {
+    display: inline-block;
+    transition: transform var(--dur-fast) var(--ease-out);
+  }
+
+  &:hover .sw-btn__arrow {
+    transform: translateX(4px);
+  }
+}
+
+.sw-btn--solid {
+  border-bottom: none;
+  padding: 18px 40px;
+  background: var(--bg-inverse);
+  color: var(--text-inverse);
+  transition: background var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out);
+
+  &:hover {
+    opacity: 0.85;
+  }
+}
+
+.sw-btn--ghost {
+  border-bottom: none;
+  padding: 18px 40px;
+  border: 1px solid currentColor;
+
+  &:hover {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.08);
+  }
+}

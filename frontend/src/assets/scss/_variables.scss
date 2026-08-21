@@ -1,0 +1,58 @@
+:root {
+  // ---- Color system ----
+  --sw-black: #0a0a0a;
+  --sw-charcoal: #1c1b1a;
+  --sw-gray-900: #2c2a28;
+  --sw-gray-600: #6f6a63;
+  --sw-gray-400: #a39d93;
+  --sw-gray-200: #d8d2c7;
+  --sw-ivory: #f3efe7;
+  --sw-white: #fdfcfa;
+  --sw-burgundy: #6b1e2b;
+  --sw-burgundy-light: #8a2e3c;
+
+  // semantic tokens
+  --bg: var(--sw-white);
+  --bg-inverse: var(--sw-black);
+  --text: var(--sw-black);
+  --text-inverse: var(--sw-white);
+  --text-muted: var(--sw-gray-600);
+  --border: rgba(10, 10, 10, 0.12);
+  --border-inverse: rgba(255, 255, 255, 0.16);
+  --accent: var(--sw-burgundy);
+
+  // ---- Typography ----
+  --font-serif: 'Cormorant Garamond', 'Times New Roman', serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  // ---- Layout ----
+  --container-pad: clamp(20px, 5vw, 64px);
+  --header-height: 84px;
+
+  // ---- Motion ----
+  --ease-luxury: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 0.3s;
+  --dur-mid: 0.6s;
+  --dur-slow: 1.1s;
+
+  // ---- Radii (kept minimal, per luxury guideline) ----
+  --radius-sm: 0px;
+  --radius-md: 2px;
+  --radius-lg: 4px;
+}
+
+// Dark theme: overrides only the semantic tokens (bg/text/border/accent).
+// Raw palette vars (--sw-black, --sw-white, etc.) stay fixed on purpose —
+// several sections (footer, hero overlay, CTA band) are deliberately
+// always-dark regardless of site theme.
+:root[data-theme='dark'] {
+  --bg: #141311;
+  --bg-inverse: var(--sw-ivory);
+  --text: var(--sw-ivory);
+  --text-inverse: var(--sw-black);
+  --text-muted: #9a9186;
+  --border: rgba(255, 255, 255, 0.14);
+  --border-inverse: rgba(10, 10, 10, 0.16);
+  --accent: var(--sw-burgundy-light);
+}
