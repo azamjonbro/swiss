@@ -4,6 +4,7 @@ import { prefersReducedMotion } from '@/composables/useReducedMotion';
 
 let lenis: Lenis | null = null;
 let rafHandler: ((time: number) => void) | null = null;
+let onScrollTriggerRefresh: (() => void) | null = null;
 
 export function initLenis(): Lenis | null {
   if (lenis) return lenis;
@@ -24,6 +25,15 @@ export function initLenis(): Lenis | null {
   gsap.ticker.add(rafHandler);
   gsap.ticker.lagSmoothing(0);
 
+  // Whenever ScrollTrigger recalculates trigger/pin positions (route change,
+  // window resize, a pinned section mounting), Lenis's own scroll-limit
+  // cache goes stale unless it's told to resize too. Without this, Lenis can
+  // clamp scrolling to an outdated max, which reads as the page "freezing"
+  // partway down.
+  onScrollTriggerRefresh = () => lenis?.resize();
+  ScrollTrigger.addEventListener('refresh', onScrollTriggerRefresh);
+  ScrollTrigger.refresh();
+
   return lenis;
 }
 
@@ -35,6 +45,10 @@ export function destroyLenis(): void {
   if (rafHandler) {
     gsap.ticker.remove(rafHandler);
     rafHandler = null;
+  }
+  if (onScrollTriggerRefresh) {
+    ScrollTrigger.removeEventListener('refresh', onScrollTriggerRefresh);
+    onScrollTriggerRefresh = null;
   }
   lenis?.destroy();
   lenis = null;
