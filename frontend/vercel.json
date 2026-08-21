@@ -2,9 +2,9 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "rewrites": [
-    { "source": "/api/:path*", "destination": "https://YOUR-BACKEND-DOMAIN/api/:path*" },
-    { "source": "/uploads/:path*", "destination": "https://YOUR-BACKEND-DOMAIN/uploads/:path*" },
-    { "source": "/sitemap.xml", "destination": "https://YOUR-BACKEND-DOMAIN/sitemap.xml" },
+    { "source": "/api/:path*", "destination": "https://swiss.techinfo.uz/api/:path*" },
+    { "source": "/uploads/:path*", "destination": "https://swiss.techinfo.uz/uploads/:path*" },
+    { "source": "/sitemap.xml", "destination": "https://swiss.techinfo.uz/sitemap.xml" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
