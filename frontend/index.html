@@ -16,8 +16,134 @@
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
+
+    <style>
+      #sw-preloader {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 22px;
+        background: #0a0a0a;
+        opacity: 1;
+        transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.7s;
+      }
+      #sw-preloader.sw-preloader--done {
+        opacity: 0;
+        pointer-events: none;
+      }
+      body.sw-loading {
+        overflow: hidden;
+      }
+      .sw-preloader__ring {
+        position: relative;
+        width: 84px;
+        height: 84px;
+        display: grid;
+        place-items: center;
+      }
+      .sw-preloader__svg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .sw-preloader__track {
+        fill: none;
+        stroke: rgba(243, 239, 231, 0.14);
+        stroke-width: 1;
+      }
+      .sw-preloader__sweep {
+        fill: none;
+        stroke: #8a2e3c;
+        stroke-width: 1.4;
+        stroke-linecap: round;
+        stroke-dasharray: 339.3;
+        stroke-dashoffset: 300;
+        transform-origin: 60px 60px;
+      }
+      .sw-preloader__mark {
+        font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+        font-size: 26px;
+        color: #f3efe7;
+        line-height: 1;
+      }
+      .sw-preloader__word {
+        display: flex;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        color: #f3efe7;
+      }
+      .sw-preloader__word span {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      .sw-preloader__eyebrow {
+        font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+        font-style: italic;
+        font-size: 13px;
+        letter-spacing: 0.06em;
+        color: #6f6a63;
+        opacity: 0;
+      }
+      @media (prefers-reduced-motion: no-preference) {
+        .sw-preloader__svg {
+          animation: sw-rotate 2.4s linear infinite;
+        }
+        .sw-preloader__word span {
+          animation: sw-letter-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .sw-preloader__word span:nth-child(1) { animation-delay: 0.15s; }
+        .sw-preloader__word span:nth-child(2) { animation-delay: 0.19s; }
+        .sw-preloader__word span:nth-child(3) { animation-delay: 0.23s; }
+        .sw-preloader__word span:nth-child(4) { animation-delay: 0.27s; }
+        .sw-preloader__word span:nth-child(5) { animation-delay: 0.31s; }
+        .sw-preloader__word span:nth-child(6) { animation-delay: 0.37s; }
+        .sw-preloader__word span:nth-child(7) { animation-delay: 0.41s; }
+        .sw-preloader__word span:nth-child(8) { animation-delay: 0.45s; }
+        .sw-preloader__word span:nth-child(9) { animation-delay: 0.49s; }
+        .sw-preloader__word span:nth-child(10) { animation-delay: 0.53s; }
+        .sw-preloader__eyebrow {
+          animation: sw-letter-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          animation-delay: 0.65s;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .sw-preloader__word span,
+        .sw-preloader__eyebrow {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      @keyframes sw-rotate {
+        to { transform: rotate(360deg); }
+      }
+      @keyframes sw-letter-in {
+        to { opacity: 1; transform: translateY(0); }
+      }
+    </style>
   </head>
   <body>
+    <div id="sw-preloader">
+      <div class="sw-preloader__ring">
+        <svg class="sw-preloader__svg" viewBox="0 0 120 120">
+          <circle class="sw-preloader__track" cx="60" cy="60" r="54" />
+          <circle class="sw-preloader__sweep" cx="60" cy="60" r="54" />
+        </svg>
+        <span class="sw-preloader__mark">S</span>
+      </div>
+      <div class="sw-preloader__word">
+        <span>S</span><span>W</span><span>I</span><span>S</span><span>S</span><span>&nbsp;</span><span>W</span><span>A</span><span>T</span><span>C</span><span>H</span>
+      </div>
+      <div class="sw-preloader__eyebrow">Time, Refined</div>
+    </div>
+    <script>document.body.classList.add('sw-loading');</script>
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
   </body>
