@@ -64,7 +64,7 @@ function close() {
 <template>
   <transition name="sw-fade">
     <div v-if="ui.isInquiryOpen" class="sw-inquiry-backdrop" @click.self="close">
-      <div class="sw-inquiry" role="dialog" aria-modal="true" aria-label="Request information">
+      <div class="sw-inquiry" data-lenis-prevent role="dialog" aria-modal="true" aria-label="Request information">
         <button class="sw-inquiry__close" type="button" :aria-label="locale.t('inquiry.close')" @click="close">{{ locale.t('inquiry.close') }}</button>
 
         <template v-if="!isSubmitted">

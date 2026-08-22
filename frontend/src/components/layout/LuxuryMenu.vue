@@ -41,7 +41,7 @@ function setCurrency(value: string) {
 
 <template>
   <transition name="sw-menu">
-    <nav v-if="ui.isMenuOpen" class="sw-menu" aria-label="Main navigation" @mouseleave="hoveredTo = null">
+    <nav v-if="ui.isMenuOpen" class="sw-menu" data-lenis-prevent aria-label="Main navigation" @mouseleave="hoveredTo = null">
       <div class="sw-menu__content">
         <ul class="sw-menu__list">
           <li

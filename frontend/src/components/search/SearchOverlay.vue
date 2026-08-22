@@ -61,7 +61,7 @@ function close() {
 
 <template>
   <transition name="sw-fade">
-    <div v-if="ui.isSearchOpen" class="sw-search" role="dialog" aria-modal="true" :aria-label="locale.t('search.title')">
+    <div v-if="ui.isSearchOpen" class="sw-search" data-lenis-prevent role="dialog" aria-modal="true" :aria-label="locale.t('search.title')">
       <button class="sw-search__close" type="button" :aria-label="locale.t('search.close')" @click="close">{{ locale.t('search.close') }}</button>
 
       <div class="sw-search__inner">
