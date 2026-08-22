@@ -76,6 +76,10 @@ const ru: Dictionary = {
   category: {
     label: 'Категория',
     discover: 'Смотреть',
+    eyebrow: 'Покупки по домам',
+    title: 'Категории',
+    viewAll: 'Смотреть все',
+    viewAllCaption: 'Откройте для себя каждый дом',
   },
   watchCard: {
     newBadge: 'Новинка',

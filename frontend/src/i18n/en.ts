@@ -74,6 +74,10 @@ const en = {
   category: {
     label: 'Category',
     discover: 'Discover',
+    eyebrow: 'Shop by House',
+    title: 'Categories',
+    viewAll: 'View All',
+    viewAllCaption: 'Discover every house',
   },
   watchCard: {
     newBadge: 'New',

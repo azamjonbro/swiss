@@ -76,6 +76,10 @@ const uz: Dictionary = {
   category: {
     label: 'Toifa',
     discover: 'Ko‘rish',
+    eyebrow: 'Uylar bo‘yicha xarid',
+    title: 'Toifalar',
+    viewAll: 'Barchasini ko‘rish',
+    viewAllCaption: 'Har bir uyni kashf eting',
   },
   watchCard: {
     newBadge: 'Yangi',
