@@ -54,13 +54,13 @@ function onError() {
   overflow: hidden;
   width: 100%;
   height: 100%;
-  background: var(--sw-gray-200);
+  background: var(--surface-media);
 }
 
 .sw-smart-image__placeholder {
   position: absolute;
   inset: 0;
-  background: linear-gradient(120deg, var(--sw-gray-200) 0%, var(--sw-ivory) 50%, var(--sw-gray-200) 100%);
+  background: linear-gradient(120deg, var(--surface-media) 0%, var(--surface-media-hi) 50%, var(--surface-media) 100%);
   background-size: 200% 100%;
   animation: sw-shimmer 1.8s ease-in-out infinite;
   transition: opacity var(--dur-mid) var(--ease-luxury);
@@ -87,7 +87,7 @@ function onError() {
 .sw-smart-image__fallback {
   position: absolute;
   inset: 0;
-  background: var(--sw-gray-200);
+  background: var(--surface-media);
 }
 
 @keyframes sw-shimmer {

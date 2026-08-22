@@ -58,7 +58,7 @@ const locale = useLocaleStore();
 .sw-cat-card__media {
   position: relative;
   overflow: hidden;
-  background: var(--sw-gray-200);
+  background: var(--surface-media);
 }
 
 .sw-cat-card__media :deep(.sw-smart-image__img) {

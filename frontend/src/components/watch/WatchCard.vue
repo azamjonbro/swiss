@@ -43,7 +43,7 @@ const brandName = computed(() => toBrandName(props.watch.brand));
 .sw-watch-card__media {
   position: relative;
   overflow: hidden;
-  background: var(--sw-gray-200);
+  background: var(--surface-media);
   padding: 10%;
 }
 

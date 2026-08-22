@@ -159,7 +159,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
 
 .sw-watch-detail__main {
   cursor: zoom-in;
-  background: var(--sw-gray-200);
+  background: var(--surface-media);
 }
 
 .sw-watch-detail__thumbs {
