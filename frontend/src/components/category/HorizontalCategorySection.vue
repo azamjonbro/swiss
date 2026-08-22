@@ -15,6 +15,7 @@ const locale = useLocaleStore();
 const sectionEl = ref<HTMLElement | null>(null);
 const trackEl = ref<HTMLElement | null>(null);
 const isDragging = ref(false);
+const isPinActive = ref(false);
 
 const EDGE_ZONE = 90; // px from the track's edge that triggers auto-scroll
 const EDGE_SPEED_MAX = 18; // px per frame at the very edge
@@ -103,20 +104,34 @@ onMounted(() => {
 
   // Ties the page's vertical scroll to this row's horizontal position while it's
   // in view: scrolling down drives the track rightward, and once the track runs
-  // out, the pin releases and normal vertical scrolling continues.
-  mm.add('(min-width: 900px) and (prefers-reduced-motion: no-preference)', () => {
+  // out, the pin releases and normal vertical scrolling continues. Runs at every
+  // viewport size (touch scroll drives it on mobile the same way wheel does on
+  // desktop) — only reduced-motion preference opts out.
+  mm.add('(prefers-reduced-motion: no-preference)', () => {
     if (!sectionEl.value || !trackEl.value) return;
     const track = trackEl.value;
     const maxScroll = () => track.scrollWidth - track.clientWidth;
 
+    // CSS scroll-snap fights a scroll position set from JS on every tick (the
+    // browser tries to nudge scrollLeft to the nearest snap point right after
+    // GSAP sets it), which reads as stutter/"freezing" while the pin is
+    // driving the track. So snap is only enabled while the pin is idle.
     const st = ScrollTrigger.create({
       trigger: sectionEl.value,
       start: 'top top',
       end: () => `+=${maxScroll()}`,
       pin: true,
-      anticipatePin: 1,
-      scrub: 0.6,
+      // No anticipatePin: with scrub it pre-shifts the track a beat before the
+      // pin visually locks in, reading as a jump to the right just before it pins.
+      // `true` (not a numeric lag) tracks the scrollbar 1:1 — Lenis already
+      // smooths the raw wheel input upstream, so a second layer of scrub
+      // easing here just compounds into a laggy, "off" feel.
+      scrub: true,
       invalidateOnRefresh: true,
+      onEnter: () => (isPinActive.value = true),
+      onEnterBack: () => (isPinActive.value = true),
+      onLeave: () => (isPinActive.value = false),
+      onLeaveBack: () => (isPinActive.value = false),
       onUpdate: (self) => {
         if (isDown) return; // a manual drag is in control — don't fight it
         track.scrollLeft = self.progress * maxScroll();
@@ -129,6 +144,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   mm?.revert();
+  isPinActive.value = false;
   stopAutoScroll();
   window.removeEventListener('pointermove', onPointerMove);
   window.removeEventListener('pointerup', onPointerUp);
@@ -145,7 +161,7 @@ onUnmounted(() => {
     <div
       ref="trackEl"
       class="sw-hcat__track"
-      :class="{ 'is-dragging': isDragging }"
+      :class="{ 'is-dragging': isDragging, 'is-pin-active': isPinActive }"
       @pointerdown="onPointerDown"
       @click.capture="onClickCapture"
     >
@@ -175,7 +191,7 @@ onUnmounted(() => {
   scroll-snap-type: x proximity;
   -webkit-overflow-scrolling: touch;
   padding: 0 var(--container-pad) 8px;
-  scrollbar-width: thin;
+  scrollbar-width: none;
   cursor: grab;
 }
 
@@ -185,11 +201,15 @@ onUnmounted(() => {
   user-select: none;
 }
 
+.sw-hcat__track.is-pin-active {
+  scroll-snap-type: none;
+}
+
 .sw-hcat__track.is-dragging :deep(a) {
   pointer-events: none;
 }
 
 .sw-hcat__track::-webkit-scrollbar {
-  height: 6px;
+  display: none;
 }
 </style>
