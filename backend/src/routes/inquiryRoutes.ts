@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import rateLimit from 'express-rate-limit';
 import { createInquiry } from '../controllers/inquiryController';
+import { attachCustomerIfPresent } from '../middleware/customerAuth';
 
 const router = Router();
 
@@ -12,6 +13,6 @@ const inquiryLimiter = rateLimit({
   message: { message: 'Too many requests. Please try again later.' },
 });
 
-router.post('/', inquiryLimiter, createInquiry);
+router.post('/', inquiryLimiter, attachCustomerIfPresent, createInquiry);
 
 export default router;

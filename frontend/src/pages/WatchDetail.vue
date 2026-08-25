@@ -7,6 +7,8 @@ import { toBrandName, toBrandSlug } from '@/utils/format';
 import { useUiStore } from '@/stores/ui';
 import { useLocaleStore } from '@/stores/locale';
 import { useCurrencyStore } from '@/stores/currency';
+import { useAccountStore } from '@/stores/account';
+import { useSavedStore } from '@/stores/saved';
 import { useMeta } from '@/composables/useMeta';
 import SmartImage from '@/components/shared/SmartImage.vue';
 
@@ -15,6 +17,8 @@ const router = useRouter();
 const ui = useUiStore();
 const locale = useLocaleStore();
 const currency = useCurrencyStore();
+const account = useAccountStore();
+const saved = useSavedStore();
 
 const watchDoc = ref<Watch | null>(null);
 const activeIndex = ref(0);
@@ -72,6 +76,22 @@ watch(
     if (slug) load(slug as string);
   },
 );
+
+const isSaved = computed(() => Boolean(watchDoc.value && saved.has(watchDoc.value._id)));
+const isSavePending = computed(() => Boolean(watchDoc.value && saved.pendingId === watchDoc.value._id));
+
+async function toggleSaved() {
+  if (!watchDoc.value) return;
+  // A click landing before the startup session restore has settled would
+  // otherwise read as "signed out"; wait for the same in-flight promise.
+  if (!account.isReady) await account.restoreSession();
+  // Saving requires an account; visitors are sent to sign in and returned here.
+  if (!account.isAuthenticated) {
+    router.push({ name: 'account-login', query: { redirect: route.fullPath } });
+    return;
+  }
+  await saved.toggle(watchDoc.value._id);
+}
 
 function openInquiry() {
   if (!watchDoc.value) return;
@@ -133,9 +153,21 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
         <span class="sw-label">{{ availabilityLabel }}</span>
       </div>
 
-      <button class="sw-btn sw-btn--solid sw-watch-detail__cta" type="button" @click="openInquiry">
-        {{ locale.t('watchDetail.requestInfo') }}
-      </button>
+      <div class="sw-watch-detail__actions">
+        <button class="sw-btn sw-btn--solid sw-watch-detail__cta" type="button" @click="openInquiry">
+          {{ locale.t('watchDetail.requestInfo') }}
+        </button>
+        <button
+          class="sw-btn sw-watch-detail__save"
+          :class="{ 'is-saved': isSaved }"
+          type="button"
+          :disabled="isSavePending"
+          :aria-pressed="isSaved"
+          @click="toggleSaved"
+        >
+          {{ isSaved ? locale.t('watchDetail.saved') : locale.t('watchDetail.save') }}
+        </button>
+      </div>
     </div>
   </article>
 
@@ -241,9 +273,24 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
   background: var(--sw-burgundy);
 }
 
-.sw-watch-detail__cta {
+.sw-watch-detail__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px 36px;
   margin-top: 32px;
+}
+
+.sw-watch-detail__cta {
   width: fit-content;
+}
+
+.sw-watch-detail__save.is-saved {
+  color: var(--accent);
+}
+
+.sw-watch-detail__save[disabled] {
+  opacity: 0.45;
 }
 
 .sw-watch-detail__notfound {

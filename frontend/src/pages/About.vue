@@ -48,15 +48,23 @@ const networkImage = '/images/swisswatch_network.jpg';
 <style scoped>
 .sw-about__hero {
   position: relative;
-  height: 70vh;
-  min-height: 420px;
+  height: min(70svh, 720px);
+  min-height: 440px;
   color: var(--sw-white);
 }
 
+/* Weighted toward the base, where the title sits, plus a light wash across the
+   top so the header's small type stays readable over a bright photograph. */
 .sw-about__hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(10, 10, 10, 0.2) 0%, rgba(10, 10, 10, 0.7) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(6, 6, 6, 0.42) 0%,
+    rgba(6, 6, 6, 0.16) 26%,
+    rgba(6, 6, 6, 0.52) 68%,
+    rgba(6, 6, 6, 0.82) 100%
+  );
 }
 
 .sw-about__hero-content {
@@ -64,7 +72,19 @@ const networkImage = '/images/swisswatch_network.jpg';
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 0 var(--container-pad) 64px;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding: 0 var(--container-pad) clamp(48px, 6vw, 80px);
+}
+
+.sw-about__hero-content .sw-eyebrow {
+  display: block;
+  margin-bottom: 24px;
+  color: rgba(253, 252, 250, 0.62);
+}
+
+.sw-about__hero-content .sw-display {
+  max-width: 14ch;
 }
 
 .sw-about__intro {

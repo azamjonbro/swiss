@@ -4,6 +4,7 @@ import { useUiStore } from '@/stores/ui';
 import { useLocaleStore } from '@/stores/locale';
 import { useThemeStore } from '@/stores/theme';
 import { useCurrencyStore, type CurrencyCode } from '@/stores/currency';
+import { useAccountStore } from '@/stores/account';
 import { useLockBodyScroll } from '@/composables/useLockBodyScroll';
 import { SUPPORTED_LANGS, LANG_LABELS, type Lang } from '@/i18n';
 import ThemeIcon from '@/components/shared/ThemeIcon.vue';
@@ -13,6 +14,7 @@ const ui = useUiStore();
 const locale = useLocaleStore();
 const theme = useThemeStore();
 const currency = useCurrencyStore();
+const account = useAccountStore();
 useLockBodyScroll(computed(() => ui.isMenuOpen));
 
 const links = computed(() => [
@@ -23,6 +25,10 @@ const links = computed(() => [
   { label: locale.t('nav.about'), to: '/about', image: '/images/swisswatch_about.jpg' },
   { label: locale.t('nav.contact'), to: '/contact', image: '/images/swisswatch_concierge.jpg' },
 ]);
+
+// The header hides its Account action on narrow screens, so the menu carries
+// the customer account entry point there.
+const accountTo = computed(() => (account.isAuthenticated ? '/account' : '/account/login'));
 
 const hoveredTo = ref<string | null>(null);
 const activeLink = computed(() => links.value.find((l) => l.to === hoveredTo.value) ?? links.value[0]);
@@ -56,6 +62,12 @@ function setCurrency(value: string) {
         </ul>
 
         <div class="sw-menu__footer">
+          <div class="sw-menu__contact">
+            <span class="sw-eyebrow">{{ locale.t('header.account') }}</span>
+            <RouterLink class="sw-body sw-menu__social" :to="accountTo" @click="ui.closeMenu">
+              {{ account.isAuthenticated ? account.user?.name : locale.t('account.signInLink') }}
+            </RouterLink>
+          </div>
           <div class="sw-menu__contact">
             <span class="sw-eyebrow">{{ locale.t('menu.visit') }}</span>
             <p class="sw-body">swisswatch.uz</p>
@@ -230,6 +242,14 @@ function setCurrency(value: string) {
   display: flex;
   gap: 64px;
   margin-top: 64px;
+}
+
+/* The label and its value are both inline elements, so a short value (an
+   account link reading just "Kirish") would sit on the label's line. Stack
+   them explicitly instead of relying on the value being long enough to wrap. */
+.sw-menu__contact {
+  display: grid;
+  justify-items: start;
 }
 
 .sw-menu__contact .sw-eyebrow {

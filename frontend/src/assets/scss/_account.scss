@@ -1,0 +1,648 @@
+// ---------------------------------------------------------------------------
+// Customer account — authentication pages and the signed-in account section.
+//
+// These screens are shared by six route components, so their anatomy lives here
+// rather than being duplicated into each one's scoped block. Everything is built
+// from the house tokens: charcoal/warm-white, serif headlines, hairline rules.
+// No cards, no gradients, no shadows.
+// ---------------------------------------------------------------------------
+
+@use 'mixins' as *;
+
+/* ---- Authentication: editorial split ---------------------------------- */
+
+.sw-auth {
+  display: grid;
+  grid-template-columns: minmax(0, 1.06fr) minmax(0, 1fr);
+  min-height: 100vh;
+  padding-top: var(--header-height);
+}
+
+// Cinematic panel. Always dark regardless of site theme — it is photography,
+// not chrome.
+.sw-auth__media {
+  position: relative;
+  overflow: hidden;
+  background: var(--sw-obsidian);
+}
+
+.sw-auth__media-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(0.18) contrast(1.04) brightness(0.92);
+  transform: scale(1.06);
+  animation: sw-auth-settle 2.6s var(--ease-editorial) forwards;
+}
+
+@keyframes sw-auth-settle {
+  to {
+    transform: scale(1);
+  }
+}
+
+// A vertical fall to black at the foot of the frame so the statement sits on
+// its own ground instead of fighting the photograph.
+.sw-auth__media-veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(6, 6, 6, 0.42) 0%,
+    rgba(6, 6, 6, 0.1) 30%,
+    rgba(6, 6, 6, 0.56) 64%,
+    rgba(6, 6, 6, 0.9) 100%
+  );
+}
+
+.sw-auth__media-copy {
+  position: absolute;
+  inset: auto 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: clamp(32px, 4.5vw, 72px);
+  color: var(--sw-white);
+}
+
+.sw-auth__media-copy .sw-eyebrow {
+  color: rgba(253, 252, 250, 0.62);
+}
+
+.sw-auth__statement {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-size: clamp(1.75rem, 2.9vw, 3.25rem);
+  line-height: 1.08;
+  letter-spacing: -0.012em;
+  max-width: 14ch;
+}
+
+.sw-auth__media-note {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 0.8125rem;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+  max-width: 34ch;
+  color: rgba(253, 252, 250, 0.56);
+}
+
+/* ---- Authentication: form column --------------------------------------- */
+
+.sw-auth__panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  padding: clamp(48px, 6vw, 96px) clamp(24px, 5vw, 88px);
+}
+
+.sw-auth__panel-inner {
+  width: 100%;
+  max-width: 430px;
+}
+
+.sw-auth-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.sw-auth-form__title {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-size: clamp(2rem, 3vw, 2.75rem);
+  line-height: 1.08;
+  letter-spacing: -0.014em;
+  margin-top: 14px;
+}
+
+.sw-auth-form__lede {
+  margin-top: 14px;
+  max-width: 38ch;
+}
+
+.sw-auth-form__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: clamp(32px, 4vw, 46px);
+}
+
+// First name / last name sit side by side on anything but a narrow phone.
+.sw-auth-form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+
+.sw-auth-form__error {
+  margin-top: 22px;
+  padding-left: 14px;
+  border-left: 1px solid var(--accent);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--accent);
+}
+
+.sw-auth-form__note {
+  margin-top: 22px;
+  padding-left: 14px;
+  border-left: 1px solid var(--border);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.sw-auth-form__actions {
+  margin-top: 34px;
+}
+
+.sw-auth-form__aside {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.sw-auth-submit {
+  width: 100%;
+  justify-content: center;
+  padding: 21px 32px;
+}
+
+.sw-auth-submit[disabled] {
+  opacity: 0.45;
+  cursor: default;
+}
+
+// Quiet secondary action — a text link with the house underline wipe.
+.sw-auth-link {
+  @include link-underline;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.sw-auth-link:hover,
+.sw-auth-link:focus-visible {
+  color: var(--text);
+}
+
+.sw-auth-form__switch {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: clamp(38px, 5vw, 56px);
+  padding-top: 26px;
+  border-top: 1px solid var(--hairline);
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.sw-auth-form__switch-link {
+  @include link-underline;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+/* ---- Field ------------------------------------------------------------- */
+
+.sw-field {
+  padding-block: 10px;
+}
+
+.sw-field__control {
+  position: relative;
+  border-bottom: 1px solid var(--border);
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+
+// The rule that wipes in on focus — the same gesture as .sw-btn.
+.sw-field__rule {
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 1px;
+  background: var(--text);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.7s var(--ease-editorial);
+  pointer-events: none;
+}
+
+.sw-field__input {
+  width: 100%;
+  border: 0;
+  background: none;
+  padding: 26px 0 11px;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 0.9375rem;
+  letter-spacing: 0.01em;
+  color: var(--text);
+}
+
+.sw-field__input:focus {
+  outline: none;
+}
+
+.sw-field__input:focus ~ .sw-field__rule {
+  transform: scaleX(1);
+}
+
+// Chrome paints its own autofill background, which reads as a cheap blue card
+// against the warm white. Repaint it with the page's own colours.
+.sw-field__input:-webkit-autofill,
+.sw-field__input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--text);
+  -webkit-box-shadow: 0 0 0 1000px var(--bg) inset;
+  caret-color: var(--text);
+}
+
+.sw-field--with-toggle .sw-field__input {
+  padding-right: 62px;
+}
+
+.sw-field__label {
+  position: absolute;
+  left: 0;
+  top: 26px;
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: 300;
+  color: var(--text-muted);
+  pointer-events: none;
+  transform-origin: left top;
+  transition:
+    transform 0.45s var(--ease-editorial),
+    color 0.45s var(--ease-editorial),
+    letter-spacing 0.45s var(--ease-editorial);
+}
+
+// Floats to a small-caps caption once the field holds a value or has focus.
+.sw-field__input:focus + .sw-field__label,
+.sw-field__input:not(:placeholder-shown) + .sw-field__label {
+  transform: translateY(-24px) scale(0.7333);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.sw-field__toggle {
+  position: absolute;
+  right: 0;
+  bottom: 13px;
+  font-family: var(--font-sans);
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.sw-field__toggle:hover {
+  color: var(--text);
+}
+
+.sw-field--invalid .sw-field__control {
+  border-bottom-color: var(--accent);
+}
+
+.sw-field__hint {
+  margin-top: 8px;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+/* ---- Signed-in account section ---------------------------------------- */
+
+.sw-account {
+  padding-top: calc(var(--header-height) + clamp(48px, 6vw, 96px));
+  padding-bottom: var(--space-section-sm);
+}
+
+.sw-account__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: clamp(28px, 3.5vw, 48px);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.sw-account__title {
+  margin-top: 12px;
+}
+
+.sw-account__layout {
+  display: grid;
+  grid-template-columns: minmax(180px, 220px) minmax(0, 1fr);
+  gap: clamp(40px, 6vw, 96px);
+  padding-top: clamp(40px, 5vw, 72px);
+}
+
+.sw-account__nav {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  position: sticky;
+  top: calc(var(--header-height) + 32px);
+  align-self: start;
+}
+
+.sw-account__nav-link {
+  position: relative;
+  padding: 11px 0 11px 20px;
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+// A short rule slides out from the left to mark the active section.
+.sw-account__nav-link::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 10px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s var(--ease-editorial);
+}
+
+.sw-account__nav-link:hover,
+.sw-account__nav-link:focus-visible {
+  color: var(--text);
+}
+
+.sw-account__nav-link.is-active {
+  color: var(--text);
+}
+
+.sw-account__nav-link.is-active::before,
+.sw-account__nav-link:hover::before {
+  transform: scaleX(1);
+}
+
+.sw-account__nav-sep {
+  width: 100%;
+  height: 1px;
+  background: var(--hairline);
+  margin: 14px 0;
+}
+
+.sw-account__nav-link--quiet {
+  color: var(--text-muted);
+}
+
+.sw-account__section + .sw-account__section {
+  margin-top: clamp(56px, 7vw, 96px);
+  padding-top: clamp(40px, 5vw, 64px);
+  border-top: 1px solid var(--hairline);
+}
+
+.sw-account__section-title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(1.375rem, 2vw, 1.75rem);
+  line-height: 1.25;
+}
+
+.sw-account__section-lede {
+  margin-top: 10px;
+  max-width: 52ch;
+}
+
+// Definition rows: label small-caps on the left, value in the reading face.
+.sw-detail-list {
+  display: flex;
+  flex-direction: column;
+  margin-top: 28px;
+}
+
+.sw-detail-row {
+  display: grid;
+  grid-template-columns: minmax(120px, 200px) minmax(0, 1fr);
+  gap: 24px;
+  padding: 20px 0;
+  border-top: 1px solid var(--hairline);
+}
+
+.sw-detail-row:last-child {
+  border-bottom: 1px solid var(--hairline);
+}
+
+.sw-detail-row__label {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.sw-detail-row__value {
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: 300;
+  line-height: 1.6;
+  word-break: break-word;
+}
+
+.sw-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.sw-status::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.sw-status--muted {
+  color: var(--text-muted);
+}
+
+.sw-status--accent {
+  color: var(--accent);
+}
+
+.sw-account__empty {
+  padding: clamp(48px, 7vw, 88px) 0;
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+  margin-top: 32px;
+}
+
+.sw-account__empty-title {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-size: clamp(1.375rem, 2.2vw, 1.875rem);
+  line-height: 1.2;
+}
+
+.sw-account__empty-body {
+  margin-top: 12px;
+  max-width: 40ch;
+}
+
+.sw-account__empty-cta {
+  margin-top: 28px;
+}
+
+.sw-account__form {
+  display: flex;
+  flex-direction: column;
+  max-width: 460px;
+  margin-top: 18px;
+}
+
+.sw-account__form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 28px;
+  margin-top: 30px;
+}
+
+.sw-account__form-message {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.sw-account__form-message--error {
+  color: var(--accent);
+}
+
+/* ---- Responsive -------------------------------------------------------- */
+
+@media (max-width: 1024px) {
+  .sw-auth {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  // On a phone the photograph becomes a compact editorial band above the form
+  // rather than a column beside it.
+  .sw-auth__media {
+    min-height: 38vh;
+    aspect-ratio: 16 / 10;
+  }
+
+  // The band is short and the crop lands on the bright dial, so the fall to
+  // black has to start higher for the statement to hold.
+  .sw-auth__media-veil {
+    background: linear-gradient(
+      to bottom,
+      rgba(6, 6, 6, 0.32) 0%,
+      rgba(6, 6, 6, 0.12) 16%,
+      rgba(6, 6, 6, 0.52) 46%,
+      rgba(6, 6, 6, 0.82) 70%,
+      rgba(6, 6, 6, 0.96) 100%
+    );
+  }
+
+  .sw-auth__media-note {
+    display: none;
+  }
+
+  .sw-auth__panel {
+    align-items: flex-start;
+    padding: clamp(40px, 9vw, 64px) var(--container-pad) clamp(64px, 12vw, 96px);
+  }
+
+  .sw-auth__panel-inner {
+    max-width: 480px;
+    margin-inline: auto;
+  }
+
+  .sw-account__layout {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .sw-account__nav {
+    position: static;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 26px;
+    padding-bottom: 26px;
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .sw-account__nav-link {
+    padding-left: 0;
+  }
+
+  .sw-account__nav-link::before {
+    display: none;
+  }
+
+  .sw-account__nav-sep {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .sw-auth__media {
+    min-height: 30vh;
+    aspect-ratio: 4 / 3;
+  }
+
+  .sw-auth-form__row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .sw-detail-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sw-auth__media-img {
+    animation: none;
+    transform: none;
+  }
+
+  .sw-field__label,
+  .sw-field__rule,
+  .sw-account__nav-link::before {
+    transition: none;
+  }
+}

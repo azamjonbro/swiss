@@ -2,6 +2,7 @@
 @use 'reset';
 @use 'typography';
 @use 'buttons';
+@use 'account';
 
 ::selection {
   background: var(--sw-black);
@@ -9,22 +10,40 @@
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 9px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--sw-ivory);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
   background: var(--sw-gray-400);
-  border: 2px solid var(--sw-ivory);
+  border: 3px solid var(--bg);
+  border-radius: 9px;
 }
 
 .sw-container {
   width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
   padding-left: var(--container-pad);
   padding-right: var(--container-pad);
+}
+
+// Section rhythm helpers — every homepage section uses one of these so the
+// vertical cadence of the page is set in exactly one place.
+.sw-section {
+  padding-block: var(--space-section);
+}
+
+.sw-section--sm {
+  padding-block: var(--space-section-sm);
+}
+
+.sw-rule {
+  border: 0;
+  border-top: 1px solid var(--hairline);
 }
 
 html.sw-scroll-locked {
@@ -44,6 +63,56 @@ html.sw-scroll-locked {
   border: 0;
 }
 
+// Keyboard-only skip link into the main content.
+.sw-skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 300;
+  padding: 12px 20px;
+  background: var(--sw-black);
+  color: var(--sw-white);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  transform: translateY(-200%);
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.sw-skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+// ---- Scroll reveal (v-reveal directive) ----
+// One shared IntersectionObserver toggles `.is-revealed`; the motion itself is
+// pure CSS, so nothing runs on the scroll thread.
+.sw-reveal {
+  opacity: 0;
+  transform: translate3d(0, var(--reveal-y, 22px), 0);
+  transition:
+    opacity 1.05s var(--ease-editorial) var(--reveal-delay, 0s),
+    transform 1.05s var(--ease-editorial) var(--reveal-delay, 0s);
+}
+
+.sw-reveal.is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+// Image variant: the frame wipes open from the top. The clip lives on the
+// child, never on the observed element itself — an element clipped to zero
+// height reports no intersection, so putting it here would stop the very
+// observer that is meant to reveal it from ever firing.
+.sw-reveal--clip > * {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 1.4s var(--ease-editorial) var(--reveal-delay, 0s);
+}
+
+.sw-reveal--clip.is-revealed > * {
+  clip-path: inset(0 0 0 0);
+}
+
 .sw-fade-enter-active,
 .sw-fade-leave-active {
   transition: opacity var(--dur-mid) var(--ease-luxury);
@@ -52,4 +121,14 @@ html.sw-scroll-locked {
 .sw-fade-enter-from,
 .sw-fade-leave-to {
   opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sw-reveal,
+  .sw-reveal--clip > * {
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+    transition: none;
+  }
 }

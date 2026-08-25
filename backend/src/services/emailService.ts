@@ -72,3 +72,28 @@ export function sendVerificationEmail(to: string, name: string, verifyUrl: strin
     `,
   });
 }
+
+export function sendPasswordResetEmail(to: string, name: string, resetUrl: string): Promise<void> {
+  return sendEmail({
+    to,
+    subject: 'Reset your SwissWatch password',
+    text: `Hello ${name},\n\nWe received a request to reset the password on your SwissWatch account:\n${resetUrl}\n\nThis link expires in 1 hour. If you did not request this, you can safely ignore this email — your password will not change.`,
+    html: `
+      <div style="font-family: Georgia, serif; max-width: 480px; margin: 0 auto; color: #0a0a0a;">
+        <h1 style="font-weight: 400; font-size: 22px;">SwissWatch</h1>
+        <p style="font-family: Arial, sans-serif; font-size: 15px; line-height: 1.6;">Hello ${name},</p>
+        <p style="font-family: Arial, sans-serif; font-size: 15px; line-height: 1.6;">
+          We received a request to reset the password on your SwissWatch account.
+        </p>
+        <p style="margin: 28px 0;">
+          <a href="${resetUrl}" style="background: #0a0a0a; color: #fff; padding: 14px 28px; text-decoration: none; font-family: Arial, sans-serif; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase;">
+            Reset Password
+          </a>
+        </p>
+        <p style="font-family: Arial, sans-serif; font-size: 13px; color: #6f6a63;">
+          This link expires in 1 hour. If you did not request this, you can safely ignore this email — your password will not change.
+        </p>
+      </div>
+    `,
+  });
+}

@@ -42,11 +42,39 @@ npm run dev                 # http://localhost:5175
 Both frontends proxy `/api` and `/uploads` to the backend on port 4000 in development (see each
 project's `vite.config.ts`), so all three must be running together.
 
-The storefront's header "Account" link opens the admin panel at `VITE_ADMIN_URL` (defaults to
-`http://localhost:5175`); the admin panel's "View Site" link opens the storefront at `VITE_STORE_URL`
-(defaults to `http://localhost:5173`). Set these env vars if you deploy the two apps to different
-domains. The backend's `CORS_ORIGINS` env var (comma-separated) controls which origins may call the
-API — it defaults to both dev ports.
+The storefront's header "Account" link opens the **customer** account at `/account` — never the admin
+panel. The admin panel's "View Site" link opens the storefront at `VITE_STORE_URL` (defaults to
+`http://localhost:5173`). The backend's `CORS_ORIGINS` env var (comma-separated) controls which
+origins may call the API — it defaults to both dev ports.
+
+## Authentication
+
+Customer and admin sessions are entirely separate and cannot be used in place of one another:
+
+| | Customer | Admin |
+| --- | --- | --- |
+| App | storefront (`frontend/`, port 5173) | admin panel (`admin/`, port 5175) |
+| Sign in at | `/account/login` | `/login` (admin app only) |
+| API | `/api/account/*` | `/api/auth/*`, `/api/admin/*` |
+| Model | `User` | `Admin` |
+| Token audience | `customer` | `admin` |
+| Cookie / storage key | `customer_token` / `sw-customer-token` | `token` / `sw_admin_token` |
+
+Both tokens are signed with the same `JWT_SECRET` but carry mutually exclusive audiences, so a
+storefront token is rejected by every admin route and an admin token is rejected by every customer
+route. There is no link from the storefront to the admin panel.
+
+### Customer account
+
+`/account` (sign-in required) holds the customer's details, order history, saved timepieces, and
+settings. The public authentication screens live at `/account/login`, `/account/register`,
+`/account/forgot-password`, `/account/reset-password`, and `/account/verify-email`.
+
+Registration takes first name, last name, email, phone, and password. Sign-in accepts **either** the
+email or the phone number — phone numbers are normalised to `+998XXXXXXXXX`, so `90 123 45 67`,
+`901234567`, and `+998 90 123-45-67` all resolve to the same account. A new account must confirm its
+email address before it can sign in; with no SMTP configured, the confirmation and password-reset
+links are printed to the backend console instead of being emailed.
 
 ## Admin panel
 
@@ -65,6 +93,16 @@ all changes are reflected immediately on the public site.
 
 - Product, brand, and category imagery is placeholder art generated on the fly (an abstract watch-dial
   motif in the site's palette) — replace it with real photography through the admin media uploader.
+- Editorial photography in `frontend/public/images/` ships as both `.jpg` and `.webp`. `SmartImage`
+  requests the `.webp` for anything under `/images/` and falls back to the original on error, so when
+  you add a new file there, generate its sibling too:
+
+  ```bash
+  cd frontend/public/images
+  cwebp -q 82 -m 6 new-photo.jpg -o new-photo.webp
+  ```
+
+  Media uploaded through the admin (served from `/uploads/`) is untouched by this and needs no sibling.
 - Videos are optional throughout; `SmartVideo` gracefully falls back to a poster image wherever no
   video source is set.
 - `npm run build` in `frontend/` and `admin/` type-checks with `vue-tsc` and produces a production

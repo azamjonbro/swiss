@@ -2,11 +2,13 @@
 import { ref, computed, watch } from 'vue';
 import { useUiStore } from '@/stores/ui';
 import { useLocaleStore } from '@/stores/locale';
+import { useAccountStore } from '@/stores/account';
 import { useLockBodyScroll } from '@/composables/useLockBodyScroll';
 import { createInquiry } from '@/services/inquiries';
 
 const ui = useUiStore();
 const locale = useLocaleStore();
+const account = useAccountStore();
 useLockBodyScroll(computed(() => ui.isInquiryOpen));
 
 const name = ref('');
@@ -24,6 +26,12 @@ watch(
       isSubmitted.value = false;
       errorMessage.value = '';
       message.value = ui.inquiryWatch ? `${locale.t('inquiry.prefilledMessage')} ${ui.inquiryWatch.name}.` : '';
+      // A signed-in customer shouldn't retype what the account already knows.
+      if (account.user) {
+        name.value = account.user.name;
+        phone.value = account.user.phone;
+        email.value = account.user.email;
+      }
     }
   },
 );
@@ -45,9 +53,11 @@ async function submit() {
       message: message.value,
     });
     isSubmitted.value = true;
-    name.value = '';
-    phone.value = '';
-    email.value = '';
+    if (!account.user) {
+      name.value = '';
+      phone.value = '';
+      email.value = '';
+    }
     message.value = '';
   } catch {
     errorMessage.value = locale.t('inquiry.errorGeneric');

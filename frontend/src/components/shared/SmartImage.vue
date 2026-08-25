@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { resolveMediaUrl } from '@/utils/media';
 
 interface Props {
@@ -19,12 +19,46 @@ const props = withDefaults(defineProps<Props>(), {
 
 const loaded = ref(false);
 const errored = ref(false);
+/** Set once the WebP candidate has failed and we have fallen back to the original. */
+const usedFallback = ref(false);
+
 const resolvedSrc = computed(() => resolveMediaUrl(props.src));
+
+/**
+ * Everything under /public/images ships with a WebP sibling (roughly an eighth
+ * of the JPEG's weight). Rather than a <picture> — where a missing source
+ * leaves a broken image with no second chance — the WebP is tried as the src
+ * and the original takes over in onError. Admin-uploaded media under /uploads
+ * has no sibling and is left alone.
+ */
+const webpSrc = computed(() => {
+  const src = props.src ?? '';
+  if (!/^\/images\/.+\.(jpe?g|png)$/i.test(src)) return '';
+  return src.replace(/\.(jpe?g|png)$/i, '.webp');
+});
+
+const displaySrc = computed(() =>
+  webpSrc.value && !usedFallback.value ? webpSrc.value : resolvedSrc.value,
+);
+
+watch(
+  () => props.src,
+  () => {
+    loaded.value = false;
+    errored.value = false;
+    usedFallback.value = false;
+  },
+);
 
 function onLoad() {
   loaded.value = true;
 }
+
 function onError() {
+  if (webpSrc.value && !usedFallback.value) {
+    usedFallback.value = true;
+    return;
+  }
   errored.value = true;
 }
 </script>
@@ -33,11 +67,13 @@ function onError() {
   <div class="sw-smart-image" :style="aspectRatio ? { aspectRatio } : undefined">
     <div class="sw-smart-image__placeholder" :class="{ 'is-hidden': loaded }" />
     <img
-      v-if="resolvedSrc && !errored"
-      :src="resolvedSrc"
+      v-if="displaySrc && !errored"
+      :key="displaySrc"
+      :src="displaySrc"
       :alt="alt"
       :loading="eager ? 'eager' : 'lazy'"
       :decoding="eager ? 'sync' : 'async'"
+      :fetchpriority="eager ? 'high' : 'auto'"
       class="sw-smart-image__img"
       :class="{ 'is-loaded': loaded }"
       :style="{ objectFit }"

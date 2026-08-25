@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, watch, nextTick } from 'vue';
 import { useRoute } from 'vue-router';
+import { useLocaleStore } from '@/stores/locale';
 import { initLenis, destroyLenis, scrollTo } from '@/composables/useLenis';
 import { ScrollTrigger } from '@/animations/gsap';
 import AppHeader from '@/components/layout/AppHeader.vue';
@@ -8,9 +9,9 @@ import AppFooter from '@/components/layout/AppFooter.vue';
 import LuxuryMenu from '@/components/layout/LuxuryMenu.vue';
 import SearchOverlay from '@/components/search/SearchOverlay.vue';
 import InquiryModal from '@/components/shared/InquiryModal.vue';
-import CustomCursor from '@/components/shared/CustomCursor.vue';
 
 const route = useRoute();
+const locale = useLocaleStore();
 
 onMounted(() => {
   initLenis();
@@ -32,15 +33,17 @@ watch(
 
 <template>
   <div class="sw-app-shell">
+    <a class="sw-skip-link" href="#sw-main">{{ locale.t('a11y.skipToContent') }}</a>
     <AppHeader />
     <LuxuryMenu />
     <SearchOverlay />
     <InquiryModal />
-    <CustomCursor />
-    <main class="sw-app-main">
+    <main id="sw-main" class="sw-app-main" tabindex="-1">
       <slot />
     </main>
-    <AppFooter />
+    <!-- The authentication screens are full-viewport compositions; the footer
+         would break their frame, so those routes opt out of it. -->
+    <AppFooter v-if="!route.meta.hideFooter" />
   </div>
 </template>
 

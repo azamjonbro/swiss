@@ -5,6 +5,7 @@ import { prefersReducedMotion } from '@/composables/useReducedMotion';
 let lenis: Lenis | null = null;
 let rafHandler: ((time: number) => void) | null = null;
 let onScrollTriggerRefresh: (() => void) | null = null;
+let heightObserver: ResizeObserver | null = null;
 
 export function initLenis(): Lenis | null {
   if (lenis) return lenis;
@@ -34,6 +35,18 @@ export function initLenis(): Lenis | null {
   ScrollTrigger.addEventListener('refresh', onScrollTriggerRefresh);
   ScrollTrigger.refresh();
 
+  // ScrollTrigger.refresh() only fires for pins/route changes/window resize —
+  // it never runs when a form's height changes on its own (a validation error
+  // appearing, a floating label animating, an async list loading in). Without
+  // this, Lenis keeps the scroll limit measured before that growth and clamps
+  // a few dozen pixels short of the real bottom. <html> and <body> are both
+  // pinned to height: 100%, so neither one's own box actually resizes when
+  // content overflows them — #app (the Vue mount point, height: auto) is the
+  // element that genuinely grows, so that's what has to be observed.
+  const growthRoot = document.getElementById('app') ?? document.body;
+  heightObserver = new ResizeObserver(() => lenis?.resize());
+  heightObserver.observe(growthRoot);
+
   return lenis;
 }
 
@@ -50,6 +63,8 @@ export function destroyLenis(): void {
     ScrollTrigger.removeEventListener('refresh', onScrollTriggerRefresh);
     onScrollTriggerRefresh = null;
   }
+  heightObserver?.disconnect();
+  heightObserver = null;
   lenis?.destroy();
   lenis = null;
 }

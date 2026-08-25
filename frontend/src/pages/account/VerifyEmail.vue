@@ -27,49 +27,32 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="sw-account-page">
-    <div class="sw-account-card">
-      <template v-if="state === 'loading'">
-        <p class="sw-body">{{ locale.t('account.verifyingTitle') }}</p>
-      </template>
+  <div class="sw-auth-form">
+    <template v-if="state === 'loading'">
+      <span class="sw-eyebrow">{{ locale.t('account.brandEyebrow') }}</span>
+      <h1 class="sw-auth-form__title">{{ locale.t('account.verifyingTitle') }}</h1>
+    </template>
 
-      <template v-else-if="state === 'success'">
-        <span class="sw-eyebrow">{{ locale.t('account.verifySuccessEyebrow') }}</span>
-        <h1 class="sw-h2">{{ locale.t('account.verifySuccessTitle') }}</h1>
-        <p class="sw-body">{{ locale.t('account.verifySuccessBody') }}</p>
-        <RouterLink class="sw-btn sw-btn--solid" to="/account/login">{{ locale.t('account.goToLogin') }}</RouterLink>
-      </template>
+    <template v-else-if="state === 'success'">
+      <span class="sw-eyebrow">{{ locale.t('account.verifySuccessEyebrow') }}</span>
+      <h1 class="sw-auth-form__title">{{ locale.t('account.verifySuccessTitle') }}</h1>
+      <p class="sw-body sw-auth-form__lede">{{ locale.t('account.verifySuccessBody') }}</p>
+      <div class="sw-auth-form__actions">
+        <RouterLink class="sw-btn sw-btn--solid sw-auth-submit" to="/account/login">
+          {{ locale.t('account.goToLogin') }}
+        </RouterLink>
+      </div>
+    </template>
 
-      <template v-else>
-        <span class="sw-eyebrow">{{ locale.t('account.verifyErrorEyebrow') }}</span>
-        <h1 class="sw-h2">{{ locale.t('account.verifyErrorTitle') }}</h1>
-        <p class="sw-body">{{ locale.t('account.verifyErrorBody') }}</p>
-        <RouterLink class="sw-btn sw-btn--solid" to="/account/login">{{ locale.t('account.goToLogin') }}</RouterLink>
-      </template>
-    </div>
+    <template v-else>
+      <span class="sw-eyebrow">{{ locale.t('account.verifyErrorEyebrow') }}</span>
+      <h1 class="sw-auth-form__title">{{ locale.t('account.verifyErrorTitle') }}</h1>
+      <p class="sw-body sw-auth-form__lede">{{ locale.t('account.verifyErrorBody') }}</p>
+      <div class="sw-auth-form__actions">
+        <RouterLink class="sw-btn sw-btn--solid sw-auth-submit" to="/account/login">
+          {{ locale.t('account.goToLogin') }}
+        </RouterLink>
+      </div>
+    </template>
   </div>
 </template>
-
-<style scoped>
-.sw-account-page {
-  min-height: 80vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: calc(var(--header-height) + 48px) var(--container-pad) 80px;
-  text-align: center;
-}
-
-.sw-account-card {
-  width: 100%;
-  max-width: 440px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-
-.sw-account-card .sw-btn {
-  margin-top: 20px;
-}
-</style>

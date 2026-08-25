@@ -1,12 +1,22 @@
 import { Request, Response } from 'express';
 import { Inquiry } from '../models/Inquiry';
 import { ApiError } from '../utils/ApiError';
+import { CustomerAuthedRequest } from '../middleware/customerAuth';
 
-export async function createInquiry(req: Request, res: Response) {
+export async function createInquiry(req: CustomerAuthedRequest, res: Response) {
   const { name, phone, email, watch, message } = req.body as Record<string, string>;
   if (!name || !phone || !email) throw new ApiError(400, 'name, phone, and email are required');
 
-  const inquiry = await Inquiry.create({ name, phone, email, watch: watch || undefined, message });
+  // Guests may inquire freely; when a customer is signed in the request is
+  // stamped with their account so it shows up in their order history.
+  const inquiry = await Inquiry.create({
+    name,
+    phone,
+    email,
+    user: req.customer?.id,
+    watch: watch || undefined,
+    message,
+  });
   res.status(201).json({ message: 'Your inquiry has been received. Our team will contact you shortly.', inquiry });
 }
 
