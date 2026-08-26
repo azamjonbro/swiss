@@ -128,7 +128,6 @@ const ru: Dictionary = {
     next: 'Следующий дом',
   },
   watchCard: {
-    newBadge: 'Новинка',
     view: 'Смотреть часы',
   },
   watchList: {

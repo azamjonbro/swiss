@@ -54,7 +54,6 @@ const colorCount = computed(() => props.watch.variants?.length ?? 0);
         prefer-trimmed
         class="sw-watch-card__shot sw-watch-card__shot--hover"
       />
-      <span v-if="watch.isNewArrival" class="sw-watch-card__badge">{{ locale.t('watchCard.newBadge') }}</span>
     </div>
 
     <div class="sw-watch-card__info">
@@ -98,6 +97,15 @@ const colorCount = computed(() => props.watch.variants?.length ?? 0);
   padding: 5%;
 }
 
+/* SmartImage defaults to --surface-media so it reads as a loading skeleton
+   on its own, but that gray fill shows through around the watch whenever
+   object-fit: contain leaves empty space — a visible dirty-gray box behind
+   the product shot. Cards want the photo floating directly on the page
+   background instead, so override it to match the container above. */
+.sw-watch-card__media :deep(.sw-smart-image) {
+  background: var(--bg);
+}
+
 .sw-watch-card__media :deep(.sw-smart-image__img) {
   transition: transform 0.55s var(--ease-editorial);
 }
@@ -137,19 +145,6 @@ const colorCount = computed(() => props.watch.variants?.length ?? 0);
   height: 8px;
   border-radius: 50%;
   box-shadow: 0 0 0 1px var(--border) inset;
-}
-
-/* No filled chip — a single line of accent small-caps is enough of a flag. */
-.sw-watch-card__badge {
-  position: absolute;
-  top: clamp(14px, 2vw, 22px);
-  left: clamp(14px, 2vw, 22px);
-  font-family: var(--font-sans);
-  font-size: 0.5625rem;
-  font-weight: 500;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--accent);
 }
 
 .sw-watch-card__info {

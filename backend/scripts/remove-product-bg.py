@@ -42,6 +42,10 @@ MIN_REMOVED_FRACTION = 0.03  # if almost nothing was classified as background, s
 MAX_REMOVED_FRACTION = 0.90  # if nearly everything reads as "background", the subject itself was
                               # likely translucent/reflective and got misclassified — bail out rather
                               # than crop down to a tiny fragment of the actual watch
+MIN_BBOX_COVERAGE = 0.12     # a real kept subject fills a decent share of its own content bbox; a
+                              # sapphire/skeleton case on a gradient backdrop can pass the two checks
+                              # above while still shattering into scattered specks (each one "kept",
+                              # none connected) — that fails here instead of shipping a confetti PNG
 
 
 def border_reference_colors(arr: np.ndarray) -> np.ndarray:
@@ -97,10 +101,14 @@ def process(path: Path) -> str:
     rgba = im.convert('RGBA')
     rgba.putalpha(alpha_img)
 
-    bbox = alpha_img.point(lambda a: 255 if a > 40 else 0).getbbox()
+    kept_mask = alpha_img.point(lambda a: 255 if a > 40 else 0)
+    bbox = kept_mask.getbbox()
     if bbox is None:
         return 'skip-empty'
     x0, y0, x1, y1 = bbox
+    bbox_coverage = (np.asarray(kept_mask.crop(bbox)) > 0).mean()
+    if bbox_coverage < MIN_BBOX_COVERAGE:
+        return f'skip-fragmented coverage={bbox_coverage:.3f}'
     pad = int(round(max(x1 - x0, y1 - y0) * PAD_FRACTION))
     padded = (max(0, x0 - pad), max(0, y0 - pad), min(w, x1 + pad), min(h, y1 + pad))
     cropped = rgba.crop(padded)

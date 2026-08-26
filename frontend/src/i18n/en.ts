@@ -125,7 +125,6 @@ const en = {
     next: 'Next house',
   },
   watchCard: {
-    newBadge: 'New',
     view: 'View Timepiece',
   },
   watchList: {

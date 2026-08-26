@@ -127,7 +127,6 @@ const uz: Dictionary = {
     next: 'Keyingi uy',
   },
   watchCard: {
-    newBadge: 'Yangi',
     view: 'Soatni ko‘rish',
   },
   watchList: {
