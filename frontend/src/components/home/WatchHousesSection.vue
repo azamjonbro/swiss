@@ -39,8 +39,9 @@ function setItemEl(id: string, el: Element | ComponentPublicInstance | null) {
   else itemEls.delete(id);
 }
 
-async function loadWatches(brand: Brand) {
-  if (watchesByBrand.value[brand._id]) return;
+// Callers prefetch by index, so a short brand list hands us undefined.
+async function loadWatches(brand: Brand | undefined) {
+  if (!brand || watchesByBrand.value[brand._id]) return;
   try {
     const watches = await getBrandWatches(brand._id);
     watchesByBrand.value = { ...watchesByBrand.value, [brand._id]: watches };
