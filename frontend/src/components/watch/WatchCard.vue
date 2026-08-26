@@ -37,13 +37,21 @@ const colorCount = computed(() => props.watch.variants?.length ?? 0);
 <template>
   <RouterLink :to="`/watches/${watch.slug}`" class="sw-watch-card" :class="`is-${size}`" data-cursor="View">
     <div class="sw-watch-card__media">
-      <SmartImage :src="mainImage" :alt="`${brandName} ${watch.name}`" aspect-ratio="1 / 1" object-fit="contain" class="sw-watch-card__shot sw-watch-card__shot--main" />
+      <SmartImage
+        :src="mainImage"
+        :alt="`${brandName} ${watch.name}`"
+        aspect-ratio="1 / 1"
+        object-fit="contain"
+        prefer-trimmed
+        class="sw-watch-card__shot sw-watch-card__shot--main"
+      />
       <SmartImage
         v-if="hoverImage"
         :src="hoverImage"
         :alt="`${brandName} ${watch.name}`"
         aspect-ratio="1 / 1"
         object-fit="contain"
+        prefer-trimmed
         class="sw-watch-card__shot sw-watch-card__shot--hover"
       />
       <span v-if="watch.isNewArrival" class="sw-watch-card__badge">{{ locale.t('watchCard.newBadge') }}</span>
@@ -78,11 +86,16 @@ const colorCount = computed(() => props.watch.variants?.length ?? 0);
   display: block;
 }
 
+/* Deliberately matches the page background, not --surface-media (a
+   noticeably darker gray meant for other backdrops) — the trimmed product
+   photography already carries its own near-white background, so matching
+   --bg exactly is what lets the watch float on the page with no visible
+   card frame, rather than sitting in a box-within-a-box. */
 .sw-watch-card__media {
   position: relative;
   overflow: hidden;
-  background: var(--surface-media);
-  padding: 10%;
+  background: var(--bg);
+  padding: 5%;
 }
 
 .sw-watch-card__media :deep(.sw-smart-image__img) {
@@ -96,7 +109,7 @@ const colorCount = computed(() => props.watch.variants?.length ?? 0);
 
 .sw-watch-card__shot--hover {
   position: absolute;
-  inset: 10%;
+  inset: 5%;
   opacity: 0;
   transition: opacity 0.5s var(--ease-editorial);
 }
