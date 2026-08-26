@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router';
 import { useUiStore } from '@/stores/ui';
 import { useLocaleStore } from '@/stores/locale';
 import { useAccountStore } from '@/stores/account';
+import { useCartStore } from '@/stores/cart';
 import PreferencesBar from '@/components/shared/PreferencesBar.vue';
 import BrandMark from '@/components/shared/BrandMark.vue';
 
@@ -11,6 +12,7 @@ const route = useRoute();
 const ui = useUiStore();
 const locale = useLocaleStore();
 const account = useAccountStore();
+const cart = useCartStore();
 
 // "Account" is the customer's account, never the admin panel — the admin app is
 // a separate deployment reached at its own URL and is not linked from the store.
@@ -91,6 +93,10 @@ const themeMode = computed<'transparent' | 'veil' | 'light'>(() => {
         <RouterLink class="sw-header__action sw-header__action--hide-mobile" :to="accountTo" @click="ui.closeMenu">
           {{ locale.t('header.account') }}
         </RouterLink>
+        <button class="sw-header__action sw-header__action--cart" type="button" @click="ui.openCart">
+          {{ locale.t('header.cart') }}
+          <span v-if="cart.count" class="sw-header__cart-count">{{ cart.count }}</span>
+        </button>
       </div>
     </div>
   </header>
@@ -223,6 +229,26 @@ const themeMode = computed<'transparent' | 'veil' | 'light'>(() => {
   opacity: 0.2;
 }
 
+.sw-header__action--cart {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sw-header__cart-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 15px;
+  height: 15px;
+  padding: 0 3px;
+  border-radius: 50%;
+  background: currentColor;
+  color: var(--bg);
+  font-size: 0.55rem;
+  letter-spacing: normal;
+}
+
 @media (max-width: 640px) {
   .sw-header__action--hide-mobile {
     display: none;
@@ -242,7 +268,23 @@ const themeMode = computed<'transparent' | 'veil' | 'light'>(() => {
   }
 
   .sw-header__actions {
-    gap: 18px;
+    gap: 12px;
+  }
+
+  /* "Search" and "Bag" are the only two actions left visible at this width
+     (everything else already hides above) — at 0.26em tracking their
+     combined width can run into the centered logo on longer locale strings
+     (e.g. Uzbek "Qidiruv"), so tracking tightens here rather than truncating
+     either label. */
+  .sw-header__action {
+    letter-spacing: 0.12em;
+    font-size: 0.6rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .sw-header__actions {
+    gap: 8px;
   }
 }
 </style>

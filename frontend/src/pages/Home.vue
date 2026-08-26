@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import type { Watch, Brand } from '@/types/models';
 import { fetchWatches } from '@/services/watches';
 import { fetchBrands } from '@/services/brands';
+import { useLocaleStore } from '@/stores/locale';
 
 import HeroSection from '@/components/home/HeroSection.vue';
 import BrandIntro from '@/components/home/BrandIntro.vue';
@@ -14,11 +15,12 @@ import EditorialStatement from '@/components/home/EditorialStatement.vue';
 import BrandSection from '@/components/home/BrandSection.vue';
 import CtaSection from '@/components/home/CtaSection.vue';
 
+const locale = useLocaleStore();
 const featuredWatches = ref<Watch[]>([]);
 const brands = ref<Brand[]>([]);
 const isLoading = ref(true);
 
-onMounted(async () => {
+async function load() {
   try {
     const [watchesData, brandsData] = await Promise.all([
       // Three pieces is the whole featured selection — see FeaturedWatches.
@@ -30,7 +32,10 @@ onMounted(async () => {
   } finally {
     isLoading.value = false;
   }
-});
+}
+
+onMounted(load);
+watch(() => locale.lang, load);
 </script>
 
 <template>

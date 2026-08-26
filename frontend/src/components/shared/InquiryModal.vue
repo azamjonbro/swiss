@@ -25,7 +25,8 @@ watch(
     if (open) {
       isSubmitted.value = false;
       errorMessage.value = '';
-      message.value = ui.inquiryWatch ? `${locale.t('inquiry.prefilledMessage')} ${ui.inquiryWatch.name}.` : '';
+      message.value =
+        ui.inquiryMessage ?? (ui.inquiryWatch ? `${locale.t('inquiry.prefilledMessage')} ${ui.inquiryWatch.name}.` : '');
       // A signed-in customer shouldn't retype what the account already knows.
       if (account.user) {
         name.value = account.user.name;

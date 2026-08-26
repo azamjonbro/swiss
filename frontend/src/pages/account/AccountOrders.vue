@@ -3,7 +3,7 @@ import { onMounted, ref } from 'vue';
 import { useLocaleStore } from '@/stores/locale';
 import { useCurrencyStore } from '@/stores/currency';
 import { fetchOrders } from '@/services/account';
-import { formatDate, toBrandName } from '@/utils/format';
+import { formatDate, toBrandName, primaryImage } from '@/utils/format';
 import SmartImage from '@/components/shared/SmartImage.vue';
 import type { Inquiry, Watch } from '@/types/models';
 
@@ -57,7 +57,7 @@ function statusLabel(status: string): string {
         <div class="sw-order__media">
           <SmartImage
             v-if="watchOf(order)"
-            :src="watchOf(order)!.images?.[0]"
+            :src="primaryImage(watchOf(order))"
             :alt="watchOf(order)!.name"
             aspect-ratio="1 / 1"
             object-fit="contain"

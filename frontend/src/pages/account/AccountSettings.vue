@@ -207,7 +207,7 @@ async function signOut() {
 .sw-account__readonly-value {
   font-family: var(--font-sans);
   font-size: 0.9375rem;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--text-muted);
 }
 </style>

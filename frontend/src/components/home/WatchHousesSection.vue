@@ -14,6 +14,7 @@ import type { Brand, Watch } from '@/types/models';
 import { useLocaleStore } from '@/stores/locale';
 import { prefersReducedMotion } from '@/composables/useReducedMotion';
 import { getBrandWatches } from '@/utils/brandWatches';
+import { primaryImage } from '@/utils/format';
 import SmartImage from '@/components/shared/SmartImage.vue';
 
 interface Props {
@@ -190,13 +191,13 @@ onUnmounted(() => {
             <span class="sw-houses__photo">
               <SmartImage
                 v-if="watchesFor(brand)[0]"
-                :src="watchesFor(brand)[0].images?.[0]"
+                :src="primaryImage(watchesFor(brand)[0])"
                 :alt="`${brand.name} ${watchesFor(brand)[0].name}`"
                 object-fit="contain"
               />
               <SmartImage
                 v-if="watchesFor(brand)[1]"
-                :src="watchesFor(brand)[1].images?.[0]"
+                :src="primaryImage(watchesFor(brand)[1])"
                 :alt="`${brand.name} ${watchesFor(brand)[1].name}`"
                 object-fit="contain"
                 class="sw-houses__photo-alt"
@@ -424,7 +425,7 @@ onUnmounted(() => {
 
 .sw-houses__name {
   font-family: var(--font-serif);
-  font-weight: 300;
+  font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.02em;
   line-height: 1.05;

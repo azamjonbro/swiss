@@ -24,6 +24,7 @@ const form = ref({
   brand: '',
   category: '',
   collectionRef: '',
+  type: 'watch' as 'watch' | 'accessory',
   price: 0,
   currency: 'USD',
   shortDescription: '',
@@ -44,6 +45,9 @@ const form = ref({
 
 const isSaving = ref(false);
 const errorMessage = ref('');
+// Additional colourways beyond the one this simplified form edits — carried
+// through untouched so saving never drops a product's other variants.
+const otherVariants = ref<Watch['variants']>([]);
 
 function brandIdOf(brand: Watch['brand']): string {
   return typeof brand === 'string' ? brand : brand._id;
@@ -60,6 +64,7 @@ async function loadWatch(id: string) {
     brand: brandIdOf(watch.brand),
     category: categoryIdOf(watch.category),
     collectionRef: watch.collectionRef ?? '',
+    type: watch.type ?? 'watch',
     price: watch.price,
     currency: watch.currency,
     shortDescription: watch.shortDescription,
@@ -74,9 +79,12 @@ async function loadWatch(id: string) {
     featured: watch.featured,
     isNewArrival: watch.isNewArrival,
     isActive: watch.isActive,
-    images: [...watch.images],
-    videos: [...watch.videos],
+    // The form only edits a single colourway for now — the product's other
+    // variants (if any) pass through untouched on save via otherVariants.
+    images: [...(watch.variants?.[0]?.images ?? [])],
+    videos: [...(watch.variants?.[0]?.videos ?? [])],
   };
+  otherVariants.value = watch.variants?.slice(1) ?? [];
 }
 
 onMounted(async () => {
@@ -114,7 +122,13 @@ async function submit() {
 
   isSaving.value = true;
   try {
-    const payload = { ...form.value, collectionRef: form.value.collectionRef || undefined };
+    const { images, videos, ...rest } = form.value;
+    const primaryVariant = { colorSlug: 'default', colorLabel: '', images, videos };
+    const payload = {
+      ...rest,
+      collectionRef: form.value.collectionRef || undefined,
+      variants: [primaryVariant, ...otherVariants.value],
+    };
     if (isEdit.value) {
       await adminUpdateWatch(route.params.id as string, payload);
     } else {
@@ -162,6 +176,13 @@ async function submit() {
           <select v-model="form.collectionRef">
             <option value="">None</option>
             <option v-for="c in collections" :key="c._id" :value="c._id">{{ c.name }}</option>
+          </select>
+        </label>
+        <label>
+          <span>Type</span>
+          <select v-model="form.type">
+            <option value="watch">Watch</option>
+            <option value="accessory">Accessory</option>
           </select>
         </label>
         <label>
@@ -234,9 +255,14 @@ async function submit() {
         </label>
       </div>
 
+      <p v-if="otherVariants.length" class="sw-admin-watch-form__notice">
+        This product has {{ otherVariants.length }} additional colorway(s) not editable here — they're preserved
+        as-is when you save. Use the seed data or a database tool to manage other variants.
+      </p>
+
       <div class="sw-admin-watch-form__media">
         <div>
-          <span class="sw-label">Images</span>
+          <span class="sw-label">Images{{ otherVariants.length ? ' (primary colorway)' : '' }}</span>
           <div class="sw-admin-watch-form__media-list">
             <div v-for="(img, i) in form.images" :key="img + i" class="sw-admin-watch-form__media-item">
               <img :src="resolveMediaUrl(img)" alt="" />
@@ -341,6 +367,14 @@ async function submit() {
   font-size: 0.65rem;
   color: #a3313f;
   text-decoration: underline;
+}
+
+.sw-admin-watch-form__notice {
+  font-size: 0.8rem;
+  color: var(--admin-text-muted, #6b6b6b);
+  padding: 10px 12px;
+  background: var(--admin-surface-alt, #f5f4f1);
+  border-radius: var(--radius-md);
 }
 
 .sw-admin-watch-form__error {

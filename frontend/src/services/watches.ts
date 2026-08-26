@@ -8,6 +8,8 @@ export interface WatchQuery {
   featured?: boolean;
   isNew?: boolean;
   availability?: string;
+  color?: string;
+  type?: 'watch' | 'accessory';
   q?: string;
   page?: number;
   limit?: number;

@@ -2,14 +2,30 @@ import { Request, Response } from 'express';
 import { Watch } from '../models/Watch';
 import { ApiError } from '../utils/ApiError';
 import { toSlug } from '../utils/slug';
-import { Lang, localize, localizeList, resolveLang } from '../utils/i18n';
+import { Lang, localize, resolveLang } from '../utils/i18n';
 
 const WATCH_FIELDS = ['name', 'description', 'shortDescription'];
 const BRAND_FIELDS = ['name', 'description'];
 const CATEGORY_FIELDS = ['name', 'description', 'tagline'];
 
+function localizeVariants(variants: unknown, lang: Lang) {
+  if (!Array.isArray(variants)) return variants;
+  return variants.map((v) => {
+    const variant = v as Record<string, unknown>;
+    const label =
+      lang === 'ru' ? (variant.colorLabelRu as string) : lang === 'uz' ? (variant.colorLabelUz as string) : undefined;
+    return {
+      colorSlug: variant.colorSlug,
+      colorLabel: label || (variant.colorLabel as string) || '',
+      images: variant.images,
+      videos: variant.videos,
+    };
+  });
+}
+
 function localizeWatch(watch: unknown, lang: Lang): Record<string, unknown> {
   const out = localize(watch, lang, WATCH_FIELDS) as Record<string, unknown>;
+  out.variants = localizeVariants(out.variants, lang);
   if (out.brand && typeof out.brand === 'object') {
     out.brand = localize(out.brand, lang, BRAND_FIELDS);
   }
@@ -22,15 +38,19 @@ function localizeWatch(watch: unknown, lang: Lang): Record<string, unknown> {
 // ---------- Public ----------
 
 export async function listWatches(req: Request, res: Response) {
-  const { category, brand, collection, featured, isNew, q, availability, limit, page } = req.query;
+  const { category, brand, collection, featured, isNew, q, availability, color, type, limit, page } = req.query;
 
   const filter: Record<string, unknown> = { isActive: true };
+  // Accessories are surfaced only via "pair it with" on a product page, never
+  // in the main catalog grid, unless a caller explicitly asks for them.
+  filter.type = type === 'accessory' || type === 'watch' ? type : { $ne: 'accessory' };
   if (category) filter.category = category;
   if (brand) filter.brand = brand;
   if (collection) filter.collectionRef = collection;
   if (featured !== undefined) filter.featured = featured === 'true';
   if (isNew !== undefined) filter.isNewArrival = isNew === 'true';
   if (availability) filter.availability = availability;
+  if (color) filter['variants.colorSlug'] = String(color);
   if (q) filter.$text = { $search: String(q) };
 
   const pageSize = Math.min(Number(limit) || 24, 60);
@@ -63,7 +83,26 @@ export async function getWatchBySlug(req: Request, res: Response) {
     .populate('collectionRef');
 
   if (!watch) throw new ApiError(404, 'Timepiece not found');
-  res.json(localizeWatch(watch as unknown as Record<string, unknown>, resolveLang(req)));
+
+  const lang = resolveLang(req);
+  const [accessories, related] = await Promise.all([
+    watch.type === 'accessory'
+      ? Promise.resolve([])
+      : Watch.find({ type: 'accessory', compatibleWith: watch._id, isActive: true })
+          .populate('brand', 'name slug')
+          .populate('category', 'name slug'),
+    watch.relatedWatches?.length
+      ? Watch.find({ _id: { $in: watch.relatedWatches }, isActive: true })
+          .populate('brand', 'name slug')
+          .populate('category', 'name slug')
+      : Promise.resolve([]),
+  ]);
+
+  res.json({
+    ...localizeWatch(watch as unknown as Record<string, unknown>, lang),
+    accessories: accessories.map((a) => localizeWatch(a as unknown as Record<string, unknown>, lang)),
+    related: related.map((r) => localizeWatch(r as unknown as Record<string, unknown>, lang)),
+  });
 }
 
 // ---------- Admin ----------

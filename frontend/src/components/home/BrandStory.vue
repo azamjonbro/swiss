@@ -129,7 +129,7 @@ const facts = computed(() => [
 .sw-story__fact-value {
   margin-top: 14px;
   font-family: var(--font-serif);
-  font-weight: 300;
+  font-weight: 400;
   font-size: clamp(1.5rem, 2.4vw, 2.25rem);
   line-height: 1.1;
 }

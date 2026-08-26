@@ -1,3 +1,53 @@
+import type { Watch, WatchVariant } from '@/types/models';
+
+/** The color selector's default variant — first in the array, i.e. seed order. */
+export function primaryVariant(watch: Pick<Watch, 'variants'> | undefined | null): WatchVariant | undefined {
+  return watch?.variants?.[0];
+}
+
+export function primaryImage(watch: Pick<Watch, 'variants'> | undefined | null): string | undefined {
+  return primaryVariant(watch)?.images?.[0];
+}
+
+export function secondaryImage(watch: Pick<Watch, 'variants'> | undefined | null): string | undefined {
+  return primaryVariant(watch)?.images?.[1];
+}
+
+// Cosmetic swatch dots only — not product data. Matches the first keyword a
+// color slug contains; unrecognized slugs fall back to a neutral dot rather
+// than guessing a color that was never in the source photography. Must be
+// keyed off the (always-English) colorSlug, never the localized colorLabel —
+// the keywords below won't match RU/UZ text and everything would fall back
+// to the same neutral dot in those locales.
+const COLOR_SWATCHES: [RegExp, string][] = [
+  [/black/i, '#1a1a1a'],
+  [/white/i, '#f2efe8'],
+  [/silver/i, '#c7c9cc'],
+  [/gold/i, '#b89652'],
+  [/titanium/i, '#8b8d92'],
+  [/carbon/i, '#232323'],
+  [/blue/i, '#2f4a6b'],
+  [/red/i, '#8c2b2b'],
+  [/orange/i, '#c1622a'],
+  [/grey|gray/i, '#87888c'],
+  [/clear|crystal|sapphire/i, '#dfe7e6'],
+];
+
+export function colorSwatchHex(colorSlug: string | undefined): string {
+  if (!colorSlug) return '#9a958a';
+  const match = COLOR_SWATCHES.find(([re]) => re.test(colorSlug));
+  return match ? match[1] : '#9a958a';
+}
+
+/** Collapses a free-text movement spec ("Automatic, Calibre 3235") to its family, for card/filter labels. */
+export function movementType(movement: string | undefined): string {
+  if (!movement) return '';
+  if (/quartz/i.test(movement)) return 'Quartz';
+  if (/manual/i.test(movement)) return 'Manual Winding';
+  if (/automatic/i.test(movement)) return 'Automatic';
+  return movement;
+}
+
 export function toBrandName(brand: unknown): string {
   if (!brand) return '';
   if (typeof brand === 'string') return brand;

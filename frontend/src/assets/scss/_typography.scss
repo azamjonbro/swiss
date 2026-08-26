@@ -1,14 +1,14 @@
 // Editorial type scale.
-// Serif (Cormorant Garamond) carries every headline and brand statement;
-// sans (Inter) carries navigation, metadata, prices and UI only.
-// Optical tracking: the larger the serif, the tighter it is set.
+// One family (DM Sans, via --font-serif/--font-sans) carries every headline,
+// brand statement, and UI/metadata text — see _variables.scss.
+// Optical tracking: the larger the size, the tighter it is set.
 
 /* Page-level hero titles (About, a brand, a collection). The homepage hero
    sets its own, larger size — this scale has to stay inside a 70vh image
    without overrunning the scrim beneath it. */
 .sw-display {
   font-family: var(--font-serif);
-  font-weight: 300;
+  font-weight: 400;
   line-height: 0.94;
   letter-spacing: -0.025em;
   font-size: clamp(3rem, 8vw, 8rem);
@@ -16,7 +16,7 @@
 
 .sw-h1 {
   font-family: var(--font-serif);
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.04;
   letter-spacing: -0.018em;
   font-size: clamp(2.25rem, 5.2vw, 4.75rem);
@@ -24,7 +24,7 @@
 
 .sw-h2 {
   font-family: var(--font-serif);
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.1;
   letter-spacing: -0.012em;
   font-size: clamp(1.875rem, 3.6vw, 3.125rem);
@@ -41,7 +41,7 @@
 // Short brand statements set over imagery — always in the widest measure.
 .sw-statement {
   font-family: var(--font-serif);
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.06;
   letter-spacing: 0.01em;
   font-size: clamp(2.5rem, 7vw, 6.5rem);
@@ -52,14 +52,14 @@
   font-family: var(--font-sans);
   font-size: 0.6875rem;
   font-weight: 500;
-  letter-spacing: 0.34em;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
   color: var(--text-muted);
 }
 
 .sw-body {
   font-family: var(--font-sans);
-  font-weight: 300;
+  font-weight: 400;
   font-size: 0.9375rem;
   line-height: 1.85;
   letter-spacing: 0.005em;
@@ -68,7 +68,7 @@
 
 .sw-body-lg {
   font-family: var(--font-sans);
-  font-weight: 300;
+  font-weight: 400;
   font-size: clamp(1rem, 1.35vw, 1.1875rem);
   line-height: 1.78;
   letter-spacing: 0.004em;
@@ -78,7 +78,7 @@
 .sw-lede {
   font-family: var(--font-serif);
   font-style: italic;
-  font-weight: 300;
+  font-weight: 400;
   font-size: clamp(1.25rem, 2.3vw, 1.875rem);
   line-height: 1.45;
   letter-spacing: 0.005em;
@@ -88,7 +88,7 @@
   font-family: var(--font-sans);
   font-size: 0.75rem;
   font-weight: 500;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
 }
 

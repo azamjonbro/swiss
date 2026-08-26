@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import type { Brand } from '@/types/models';
 import { fetchBrands } from '@/services/brands';
 import { useLocaleStore } from '@/stores/locale';
@@ -9,13 +9,16 @@ const locale = useLocaleStore();
 const brands = ref<Brand[]>([]);
 const isLoading = ref(true);
 
-onMounted(async () => {
+async function load() {
   try {
     brands.value = await fetchBrands();
   } finally {
     isLoading.value = false;
   }
-});
+}
+
+onMounted(load);
+watch(() => locale.lang, load);
 </script>
 
 <template>

@@ -3,14 +3,17 @@ import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import type { Watch } from '@/types/models';
 import { fetchWatchBySlug } from '@/services/watches';
-import { toBrandName, toBrandSlug } from '@/utils/format';
+import { toBrandName, toBrandSlug, colorSwatchHex } from '@/utils/format';
 import { useUiStore } from '@/stores/ui';
 import { useLocaleStore } from '@/stores/locale';
 import { useCurrencyStore } from '@/stores/currency';
 import { useAccountStore } from '@/stores/account';
 import { useSavedStore } from '@/stores/saved';
+import { useCartStore } from '@/stores/cart';
 import { useMeta } from '@/composables/useMeta';
 import SmartImage from '@/components/shared/SmartImage.vue';
+import SmartVideo from '@/components/shared/SmartVideo.vue';
+import RelatedProductsCarousel from '@/components/watch/RelatedProductsCarousel.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -19,23 +22,82 @@ const locale = useLocaleStore();
 const currency = useCurrencyStore();
 const account = useAccountStore();
 const saved = useSavedStore();
+const cart = useCartStore();
 
 const watchDoc = ref<Watch | null>(null);
-const activeIndex = ref(0);
-const isFullscreen = ref(false);
 const isLoading = ref(true);
 const notFound = ref(false);
+
+const activeIndex = ref(0);
+const isFullscreen = ref(false);
+const isZoomed = ref(false);
+const zoomOrigin = ref('50% 50%');
+const quantity = ref(1);
+const justAdded = ref(false);
 
 const brandName = computed(() => (watchDoc.value ? toBrandName(watchDoc.value.brand) : ''));
 const brandSlug = computed(() => (watchDoc.value ? toBrandSlug(watchDoc.value.brand) : ''));
 
+const variants = computed(() => watchDoc.value?.variants ?? []);
+const selectedVariant = computed(() => {
+  const slug = route.query.variant as string | undefined;
+  return variants.value.find((v) => v.colorSlug === slug) ?? variants.value[0];
+});
+
+// The video, when the colorway has one, rides at the end of the same gallery
+// strip as extra slide(s) — one thumbnail rail, one active-index, rather than
+// a separate video widget bolted on beside it.
+type GalleryItem = { type: 'image' | 'video'; src: string };
+const galleryItems = computed<GalleryItem[]>(() => {
+  const v = selectedVariant.value;
+  if (!v) return [];
+  const items: GalleryItem[] = v.images.map((src) => ({ type: 'image', src }));
+  for (const src of v.videos ?? []) items.push({ type: 'video', src });
+  return items;
+});
+const activeItem = computed<GalleryItem | undefined>(() => galleryItems.value[activeIndex.value]);
+
+function selectVariant(colorSlug: string) {
+  if (colorSlug === selectedVariant.value?.colorSlug) return;
+  activeIndex.value = 0;
+  isZoomed.value = false;
+  router.replace({ query: { ...route.query, variant: colorSlug } });
+}
+
+function toggleZoom() {
+  if (activeItem.value?.type !== 'image') return;
+  isZoomed.value = !isZoomed.value;
+}
+
+function onMainMouseMove(event: MouseEvent) {
+  if (!isZoomed.value) return;
+  const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
+  const x = ((event.clientX - rect.left) / rect.width) * 100;
+  const y = ((event.clientY - rect.top) / rect.height) * 100;
+  zoomOrigin.value = `${x}% ${y}%`;
+}
+
+function openFullscreen() {
+  if (activeItem.value?.type !== 'image') return;
+  isFullscreen.value = true;
+}
+
+function stepGallery(direction: 1 | -1) {
+  if (!galleryItems.value.length) return;
+  activeIndex.value = (activeIndex.value + direction + galleryItems.value.length) % galleryItems.value.length;
+}
+
 const specs = computed(() => {
   if (!watchDoc.value) return [];
   const w = watchDoc.value;
+  // Accessories (straps, crowns, clasps) leave several of these blank —
+  // join only the parts actually present so an empty caseMaterial/caseSize
+  // pair never renders as a bare ", ".
+  const caseValue = [w.caseMaterial, w.caseSize].filter(Boolean).join(', ');
   return [
     { label: locale.t('watchDetail.reference'), value: w.reference },
     { label: locale.t('watchDetail.movement'), value: w.movement },
-    { label: locale.t('watchDetail.case'), value: `${w.caseMaterial}, ${w.caseSize}` },
+    { label: locale.t('watchDetail.case'), value: caseValue },
     { label: locale.t('watchDetail.dial'), value: w.dial },
     { label: locale.t('watchDetail.bracelet'), value: w.bracelet },
     { label: locale.t('watchDetail.waterResistance'), value: w.waterResistance },
@@ -52,12 +114,26 @@ const availabilityLabel = computed(() => {
   return watchDoc.value ? map[watchDoc.value.availability] ?? watchDoc.value.availability : '';
 });
 
+const storyImage = computed(() => {
+  const images = selectedVariant.value?.images ?? [];
+  return images[1] ?? images[0];
+});
+
 async function load(slug: string) {
   isLoading.value = true;
   notFound.value = false;
   activeIndex.value = 0;
+  isZoomed.value = false;
+  quantity.value = 1;
   try {
     watchDoc.value = await fetchWatchBySlug(slug);
+    // Default the URL to an actual colorway so the page is shareable at a
+    // specific variant even before anyone touches the swatches.
+    const requested = route.query.variant as string | undefined;
+    const isValid = watchDoc.value.variants.some((v) => v.colorSlug === requested);
+    if (!isValid && watchDoc.value.variants[0]) {
+      router.replace({ query: { ...route.query, variant: watchDoc.value.variants[0].colorSlug } });
+    }
     useMeta(
       `${toBrandName(watchDoc.value.brand)} ${watchDoc.value.name} — SwissWatch`,
       watchDoc.value.shortDescription || watchDoc.value.description,
@@ -75,6 +151,10 @@ watch(
   (slug) => {
     if (slug) load(slug as string);
   },
+);
+watch(
+  () => locale.lang,
+  () => load(route.params.slug as string),
 );
 
 const isSaved = computed(() => Boolean(watchDoc.value && saved.has(watchDoc.value._id)));
@@ -98,8 +178,47 @@ function openInquiry() {
   ui.openInquiry({ id: watchDoc.value._id, name: `${brandName.value} ${watchDoc.value.name}` });
 }
 
+function cartItemFromCurrent(watch: Watch, variant: Watch['variants'][number]) {
+  return {
+    key: `${watch._id}:${variant.colorSlug}`,
+    watchId: watch._id,
+    slug: watch.slug,
+    name: watch.name,
+    brandName: toBrandName(watch.brand) || brandName.value,
+    image: variant.images[0],
+    price: watch.price,
+    colorLabel: variant.colorLabel || undefined,
+    isAccessory: watch.type === 'accessory',
+  };
+}
+
+function addToCart() {
+  if (!watchDoc.value || !selectedVariant.value) return;
+  cart.add(cartItemFromCurrent(watchDoc.value, selectedVariant.value), quantity.value);
+  justAdded.value = true;
+  window.setTimeout(() => (justAdded.value = false), 1600);
+}
+
+function buyNow() {
+  if (!watchDoc.value || !selectedVariant.value) return;
+  addToCart();
+  ui.openInquiry({ id: watchDoc.value._id, name: watchDoc.value.name }, cart.buildInquiryMessage());
+}
+
+function addAccessoryToCart(accessory: Watch) {
+  const variant = accessory.variants[0];
+  if (!variant) return;
+  cart.add(cartItemFromCurrent(accessory, variant), 1);
+}
+
 function onKeydown(event: KeyboardEvent) {
-  if (event.key === 'Escape') isFullscreen.value = false;
+  if (event.key === 'Escape') {
+    isFullscreen.value = false;
+    return;
+  }
+  if (!isFullscreen.value) return;
+  if (event.key === 'ArrowRight') stepGallery(1);
+  else if (event.key === 'ArrowLeft') stepGallery(-1);
 }
 
 onMounted(() => window.addEventListener('keydown', onKeydown));
@@ -114,98 +233,292 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
     <button class="sw-btn" type="button" @click="router.push('/watches')">{{ locale.t('watchDetail.backToCollection') }}</button>
   </div>
 
-  <article v-else-if="watchDoc" class="sw-watch-detail">
-    <div class="sw-watch-detail__gallery">
-      <div class="sw-watch-detail__main" @click="isFullscreen = true">
-        <SmartImage :src="watchDoc.images[activeIndex]" :alt="watchDoc.name" eager aspect-ratio="4 / 5" />
-      </div>
-      <div v-if="watchDoc.images.length > 1" class="sw-watch-detail__thumbs">
-        <button
-          v-for="(img, i) in watchDoc.images"
-          :key="img + i"
-          class="sw-watch-detail__thumb"
-          :class="{ 'is-active': i === activeIndex }"
-          type="button"
-          @click="activeIndex = i"
+  <template v-else-if="watchDoc">
+    <nav class="sw-watch-detail__breadcrumb" aria-label="Breadcrumb">
+      <RouterLink to="/">{{ locale.t('nav.home') }}</RouterLink>
+      <span aria-hidden="true">/</span>
+      <RouterLink to="/watches">{{ locale.t('nav.watches') }}</RouterLink>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">{{ watchDoc.name }}</span>
+    </nav>
+
+    <article class="sw-watch-detail">
+      <div class="sw-watch-detail__gallery">
+        <div
+          class="sw-watch-detail__main"
+          :class="{ 'is-video': activeItem?.type === 'video', 'is-zoomed': isZoomed }"
+          :style="isZoomed ? { '--zoom-origin': zoomOrigin } : undefined"
+          @click="toggleZoom"
+          @mousemove="onMainMouseMove"
         >
-          <SmartImage :src="img" :alt="`${watchDoc.name} view ${i + 1}`" aspect-ratio="1 / 1" />
-        </button>
+          <SmartVideo
+            v-if="activeItem?.type === 'video'"
+            :src="activeItem.src"
+            :poster="selectedVariant?.images[0]"
+            :alt="watchDoc.name"
+            playback-strategy="manual"
+            object-fit="contain"
+          />
+          <SmartImage v-else :src="activeItem?.src" :alt="watchDoc.name" eager aspect-ratio="4 / 5" />
+
+          <button
+            v-if="activeItem?.type === 'image'"
+            class="sw-watch-detail__expand"
+            type="button"
+            :aria-label="locale.t('watchDetail.close')"
+            @click.stop="openFullscreen"
+          >
+            &#x2922;
+          </button>
+        </div>
+
+        <div v-if="galleryItems.length > 1" class="sw-watch-detail__thumbs">
+          <button
+            v-for="(item, i) in galleryItems"
+            :key="item.src + i"
+            class="sw-watch-detail__thumb"
+            :class="{ 'is-active': i === activeIndex }"
+            type="button"
+            @click="activeIndex = i"
+          >
+            <SmartImage
+              :src="item.type === 'video' ? selectedVariant?.images[0] : item.src"
+              :alt="item.type === 'video' ? `${watchDoc.name} video` : `${watchDoc.name} view ${i + 1}`"
+              aspect-ratio="1 / 1"
+            />
+            <span v-if="item.type === 'video'" class="sw-watch-detail__thumb-play" aria-hidden="true">&#9654;</span>
+          </button>
+        </div>
       </div>
-    </div>
 
-    <div class="sw-watch-detail__info">
-      <RouterLink v-if="brandSlug" :to="`/brands/${brandSlug}`" class="sw-label sw-watch-detail__brand">
-        {{ brandName }}
-      </RouterLink>
-      <h1 class="sw-h1">{{ watchDoc.name }}</h1>
-      <p class="sw-watch-detail__price">{{ currency.format(watchDoc.price) }}</p>
-      <p class="sw-body-lg sw-watch-detail__desc">{{ watchDoc.description }}</p>
+      <div class="sw-watch-detail__info">
+        <RouterLink v-if="brandSlug" :to="`/brands/${brandSlug}`" class="sw-label sw-watch-detail__brand">
+          {{ brandName }}
+        </RouterLink>
+        <h1 class="sw-h1">{{ watchDoc.name }}</h1>
+        <p class="sw-watch-detail__price">{{ currency.format(watchDoc.price) }}</p>
+        <p class="sw-body-lg sw-watch-detail__desc">{{ watchDoc.shortDescription }}</p>
 
-      <dl class="sw-watch-detail__specs">
-        <div v-for="spec in specs" :key="spec.label" class="sw-watch-detail__spec">
+        <div v-if="variants.length > 1" class="sw-watch-detail__colors">
+          <span class="sw-label">{{ locale.t('watchDetail.color') }} — {{ selectedVariant?.colorLabel }}</span>
+          <div class="sw-watch-detail__swatches">
+            <button
+              v-for="v in variants"
+              :key="v.colorSlug"
+              class="sw-watch-detail__swatch"
+              :class="{ 'is-active': v.colorSlug === selectedVariant?.colorSlug }"
+              type="button"
+              :aria-label="v.colorLabel"
+              :aria-pressed="v.colorSlug === selectedVariant?.colorSlug"
+              @click="selectVariant(v.colorSlug)"
+            >
+              <span :style="{ background: colorSwatchHex(v.colorSlug) }" />
+            </button>
+          </div>
+        </div>
+
+        <div class="sw-watch-detail__availability">
+          <span class="sw-watch-detail__dot" :class="`is-${watchDoc.availability}`" />
+          <span class="sw-label">{{ availabilityLabel }}</span>
+        </div>
+
+        <div class="sw-watch-detail__purchase">
+          <div class="sw-watch-detail__qty">
+            <span class="sw-label">{{ locale.t('watchDetail.quantity') }}</span>
+            <div class="sw-watch-detail__stepper">
+              <button type="button" aria-label="-" @click="quantity = Math.max(1, quantity - 1)">&minus;</button>
+              <span>{{ quantity }}</span>
+              <button type="button" aria-label="+" @click="quantity = Math.min(10, quantity + 1)">&plus;</button>
+            </div>
+          </div>
+
+          <div class="sw-watch-detail__actions">
+            <button class="sw-btn sw-btn--solid sw-watch-detail__cta" type="button" @click="addToCart">
+              {{ justAdded ? locale.t('watchDetail.addedToCart') : locale.t('watchDetail.addToCart') }}
+            </button>
+            <button class="sw-btn sw-watch-detail__buy" type="button" @click="buyNow">
+              {{ locale.t('watchDetail.buyNow') }}
+            </button>
+          </div>
+
+          <div class="sw-watch-detail__secondary">
+            <button class="sw-btn sw-watch-detail__inquire" type="button" @click="openInquiry">
+              {{ locale.t('watchDetail.requestInfo') }}
+            </button>
+            <button
+              class="sw-btn sw-watch-detail__save"
+              :class="{ 'is-saved': isSaved }"
+              type="button"
+              :disabled="isSavePending"
+              :aria-pressed="isSaved"
+              @click="toggleSaved"
+            >
+              {{ isSaved ? locale.t('watchDetail.saved') : locale.t('watchDetail.save') }}
+            </button>
+          </div>
+        </div>
+
+        <div v-if="watchDoc.accessories?.length" class="sw-watch-detail__pair">
+          <span class="sw-label">{{ locale.t('watchDetail.pairItWith') }}</span>
+          <ul class="sw-watch-detail__pair-list">
+            <li v-for="accessory in watchDoc.accessories" :key="accessory._id" class="sw-watch-detail__pair-item">
+              <RouterLink :to="`/watches/${accessory.slug}`" class="sw-watch-detail__pair-media">
+                <SmartImage :src="accessory.variants[0]?.images[0]" :alt="accessory.name" aspect-ratio="1 / 1" object-fit="contain" />
+              </RouterLink>
+              <div class="sw-watch-detail__pair-body">
+                <RouterLink :to="`/watches/${accessory.slug}`" class="sw-watch-detail__pair-name">{{ accessory.name }}</RouterLink>
+                <span class="sw-watch-detail__pair-price">{{ currency.format(accessory.price) }}</span>
+              </div>
+              <button class="sw-watch-detail__pair-add" type="button" @click="addAccessoryToCart(accessory)">
+                {{ locale.t('watchDetail.add') }}
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <section v-if="watchDoc.description" class="sw-watch-story">
+      <div class="sw-watch-story__media">
+        <SmartImage :src="storyImage" :alt="watchDoc.name" aspect-ratio="4 / 5" />
+      </div>
+      <div class="sw-watch-story__body">
+        <span class="sw-eyebrow">{{ locale.t('watchDetail.theStory') }}</span>
+        <p class="sw-body-lg">{{ watchDoc.description }}</p>
+      </div>
+    </section>
+
+    <section v-if="specs.length" class="sw-watch-specs">
+      <span class="sw-eyebrow">{{ locale.t('watchDetail.specifications') }}</span>
+      <dl class="sw-watch-specs__grid">
+        <div v-for="spec in specs" :key="spec.label" class="sw-watch-specs__row">
           <dt class="sw-label">{{ spec.label }}</dt>
           <dd class="sw-body">{{ spec.value }}</dd>
         </div>
       </dl>
+    </section>
 
-      <div class="sw-watch-detail__availability">
-        <span class="sw-watch-detail__dot" :class="`is-${watchDoc.availability}`" />
-        <span class="sw-label">{{ availabilityLabel }}</span>
-      </div>
-
-      <div class="sw-watch-detail__actions">
-        <button class="sw-btn sw-btn--solid sw-watch-detail__cta" type="button" @click="openInquiry">
-          {{ locale.t('watchDetail.requestInfo') }}
-        </button>
-        <button
-          class="sw-btn sw-watch-detail__save"
-          :class="{ 'is-saved': isSaved }"
-          type="button"
-          :disabled="isSavePending"
-          :aria-pressed="isSaved"
-          @click="toggleSaved"
-        >
-          {{ isSaved ? locale.t('watchDetail.saved') : locale.t('watchDetail.save') }}
-        </button>
-      </div>
-    </div>
-  </article>
+    <section v-if="watchDoc.related?.length" class="sw-watch-related-section">
+      <span class="sw-eyebrow">{{ locale.t('watchDetail.relatedTitle') }}</span>
+      <RelatedProductsCarousel :watches="watchDoc.related" />
+    </section>
+  </template>
 
   <transition name="sw-fade">
-    <div v-if="isFullscreen && watchDoc" class="sw-lightbox" @click="isFullscreen = false">
-      <button class="sw-lightbox__close" type="button" :aria-label="locale.t('watchDetail.close')">{{ locale.t('watchDetail.close') }}</button>
-      <SmartImage :src="watchDoc.images[activeIndex]" :alt="watchDoc.name" eager object-fit="contain" />
+    <div v-if="isFullscreen && watchDoc" class="sw-lightbox" @click.self="isFullscreen = false">
+      <button class="sw-lightbox__close" type="button" :aria-label="locale.t('watchDetail.close')" @click="isFullscreen = false">
+        {{ locale.t('watchDetail.close') }}
+      </button>
+      <button v-if="galleryItems.length > 1" class="sw-lightbox__arrow sw-lightbox__arrow--prev" type="button" aria-label="Previous" @click.stop="stepGallery(-1)">&larr;</button>
+      <SmartImage :src="activeItem?.src" :alt="watchDoc.name" eager object-fit="contain" />
+      <button v-if="galleryItems.length > 1" class="sw-lightbox__arrow sw-lightbox__arrow--next" type="button" aria-label="Next" @click.stop="stepGallery(1)">&rarr;</button>
     </div>
   </transition>
   </div>
 </template>
 
 <style scoped>
+.sw-watch-detail-page {
+  padding: calc(var(--header-height) + 32px) var(--container-pad) 0;
+}
+
+.sw-watch-detail__breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 28px;
+}
+
+.sw-watch-detail__breadcrumb a {
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.sw-watch-detail__breadcrumb a:hover {
+  color: var(--text);
+}
+
 .sw-watch-detail {
-  padding: calc(var(--header-height) + 32px) var(--container-pad) 120px;
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
   gap: clamp(32px, 5vw, 96px);
   align-items: start;
+  padding-bottom: 96px;
 }
 
 .sw-watch-detail__main {
+  position: relative;
   cursor: zoom-in;
   background: var(--surface-media);
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+}
+
+.sw-watch-detail__main.is-video {
+  cursor: default;
+}
+
+.sw-watch-detail__main.is-zoomed {
+  cursor: zoom-out;
+}
+
+.sw-watch-detail__main.is-zoomed :deep(.sw-smart-image__img) {
+  transform: scale(2);
+  transform-origin: var(--zoom-origin, 50% 50%);
+}
+
+.sw-watch-detail__main :deep(.sw-smart-image__img) {
+  transition: transform 0.2s var(--ease-out);
+}
+
+.sw-watch-detail__expand {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--sw-ink, #111);
+  font-size: 1.1rem;
+  transition: background var(--dur-fast) var(--ease-out);
+}
+
+.sw-watch-detail__expand:hover {
+  background: #fff;
 }
 
 .sw-watch-detail__thumbs {
   display: flex;
   gap: 12px;
   margin-top: 16px;
+  flex-wrap: wrap;
 }
 
 .sw-watch-detail__thumb {
+  position: relative;
   width: 76px;
   height: 76px;
   overflow: hidden;
   opacity: 0.5;
   transition: opacity var(--dur-fast) var(--ease-out);
+}
+
+.sw-watch-detail__thumb-play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  color: var(--sw-white);
+  background: rgba(10, 10, 10, 0.32);
+  pointer-events: none;
 }
 
 .sw-watch-detail__thumb.is-active,
@@ -226,7 +539,11 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
 }
 
 .sw-watch-detail__price {
-  font-size: 1.375rem;
+  font-family: var(--font-sans);
+  font-size: 1.125rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
   margin-top: 8px;
 }
 
@@ -234,24 +551,45 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
   margin-top: 24px;
 }
 
-.sw-watch-detail__specs {
-  margin-top: 36px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px 24px;
-  padding-top: 28px;
+.sw-watch-detail__colors {
+  margin-top: 28px;
+  padding-top: 24px;
   border-top: 1px solid var(--border);
 }
 
-.sw-watch-detail__spec dd {
-  margin-top: 6px;
+.sw-watch-detail__swatches {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.sw-watch-detail__swatch {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  padding: 3px;
+  border: 1px solid transparent;
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+
+.sw-watch-detail__swatch span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px var(--border) inset;
+}
+
+.sw-watch-detail__swatch.is-active,
+.sw-watch-detail__swatch:hover {
+  border-color: var(--text);
 }
 
 .sw-watch-detail__availability {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-top: 32px;
+  margin-top: 28px;
 }
 
 .sw-watch-detail__dot {
@@ -273,16 +611,48 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
   background: var(--sw-burgundy);
 }
 
+.sw-watch-detail__purchase {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sw-watch-detail__qty {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.sw-watch-detail__stepper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--border);
+  padding: 6px 14px;
+  font-size: 0.85rem;
+}
+
 .sw-watch-detail__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.sw-watch-detail__cta,
+.sw-watch-detail__buy {
+  flex: 1;
+  min-width: 160px;
+  justify-content: center;
+}
+
+.sw-watch-detail__secondary {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 20px 36px;
-  margin-top: 32px;
-}
-
-.sw-watch-detail__cta {
-  width: fit-content;
 }
 
 .sw-watch-detail__save.is-saved {
@@ -293,6 +663,66 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
   opacity: 0.45;
 }
 
+.sw-watch-detail__pair {
+  margin-top: 36px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.sw-watch-detail__pair-list {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sw-watch-detail__pair-item {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  align-items: center;
+  gap: 14px;
+}
+
+.sw-watch-detail__pair-media {
+  display: block;
+  background: var(--surface-media);
+}
+
+.sw-watch-detail__pair-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.sw-watch-detail__pair-name {
+  font-size: 0.9rem;
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+
+.sw-watch-detail__pair-name:hover {
+  opacity: 0.7;
+}
+
+.sw-watch-detail__pair-price {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.sw-watch-detail__pair-add {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid var(--border);
+  padding: 8px 16px;
+  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+
+.sw-watch-detail__pair-add:hover {
+  background: var(--bg-inverse);
+  color: var(--text-inverse);
+  border-color: var(--bg-inverse);
+}
+
 .sw-watch-detail__notfound {
   min-height: 60vh;
   display: flex;
@@ -301,6 +731,51 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
   justify-content: center;
   gap: 20px;
   padding: 0 var(--container-pad);
+}
+
+.sw-watch-story {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(32px, 5vw, 80px);
+  align-items: center;
+  padding: 80px 0;
+  border-top: 1px solid var(--border);
+}
+
+.sw-watch-story__media {
+  background: var(--surface-media);
+}
+
+.sw-watch-story__body .sw-body-lg {
+  margin-top: 18px;
+  line-height: 1.7;
+}
+
+.sw-watch-specs {
+  padding: 64px 0 96px;
+  border-top: 1px solid var(--border);
+}
+
+.sw-watch-specs__grid {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px 24px;
+}
+
+.sw-watch-specs__row dd {
+  margin-top: 6px;
+}
+
+.sw-watch-related-section {
+  padding: 0 0 120px;
+  border-top: 1px solid var(--border);
+  padding-top: 64px;
+}
+
+.sw-watch-related-section > .sw-eyebrow {
+  display: block;
+  margin-bottom: 32px;
 }
 
 .sw-lightbox {
@@ -324,6 +799,23 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
   text-transform: uppercase;
 }
 
+.sw-lightbox__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--sw-white);
+  font-size: 1.5rem;
+  padding: 12px;
+}
+
+.sw-lightbox__arrow--prev {
+  left: var(--container-pad);
+}
+
+.sw-lightbox__arrow--next {
+  right: var(--container-pad);
+}
+
 @media (max-width: 900px) {
   .sw-watch-detail {
     grid-template-columns: 1fr;
@@ -331,6 +823,20 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
 
   .sw-watch-detail__info {
     position: static;
+  }
+
+  .sw-watch-story {
+    grid-template-columns: 1fr;
+  }
+
+  .sw-watch-specs__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .sw-watch-specs__grid {
+    grid-template-columns: 1fr;
   }
 }
 </style>

@@ -41,6 +41,14 @@ export interface CategoryRef {
 }
 
 export type Availability = 'in-stock' | 'reserved' | 'sold' | 'made-to-order';
+export type WatchType = 'watch' | 'accessory';
+
+export interface WatchVariant {
+  colorSlug: string;
+  colorLabel: string;
+  images: string[];
+  videos: string[];
+}
 
 export interface Watch {
   _id: string;
@@ -52,8 +60,8 @@ export interface Watch {
   currency: string;
   description: string;
   shortDescription: string;
-  images: string[];
-  videos: string[];
+  type: WatchType;
+  variants: WatchVariant[];
   category: CategoryRef | string;
   collectionRef?: string;
   movement: string;
@@ -66,6 +74,11 @@ export interface Watch {
   featured: boolean;
   isNewArrival: boolean;
   isActive: boolean;
+  compatibleWith?: string[];
+  relatedWatches?: string[];
+  // Present only on the single-product detail response (GET /watches/:slug).
+  accessories?: Watch[];
+  related?: Watch[];
   createdAt?: string;
   updatedAt?: string;
 }

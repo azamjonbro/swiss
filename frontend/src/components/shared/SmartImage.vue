@@ -25,16 +25,20 @@ const usedFallback = ref(false);
 const resolvedSrc = computed(() => resolveMediaUrl(props.src));
 
 /**
- * Everything under /public/images ships with a WebP sibling (roughly an eighth
- * of the JPEG's weight). Rather than a <picture> — where a missing source
- * leaves a broken image with no second chance — the WebP is tried as the src
- * and the original takes over in onError. Admin-uploaded media under /uploads
- * has no sibling and is left alone.
+ * Everything under /public/images, plus the product photography migrated into
+ * backend/uploads/images, ships with a WebP sibling (roughly an eighth of the
+ * JPEG's weight). Rather than a <picture> — where a missing source leaves a
+ * broken image with no second chance — the WebP is tried as the src and the
+ * original takes over in onError, so a one-off admin upload with no sibling
+ * just costs a single failed request before falling back cleanly.
  */
 const webpSrc = computed(() => {
   const src = props.src ?? '';
-  if (!/^\/images\/.+\.(jpe?g|png)$/i.test(src)) return '';
-  return src.replace(/\.(jpe?g|png)$/i, '.webp');
+  if (!/^\/(images|uploads\/images)\/.+\.(jpe?g|png)$/i.test(src)) return '';
+  // /images paths are frontend-hosted and need no resolving, but /uploads/images
+  // paths are backend-hosted — resolveMediaUrl is what points those at the API
+  // origin in production, same as resolvedSrc does for the JPEG fallback below.
+  return resolveMediaUrl(src.replace(/\.(jpe?g|png)$/i, '.webp'));
 });
 
 const displaySrc = computed(() =>

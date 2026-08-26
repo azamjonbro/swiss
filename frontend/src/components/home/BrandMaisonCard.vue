@@ -12,6 +12,7 @@ import type { Brand, Watch } from '@/types/models';
 import { useLocaleStore } from '@/stores/locale';
 import { useInViewport } from '@/composables/useInViewport';
 import { getBrandWatches } from '@/utils/brandWatches';
+import { primaryImage } from '@/utils/format';
 import SmartImage from '@/components/shared/SmartImage.vue';
 
 interface Props {
@@ -73,10 +74,10 @@ function onLinkClick(event: MouseEvent) {
 
         <span v-if="primaryWatch" class="sw-maison__watch-layer" :class="{ 'has-two': secondaryWatch }">
           <span class="sw-maison__shot">
-            <SmartImage :src="primaryWatch.images?.[0]" :alt="primaryWatch.name" object-fit="contain" />
+            <SmartImage :src="primaryImage(primaryWatch)" :alt="primaryWatch.name" object-fit="contain" />
           </span>
           <span v-if="secondaryWatch" class="sw-maison__shot sw-maison__shot--alt">
-            <SmartImage :src="secondaryWatch.images?.[0]" :alt="secondaryWatch.name" object-fit="contain" />
+            <SmartImage :src="primaryImage(secondaryWatch)" :alt="secondaryWatch.name" object-fit="contain" />
           </span>
         </span>
 

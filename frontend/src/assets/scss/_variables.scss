@@ -39,8 +39,12 @@
   --surface-media-hi: #fafafa;
 
   // ---- Typography ----
-  --font-serif: 'Cormorant Garamond', 'Times New Roman', serif;
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  // Both tokens point at the same family — DM Sans, matching the official
+  // tsarbomba.com storefront (single-font, no serif pairing). The two
+  // variable names stay so call sites (headline vs. UI text) don't all
+  // need touching if that ever changes again.
+  --font-serif: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
   // ---- Layout ----
   --container-pad: clamp(24px, 5vw, 72px);

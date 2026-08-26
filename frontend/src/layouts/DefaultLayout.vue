@@ -9,6 +9,7 @@ import AppFooter from '@/components/layout/AppFooter.vue';
 import LuxuryMenu from '@/components/layout/LuxuryMenu.vue';
 import SearchOverlay from '@/components/search/SearchOverlay.vue';
 import InquiryModal from '@/components/shared/InquiryModal.vue';
+import CartDrawer from '@/components/shared/CartDrawer.vue';
 
 const route = useRoute();
 const locale = useLocaleStore();
@@ -38,6 +39,7 @@ watch(
     <LuxuryMenu />
     <SearchOverlay />
     <InquiryModal />
+    <CartDrawer />
     <main id="sw-main" class="sw-app-main" tabindex="-1">
       <slot />
     </main>

@@ -30,6 +30,10 @@ watch(
   () => route.params.slug,
   (slug) => slug && load(slug as string),
 );
+watch(
+  () => locale.lang,
+  () => load(route.params.slug as string),
+);
 </script>
 
 <template>

@@ -1,6 +1,9 @@
 import type { Dictionary } from './en';
 
 const ru: Dictionary = {
+  common: {
+    under: 'До',
+  },
   a11y: {
     skipToContent: 'К основному содержанию',
   },
@@ -9,8 +12,10 @@ const ru: Dictionary = {
     close: 'Закрыть',
     search: 'Поиск',
     account: 'Аккаунт',
+    cart: 'Корзина',
   },
   nav: {
+    home: 'Главная',
     collections: 'Коллекции',
     watches: 'Часы',
     brands: 'Бренды',
@@ -133,6 +138,23 @@ const ru: Dictionary = {
     clearFilters: 'Сбросить фильтры',
     empty: 'Часы, соответствующие вашему выбору, не найдены.',
     count: 'часов в наличии',
+    loadMore: 'Показать ещё',
+    loading: 'Загрузка…',
+    filters: 'Фильтры',
+    filterColor: 'Цвет',
+    filterPrice: 'Цена',
+    filterMovement: 'Механизм',
+    filterAvailability: 'Наличие',
+    allColors: 'Все цвета',
+    allPrices: 'Любая цена',
+    allMovements: 'Любой механизм',
+    allAvailability: 'Любое наличие',
+    applyFilters: 'Показать результаты',
+    closeFilters: 'Закрыть',
+    sort: 'Сортировка',
+    sortNewest: 'Новинки',
+    sortPriceAsc: 'Цена: по возрастанию',
+    sortPriceDesc: 'Цена: по убыванию',
   },
   watchDetail: {
     notFoundEyebrow: 'Не найдено',
@@ -152,6 +174,17 @@ const ru: Dictionary = {
     save: 'Сохранить',
     saved: 'Сохранено',
     close: 'Закрыть',
+    color: 'Цвет',
+    quantity: 'Количество',
+    addToCart: 'В корзину',
+    addedToCart: 'Добавлено',
+    buyNow: 'Купить сейчас',
+    pairItWith: 'Дополните образ',
+    add: 'Добавить',
+    added: 'Добавлено',
+    relatedTitle: 'Вам может понравиться',
+    specifications: 'Характеристики',
+    theStory: 'История',
   },
   brandList: {
     eyebrow: 'Дома моды',
@@ -198,6 +231,17 @@ const ru: Dictionary = {
     thankYouEyebrow: 'Спасибо',
     thankYouTitle: 'Ваш запрос получен.',
     thankYouBody: 'Специалист SwissWatch свяжется с вами в ближайшее время.',
+    close: 'Закрыть',
+  },
+  cart: {
+    title: 'Ваша корзина',
+    empty: 'Ваша корзина пуста.',
+    continueBrowsing: 'Продолжить выбор',
+    subtotal: 'Промежуточный итог',
+    remove: 'Удалить',
+    checkoutNote:
+      'Оформление заказа проводят наши специалисты — отправьте корзину как запрос на заказ, и мы подтвердим наличие и организуем оплату.',
+    submitOrder: 'Отправить запрос на заказ',
     close: 'Закрыть',
   },
   about: {

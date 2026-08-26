@@ -91,18 +91,32 @@ all changes are reflected immediately on the public site.
 
 ## Notes
 
-- Product, brand, and category imagery is placeholder art generated on the fly (an abstract watch-dial
-  motif in the site's palette) — replace it with real photography through the admin media uploader.
-- Editorial photography in `frontend/public/images/` ships as both `.jpg` and `.webp`. `SmartImage`
-  requests the `.webp` for anything under `/images/` and falls back to the original on error, so when
-  you add a new file there, generate its sibling too:
+- Product, brand, and category imagery lives in two places, matching what it's for:
+  - **Real product photography** (watch galleries, brand logos) is tracked in MongoDB and served from
+    `backend/src/uploads/` (`images/` and `videos/`) — the same place anything uploaded through the
+    admin panel's media uploader lands. `seed.ts` points at this folder; a brand or watch with no real
+    photo yet falls back to placeholder art generated on the fly (an abstract watch-dial motif in the
+    site's palette).
+  - **Editorial/decorative photography** (homepage hero, About, the full-bleed menu previews, the
+    auth screen background) stays static in `frontend/public/images/` — these are above-the-fold or
+    LCP-critical images, so they ship with the frontend bundle instead of round-tripping through the
+    API.
+  - `backend/src/uploads/` is gitignored (matching how admin uploads have always worked) and lives on
+    the backend's own filesystem — `backend/vercel.json` deploys the API as serverless functions, whose
+    filesystem is ephemeral, so this folder needs a persistent volume or object storage (S3, R2, etc.)
+    behind it before deploying there for real; it's fine as-is for local development.
+- Every image under `frontend/public/images/`, and everything in `backend/src/uploads/images/` that
+  was seeded from there, ships as both `.jpg` and `.webp`. `SmartImage` requests the `.webp` first and
+  falls back to the original on error, so when you add a new file to either location, generate its
+  sibling too:
 
   ```bash
-  cd frontend/public/images
+  cd frontend/public/images   # or backend/src/uploads/images
   cwebp -q 82 -m 6 new-photo.jpg -o new-photo.webp
   ```
 
-  Media uploaded through the admin (served from `/uploads/`) is untouched by this and needs no sibling.
+  A `.webp` probe against a photo with no sibling (e.g. a fresh, one-off admin upload) just costs one
+  failed request before `SmartImage` falls back to the original — harmless, no broken image.
 - Videos are optional throughout; `SmartVideo` gracefully falls back to a poster image wherever no
   video source is set.
 - `npm run build` in `frontend/` and `admin/` type-checks with `vue-tsc` and produces a production

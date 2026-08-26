@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import type { Collection } from '@/types/models';
 import { fetchCollections } from '@/services/collections';
 import { useLocaleStore } from '@/stores/locale';
@@ -8,9 +8,15 @@ import SmartImage from '@/components/shared/SmartImage.vue';
 const locale = useLocaleStore();
 const collections = ref<Collection[]>([]);
 
-onMounted(async () => {
+async function load() {
   collections.value = await fetchCollections();
-});
+}
+
+onMounted(load);
+// Names/descriptions come pre-localized from the API by `lang` query param —
+// switching the language selector mid-visit has to re-fetch, or this content
+// stays frozen in whatever language was active on first load.
+watch(() => locale.lang, load);
 </script>
 
 <template>

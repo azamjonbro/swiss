@@ -12,6 +12,7 @@ useSavedStore();
 function onKeydown(event: KeyboardEvent) {
   if (event.key !== 'Escape') return;
   if (ui.isInquiryOpen) ui.closeInquiry();
+  else if (ui.isCartOpen) ui.closeCart();
   else if (ui.isSearchOpen) ui.closeSearch();
   else if (ui.isMenuOpen) ui.closeMenu();
 }

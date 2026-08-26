@@ -1,6 +1,9 @@
 import type { Dictionary } from './en';
 
 const uz: Dictionary = {
+  common: {
+    under: 'Gacha',
+  },
   a11y: {
     skipToContent: 'Asosiy qismga o‘tish',
   },
@@ -9,8 +12,10 @@ const uz: Dictionary = {
     close: 'Yopish',
     search: 'Qidiruv',
     account: 'Hisob',
+    cart: 'Savat',
   },
   nav: {
+    home: 'Bosh sahifa',
     collections: 'Kolleksiyalar',
     watches: 'Soatlar',
     brands: 'Brendlar',
@@ -132,6 +137,23 @@ const uz: Dictionary = {
     clearFilters: 'Filtrlarni tozalash',
     empty: 'Tanlovingizga mos soat topilmadi.',
     count: 'ta soat',
+    loadMore: 'Yana ko‘rsatish',
+    loading: 'Yuklanmoqda…',
+    filters: 'Filtrlar',
+    filterColor: 'Rang',
+    filterPrice: 'Narx',
+    filterMovement: 'Mexanizm',
+    filterAvailability: 'Mavjudligi',
+    allColors: 'Barcha ranglar',
+    allPrices: 'Barcha narxlar',
+    allMovements: 'Barcha mexanizmlar',
+    allAvailability: 'Barcha holatlar',
+    applyFilters: 'Natijalarni ko‘rsatish',
+    closeFilters: 'Yopish',
+    sort: 'Saralash',
+    sortNewest: 'Yangi',
+    sortPriceAsc: 'Narx: pastdan yuqoriga',
+    sortPriceDesc: 'Narx: yuqoridan pastga',
   },
   watchDetail: {
     notFoundEyebrow: 'Topilmadi',
@@ -151,6 +173,17 @@ const uz: Dictionary = {
     save: 'Saqlash',
     saved: 'Saqlangan',
     close: 'Yopish',
+    color: 'Rang',
+    quantity: 'Miqdor',
+    addToCart: 'Savatga qo‘shish',
+    addedToCart: 'Qo‘shildi',
+    buyNow: 'Hoziroq xarid qilish',
+    pairItWith: 'Birga tanlang',
+    add: 'Qo‘shish',
+    added: 'Qo‘shildi',
+    relatedTitle: 'Sizga yoqishi mumkin',
+    specifications: 'Texnik xususiyatlar',
+    theStory: 'Tarix',
   },
   brandList: {
     eyebrow: 'Brend uylari',
@@ -197,6 +230,17 @@ const uz: Dictionary = {
     thankYouEyebrow: 'Rahmat',
     thankYouTitle: 'So‘rovingiz qabul qilindi.',
     thankYouBody: 'SwissWatch mutaxassisi tez orada siz bilan bog‘lanadi.',
+    close: 'Yopish',
+  },
+  cart: {
+    title: 'Savatingiz',
+    empty: 'Savatingiz bo‘sh.',
+    continueBrowsing: 'Xaridni davom ettirish',
+    subtotal: 'Oraliq summa',
+    remove: 'O‘chirish',
+    checkoutNote:
+      'Buyurtmani mutaxassislarimiz rasmiylashtiradi — savatingizni buyurtma so‘rovi sifatida yuboring, biz mavjudligini tasdiqlab, to‘lovni kelishamiz.',
+    submitOrder: 'Buyurtma so‘rovini yuborish',
     close: 'Yopish',
   },
   about: {

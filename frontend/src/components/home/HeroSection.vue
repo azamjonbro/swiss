@@ -215,7 +215,7 @@ function handleDiscover() {
 
 .sw-hero__title {
   font-family: var(--font-serif);
-  font-weight: 300;
+  font-weight: 400;
   font-size: clamp(3.75rem, 13vw, 12rem);
   line-height: 0.86;
   letter-spacing: -0.035em;
