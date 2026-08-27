@@ -1,5 +1,6 @@
 [
   {
+    "type": "watch",
     "reference": "TB8206A",
     "title": "Elemental-TB8206A",
     "handle": "tb8206a-us",
@@ -45,6 +46,7 @@
     ]
   },
   {
+    "type": "watch",
     "reference": "TB8207A",
     "title": "Elemental-TB8207A",
     "handle": "tb8207a-us",
@@ -99,6 +101,7 @@
     ]
   },
   {
+    "type": "watch",
     "reference": "TB8207CF",
     "title": "Elemental-TB8207CF",
     "handle": "tb8207cf-mc-us",
@@ -134,6 +137,7 @@
     ]
   },
   {
+    "type": "watch",
     "reference": "TB8208D",
     "title": "Elemental-TB8208D",
     "handle": "tb8208d",
@@ -186,6 +190,7 @@
     ]
   },
   {
+    "type": "watch",
     "reference": "TB8209A",
     "title": "Elemental-TB8209A",
     "handle": "tb8209a-eu",
@@ -244,6 +249,7 @@
     ]
   },
   {
+    "type": "watch",
     "reference": "TB8209CF",
     "title": "Elemental-TB8209CF",
     "handle": "tb8209cf-eu",
@@ -339,6 +345,7 @@
     ]
   },
   {
+    "type": "watch",
     "reference": "TB8209D",
     "title": "Elemental-TB8209D",
     "handle": "tb8209d-eu",
@@ -367,6 +374,7 @@
     ]
   },
   {
+    "type": "watch",
     "reference": "TB8210A",
     "title": "Elemental-TB8210A",
     "handle": "tb8210a-us",
@@ -431,6 +439,7 @@
     ]
   },
   {
+    "type": "watch",
     "reference": "TB8211Q",
     "title": "Elemental-TB8211Q",
     "handle": "tb8211q-mc-us",
@@ -499,6 +508,7 @@
     ]
   },
   {
+    "type": "watch",
     "reference": "TB8211Q-II",
     "title": "Elemental-TB8211Q-II",
     "handle": "tb8211q-ii",
@@ -578,6 +588,7 @@
     ]
   },
   {
+    "type": "watch",
     "reference": "TB8212",
     "title": "Elemental-TB8212",
     "handle": "tb8212",
@@ -666,6 +677,7 @@
     ]
   },
   {
+    "type": "watch",
     "reference": "TB8218",
     "title": "Atomic-TB8218 Standard Edition（Women）",
     "handle": "tb8218wm",
@@ -801,6 +813,7 @@
     ]
   },
   {
+    "type": "watch",
     "reference": "TB8218C",
     "title": "Atomic-TB8218C",
     "handle": "tb8218c",
@@ -934,6 +947,7 @@
     ]
   },
   {
+    "type": "watch",
     "reference": "TB8218CF",
     "title": "Atomic-TB8218CF(5-in-1)",
     "handle": "tb8218cf",
@@ -966,6 +980,7 @@
     ]
   },
   {
+    "type": "watch",
     "reference": "TB8218E",
     "title": "Atomic-TB8218E",
     "handle": "tb8218e",
@@ -1002,6 +1017,7 @@
     ]
   },
   {
+    "type": "watch",
     "reference": "TB8223",
     "title": "Light Matter-TB8223 (Women)",
     "handle": "tb8223w",
@@ -1114,6 +1130,7 @@
     ]
   },
   {
+    "type": "watch",
     "reference": "TB8224B",
     "title": "Elemental–TB8224B",
     "handle": "tb8224b",
@@ -1170,6 +1187,7 @@
     ]
   },
   {
+    "type": "watch",
     "reference": "TB8224Q",
     "title": "Elemental-TB8224Q",
     "handle": "tb8224q",
@@ -1246,6 +1264,7 @@
     ]
   },
   {
+    "type": "watch",
     "reference": "TB8226C",
     "title": "Atomic-TB8226C",
     "handle": "tb8226",
@@ -1302,6 +1321,7 @@
     ]
   },
   {
+    "type": "watch",
     "reference": "TB8228A",
     "title": "Elemental-TB8228A",
     "handle": "tb8228a",
@@ -1368,6 +1388,7 @@
     ]
   },
   {
+    "type": "watch",
     "reference": "TB8228CF",
     "title": "Elemental-TB8228CF",
     "handle": "tb8228cf",
@@ -1424,6 +1445,7 @@
     ]
   },
   {
+    "type": "watch",
     "reference": "TB8228T",
     "title": "Elemental-TB8228T",
     "handle": "tb8228t",
@@ -1450,6 +1472,7 @@
     ]
   },
   {
+    "type": "watch",
     "reference": "TB8401CF",
     "title": "Electron-TB8401CF",
     "handle": "tb8401cf",
@@ -1498,6 +1521,7 @@
     ]
   },
   {
+    "type": "watch",
     "reference": "TB8605",
     "title": "Dark Matter 5",
     "handle": "tb8605",
@@ -1579,6 +1603,7 @@
     ]
   },
   {
+    "type": "watch",
     "reference": "TB8801Q",
     "title": "Elemental-TB8801Q",
     "handle": "tb8801q",
@@ -1629,6 +1654,7 @@
     ]
   },
   {
+    "type": "watch",
     "reference": "TB8803A",
     "title": "Elemental-TB8803A",
     "handle": "tb8803a-us",
@@ -1685,6 +1711,7 @@
     ]
   },
   {
+    "type": "watch",
     "reference": "TB8804A",
     "title": "Elemental-TB8804A",
     "handle": "tb8804a-us",
@@ -1735,6 +1762,7 @@
     ]
   },
   {
+    "type": "watch",
     "reference": "TB8806Q",
     "title": "Elemental-TB8806Q",
     "handle": "tb8806q",
@@ -1758,6 +1786,2373 @@
           "/uploads/images/tsarbomba_tb8806q_5.jpg",
           "/uploads/images/tsarbomba_tb8806q_6.jpg",
           "/uploads/images/tsarbomba_tb8806q_7.jpg"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "accessory",
+    "reference": "PARALLAX-INTERCHANGEABLE-STRAP",
+    "title": "Parallax Interchangeable Strap",
+    "handle": "parallax-interchangeable-strap",
+    "series": "Reactor",
+    "women": false,
+    "price": 99.99,
+    "movement": "",
+    "material": "",
+    "chronograph": false,
+    "skeleton": false,
+    "sapphire": false,
+    "interchangeable": true,
+    "variants": [
+      {
+        "colorLabel": "White",
+        "images": [
+          "/uploads/images/tsarbomba_parallax_interchangeable_strap_1.jpg",
+          "/uploads/images/tsarbomba_parallax_interchangeable_strap_2.jpg",
+          "/uploads/images/tsarbomba_parallax_interchangeable_strap_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Black",
+        "images": [
+          "/uploads/images/tsarbomba_parallax_interchangeable_strap_c02_1.jpg",
+          "/uploads/images/tsarbomba_parallax_interchangeable_strap_c02_2.jpg",
+          "/uploads/images/tsarbomba_parallax_interchangeable_strap_c02_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Red",
+        "images": [
+          "/uploads/images/tsarbomba_parallax_interchangeable_strap_c03_1.jpg",
+          "/uploads/images/tsarbomba_parallax_interchangeable_strap_c03_2.jpg",
+          "/uploads/images/tsarbomba_parallax_interchangeable_strap_c03_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Orange",
+        "images": [
+          "/uploads/images/tsarbomba_parallax_interchangeable_strap_c04_1.jpg",
+          "/uploads/images/tsarbomba_parallax_interchangeable_strap_c04_2.jpg",
+          "/uploads/images/tsarbomba_parallax_interchangeable_strap_c04_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Blue",
+        "images": [
+          "/uploads/images/tsarbomba_parallax_interchangeable_strap_c05_1.jpg",
+          "/uploads/images/tsarbomba_parallax_interchangeable_strap_c05_2.jpg",
+          "/uploads/images/tsarbomba_parallax_interchangeable_strap_c05_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Light Blue",
+        "images": [
+          "/uploads/images/tsarbomba_parallax_interchangeable_strap_c06_1.jpg",
+          "/uploads/images/tsarbomba_parallax_interchangeable_strap_c06_2.jpg",
+          "/uploads/images/tsarbomba_parallax_interchangeable_strap_c06_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Yellow",
+        "images": [
+          "/uploads/images/tsarbomba_parallax_interchangeable_strap_c07_1.jpg",
+          "/uploads/images/tsarbomba_parallax_interchangeable_strap_c07_2.jpg",
+          "/uploads/images/tsarbomba_parallax_interchangeable_strap_c07_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Green",
+        "images": [
+          "/uploads/images/tsarbomba_parallax_interchangeable_strap_c08_1.jpg",
+          "/uploads/images/tsarbomba_parallax_interchangeable_strap_c08_2.jpg",
+          "/uploads/images/tsarbomba_parallax_interchangeable_strap_c08_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Ghost Grey",
+        "images": [
+          "/uploads/images/tsarbomba_parallax_interchangeable_strap_c09_1.jpg",
+          "/uploads/images/tsarbomba_parallax_interchangeable_strap_c09_2.jpg",
+          "/uploads/images/tsarbomba_parallax_interchangeable_strap_c09_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Pink",
+        "images": [
+          "/uploads/images/tsarbomba_parallax_interchangeable_strap_c10_1.jpg",
+          "/uploads/images/tsarbomba_parallax_interchangeable_strap_c10_2.jpg",
+          "/uploads/images/tsarbomba_parallax_interchangeable_strap_c10_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Lake Blue",
+        "images": [
+          "/uploads/images/tsarbomba_parallax_interchangeable_strap_c11_1.jpg",
+          "/uploads/images/tsarbomba_parallax_interchangeable_strap_c11_2.jpg",
+          "/uploads/images/tsarbomba_parallax_interchangeable_strap_c11_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Klein Blue",
+        "images": [
+          "/uploads/images/tsarbomba_parallax_interchangeable_strap_c12_1.jpg",
+          "/uploads/images/tsarbomba_parallax_interchangeable_strap_c12_2.jpg",
+          "/uploads/images/tsarbomba_parallax_interchangeable_strap_c12_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Brown",
+        "images": [
+          "/uploads/images/tsarbomba_parallax_interchangeable_strap_c13_1.jpg",
+          "/uploads/images/tsarbomba_parallax_interchangeable_strap_c13_2.jpg",
+          "/uploads/images/tsarbomba_parallax_interchangeable_strap_c13_3.jpg"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "accessory",
+    "reference": "CORE-DECAY-INTERCHANGEABLE-STRAP",
+    "title": "Core Decay Interchangeable Strap",
+    "handle": "core-decay-interchangeable-strap",
+    "series": "Reactor",
+    "women": false,
+    "price": 99.99,
+    "movement": "",
+    "material": "",
+    "chronograph": false,
+    "skeleton": false,
+    "sapphire": false,
+    "interchangeable": true,
+    "variants": [
+      {
+        "colorLabel": "Fluororubber-Black",
+        "images": [
+          "/uploads/images/tsarbomba_core_decay_interchangeable_strap_1.jpg",
+          "/uploads/images/tsarbomba_core_decay_interchangeable_strap_2.jpg",
+          "/uploads/images/tsarbomba_core_decay_interchangeable_strap_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Fluororubber-Black (Gold Clasp)",
+        "images": [
+          "/uploads/images/tsarbomba_core_decay_interchangeable_strap_c02_1.jpg",
+          "/uploads/images/tsarbomba_core_decay_interchangeable_strap_c02_2.jpg",
+          "/uploads/images/tsarbomba_core_decay_interchangeable_strap_c02_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Fluororubber-Black (Silver Clasp)",
+        "images": [
+          "/uploads/images/tsarbomba_core_decay_interchangeable_strap_c03_1.jpg",
+          "/uploads/images/tsarbomba_core_decay_interchangeable_strap_c03_2.jpg",
+          "/uploads/images/tsarbomba_core_decay_interchangeable_strap_c03_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Fluororubber-Blue",
+        "images": [
+          "/uploads/images/tsarbomba_core_decay_interchangeable_strap_c04_1.jpg",
+          "/uploads/images/tsarbomba_core_decay_interchangeable_strap_c04_2.jpg",
+          "/uploads/images/tsarbomba_core_decay_interchangeable_strap_c04_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Fluororubber-Orange",
+        "images": [
+          "/uploads/images/tsarbomba_core_decay_interchangeable_strap_c05_1.jpg",
+          "/uploads/images/tsarbomba_core_decay_interchangeable_strap_c05_2.jpg",
+          "/uploads/images/tsarbomba_core_decay_interchangeable_strap_c05_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Fluororubber-Red",
+        "images": [
+          "/uploads/images/tsarbomba_core_decay_interchangeable_strap_c06_1.jpg",
+          "/uploads/images/tsarbomba_core_decay_interchangeable_strap_c06_2.jpg",
+          "/uploads/images/tsarbomba_core_decay_interchangeable_strap_c06_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Fluororubber-Yellow",
+        "images": [
+          "/uploads/images/tsarbomba_core_decay_interchangeable_strap_c07_1.jpg",
+          "/uploads/images/tsarbomba_core_decay_interchangeable_strap_c07_2.jpg",
+          "/uploads/images/tsarbomba_core_decay_interchangeable_strap_c07_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Fluororubber-White",
+        "images": [
+          "/uploads/images/tsarbomba_core_decay_interchangeable_strap_c08_1.jpg",
+          "/uploads/images/tsarbomba_core_decay_interchangeable_strap_c08_2.jpg",
+          "/uploads/images/tsarbomba_core_decay_interchangeable_strap_c08_3.jpg"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "accessory",
+    "reference": "DARK-MATTER-CUSTOM-STRAP",
+    "title": "Dark Matter Custom Strap",
+    "handle": "dark-matter-custom-strap",
+    "series": "Dark Matter",
+    "women": false,
+    "price": 199.99,
+    "movement": "",
+    "material": "",
+    "chronograph": false,
+    "skeleton": false,
+    "sapphire": false,
+    "interchangeable": false,
+    "variants": [
+      {
+        "colorLabel": "Black Gold",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_custom_strap_1.jpg",
+          "/uploads/images/tsarbomba_dark_matter_custom_strap_2.jpg",
+          "/uploads/images/tsarbomba_dark_matter_custom_strap_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Black",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_custom_strap_c02_1.jpg",
+          "/uploads/images/tsarbomba_dark_matter_custom_strap_c02_2.jpg",
+          "/uploads/images/tsarbomba_dark_matter_custom_strap_c02_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Orange",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_custom_strap_c03_1.jpg",
+          "/uploads/images/tsarbomba_dark_matter_custom_strap_c03_2.jpg",
+          "/uploads/images/tsarbomba_dark_matter_custom_strap_c03_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Light Blue",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_custom_strap_c04_1.jpg",
+          "/uploads/images/tsarbomba_dark_matter_custom_strap_c04_2.jpg",
+          "/uploads/images/tsarbomba_dark_matter_custom_strap_c04_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Red",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_custom_strap_c05_1.jpg",
+          "/uploads/images/tsarbomba_dark_matter_custom_strap_c05_2.jpg",
+          "/uploads/images/tsarbomba_dark_matter_custom_strap_c05_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "White",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_custom_strap_c06_1.jpg",
+          "/uploads/images/tsarbomba_dark_matter_custom_strap_c06_2.jpg",
+          "/uploads/images/tsarbomba_dark_matter_custom_strap_c06_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Blue",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_custom_strap_c07_1.jpg",
+          "/uploads/images/tsarbomba_dark_matter_custom_strap_c07_2.jpg",
+          "/uploads/images/tsarbomba_dark_matter_custom_strap_c07_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Green",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_custom_strap_c08_1.jpg",
+          "/uploads/images/tsarbomba_dark_matter_custom_strap_c08_2.jpg",
+          "/uploads/images/tsarbomba_dark_matter_custom_strap_c08_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Ghost Grey",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_custom_strap_c09_1.jpg",
+          "/uploads/images/tsarbomba_dark_matter_custom_strap_c09_2.jpg",
+          "/uploads/images/tsarbomba_dark_matter_custom_strap_c09_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Klein Blue",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_custom_strap_c10_1.jpg",
+          "/uploads/images/tsarbomba_dark_matter_custom_strap_c10_2.jpg",
+          "/uploads/images/tsarbomba_dark_matter_custom_strap_c10_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Lake Blue",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_custom_strap_c11_1.jpg",
+          "/uploads/images/tsarbomba_dark_matter_custom_strap_c11_2.jpg",
+          "/uploads/images/tsarbomba_dark_matter_custom_strap_c11_3.jpg"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "accessory",
+    "reference": "ATOMIC-INTERCHANGEABLE-CUSTOM-STRAP",
+    "title": "Atomic Interchangeable Custom Strap",
+    "handle": "atomic-interchangeable-custom-strap",
+    "series": "Atomic",
+    "women": false,
+    "price": 99.99,
+    "movement": "",
+    "material": "",
+    "chronograph": false,
+    "skeleton": false,
+    "sapphire": false,
+    "interchangeable": true,
+    "variants": [
+      {
+        "colorLabel": "White",
+        "images": [
+          "/uploads/images/tsarbomba_atomic_interchangeable_custom_strap_1.jpg",
+          "/uploads/images/tsarbomba_atomic_interchangeable_custom_strap_2.jpg",
+          "/uploads/images/tsarbomba_atomic_interchangeable_custom_strap_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Black",
+        "images": [
+          "/uploads/images/tsarbomba_atomic_interchangeable_custom_strap_c02_1.jpg",
+          "/uploads/images/tsarbomba_atomic_interchangeable_custom_strap_c02_2.jpg",
+          "/uploads/images/tsarbomba_atomic_interchangeable_custom_strap_c02_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Red",
+        "images": [
+          "/uploads/images/tsarbomba_atomic_interchangeable_custom_strap_c03_1.jpg",
+          "/uploads/images/tsarbomba_atomic_interchangeable_custom_strap_c03_2.jpg",
+          "/uploads/images/tsarbomba_atomic_interchangeable_custom_strap_c03_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Orange",
+        "images": [
+          "/uploads/images/tsarbomba_atomic_interchangeable_custom_strap_c04_1.jpg",
+          "/uploads/images/tsarbomba_atomic_interchangeable_custom_strap_c04_2.jpg",
+          "/uploads/images/tsarbomba_atomic_interchangeable_custom_strap_c04_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Blue",
+        "images": [
+          "/uploads/images/tsarbomba_atomic_interchangeable_custom_strap_c05_1.jpg",
+          "/uploads/images/tsarbomba_atomic_interchangeable_custom_strap_c05_2.jpg",
+          "/uploads/images/tsarbomba_atomic_interchangeable_custom_strap_c05_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Light Blue",
+        "images": [
+          "/uploads/images/tsarbomba_atomic_interchangeable_custom_strap_c06_1.jpg",
+          "/uploads/images/tsarbomba_atomic_interchangeable_custom_strap_c06_2.jpg",
+          "/uploads/images/tsarbomba_atomic_interchangeable_custom_strap_c06_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Yellow",
+        "images": [
+          "/uploads/images/tsarbomba_atomic_interchangeable_custom_strap_c07_1.jpg",
+          "/uploads/images/tsarbomba_atomic_interchangeable_custom_strap_c07_2.jpg",
+          "/uploads/images/tsarbomba_atomic_interchangeable_custom_strap_c07_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Green",
+        "images": [
+          "/uploads/images/tsarbomba_atomic_interchangeable_custom_strap_c08_1.jpg",
+          "/uploads/images/tsarbomba_atomic_interchangeable_custom_strap_c08_2.jpg",
+          "/uploads/images/tsarbomba_atomic_interchangeable_custom_strap_c08_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Ghost Grey",
+        "images": [
+          "/uploads/images/tsarbomba_atomic_interchangeable_custom_strap_c09_1.jpg",
+          "/uploads/images/tsarbomba_atomic_interchangeable_custom_strap_c09_2.jpg",
+          "/uploads/images/tsarbomba_atomic_interchangeable_custom_strap_c09_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Pink",
+        "images": [
+          "/uploads/images/tsarbomba_atomic_interchangeable_custom_strap_c10_1.jpg",
+          "/uploads/images/tsarbomba_atomic_interchangeable_custom_strap_c10_2.jpg",
+          "/uploads/images/tsarbomba_atomic_interchangeable_custom_strap_c10_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Lake Blue",
+        "images": [
+          "/uploads/images/tsarbomba_atomic_interchangeable_custom_strap_c11_1.jpg",
+          "/uploads/images/tsarbomba_atomic_interchangeable_custom_strap_c11_2.jpg",
+          "/uploads/images/tsarbomba_atomic_interchangeable_custom_strap_c11_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Klein Blue",
+        "images": [
+          "/uploads/images/tsarbomba_atomic_interchangeable_custom_strap_c12_1.jpg",
+          "/uploads/images/tsarbomba_atomic_interchangeable_custom_strap_c12_2.jpg",
+          "/uploads/images/tsarbomba_atomic_interchangeable_custom_strap_c12_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Brown",
+        "images": [
+          "/uploads/images/tsarbomba_atomic_interchangeable_custom_strap_c13_1.jpg",
+          "/uploads/images/tsarbomba_atomic_interchangeable_custom_strap_c13_2.jpg",
+          "/uploads/images/tsarbomba_atomic_interchangeable_custom_strap_c13_3.jpg"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "accessory",
+    "reference": "CERAMIC-BEZEL",
+    "title": "Ceramic Bezel",
+    "handle": "8218bezel-ceramic",
+    "series": "",
+    "women": false,
+    "price": 249.99,
+    "movement": "",
+    "material": "",
+    "chronograph": false,
+    "skeleton": false,
+    "sapphire": false,
+    "interchangeable": false,
+    "variants": [
+      {
+        "colorLabel": "Ceramic-White",
+        "images": [
+          "/uploads/images/tsarbomba_ceramic_bezel_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Ceramic-Ghost Grey",
+        "images": [
+          "/uploads/images/tsarbomba_ceramic_bezel_c02_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Ceramic-Green",
+        "images": [
+          "/uploads/images/tsarbomba_ceramic_bezel_c03_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Ceramic-Klein Blue",
+        "images": [
+          "/uploads/images/tsarbomba_ceramic_bezel_c04_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Ceramic-Lake Blue",
+        "images": [
+          "/uploads/images/tsarbomba_ceramic_bezel_c05_1.jpg"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "accessory",
+    "reference": "CUBIC-ZIRCONIA-BEZEL",
+    "title": "Cubic Zirconia Bezel",
+    "handle": "8218bezel-cubic-zirconia",
+    "series": "",
+    "women": false,
+    "price": 159.99,
+    "movement": "",
+    "material": "",
+    "chronograph": false,
+    "skeleton": false,
+    "sapphire": false,
+    "interchangeable": false,
+    "variants": [
+      {
+        "colorLabel": "Cubic Zirconia-Silver",
+        "images": [
+          "/uploads/images/tsarbomba_cubic_zirconia_bezel_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Cubic Zirconia-Black",
+        "images": [
+          "/uploads/images/tsarbomba_cubic_zirconia_bezel_c02_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Cubic Zirconia-Rose Gold",
+        "images": [
+          "/uploads/images/tsarbomba_cubic_zirconia_bezel_c03_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Square Diamond-Silver",
+        "images": [
+          "/uploads/images/tsarbomba_cubic_zirconia_bezel_c04_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Square Diamond-Gold",
+        "images": [
+          "/uploads/images/tsarbomba_cubic_zirconia_bezel_c05_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Square Diamond-Rose Gold",
+        "images": [
+          "/uploads/images/tsarbomba_cubic_zirconia_bezel_c06_1.jpg"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "accessory",
+    "reference": "STAINLESS-STEEL-BEZEL",
+    "title": "Stainless Steel Bezel",
+    "handle": "8218bezel-stainless-steel",
+    "series": "",
+    "women": false,
+    "price": 39.99,
+    "movement": "",
+    "material": "",
+    "chronograph": false,
+    "skeleton": false,
+    "sapphire": false,
+    "interchangeable": false,
+    "variants": [
+      {
+        "colorLabel": "Stainless Steel-Silver",
+        "images": [
+          "/uploads/images/tsarbomba_stainless_steel_bezel_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Stainless Steel-Black",
+        "images": [
+          "/uploads/images/tsarbomba_stainless_steel_bezel_c02_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Stainless Steel-Gold",
+        "images": [
+          "/uploads/images/tsarbomba_stainless_steel_bezel_c03_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Stainless Steel-Rose Gold",
+        "images": [
+          "/uploads/images/tsarbomba_stainless_steel_bezel_c04_1.jpg"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "accessory",
+    "reference": "DYNAMIC-FLUORORUBBER-BEZEL",
+    "title": "Dynamic Fluororubber Bezel",
+    "handle": "8218bezel-dynamic-fluororubber",
+    "series": "",
+    "women": false,
+    "price": 69.99,
+    "movement": "",
+    "material": "",
+    "chronograph": false,
+    "skeleton": false,
+    "sapphire": false,
+    "interchangeable": false,
+    "variants": [
+      {
+        "colorLabel": "Fluororubber-Dynamic Red",
+        "images": [
+          "/uploads/images/tsarbomba_dynamic_fluororubber_bezel_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Fluororubber-Dynamic Black",
+        "images": [
+          "/uploads/images/tsarbomba_dynamic_fluororubber_bezel_c02_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Fluororubber-Dynamic Green",
+        "images": [
+          "/uploads/images/tsarbomba_dynamic_fluororubber_bezel_c03_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Fluororubber-Dynamic Yellow",
+        "images": [
+          "/uploads/images/tsarbomba_dynamic_fluororubber_bezel_c04_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Fluororubber-Dynamic Blue",
+        "images": [
+          "/uploads/images/tsarbomba_dynamic_fluororubber_bezel_c05_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Fluororubber-Dynamic Light Blue",
+        "images": [
+          "/uploads/images/tsarbomba_dynamic_fluororubber_bezel_c06_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Fluororubber-Dynamic Orange",
+        "images": [
+          "/uploads/images/tsarbomba_dynamic_fluororubber_bezel_c07_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Fluororubber-Dynamic White",
+        "images": [
+          "/uploads/images/tsarbomba_dynamic_fluororubber_bezel_c08_1.jpg"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "accessory",
+    "reference": "FLUORORUBBER-BEZEL",
+    "title": "Fluororubber Bezel",
+    "handle": "8218bezel-fluororubber",
+    "series": "",
+    "women": false,
+    "price": 69.99,
+    "movement": "",
+    "material": "",
+    "chronograph": false,
+    "skeleton": false,
+    "sapphire": false,
+    "interchangeable": false,
+    "variants": [
+      {
+        "colorLabel": "Fluororubber-White",
+        "images": [
+          "/uploads/images/tsarbomba_fluororubber_bezel_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Fluororubber-Black",
+        "images": [
+          "/uploads/images/tsarbomba_fluororubber_bezel_c02_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Fluororubber-Red",
+        "images": [
+          "/uploads/images/tsarbomba_fluororubber_bezel_c03_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Fluororubber-Orange",
+        "images": [
+          "/uploads/images/tsarbomba_fluororubber_bezel_c04_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Fluororubber-Blue",
+        "images": [
+          "/uploads/images/tsarbomba_fluororubber_bezel_c05_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Fluororubber-Green",
+        "images": [
+          "/uploads/images/tsarbomba_fluororubber_bezel_c06_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Fluororubber-Yellow",
+        "images": [
+          "/uploads/images/tsarbomba_fluororubber_bezel_c07_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Fluororubber-Light Blue",
+        "images": [
+          "/uploads/images/tsarbomba_fluororubber_bezel_c08_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Fluororubber-Pink",
+        "images": [
+          "/uploads/images/tsarbomba_fluororubber_bezel_c09_1.jpg"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "accessory",
+    "reference": "CARBON-FIBER-BEZEL",
+    "title": "Carbon Fiber Bezel",
+    "handle": "8218bezel-carbon-fiber",
+    "series": "",
+    "women": false,
+    "price": 159.99,
+    "movement": "",
+    "material": "",
+    "chronograph": false,
+    "skeleton": false,
+    "sapphire": false,
+    "interchangeable": false,
+    "variants": [
+      {
+        "colorLabel": "Carbon Fiber-White",
+        "images": [
+          "/uploads/images/tsarbomba_carbon_fiber_bezel_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Carbon Fiber-Black Orange",
+        "images": [
+          "/uploads/images/tsarbomba_carbon_fiber_bezel_c02_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Carbon Fiber-Black",
+        "images": [
+          "/uploads/images/tsarbomba_carbon_fiber_bezel_c03_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Carbon Fiber-Red",
+        "images": [
+          "/uploads/images/tsarbomba_carbon_fiber_bezel_c04_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Carbon Fiber-Black Blue",
+        "images": [
+          "/uploads/images/tsarbomba_carbon_fiber_bezel_c05_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Carbon Fiber-Black Green",
+        "images": [
+          "/uploads/images/tsarbomba_carbon_fiber_bezel_c06_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Carbon Fiber-Black Gold",
+        "images": [
+          "/uploads/images/tsarbomba_carbon_fiber_bezel_c07_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Carbon Fiber-Black Red",
+        "images": [
+          "/uploads/images/tsarbomba_carbon_fiber_bezel_c08_1.jpg"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "accessory",
+    "reference": "LIGHT-MATTER-SAPPHIRE-BEZEL-CHRONITE-CAS",
+    "title": "Light Matter Sapphire Bezel & Chronite® Case",
+    "handle": "light-matter-sapphire-crystal",
+    "series": "Light Matter",
+    "women": false,
+    "price": 310.0,
+    "movement": "",
+    "material": "",
+    "chronograph": false,
+    "skeleton": false,
+    "sapphire": true,
+    "interchangeable": false,
+    "variants": [
+      {
+        "colorLabel": "Bezel",
+        "images": [
+          "/uploads/images/tsarbomba_light_matter_sapphire_bezel_chronite_case_1.jpg",
+          "/uploads/images/tsarbomba_light_matter_sapphire_bezel_chronite_case_2.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Case Middle",
+        "images": [
+          "/uploads/images/tsarbomba_light_matter_sapphire_bezel_chronite_case_c02_1.jpg",
+          "/uploads/images/tsarbomba_light_matter_sapphire_bezel_chronite_case_c02_2.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Case Back",
+        "images": [
+          "/uploads/images/tsarbomba_light_matter_sapphire_bezel_chronite_case_c03_1.jpg",
+          "/uploads/images/tsarbomba_light_matter_sapphire_bezel_chronite_case_c03_2.jpg"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "accessory",
+    "reference": "DARK-MATTER-CUSTOM-WATCH-KIT",
+    "title": "Dark Matter-Custom Watch Kit",
+    "handle": "dark-matter-design",
+    "series": "Dark Matter",
+    "women": false,
+    "price": 419.97,
+    "movement": "",
+    "material": "",
+    "chronograph": false,
+    "skeleton": false,
+    "sapphire": false,
+    "interchangeable": false,
+    "variants": [
+      {
+        "colorLabel": "mczr_price_5009_8",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_custom_watch_kit_1.jpg",
+          "/uploads/images/tsarbomba_dark_matter_custom_watch_kit_2.jpg",
+          "/uploads/images/tsarbomba_dark_matter_custom_watch_kit_3.jpg"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "accessory",
+    "reference": "REACTOR-CUSTOM-WATCH-KIT",
+    "title": "Reactor-Custom Watch Kit",
+    "handle": "tb8213diy",
+    "series": "Reactor",
+    "women": false,
+    "price": 159.97,
+    "movement": "",
+    "material": "",
+    "chronograph": false,
+    "skeleton": false,
+    "sapphire": false,
+    "interchangeable": false,
+    "variants": [
+      {
+        "colorLabel": "mczr_price_1589_92",
+        "images": [
+          "/uploads/images/tsarbomba_reactor_custom_watch_kit_1.jpg",
+          "/uploads/images/tsarbomba_reactor_custom_watch_kit_2.jpg"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "accessory",
+    "reference": "LIGHT-MATTER-INTERCHANGEABLE-STRAP",
+    "title": "Light Matter Interchangeable Strap",
+    "handle": "light-matter-interchangeable-strap",
+    "series": "Light Matter",
+    "women": false,
+    "price": 99.99,
+    "movement": "",
+    "material": "",
+    "chronograph": false,
+    "skeleton": false,
+    "sapphire": false,
+    "interchangeable": true,
+    "variants": [
+      {
+        "colorLabel": "Classic Clasp-White",
+        "images": [
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_1.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_2.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Classic Clasp-Black",
+        "images": [
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c02_1.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c02_2.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c02_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Classic Clasp-Red",
+        "images": [
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c03_1.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c03_2.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c03_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Classic Clasp-Orange",
+        "images": [
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c04_1.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c04_2.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c04_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Classic Clasp-Blue",
+        "images": [
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c05_1.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c05_2.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c05_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Classic Clasp-Light Blue",
+        "images": [
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c06_1.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c06_2.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c06_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Classic Clasp-Yellow",
+        "images": [
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c07_1.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c07_2.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c07_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Classic Clasp-Green",
+        "images": [
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c08_1.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c08_2.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c08_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Classic Clasp-Ghost Grey",
+        "images": [
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c09_1.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c09_2.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c09_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Classic Clasp-Pink",
+        "images": [
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c10_1.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c10_2.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c10_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Classic Clasp-Lake Blue",
+        "images": [
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c11_1.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c11_2.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c11_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Classic Clasp-Klein Blue",
+        "images": [
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c12_1.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c12_2.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c12_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Classic Clasp-Brown",
+        "images": [
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c13_1.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c13_2.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c13_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Deployant Clasp-White",
+        "images": [
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c14_1.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c14_2.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c14_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Deployant Clasp-Black",
+        "images": [
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c15_1.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c15_2.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c15_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Deployant Clasp-Red",
+        "images": [
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c16_1.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c16_2.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c16_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Deployant Clasp-Orange",
+        "images": [
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c17_1.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c17_2.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c17_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Deployant Clasp-Blue",
+        "images": [
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c18_1.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c18_2.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c18_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Deployant Clasp-Yellow",
+        "images": [
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c19_1.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c19_2.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c19_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Deployant Clasp-Light Blue",
+        "images": [
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c20_1.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c20_2.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c20_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Deployant Clasp-Green",
+        "images": [
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c21_1.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c21_2.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c21_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Deployant Clasp-Ghost Grey",
+        "images": [
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c22_1.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c22_2.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c22_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Deployant Clasp-Pink",
+        "images": [
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c23_1.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c23_2.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c23_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Deployant Clasp-Lake Blue",
+        "images": [
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c24_1.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c24_2.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c24_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Deployant Clasp-Klein Blue",
+        "images": [
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c25_1.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c25_2.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c25_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Deployant Clasp-Brown",
+        "images": [
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c26_1.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c26_2.jpg",
+          "/uploads/images/tsarbomba_light_matter_interchangeable_strap_c26_3.jpg"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "accessory",
+    "reference": "NEUTRON-INTERCHANGEABLE-STRAP",
+    "title": "Neutron Interchangeable Strap",
+    "handle": "neutron-collection-interchangeable-strap",
+    "series": "Neutron",
+    "women": false,
+    "price": 99.99,
+    "movement": "",
+    "material": "",
+    "chronograph": false,
+    "skeleton": false,
+    "sapphire": false,
+    "interchangeable": true,
+    "variants": [
+      {
+        "colorLabel": "Classic Clasp-White",
+        "images": [
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_1.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_2.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Classic Clasp-Black",
+        "images": [
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c02_1.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c02_2.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c02_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Classic Clasp-Red",
+        "images": [
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c03_1.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c03_2.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c03_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Classic Clasp-Orange",
+        "images": [
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c04_1.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c04_2.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c04_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Classic Clasp-Blue",
+        "images": [
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c05_1.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c05_2.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c05_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Classic Clasp-Yellow",
+        "images": [
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c06_1.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c06_2.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c06_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Classic Clasp-Light Blue",
+        "images": [
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c07_1.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c07_2.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c07_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Classic Clasp-Green",
+        "images": [
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c08_1.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c08_2.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c08_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Classic Clasp-Ghost Grey",
+        "images": [
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c09_1.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c09_2.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c09_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Classic Clasp-Pink",
+        "images": [
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c10_1.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c10_2.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c10_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Classic Clasp-Lake Blue",
+        "images": [
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c11_1.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c11_2.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c11_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Classic Clasp-Klein Blue",
+        "images": [
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c12_1.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c12_2.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c12_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Classic Clasp-Brown",
+        "images": [
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c13_1.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c13_2.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c13_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Deployant Clasp-White",
+        "images": [
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c14_1.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c14_2.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c14_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Deployant Clasp-Black",
+        "images": [
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c15_1.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c15_2.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c15_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Deployant Clasp-Red",
+        "images": [
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c16_1.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c16_2.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c16_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Deployant Clasp-Orange",
+        "images": [
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c17_1.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c17_2.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c17_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Deployant Clasp-Blue",
+        "images": [
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c18_1.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c18_2.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c18_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Deployant Clasp-Yellow",
+        "images": [
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c19_1.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c19_2.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c19_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Deployant Clasp-Light Blue",
+        "images": [
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c20_1.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c20_2.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c20_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Deployant Clasp-Green",
+        "images": [
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c21_1.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c21_2.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c21_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Deployant Clasp-Ghost Grey",
+        "images": [
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c22_1.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c22_2.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c22_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Deployant Clasp-Pink",
+        "images": [
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c23_1.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c23_2.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c23_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Deployant Clasp-Lake Blue",
+        "images": [
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c24_1.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c24_2.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c24_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Deployant Clasp-Klein Blue",
+        "images": [
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c25_1.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c25_2.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c25_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Deployant Clasp-Brown",
+        "images": [
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c26_1.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c26_2.jpg",
+          "/uploads/images/tsarbomba_neutron_interchangeable_strap_c26_3.jpg"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "accessory",
+    "reference": "ATOMIC-CUSTOM-WATCH-KIT",
+    "title": "Atomic-Custom Watch Kit",
+    "handle": "customtb8218",
+    "series": "Atomic",
+    "women": false,
+    "price": 0.0,
+    "movement": "",
+    "material": "",
+    "chronograph": false,
+    "skeleton": false,
+    "sapphire": false,
+    "interchangeable": false,
+    "variants": [
+      {
+        "colorLabel": "mczr_price_1259_94",
+        "images": [
+          "/uploads/images/tsarbomba_atomic_custom_watch_kit_1.jpg",
+          "/uploads/images/tsarbomba_atomic_custom_watch_kit_2.jpg"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "accessory",
+    "reference": "DARK-MATTER-INTERCHANGEABLE-AUTOMATIC-WA",
+    "title": "Dark Matter Interchangeable Automatic Watch Head",
+    "handle": "tb8601head",
+    "series": "Dark Matter",
+    "women": false,
+    "price": 609.99,
+    "movement": "",
+    "material": "",
+    "chronograph": false,
+    "skeleton": false,
+    "sapphire": false,
+    "interchangeable": true,
+    "variants": [
+      {
+        "colorLabel": "Dark Matter 1-Black",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_interchangeable_automatic_watch__1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Dark Matter 1-Silver",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_interchangeable_automatic_watch__c02_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Dark Matter 1-Gold",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_interchangeable_automatic_watch__c03_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Dark Matter 2-Silver",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_interchangeable_automatic_watch__c04_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Dark Matter 2-Black",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_interchangeable_automatic_watch__c05_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Dark Matter 3-Silver",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_interchangeable_automatic_watch__c06_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Dark Matter 3-Black",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_interchangeable_automatic_watch__c07_1.jpg"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "accessory",
+    "reference": "ELEMENTAL-FLUORORUBBER-STRAP",
+    "title": "Elemental Fluororubber Strap",
+    "handle": "elemental-tb880-series-strap",
+    "series": "Elemental",
+    "women": false,
+    "price": 59.99,
+    "movement": "",
+    "material": "",
+    "chronograph": false,
+    "skeleton": false,
+    "sapphire": false,
+    "interchangeable": false,
+    "variants": [
+      {
+        "colorLabel": "Blue",
+        "images": [
+          "/uploads/images/tsarbomba_elemental_fluororubber_strap_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Orange",
+        "images": [
+          "/uploads/images/tsarbomba_elemental_fluororubber_strap_c02_1.jpg"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "accessory",
+    "reference": "PREMIUM-WATCH-GIFT-BOX",
+    "title": "Premium Watch Gift Box",
+    "handle": "premium-watch-gift-box",
+    "series": "",
+    "women": false,
+    "price": 29.99,
+    "movement": "",
+    "material": "",
+    "chronograph": false,
+    "skeleton": false,
+    "sapphire": false,
+    "interchangeable": false,
+    "variants": [
+      {
+        "colorLabel": "Universal Black Box",
+        "images": [
+          "/uploads/images/tsarbomba_premium_watch_gift_box_1.jpg",
+          "/uploads/images/tsarbomba_premium_watch_gift_box_2.jpg",
+          "/uploads/images/tsarbomba_premium_watch_gift_box_3.jpg",
+          "/uploads/images/tsarbomba_premium_watch_gift_box_4.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Universal Silver Box",
+        "images": [
+          "/uploads/images/tsarbomba_premium_watch_gift_box_c02_1.jpg",
+          "/uploads/images/tsarbomba_premium_watch_gift_box_c02_2.jpg",
+          "/uploads/images/tsarbomba_premium_watch_gift_box_c02_3.jpg",
+          "/uploads/images/tsarbomba_premium_watch_gift_box_c02_4.jpg"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "accessory",
+    "reference": "DARK-MATTER-5-STRAPS",
+    "title": "Dark Matter 5 Straps",
+    "handle": "dark-matter-5-straps",
+    "series": "Dark Matter",
+    "women": false,
+    "price": 69.99,
+    "movement": "",
+    "material": "",
+    "chronograph": false,
+    "skeleton": false,
+    "sapphire": false,
+    "interchangeable": false,
+    "variants": [
+      {
+        "colorLabel": "Classic Clasp-Green",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_5_straps_1.jpg",
+          "/uploads/images/tsarbomba_dark_matter_5_straps_2.jpg",
+          "/uploads/images/tsarbomba_dark_matter_5_straps_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Classic Clasp-Black",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_5_straps_c02_1.jpg",
+          "/uploads/images/tsarbomba_dark_matter_5_straps_c02_2.jpg",
+          "/uploads/images/tsarbomba_dark_matter_5_straps_c02_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Classic Clasp-Blue",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_5_straps_c03_1.jpg",
+          "/uploads/images/tsarbomba_dark_matter_5_straps_c03_2.jpg",
+          "/uploads/images/tsarbomba_dark_matter_5_straps_c03_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Classic Clasp-Orange",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_5_straps_c04_1.jpg",
+          "/uploads/images/tsarbomba_dark_matter_5_straps_c04_2.jpg",
+          "/uploads/images/tsarbomba_dark_matter_5_straps_c04_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Classic Clasp-Red",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_5_straps_c05_1.jpg",
+          "/uploads/images/tsarbomba_dark_matter_5_straps_c05_2.jpg",
+          "/uploads/images/tsarbomba_dark_matter_5_straps_c05_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Deployant Clasp-Green",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_5_straps_c06_1.jpg",
+          "/uploads/images/tsarbomba_dark_matter_5_straps_c06_2.jpg",
+          "/uploads/images/tsarbomba_dark_matter_5_straps_c06_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Deployant Clasp-Black",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_5_straps_c07_1.jpg",
+          "/uploads/images/tsarbomba_dark_matter_5_straps_c07_2.jpg",
+          "/uploads/images/tsarbomba_dark_matter_5_straps_c07_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Deployant Clasp-Blue",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_5_straps_c08_1.jpg",
+          "/uploads/images/tsarbomba_dark_matter_5_straps_c08_2.jpg",
+          "/uploads/images/tsarbomba_dark_matter_5_straps_c08_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Deployant Clasp-Orange",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_5_straps_c09_1.jpg",
+          "/uploads/images/tsarbomba_dark_matter_5_straps_c09_2.jpg",
+          "/uploads/images/tsarbomba_dark_matter_5_straps_c09_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Deployant Clasp-Red",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_5_straps_c10_1.jpg",
+          "/uploads/images/tsarbomba_dark_matter_5_straps_c10_2.jpg",
+          "/uploads/images/tsarbomba_dark_matter_5_straps_c10_3.jpg"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "accessory",
+    "reference": "DARK-MATTER-INTERCHANGEABLE-CROWN",
+    "title": "Dark Matter Interchangeable Crown",
+    "handle": "tb8601crown",
+    "series": "Dark Matter",
+    "women": false,
+    "price": 19.99,
+    "movement": "",
+    "material": "",
+    "chronograph": false,
+    "skeleton": false,
+    "sapphire": false,
+    "interchangeable": true,
+    "variants": [
+      {
+        "colorLabel": "Black Gold",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_interchangeable_crown_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Black",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_interchangeable_crown_c02_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Black Silver",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_interchangeable_crown_c03_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Red",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_interchangeable_crown_c04_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Orange Black",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_interchangeable_crown_c05_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Orange Gold",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_interchangeable_crown_c06_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "White",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_interchangeable_crown_c07_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Light Blue",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_interchangeable_crown_c08_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Blue Black",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_interchangeable_crown_c09_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Blue Silver",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_interchangeable_crown_c10_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Lake Blue",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_interchangeable_crown_c11_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Klein Blue",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_interchangeable_crown_c12_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Ghost Grey",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_interchangeable_crown_c13_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Green",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_interchangeable_crown_c14_1.jpg"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "accessory",
+    "reference": "LUXURY-WATCH-GIFT-BOX",
+    "title": "Luxury Watch Gift Box",
+    "handle": "gift-box",
+    "series": "",
+    "women": false,
+    "price": 29.99,
+    "movement": "",
+    "material": "",
+    "chronograph": false,
+    "skeleton": false,
+    "sapphire": false,
+    "interchangeable": false,
+    "variants": [
+      {
+        "colorLabel": "Universal Wooden Box",
+        "images": [
+          "/uploads/images/tsarbomba_luxury_watch_gift_box_1.jpg",
+          "/uploads/images/tsarbomba_luxury_watch_gift_box_2.jpg",
+          "/uploads/images/tsarbomba_luxury_watch_gift_box_3.jpg",
+          "/uploads/images/tsarbomba_luxury_watch_gift_box_4.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Black Transparent Box",
+        "images": [
+          "/uploads/images/tsarbomba_luxury_watch_gift_box_c02_1.jpg",
+          "/uploads/images/tsarbomba_luxury_watch_gift_box_c02_2.jpg",
+          "/uploads/images/tsarbomba_luxury_watch_gift_box_c02_3.jpg",
+          "/uploads/images/tsarbomba_luxury_watch_gift_box_c02_4.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Universal Eco-Friendly Box",
+        "images": [
+          "/uploads/images/tsarbomba_luxury_watch_gift_box_c03_1.jpg",
+          "/uploads/images/tsarbomba_luxury_watch_gift_box_c03_2.jpg",
+          "/uploads/images/tsarbomba_luxury_watch_gift_box_c03_3.jpg",
+          "/uploads/images/tsarbomba_luxury_watch_gift_box_c03_4.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Wooden Box(2-in-1 )",
+        "images": [
+          "/uploads/images/tsarbomba_luxury_watch_gift_box_c04_1.jpg",
+          "/uploads/images/tsarbomba_luxury_watch_gift_box_c04_2.jpg",
+          "/uploads/images/tsarbomba_luxury_watch_gift_box_c04_3.jpg",
+          "/uploads/images/tsarbomba_luxury_watch_gift_box_c04_4.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Wooden Box(5-in-1 )",
+        "images": [
+          "/uploads/images/tsarbomba_luxury_watch_gift_box_c05_1.jpg",
+          "/uploads/images/tsarbomba_luxury_watch_gift_box_c05_2.jpg",
+          "/uploads/images/tsarbomba_luxury_watch_gift_box_c05_3.jpg",
+          "/uploads/images/tsarbomba_luxury_watch_gift_box_c05_4.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Sample Suitcase",
+        "images": [
+          "/uploads/images/tsarbomba_luxury_watch_gift_box_c06_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "2-in-1 Display Box",
+        "images": [
+          "/uploads/images/tsarbomba_luxury_watch_gift_box_c07_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "5-in-1 Display Box",
+        "images": [
+          "/uploads/images/tsarbomba_luxury_watch_gift_box_c08_1.jpg"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "accessory",
+    "reference": "NUCLEUS-FEMME-STRAP",
+    "title": "Nucleus Femme Strap",
+    "handle": "8219strap",
+    "series": "Nucleus Femme",
+    "women": true,
+    "price": 79.99,
+    "movement": "",
+    "material": "",
+    "chronograph": false,
+    "skeleton": false,
+    "sapphire": false,
+    "interchangeable": false,
+    "variants": [
+      {
+        "colorLabel": "Blue",
+        "images": [
+          "/uploads/images/tsarbomba_nucleus_femme_strap_1.jpg",
+          "/uploads/images/tsarbomba_nucleus_femme_strap_2.jpg",
+          "/uploads/images/tsarbomba_nucleus_femme_strap_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Green",
+        "images": [
+          "/uploads/images/tsarbomba_nucleus_femme_strap_c02_1.jpg",
+          "/uploads/images/tsarbomba_nucleus_femme_strap_c02_2.jpg",
+          "/uploads/images/tsarbomba_nucleus_femme_strap_c02_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Pink",
+        "images": [
+          "/uploads/images/tsarbomba_nucleus_femme_strap_c03_1.jpg",
+          "/uploads/images/tsarbomba_nucleus_femme_strap_c03_2.jpg",
+          "/uploads/images/tsarbomba_nucleus_femme_strap_c03_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "White",
+        "images": [
+          "/uploads/images/tsarbomba_nucleus_femme_strap_c04_1.jpg",
+          "/uploads/images/tsarbomba_nucleus_femme_strap_c04_2.jpg",
+          "/uploads/images/tsarbomba_nucleus_femme_strap_c04_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Grey",
+        "images": [
+          "/uploads/images/tsarbomba_nucleus_femme_strap_c05_1.jpg",
+          "/uploads/images/tsarbomba_nucleus_femme_strap_c05_2.jpg",
+          "/uploads/images/tsarbomba_nucleus_femme_strap_c05_3.jpg"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "accessory",
+    "reference": "ELEMENTAL-TB8212-STRAP",
+    "title": "Elemental TB8212 Strap",
+    "handle": "tb8212-strap",
+    "series": "Elemental",
+    "women": false,
+    "price": 99.99,
+    "movement": "",
+    "material": "",
+    "chronograph": false,
+    "skeleton": false,
+    "sapphire": false,
+    "interchangeable": false,
+    "variants": [
+      {
+        "colorLabel": "Yellow",
+        "images": [
+          "/uploads/images/tsarbomba_elemental_tb8212_strap_1.jpg",
+          "/uploads/images/tsarbomba_elemental_tb8212_strap_2.jpg",
+          "/uploads/images/tsarbomba_elemental_tb8212_strap_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Black",
+        "images": [
+          "/uploads/images/tsarbomba_elemental_tb8212_strap_c02_1.jpg",
+          "/uploads/images/tsarbomba_elemental_tb8212_strap_c02_2.jpg",
+          "/uploads/images/tsarbomba_elemental_tb8212_strap_c02_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "White",
+        "images": [
+          "/uploads/images/tsarbomba_elemental_tb8212_strap_c03_1.jpg",
+          "/uploads/images/tsarbomba_elemental_tb8212_strap_c03_2.jpg",
+          "/uploads/images/tsarbomba_elemental_tb8212_strap_c03_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Red",
+        "images": [
+          "/uploads/images/tsarbomba_elemental_tb8212_strap_c04_1.jpg",
+          "/uploads/images/tsarbomba_elemental_tb8212_strap_c04_2.jpg",
+          "/uploads/images/tsarbomba_elemental_tb8212_strap_c04_3.jpg"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "accessory",
+    "reference": "DARK-MATTER-INTERCHANGEABLE-ACCESSORY-KI",
+    "title": "Dark Matter Interchangeable Accessory Kits",
+    "handle": "dm-accessories",
+    "series": "Dark Matter",
+    "women": false,
+    "price": 269.99,
+    "movement": "",
+    "material": "",
+    "chronograph": false,
+    "skeleton": false,
+    "sapphire": false,
+    "interchangeable": true,
+    "variants": [
+      {
+        "colorLabel": "Carbon Fiber-Orange",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_interchangeable_accessory_kits_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Carbon Fiber-Black",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_interchangeable_accessory_kits_c02_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Carbon Fiber-White",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_interchangeable_accessory_kits_c03_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Carbon Fiber-Blue",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_interchangeable_accessory_kits_c04_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Carbon Fiber-Light Blue",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_interchangeable_accessory_kits_c05_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Stainless Steel-Gold",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_interchangeable_accessory_kits_c06_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Stainless Steel-Light Blue",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_interchangeable_accessory_kits_c07_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Stainless Steel-Red",
+        "images": [
+          "/uploads/images/tsarbomba_dark_matter_interchangeable_accessory_kits_c08_1.jpg"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "accessory",
+    "reference": "REACTOR-INTERCHANGEABLE-WATCH-HEAD",
+    "title": "Reactor Interchangeable Watch Head",
+    "handle": "tb8213-interchangeable-watch",
+    "series": "Reactor",
+    "women": false,
+    "price": 549.99,
+    "movement": "",
+    "material": "",
+    "chronograph": false,
+    "skeleton": false,
+    "sapphire": false,
+    "interchangeable": true,
+    "variants": [
+      {
+        "colorLabel": "Black",
+        "images": [
+          "/uploads/images/tsarbomba_reactor_interchangeable_watch_head_1.jpg",
+          "/uploads/images/tsarbomba_reactor_interchangeable_watch_head_2.jpg",
+          "/uploads/images/tsarbomba_reactor_interchangeable_watch_head_3.jpg",
+          "/uploads/images/tsarbomba_reactor_interchangeable_watch_head_4.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Gold",
+        "images": [
+          "/uploads/images/tsarbomba_reactor_interchangeable_watch_head_c02_1.jpg",
+          "/uploads/images/tsarbomba_reactor_interchangeable_watch_head_c02_2.jpg",
+          "/uploads/images/tsarbomba_reactor_interchangeable_watch_head_c02_3.jpg",
+          "/uploads/images/tsarbomba_reactor_interchangeable_watch_head_c02_4.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Silver",
+        "images": [
+          "/uploads/images/tsarbomba_reactor_interchangeable_watch_head_c03_1.jpg",
+          "/uploads/images/tsarbomba_reactor_interchangeable_watch_head_c03_2.jpg",
+          "/uploads/images/tsarbomba_reactor_interchangeable_watch_head_c03_3.jpg",
+          "/uploads/images/tsarbomba_reactor_interchangeable_watch_head_c03_4.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Blue",
+        "images": [
+          "/uploads/images/tsarbomba_reactor_interchangeable_watch_head_c04_1.jpg",
+          "/uploads/images/tsarbomba_reactor_interchangeable_watch_head_c04_2.jpg",
+          "/uploads/images/tsarbomba_reactor_interchangeable_watch_head_c04_3.jpg",
+          "/uploads/images/tsarbomba_reactor_interchangeable_watch_head_c04_4.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Orange",
+        "images": [
+          "/uploads/images/tsarbomba_reactor_interchangeable_watch_head_c05_1.jpg",
+          "/uploads/images/tsarbomba_reactor_interchangeable_watch_head_c05_2.jpg",
+          "/uploads/images/tsarbomba_reactor_interchangeable_watch_head_c05_3.jpg",
+          "/uploads/images/tsarbomba_reactor_interchangeable_watch_head_c05_4.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Red",
+        "images": [
+          "/uploads/images/tsarbomba_reactor_interchangeable_watch_head_c06_1.jpg",
+          "/uploads/images/tsarbomba_reactor_interchangeable_watch_head_c06_2.jpg",
+          "/uploads/images/tsarbomba_reactor_interchangeable_watch_head_c06_3.jpg",
+          "/uploads/images/tsarbomba_reactor_interchangeable_watch_head_c06_4.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Yellow",
+        "images": [
+          "/uploads/images/tsarbomba_reactor_interchangeable_watch_head_c07_1.jpg",
+          "/uploads/images/tsarbomba_reactor_interchangeable_watch_head_c07_2.jpg",
+          "/uploads/images/tsarbomba_reactor_interchangeable_watch_head_c07_3.jpg",
+          "/uploads/images/tsarbomba_reactor_interchangeable_watch_head_c07_4.jpg"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "accessory",
+    "reference": "ATOMIC-INTERCHANGEABLE-WATCH-HEAD",
+    "title": "Atomic Interchangeable Watch Head",
+    "handle": "atomic-watch",
+    "series": "Atomic",
+    "women": false,
+    "price": 349.99,
+    "movement": "",
+    "material": "",
+    "chronograph": false,
+    "skeleton": false,
+    "sapphire": false,
+    "interchangeable": true,
+    "variants": [
+      {
+        "colorLabel": "Quartz-Silver Black",
+        "images": [
+          "/uploads/images/tsarbomba_atomic_interchangeable_watch_head_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Automatic-Black",
+        "images": [
+          "/uploads/images/tsarbomba_atomic_interchangeable_watch_head_c02_1.jpg",
+          "/uploads/images/tsarbomba_atomic_interchangeable_watch_head_c02_2.jpg",
+          "/uploads/images/tsarbomba_atomic_interchangeable_watch_head_c02_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Automatic-Silver Black",
+        "images": [
+          "/uploads/images/tsarbomba_atomic_interchangeable_watch_head_c03_1.jpg",
+          "/uploads/images/tsarbomba_atomic_interchangeable_watch_head_c03_2.jpg",
+          "/uploads/images/tsarbomba_atomic_interchangeable_watch_head_c03_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Automatic-Silver Blue",
+        "images": [
+          "/uploads/images/tsarbomba_atomic_interchangeable_watch_head_c04_1.jpg",
+          "/uploads/images/tsarbomba_atomic_interchangeable_watch_head_c04_2.jpg",
+          "/uploads/images/tsarbomba_atomic_interchangeable_watch_head_c04_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Automatic Cubic Zirconia-Silver Black",
+        "images": [
+          "/uploads/images/tsarbomba_atomic_interchangeable_watch_head_c05_1.jpg",
+          "/uploads/images/tsarbomba_atomic_interchangeable_watch_head_c05_2.jpg",
+          "/uploads/images/tsarbomba_atomic_interchangeable_watch_head_c05_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Automatic-Classic Black",
+        "images": [
+          "/uploads/images/tsarbomba_atomic_interchangeable_watch_head_c06_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Automatic-Classic Siliver Blue",
+        "images": [
+          "/uploads/images/tsarbomba_atomic_interchangeable_watch_head_c07_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Automatic-Black White",
+        "images": [
+          "/uploads/images/tsarbomba_atomic_interchangeable_watch_head_c08_1.jpg",
+          "/uploads/images/tsarbomba_atomic_interchangeable_watch_head_c08_2.jpg",
+          "/uploads/images/tsarbomba_atomic_interchangeable_watch_head_c08_3.jpg"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "accessory",
+    "reference": "SAPPHIRE-CRYSTAL",
+    "title": "Sapphire Crystal",
+    "handle": "sapphire-glass",
+    "series": "",
+    "women": false,
+    "price": 49.99,
+    "movement": "",
+    "material": "",
+    "chronograph": false,
+    "skeleton": false,
+    "sapphire": true,
+    "interchangeable": false,
+    "variants": [
+      {
+        "colorLabel": "TB820 Series",
+        "images": [
+          "/uploads/images/tsarbomba_sapphire_crystal_1.jpg",
+          "/uploads/images/tsarbomba_sapphire_crystal_2.jpg"
+        ]
+      },
+      {
+        "colorLabel": "TB8224&TB8228",
+        "images": [
+          "/uploads/images/tsarbomba_sapphire_crystal_c02_1.jpg",
+          "/uploads/images/tsarbomba_sapphire_crystal_c02_2.jpg"
+        ]
+      },
+      {
+        "colorLabel": "TB8210&TB8211",
+        "images": [
+          "/uploads/images/tsarbomba_sapphire_crystal_c03_1.jpg",
+          "/uploads/images/tsarbomba_sapphire_crystal_c03_2.jpg",
+          "/uploads/images/tsarbomba_sapphire_crystal_c03_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "TB8212",
+        "images": [
+          "/uploads/images/tsarbomba_sapphire_crystal_c04_1.jpg",
+          "/uploads/images/tsarbomba_sapphire_crystal_c04_2.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Atomic Series",
+        "images": [
+          "/uploads/images/tsarbomba_sapphire_crystal_c05_1.jpg",
+          "/uploads/images/tsarbomba_sapphire_crystal_c05_2.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Reactor Series",
+        "images": [
+          "/uploads/images/tsarbomba_sapphire_crystal_c06_1.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Dark Matter Series",
+        "images": [
+          "/uploads/images/tsarbomba_sapphire_crystal_c07_1.jpg",
+          "/uploads/images/tsarbomba_sapphire_crystal_c07_2.jpg"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "accessory",
+    "reference": "SAPPHIRE-CRYSTAL-AND-BACK-COVER",
+    "title": "Sapphire Crystal And Back Cover",
+    "handle": "glass-cover",
+    "series": "",
+    "women": false,
+    "price": 100.0,
+    "movement": "",
+    "material": "",
+    "chronograph": false,
+    "skeleton": false,
+    "sapphire": true,
+    "interchangeable": false,
+    "variants": [
+      {
+        "colorLabel": "Silver",
+        "images": [
+          "/uploads/images/tsarbomba_sapphire_crystal_and_back_cover_1.jpg",
+          "/uploads/images/tsarbomba_sapphire_crystal_and_back_cover_2.jpg",
+          "/uploads/images/tsarbomba_sapphire_crystal_and_back_cover_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Black",
+        "images": [
+          "/uploads/images/tsarbomba_sapphire_crystal_and_back_cover_c02_1.jpg",
+          "/uploads/images/tsarbomba_sapphire_crystal_and_back_cover_c02_2.jpg",
+          "/uploads/images/tsarbomba_sapphire_crystal_and_back_cover_c02_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Gold",
+        "images": [
+          "/uploads/images/tsarbomba_sapphire_crystal_and_back_cover_c03_1.jpg",
+          "/uploads/images/tsarbomba_sapphire_crystal_and_back_cover_c03_2.jpg",
+          "/uploads/images/tsarbomba_sapphire_crystal_and_back_cover_c03_3.jpg"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "accessory",
+    "reference": "ELEMENTAL-TB8210CF-TB8211Q-STRAP",
+    "title": "Elemental TB8210CF&TB8211Q Strap",
+    "handle": "tb8210-tb8211strap",
+    "series": "Elemental",
+    "women": false,
+    "price": 29.99,
+    "movement": "",
+    "material": "",
+    "chronograph": false,
+    "skeleton": false,
+    "sapphire": false,
+    "interchangeable": false,
+    "variants": [
+      {
+        "colorLabel": "Fluoro rubber strap-Black",
+        "images": [
+          "/uploads/images/tsarbomba_elemental_tb8210cf_tb8211q_strap_1.jpg",
+          "/uploads/images/tsarbomba_elemental_tb8210cf_tb8211q_strap_2.jpg",
+          "/uploads/images/tsarbomba_elemental_tb8210cf_tb8211q_strap_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Fluoro rubber strap-White",
+        "images": [
+          "/uploads/images/tsarbomba_elemental_tb8210cf_tb8211q_strap_c02_1.jpg",
+          "/uploads/images/tsarbomba_elemental_tb8210cf_tb8211q_strap_c02_2.jpg",
+          "/uploads/images/tsarbomba_elemental_tb8210cf_tb8211q_strap_c02_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Fluoro rubber strap-Red",
+        "images": [
+          "/uploads/images/tsarbomba_elemental_tb8210cf_tb8211q_strap_c03_1.jpg",
+          "/uploads/images/tsarbomba_elemental_tb8210cf_tb8211q_strap_c03_2.jpg",
+          "/uploads/images/tsarbomba_elemental_tb8210cf_tb8211q_strap_c03_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Fluoro rubber strap-Blue",
+        "images": [
+          "/uploads/images/tsarbomba_elemental_tb8210cf_tb8211q_strap_c04_1.jpg",
+          "/uploads/images/tsarbomba_elemental_tb8210cf_tb8211q_strap_c04_2.jpg",
+          "/uploads/images/tsarbomba_elemental_tb8210cf_tb8211q_strap_c04_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Fluoro rubber strap-Orange",
+        "images": [
+          "/uploads/images/tsarbomba_elemental_tb8210cf_tb8211q_strap_c05_1.jpg",
+          "/uploads/images/tsarbomba_elemental_tb8210cf_tb8211q_strap_c05_2.jpg",
+          "/uploads/images/tsarbomba_elemental_tb8210cf_tb8211q_strap_c05_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Silicone strap-Light Blue",
+        "images": [
+          "/uploads/images/tsarbomba_elemental_tb8210cf_tb8211q_strap_c06_1.jpg",
+          "/uploads/images/tsarbomba_elemental_tb8210cf_tb8211q_strap_c06_2.jpg",
+          "/uploads/images/tsarbomba_elemental_tb8210cf_tb8211q_strap_c06_3.jpg"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "accessory",
+    "reference": "ELEMENTAL-STRAP",
+    "title": "Elemental Strap",
+    "handle": "tsarbomba-watch-strap",
+    "series": "Elemental",
+    "women": false,
+    "price": 29.99,
+    "movement": "",
+    "material": "",
+    "chronograph": false,
+    "skeleton": false,
+    "sapphire": false,
+    "interchangeable": false,
+    "variants": [
+      {
+        "colorLabel": "Silicone Strap-Black",
+        "images": [
+          "/uploads/images/tsarbomba_elemental_strap_1.jpg",
+          "/uploads/images/tsarbomba_elemental_strap_2.jpg",
+          "/uploads/images/tsarbomba_elemental_strap_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Silicone Strap-Red",
+        "images": [
+          "/uploads/images/tsarbomba_elemental_strap_c02_1.jpg",
+          "/uploads/images/tsarbomba_elemental_strap_c02_2.jpg",
+          "/uploads/images/tsarbomba_elemental_strap_c02_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Silicone Strap-Blue",
+        "images": [
+          "/uploads/images/tsarbomba_elemental_strap_c03_1.jpg",
+          "/uploads/images/tsarbomba_elemental_strap_c03_2.jpg",
+          "/uploads/images/tsarbomba_elemental_strap_c03_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Silicone Strap-Yellow",
+        "images": [
+          "/uploads/images/tsarbomba_elemental_strap_c04_1.jpg",
+          "/uploads/images/tsarbomba_elemental_strap_c04_2.jpg",
+          "/uploads/images/tsarbomba_elemental_strap_c04_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Silicone Strap-Olive",
+        "images": [
+          "/uploads/images/tsarbomba_elemental_strap_c05_1.jpg",
+          "/uploads/images/tsarbomba_elemental_strap_c05_2.jpg",
+          "/uploads/images/tsarbomba_elemental_strap_c05_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Silicone Strap-Orange",
+        "images": [
+          "/uploads/images/tsarbomba_elemental_strap_c06_1.jpg",
+          "/uploads/images/tsarbomba_elemental_strap_c06_2.jpg",
+          "/uploads/images/tsarbomba_elemental_strap_c06_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Silicone Strap-Green",
+        "images": [
+          "/uploads/images/tsarbomba_elemental_strap_c07_1.jpg",
+          "/uploads/images/tsarbomba_elemental_strap_c07_2.jpg",
+          "/uploads/images/tsarbomba_elemental_strap_c07_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Silicone Strap-White",
+        "images": [
+          "/uploads/images/tsarbomba_elemental_strap_c08_1.jpg",
+          "/uploads/images/tsarbomba_elemental_strap_c08_2.jpg",
+          "/uploads/images/tsarbomba_elemental_strap_c08_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Silicone Strap-Light Blue",
+        "images": [
+          "/uploads/images/tsarbomba_elemental_strap_c09_1.jpg",
+          "/uploads/images/tsarbomba_elemental_strap_c09_2.jpg",
+          "/uploads/images/tsarbomba_elemental_strap_c09_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Silicone Strap-Tiffany Blue",
+        "images": [
+          "/uploads/images/tsarbomba_elemental_strap_c10_1.jpg",
+          "/uploads/images/tsarbomba_elemental_strap_c10_2.jpg",
+          "/uploads/images/tsarbomba_elemental_strap_c10_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Fluoro rubber strap-Red",
+        "images": [
+          "/uploads/images/tsarbomba_elemental_strap_c11_1.jpg",
+          "/uploads/images/tsarbomba_elemental_strap_c11_2.jpg",
+          "/uploads/images/tsarbomba_elemental_strap_c11_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Fluoro rubber strap-White",
+        "images": [
+          "/uploads/images/tsarbomba_elemental_strap_c12_1.jpg",
+          "/uploads/images/tsarbomba_elemental_strap_c12_2.jpg",
+          "/uploads/images/tsarbomba_elemental_strap_c12_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Fluoro rubber strap-Black",
+        "images": [
+          "/uploads/images/tsarbomba_elemental_strap_c13_1.jpg",
+          "/uploads/images/tsarbomba_elemental_strap_c13_2.jpg",
+          "/uploads/images/tsarbomba_elemental_strap_c13_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Fluoro rubber strap-Orange",
+        "images": [
+          "/uploads/images/tsarbomba_elemental_strap_c14_1.jpg",
+          "/uploads/images/tsarbomba_elemental_strap_c14_2.jpg",
+          "/uploads/images/tsarbomba_elemental_strap_c14_3.jpg"
+        ]
+      },
+      {
+        "colorLabel": "Fluoro rubber strap-Light Blue",
+        "images": [
+          "/uploads/images/tsarbomba_elemental_strap_c15_1.jpg",
+          "/uploads/images/tsarbomba_elemental_strap_c15_2.jpg",
+          "/uploads/images/tsarbomba_elemental_strap_c15_3.jpg"
         ]
       }
     ]

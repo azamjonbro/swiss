@@ -130,8 +130,8 @@ const en = {
   watchList: {
     filterGender: 'Audience',
     allGenders: 'All',
-    gender_men: 'Men's',
-    gender_women: 'Women's',
+    gender_men: "Men's",
+    gender_women: "Women's",
     filterCollection: 'Collection',
     allCollections: 'All Collections',
     filterType: 'Product',
