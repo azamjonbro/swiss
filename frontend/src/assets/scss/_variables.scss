@@ -13,6 +13,11 @@
   --sw-white: #fdfcfa;
   --sw-burgundy: #6b1e2b;
   --sw-burgundy-light: #8a2e3c;
+  // The logo tile's true red — brighter and more saturated than the accent
+  // burgundy. Used only for the brand mark (BrandMark.vue, favicon), never as
+  // a UI accent, so the "single burgundy accent" rule above still holds.
+  --sw-crimson: #ad2b39;
+  --sw-crimson-deep: #7c1f29;
 
   // Cool metallic grays — used only for hairlines, indices and case-detail
   // captions, where the warm grays would read as beige next to steel.

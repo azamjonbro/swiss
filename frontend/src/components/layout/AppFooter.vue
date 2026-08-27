@@ -3,6 +3,7 @@ import { useLocaleStore } from '@/stores/locale';
 import { site } from '@/utils/seo';
 import { telHref, STORES_PATH } from '@/seo/schema.mjs';
 import { hasStoreLocations } from '@/data/locations';
+import BrandMark from '@/components/shared/BrandMark.vue';
 
 const locale = useLocaleStore();
 const year = new Date().getFullYear();
@@ -17,7 +18,10 @@ const phone = site.contactPhone ?? '';
 <template>
   <footer class="sw-footer">
     <div class="sw-footer__top">
-      <RouterLink to="/" class="sw-footer__logo">SwissWatch Premium</RouterLink>
+      <RouterLink to="/" class="sw-footer__logo" aria-label="SwissWatch Premium">
+        <BrandMark :size="30" :wordmark="false" />
+        <span>SwissWatch Premium</span>
+      </RouterLink>
 
       <nav class="sw-footer__col">
         <span class="sw-eyebrow">{{ locale.t('footer.explore') }}</span>
@@ -66,6 +70,9 @@ const phone = site.contactPhone ?? '';
 }
 
 .sw-footer__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
   font-family: var(--font-serif);
   font-size: 1.75rem;
   color: var(--sw-white);

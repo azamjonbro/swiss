@@ -33,7 +33,16 @@ async function submit() {
 <template>
   <div class="sw-admin sw-admin-login">
     <form class="sw-admin-login__form sw-admin-card" @submit.prevent="submit">
-      <span class="sw-admin-login__brand">SwissWatch<span>Admin</span></span>
+      <span class="sw-admin-login__brand">
+        <svg class="sw-admin-login__mark" viewBox="0 0 40 40" aria-hidden="true">
+          <rect width="40" height="40" rx="2" fill="#ad2b39" />
+          <rect x="23" y="6" width="3" height="28" rx="0.6" fill="#7c1f29" />
+          <rect x="7.5" y="22" width="26" height="3" rx="0.6" fill="#7c1f29" />
+          <rect x="16" y="5" width="7" height="30" rx="1" fill="#f3efe7" />
+          <rect x="5.5" y="15" width="28" height="7" rx="1" fill="#f3efe7" />
+        </svg>
+        <span class="sw-admin-login__brand-text">SwissWatch<span>Admin</span></span>
+      </span>
       <p class="sw-admin-login__sub">{{ locale.t('admin.signInSub') }}</p>
 
       <label>
@@ -77,13 +86,23 @@ async function submit() {
 }
 
 .sw-admin-login__brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   font-family: var(--font-sans);
   font-weight: 700;
   font-size: 1.35rem;
   letter-spacing: -0.01em;
 }
 
-.sw-admin-login__brand span {
+.sw-admin-login__mark {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 2px;
+}
+
+.sw-admin-login__brand-text span {
   display: block;
   font-family: var(--font-sans);
   font-size: 0.65rem;

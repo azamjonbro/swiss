@@ -18,7 +18,16 @@ const links = computed(() => [
 
 <template>
   <aside class="sw-admin-sidebar">
-    <RouterLink to="/" class="sw-admin-sidebar__brand">SwissWatch<span>Admin</span></RouterLink>
+    <RouterLink to="/" class="sw-admin-sidebar__brand" aria-label="SwissWatch Admin">
+      <svg class="sw-admin-sidebar__mark" viewBox="0 0 40 40" aria-hidden="true">
+        <rect width="40" height="40" rx="2" fill="#ad2b39" />
+        <rect x="23" y="6" width="3" height="28" rx="0.6" fill="#7c1f29" />
+        <rect x="7.5" y="22" width="26" height="3" rx="0.6" fill="#7c1f29" />
+        <rect x="16" y="5" width="7" height="30" rx="1" fill="#f3efe7" />
+        <rect x="5.5" y="15" width="28" height="7" rx="1" fill="#f3efe7" />
+      </svg>
+      <span class="sw-admin-sidebar__brand-text">SwissWatch<span>Admin</span></span>
+    </RouterLink>
     <nav class="sw-admin-sidebar__nav">
       <RouterLink
         v-for="link in links"
@@ -50,6 +59,9 @@ const links = computed(() => [
 }
 
 .sw-admin-sidebar__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-family: var(--font-sans);
   font-weight: 700;
   font-size: 1.05rem;
@@ -57,7 +69,14 @@ const links = computed(() => [
   padding: 0 8px;
 }
 
-.sw-admin-sidebar__brand span {
+.sw-admin-sidebar__mark {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 2px;
+}
+
+.sw-admin-sidebar__brand-text span {
   display: block;
   font-family: var(--font-sans);
   font-size: 0.65rem;

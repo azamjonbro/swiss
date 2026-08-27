@@ -1,8 +1,8 @@
 <script setup lang="ts">
 interface Props {
-  /** Mark diameter in px. */
+  /** Mark height in px (the tile is square). */
   size?: number;
-  /** Render the wordmark next to the monogram. */
+  /** Render the wordmark next to the tile. */
   wordmark?: boolean;
 }
 
@@ -12,10 +12,10 @@ withDefaults(defineProps<Props>(), { size: 30, wordmark: true });
 <template>
   <span class="sw-mark">
     <!--
-      The monogram reads as a dial: a hairline bezel, a single burgundy index at
-      twelve, and the serif S at the centre. No fills, no gradients — it holds
-      up at 16px and at 200px, in either theme, because it is built from
-      currentColor and one accent stroke.
+      The house mark: a painterly Swiss cross on a crimson tile, lifted from the
+      boutique logo. Two ivory bars over two deeper-red under-strokes give the
+      hand-painted layering; it is built from three flat fills so it stays clean
+      from 16px (favicon) to full width, in either theme.
     -->
     <svg
       class="sw-mark__glyph"
@@ -26,18 +26,11 @@ withDefaults(defineProps<Props>(), { size: 30, wordmark: true });
       aria-hidden="true"
       focusable="false"
     >
-      <circle cx="20" cy="20" r="19" stroke="currentColor" stroke-opacity="0.32" stroke-width="1" />
-      <line x1="20" y1="1.6" x2="20" y2="5.4" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="butt" />
-      <text
-        class="sw-mark__letter"
-        x="20"
-        y="20"
-        text-anchor="middle"
-        dominant-baseline="central"
-        fill="currentColor"
-      >
-        S
-      </text>
+      <rect width="40" height="40" rx="2" fill="var(--sw-crimson)" />
+      <rect x="23" y="6" width="3" height="28" rx="0.6" fill="var(--sw-crimson-deep)" />
+      <rect x="7.5" y="22" width="26" height="3" rx="0.6" fill="var(--sw-crimson-deep)" />
+      <rect x="16" y="5" width="7" height="30" rx="1" fill="var(--sw-ivory)" />
+      <rect x="5.5" y="15" width="28" height="7" rx="1" fill="var(--sw-ivory)" />
     </svg>
     <span v-if="wordmark" class="sw-mark__word">SwissWatch Premium</span>
   </span>
@@ -53,14 +46,7 @@ withDefaults(defineProps<Props>(), { size: 30, wordmark: true });
 
 .sw-mark__glyph {
   flex: none;
-  overflow: visible;
-}
-
-.sw-mark__letter {
-  font-family: var(--font-serif);
-  font-size: 21px;
-  font-weight: 400;
-  letter-spacing: 0.02em;
+  border-radius: 2px;
 }
 
 .sw-mark__word {

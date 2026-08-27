@@ -1,5 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" fill="#0a0a0a"/>
-  <circle cx="32" cy="14" r="3" fill="#6b1e2b"/>
-  <text x="32" y="46" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="34" fill="#f3efe7">S</text>
+  <!-- SwissWatch Premium — the logo tile: a painterly Swiss cross on crimson. -->
+  <rect width="64" height="64" rx="3" fill="#ad2b39"/>
+  <!-- Deep-red under-strokes, offset down/right, for the hand-painted layering. -->
+  <rect x="37" y="10" width="5" height="45" rx="1" fill="#7c1f29"/>
+  <rect x="12" y="35" width="41" height="4.5" rx="1" fill="#7c1f29"/>
+  <!-- Ivory cross, set a touch left of centre with the bar riding high. -->
+  <rect x="25.5" y="8" width="11" height="48" rx="1.4" fill="#f3efe7"/>
+  <rect x="9" y="24" width="45" height="11" rx="1.4" fill="#f3efe7"/>
 </svg>
