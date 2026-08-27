@@ -38,12 +38,13 @@ function localizeWatch(watch: unknown, lang: Lang): Record<string, unknown> {
 // ---------- Public ----------
 
 export async function listWatches(req: Request, res: Response) {
-  const { category, brand, collection, featured, isNew, q, availability, color, type, limit, page } = req.query;
+  const { category, brand, collection, featured, isNew, q, availability, color, type, gender, limit, page } = req.query;
 
   const filter: Record<string, unknown> = { isActive: true };
   // Accessories are surfaced only via "pair it with" on a product page, never
   // in the main catalog grid, unless a caller explicitly asks for them.
   filter.type = type === 'accessory' || type === 'watch' ? type : { $ne: 'accessory' };
+  if (gender === 'men' || gender === 'women') filter.gender = gender;
   if (category) filter.category = category;
   if (brand) filter.brand = brand;
   if (collection) filter.collectionRef = collection;

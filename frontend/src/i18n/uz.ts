@@ -196,6 +196,8 @@ const uz: Dictionary = {
     availableTimepieces: 'Mavjud soatlar',
   },
   collectionList: {
+    men: 'Erkaklar kolleksiyalari',
+    women: 'Ayollar kolleksiyalari',
     eyebrow: 'Tanlangan',
     title: 'Kolleksiyalar',
     explore: 'Kolleksiyani ko‘rish',

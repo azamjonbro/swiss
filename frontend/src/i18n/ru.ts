@@ -197,6 +197,8 @@ const ru: Dictionary = {
     availableTimepieces: 'Доступные часы',
   },
   collectionList: {
+    men: 'Мужские коллекции',
+    women: 'Женские коллекции',
     eyebrow: 'Курировано',
     title: 'Коллекции',
     explore: 'Смотреть коллекцию',

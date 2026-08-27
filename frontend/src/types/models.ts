@@ -89,6 +89,7 @@ export interface Collection {
   slug: string;
   description: string;
   image: string;
+  gender: 'men' | 'women';
   watches: Watch[] | string[];
   featured: boolean;
   isActive: boolean;

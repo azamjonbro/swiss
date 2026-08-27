@@ -19,6 +19,9 @@ export interface IWatch extends Document {
   description: string;
   shortDescription: string;
   type: 'watch' | 'accessory';
+  // A women's edition can sit inside a men's series (Light Matter TB8223 ships in
+  // both), so the audience is a property of the watch, not only of its collection.
+  gender: 'men' | 'women';
   variants: IWatchVariant[];
   category: Types.ObjectId;
   collectionRef?: Types.ObjectId;
@@ -71,6 +74,7 @@ const WatchSchema = new Schema<IWatch>(
     description: { type: String, default: '' },
     shortDescription: { type: String, default: '' },
     type: { type: String, enum: ['watch', 'accessory'], default: 'watch', index: true },
+    gender: { type: String, enum: ['men', 'women'], default: 'men', index: true },
     variants: {
       type: [WatchVariantSchema],
       validate: {

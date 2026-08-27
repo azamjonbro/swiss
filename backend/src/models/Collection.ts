@@ -5,6 +5,8 @@ export interface ICollection extends Document {
   slug: string;
   description: string;
   image: string;
+  // Tsar Bomba splits its line-up by audience: eight men's series plus Nucleus Femme.
+  gender: 'men' | 'women';
   watches: Types.ObjectId[];
   featured: boolean;
   isActive: boolean;
@@ -25,6 +27,7 @@ const CollectionSchema = new Schema<ICollection>(
     slug: { type: String, required: true, unique: true, lowercase: true, index: true },
     description: { type: String, default: '' },
     image: { type: String, default: '' },
+    gender: { type: String, enum: ['men', 'women'], default: 'men', index: true },
     watches: [{ type: Schema.Types.ObjectId, ref: 'Watch' }],
     featured: { type: Boolean, default: false },
     isActive: { type: Boolean, default: true },

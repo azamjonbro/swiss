@@ -29,6 +29,8 @@ Run after adding new product photography:
 """
 
 from pathlib import Path
+import sys
+
 import numpy as np
 from scipy import ndimage
 from PIL import Image, ImageFilter
@@ -122,6 +124,15 @@ def process(path: Path) -> str:
 def main():
     files = sorted(IMAGES_DIR.glob('*.jpg')) + sorted(IMAGES_DIR.glob('*.jpeg')) + sorted(IMAGES_DIR.glob('*.png'))
     files = [f for f in files if '_trim' not in f.stem]
+    # Derivatives already on disk are left alone, so a re-run after adding new
+    # photography only pays for the new files.
+    files = [f for f in files if not f.with_name(f'{f.stem}_trim.webp').exists()]
+    # Optional name prefixes, so a batch of freshly imported photography can be
+    # processed without touching the rest of the library:
+    #     python3 scripts/remove-product-bg.py tsarbomba_tb8228a tsarbomba_tb8605
+    prefixes = sys.argv[1:]
+    if prefixes:
+        files = [f for f in files if any(f.stem.startswith(p) for p in prefixes)]
     counts: dict[str, int] = {}
     for i, f in enumerate(files):
         try:

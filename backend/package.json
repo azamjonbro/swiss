@@ -8,7 +8,8 @@
     "build": "tsc -p tsconfig.json",
     "start": "node dist/server.js",
     "seed": "ts-node-dev --transpile-only src/seed/seed.ts",
-    "translate": "ts-node-dev --transpile-only src/seed/applyTranslations.ts"
+    "translate": "ts-node-dev --transpile-only src/seed/applyTranslations.ts",
+    "import:catalog": "ts-node-dev --transpile-only src/seed/importCatalog.ts"
   },
   "keywords": [],
   "author": "",

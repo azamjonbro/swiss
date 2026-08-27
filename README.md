@@ -26,6 +26,7 @@ cd backend
 npm install
 cp .env.example .env      # edit if your Mongo URI or ports differ
 npm run seed               # populates the database with demo brands, categories, watches, and an admin user
+npm run import:catalog     # pulls in the rest of the tsarbomba.com line-up and rebuilds the collections
 npm run dev                 # http://localhost:4000
 
 # Storefront (in a second terminal)
@@ -88,6 +89,41 @@ Override these by setting `SEED_ADMIN_EMAIL` / `SEED_ADMIN_PASSWORD` before runn
 
 From the admin panel you can manage watches, brands, categories, collections, inquiries, and media —
 all changes are reflected immediately on the public site.
+
+## Catalogue
+
+The hand-written `seed.ts` carries a curated subset of Tsar Bomba's line-up with copy and
+spec sheets written for this store. Everything else comes from the brand's own storefront:
+
+```bash
+cd backend
+python3 scripts/fetch-tsarbomba.py   # downloads photography + writes src/seed/tsarbomba-import.json
+npm run import:catalog               # inserts the models and rebuilds the collections
+```
+
+`fetch-tsarbomba.py` reads tsarbomba.com's Shopify endpoints, so the product list, colourway
+split, prices, and photography are the brand's own data rather than a guess. Two things
+Shopify does not expose are the spec sheet and any real product copy — every listing's
+`body_html` is shipping boilerplate — so movement and case material are read off the site's
+attribute collections (Automatic Watches, Carbon Fiber Watches, …) and **case size, dial,
+bracelet, and water resistance are left blank on imported models** for an editor to fill in
+from the admin panel. Both scripts are safe to re-run: photography already on disk is not
+re-downloaded and watches already in the database are not touched.
+
+`import:catalog` also rebuilds the collections to match how tsarbomba.com organises its
+line-up — eight men's series (Elemental, Atomic, Dark Matter, Light Matter, Neutron, Reactor,
+Electron, Skunk Works) plus the women's Nucleus Femme — replacing the demo seed's
+`heritage-icons` / `new-arrivals` pair. Both `Collection` and `Watch` carry a `gender`, because
+a women's edition can live inside a men's series (Light Matter TB8223 and Atomic TB8218 both
+ship in one); `/api/watches?gender=women` filters on it, and the storefront's collections page
+groups the two audiences under separate headings.
+
+After adding new product photography, generate the card thumbnails:
+
+```bash
+python3 backend/scripts/remove-product-bg.py                      # everything missing one
+python3 backend/scripts/remove-product-bg.py tsarbomba_tb8228a    # or just these prefixes
+```
 
 ## Notes
 

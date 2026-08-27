@@ -194,6 +194,8 @@ const en = {
     availableTimepieces: 'Available Timepieces',
   },
   collectionList: {
+    men: "Men's Collections",
+    women: "Women's Collections",
     eyebrow: 'Curated',
     title: 'Collections',
     explore: 'Explore Collection',

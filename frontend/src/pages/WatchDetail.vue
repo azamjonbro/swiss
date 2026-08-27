@@ -66,6 +66,9 @@ function selectVariant(colorSlug: string) {
 
 function toggleZoom() {
   if (activeItem.value?.type !== 'image') return;
+  // On touch the same tap is how the gallery is swiped, so zoom is reserved
+  // for pointers that can hover — the lightbox covers phones instead.
+  if (window.matchMedia('(hover: none)').matches) return;
   isZoomed.value = !isZoomed.value;
 }
 
@@ -84,7 +87,30 @@ function openFullscreen() {
 
 function stepGallery(direction: 1 | -1) {
   if (!galleryItems.value.length) return;
+  isZoomed.value = false;
   activeIndex.value = (activeIndex.value + direction + galleryItems.value.length) % galleryItems.value.length;
+}
+
+function selectItem(index: number) {
+  isZoomed.value = false;
+  activeIndex.value = index;
+}
+
+// Horizontal swipe on the main frame — the phone equivalent of the thumb rail.
+const touchStart = ref({ x: 0, y: 0 });
+
+function onTouchStart(event: TouchEvent) {
+  const touch = event.changedTouches[0];
+  touchStart.value = { x: touch.clientX, y: touch.clientY };
+}
+
+function onTouchEnd(event: TouchEvent) {
+  const touch = event.changedTouches[0];
+  const dx = touch.clientX - touchStart.value.x;
+  const dy = touch.clientY - touchStart.value.y;
+  // Ignore anything that reads as a vertical scroll or an ordinary tap.
+  if (Math.abs(dx) < 44 || Math.abs(dx) <= Math.abs(dy)) return;
+  stepGallery(dx < 0 ? 1 : -1);
 }
 
 const specs = computed(() => {
@@ -244,22 +270,26 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
 
     <article class="sw-watch-detail">
       <div class="sw-watch-detail__gallery">
-        <div
-          class="sw-watch-detail__main"
-          :class="{ 'is-video': activeItem?.type === 'video', 'is-zoomed': isZoomed }"
-          :style="isZoomed ? { '--zoom-origin': zoomOrigin } : undefined"
-          @click="toggleZoom"
-          @mousemove="onMainMouseMove"
-        >
-          <SmartVideo
-            v-if="activeItem?.type === 'video'"
-            :src="activeItem.src"
-            :poster="selectedVariant?.images[0]"
-            :alt="watchDoc.name"
-            playback-strategy="manual"
-            object-fit="contain"
-          />
-          <SmartImage v-else :src="activeItem?.src" :alt="watchDoc.name" eager aspect-ratio="4 / 5" />
+        <div class="sw-watch-detail__stage">
+          <div
+            class="sw-watch-detail__main"
+            :class="{ 'is-video': activeItem?.type === 'video', 'is-zoomed': isZoomed }"
+            :style="isZoomed ? { '--zoom-origin': zoomOrigin } : undefined"
+            @click="toggleZoom"
+            @mousemove="onMainMouseMove"
+            @touchstart.passive="onTouchStart"
+            @touchend.passive="onTouchEnd"
+          >
+            <SmartVideo
+              v-if="activeItem?.type === 'video'"
+              :src="activeItem.src"
+              :poster="selectedVariant?.images[0]"
+              :alt="watchDoc.name"
+              playback-strategy="manual"
+              object-fit="contain"
+            />
+            <SmartImage v-else :src="activeItem?.src" :alt="watchDoc.name" eager object-fit="contain" />
+          </div>
 
           <button
             v-if="activeItem?.type === 'image'"
@@ -270,6 +300,28 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
           >
             &#x2922;
           </button>
+
+          <template v-if="galleryItems.length > 1">
+            <button
+              class="sw-watch-detail__nav sw-watch-detail__nav--prev"
+              type="button"
+              aria-label="Previous"
+              @click.stop="stepGallery(-1)"
+            >
+              &larr;
+            </button>
+            <button
+              class="sw-watch-detail__nav sw-watch-detail__nav--next"
+              type="button"
+              aria-label="Next"
+              @click.stop="stepGallery(1)"
+            >
+              &rarr;
+            </button>
+            <span class="sw-watch-detail__counter" aria-hidden="true">
+              {{ activeIndex + 1 }} / {{ galleryItems.length }}
+            </span>
+          </template>
         </div>
 
         <div v-if="galleryItems.length > 1" class="sw-watch-detail__thumbs">
@@ -279,12 +331,13 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
             class="sw-watch-detail__thumb"
             :class="{ 'is-active': i === activeIndex }"
             type="button"
-            @click="activeIndex = i"
+            @click="selectItem(i)"
           >
             <SmartImage
               :src="item.type === 'video' ? selectedVariant?.images[0] : item.src"
               :alt="item.type === 'video' ? `${watchDoc.name} video` : `${watchDoc.name} view ${i + 1}`"
               aspect-ratio="1 / 1"
+              object-fit="contain"
             />
             <span v-if="item.type === 'video'" class="sw-watch-detail__thumb-play" aria-hidden="true">&#9654;</span>
           </button>
@@ -295,7 +348,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
         <RouterLink v-if="brandSlug" :to="`/brands/${brandSlug}`" class="sw-label sw-watch-detail__brand">
           {{ brandName }}
         </RouterLink>
-        <h1 class="sw-h1">{{ watchDoc.name }}</h1>
+        <h1 class="sw-h1 sw-watch-detail__title">{{ watchDoc.name }}</h1>
         <p class="sw-watch-detail__price">{{ currency.format(watchDoc.price) }}</p>
         <p class="sw-body-lg sw-watch-detail__desc">{{ watchDoc.shortDescription }}</p>
 
@@ -405,7 +458,13 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
   </template>
 
   <transition name="sw-fade">
-    <div v-if="isFullscreen && watchDoc" class="sw-lightbox" @click.self="isFullscreen = false">
+    <div
+      v-if="isFullscreen && watchDoc"
+      class="sw-lightbox"
+      @click.self="isFullscreen = false"
+      @touchstart.passive="onTouchStart"
+      @touchend.passive="onTouchEnd"
+    >
       <button class="sw-lightbox__close" type="button" :aria-label="locale.t('watchDetail.close')" @click="isFullscreen = false">
         {{ locale.t('watchDetail.close') }}
       </button>
@@ -418,15 +477,23 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
 </template>
 
 <style scoped>
+/* Product-page type scale. The site-wide scale is editorial (huge headline,
+   small everything else); a product page has to be read, so the imagery is
+   capped and the reading column is set a full step larger throughout. */
 .sw-watch-detail-page {
+  --pd-title: clamp(2.4rem, 4.4vw, 3.9rem);
+  --pd-body: clamp(1.0625rem, 1.15vw, 1.25rem);
+  --pd-label: 0.8125rem;
+  --pd-gallery-max: 640px;
   padding: calc(var(--header-height) + 32px) var(--container-pad) 0;
 }
 
 .sw-watch-detail__breadcrumb {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 0.7rem;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  font-size: 0.78rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--text-muted);
@@ -443,22 +510,40 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
 
 .sw-watch-detail {
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: clamp(32px, 5vw, 96px);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(32px, 4.5vw, 88px);
   align-items: start;
   padding-bottom: 96px;
+}
+
+/* ---- Gallery ---- */
+
+.sw-watch-detail__gallery {
+  /* The frame is capped so the photograph never outshouts the copy beside
+     it — on a wide screen the column is wider than the picture needs to be. */
+  max-width: var(--pd-gallery-max);
+  position: sticky;
+  top: calc(var(--header-height) + 32px);
+}
+
+.sw-watch-detail__stage {
+  position: relative;
 }
 
 .sw-watch-detail__main {
   position: relative;
   cursor: zoom-in;
   background: var(--surface-media);
-  aspect-ratio: 4 / 5;
+  /* Square, contain-fit: product photography arrives with wildly different
+     framing, and a 4/5 cover crop was cutting bracelets off the edge. */
+  aspect-ratio: 1 / 1;
   overflow: hidden;
+  padding: clamp(12px, 2.4vw, 32px);
 }
 
 .sw-watch-detail__main.is-video {
   cursor: default;
+  padding: 0;
 }
 
 .sw-watch-detail__main.is-zoomed {
@@ -476,16 +561,16 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
 
 .sw-watch-detail__expand {
   position: absolute;
-  bottom: 16px;
-  right: 16px;
-  width: 36px;
-  height: 36px;
+  bottom: 14px;
+  right: 14px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: rgba(255, 255, 255, 0.85);
   color: var(--sw-ink, #111);
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   transition: background var(--dur-fast) var(--ease-out);
 }
 
@@ -493,20 +578,85 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
   background: #fff;
 }
 
+.sw-watch-detail__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.88);
+  color: #111;
+  font-size: 1.05rem;
+  opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
+}
+
+.sw-watch-detail__nav:hover {
+  background: #fff;
+}
+
+.sw-watch-detail__nav--prev {
+  left: 12px;
+}
+
+.sw-watch-detail__nav--next {
+  right: 12px;
+}
+
+.sw-watch-detail__stage:hover .sw-watch-detail__nav,
+.sw-watch-detail__nav:focus-visible {
+  opacity: 1;
+}
+
+.sw-watch-detail__counter {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Touch has no hover: the arrows stay put, and the swipe handler does the rest. */
+@media (hover: none) {
+  .sw-watch-detail__nav {
+    opacity: 1;
+  }
+}
+
 .sw-watch-detail__thumbs {
   display: flex;
   gap: 12px;
-  margin-top: 16px;
-  flex-wrap: wrap;
+  margin-top: 14px;
+  /* A rail rather than a wrapping grid — a colorway with eight shots used to
+     push a second and third row of thumbs down the page. */
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.sw-watch-detail__thumbs::-webkit-scrollbar {
+  display: none;
 }
 
 .sw-watch-detail__thumb {
   position: relative;
-  width: 76px;
-  height: 76px;
+  flex: 0 0 auto;
+  width: clamp(68px, 7vw, 88px);
+  aspect-ratio: 1 / 1;
   overflow: hidden;
-  opacity: 0.5;
-  transition: opacity var(--dur-fast) var(--ease-out);
+  background: var(--surface-media);
+  border: 1px solid transparent;
+  opacity: 0.62;
+  scroll-snap-align: start;
+  transition: opacity var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
 }
 
 .sw-watch-detail__thumb-play {
@@ -526,9 +676,13 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
   opacity: 1;
 }
 
+.sw-watch-detail__thumb.is-active {
+  border-color: var(--text);
+}
+
+/* ---- Info column ---- */
+
 .sw-watch-detail__info {
-  position: sticky;
-  top: calc(var(--header-height) + 32px);
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -536,19 +690,30 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
 
 .sw-watch-detail__brand {
   color: var(--text-muted);
+  font-size: var(--pd-label);
+  letter-spacing: 0.18em;
+}
+
+.sw-watch-detail__title {
+  font-size: var(--pd-title);
+  margin-top: 10px;
 }
 
 .sw-watch-detail__price {
   font-family: var(--font-sans);
-  font-size: 1.125rem;
-  font-weight: 500;
-  letter-spacing: 0.02em;
+  font-size: clamp(1.35rem, 1.8vw, 1.75rem);
+  font-weight: 600;
+  letter-spacing: 0.01em;
   font-variant-numeric: tabular-nums;
-  margin-top: 8px;
+  margin-top: 14px;
 }
 
 .sw-watch-detail__desc {
-  margin-top: 24px;
+  font-size: var(--pd-body);
+  line-height: 1.7;
+  max-width: 52ch;
+  margin-top: 22px;
+  color: var(--text-muted);
 }
 
 .sw-watch-detail__colors {
@@ -557,19 +722,30 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
   border-top: 1px solid var(--border);
 }
 
+.sw-watch-detail__colors > .sw-label,
+.sw-watch-detail__availability .sw-label,
+.sw-watch-detail__qty .sw-label,
+.sw-watch-detail__pair > .sw-label {
+  font-size: var(--pd-label);
+  letter-spacing: 0.16em;
+}
+
 .sw-watch-detail__swatches {
   display: flex;
-  gap: 10px;
-  margin-top: 12px;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 14px;
 }
 
 .sw-watch-detail__swatch {
-  width: 30px;
-  height: 30px;
+  /* 44px is the tap-target floor; the old 30px circles were both hard to hit
+     and too quiet to read as the page's colour filter. */
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  padding: 3px;
+  padding: 4px;
   border: 1px solid transparent;
-  transition: border-color var(--dur-fast) var(--ease-out);
+  transition: border-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
 }
 
 .sw-watch-detail__swatch span {
@@ -585,16 +761,20 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
   border-color: var(--text);
 }
 
+.sw-watch-detail__swatch.is-active {
+  transform: scale(1.04);
+}
+
 .sw-watch-detail__availability {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-top: 28px;
+  margin-top: 26px;
 }
 
 .sw-watch-detail__dot {
-  width: 8px;
-  height: 8px;
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
   background: var(--sw-gray-400);
 }
@@ -623,16 +803,35 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
 .sw-watch-detail__qty {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
 }
 
 .sw-watch-detail__stepper {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   border: 1px solid var(--border);
-  padding: 6px 14px;
-  font-size: 0.85rem;
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.sw-watch-detail__stepper button {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05rem;
+  transition: background var(--dur-fast) var(--ease-out);
+}
+
+.sw-watch-detail__stepper button:hover {
+  background: var(--surface-media);
+}
+
+.sw-watch-detail__stepper > span {
+  min-width: 2ch;
+  text-align: center;
 }
 
 .sw-watch-detail__actions {
@@ -644,8 +843,20 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
 .sw-watch-detail__cta,
 .sw-watch-detail__buy {
   flex: 1;
-  min-width: 160px;
+  min-width: 190px;
   justify-content: center;
+  font-size: 0.8125rem;
+  letter-spacing: 0.18em;
+}
+
+.sw-watch-detail__buy {
+  border: 1px solid var(--text);
+  padding: 20px 32px;
+}
+
+.sw-watch-detail__buy::before,
+.sw-watch-detail__buy::after {
+  display: none;
 }
 
 .sw-watch-detail__secondary {
@@ -653,6 +864,12 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
   flex-wrap: wrap;
   align-items: center;
   gap: 20px 36px;
+}
+
+.sw-watch-detail__inquire,
+.sw-watch-detail__save {
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
 }
 
 .sw-watch-detail__save.is-saved {
@@ -670,17 +887,17 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
 }
 
 .sw-watch-detail__pair-list {
-  margin-top: 16px;
+  margin-top: 18px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 18px;
 }
 
 .sw-watch-detail__pair-item {
   display: grid;
-  grid-template-columns: 56px 1fr auto;
+  grid-template-columns: 72px minmax(0, 1fr) auto;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
 }
 
 .sw-watch-detail__pair-media {
@@ -691,10 +908,12 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
 .sw-watch-detail__pair-body {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .sw-watch-detail__pair-name {
-  font-size: 0.9rem;
+  font-size: 1.02rem;
+  line-height: 1.4;
   transition: opacity var(--dur-fast) var(--ease-out);
 }
 
@@ -703,17 +922,18 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
 }
 
 .sw-watch-detail__pair-price {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   color: var(--text-muted);
-  margin-top: 2px;
+  margin-top: 4px;
+  font-variant-numeric: tabular-nums;
 }
 
 .sw-watch-detail__pair-add {
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   border: 1px solid var(--border);
-  padding: 8px 16px;
+  padding: 12px 20px;
   transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
 }
 
@@ -733,9 +953,11 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
   padding: 0 var(--container-pad);
 }
 
+/* ---- Story / specs ---- */
+
 .sw-watch-story {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
   gap: clamp(32px, 5vw, 80px);
   align-items: center;
   padding: 80px 0;
@@ -744,11 +966,14 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
 
 .sw-watch-story__media {
   background: var(--surface-media);
+  max-width: 520px;
 }
 
 .sw-watch-story__body .sw-body-lg {
   margin-top: 18px;
-  line-height: 1.7;
+  font-size: var(--pd-body);
+  line-height: 1.8;
+  max-width: 60ch;
 }
 
 .sw-watch-specs {
@@ -759,12 +984,21 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
 .sw-watch-specs__grid {
   margin-top: 28px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 28px 24px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px 28px;
+}
+
+.sw-watch-specs__row dt {
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  color: var(--text-muted);
 }
 
 .sw-watch-specs__row dd {
-  margin-top: 6px;
+  margin-top: 8px;
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  color: var(--text);
 }
 
 .sw-watch-related-section {
@@ -778,6 +1012,8 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
   margin-bottom: 32px;
 }
 
+/* ---- Lightbox ---- */
+
 .sw-lightbox {
   position: fixed;
   inset: 0;
@@ -786,7 +1022,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40px;
+  padding: clamp(16px, 5vw, 40px);
 }
 
 .sw-lightbox__close {
@@ -816,9 +1052,38 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
   right: var(--container-pad);
 }
 
+/* ---- Responsive ----
+   Three steps: the two-column desktop layout collapses to one column at the
+   tablet width, then the info column loses its side-by-side rows on phones. */
+
+@media (max-width: 1180px) {
+  .sw-watch-detail-page {
+    --pd-gallery-max: 560px;
+  }
+
+  .sw-watch-specs__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 900px) {
   .sw-watch-detail {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+    padding-bottom: 64px;
+  }
+
+  .sw-watch-detail-page {
+    --pd-gallery-max: 100%;
+  }
+
+  .sw-watch-detail__gallery {
+    position: static;
+    /* Centred rather than stretched: a full-width square on a tablet is a
+       screenful of watch before a single line of copy. */
+    max-width: 540px;
+    margin-inline: auto;
+    width: 100%;
   }
 
   .sw-watch-detail__info {
@@ -826,17 +1091,97 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
   }
 
   .sw-watch-story {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+    padding: 56px 0;
   }
 
-  .sw-watch-specs__grid {
-    grid-template-columns: 1fr 1fr;
+  .sw-watch-story__media {
+    max-width: 440px;
+  }
+
+  .sw-watch-specs {
+    padding: 48px 0 64px;
+  }
+
+  .sw-watch-related-section {
+    padding-top: 48px;
+    padding-bottom: 80px;
   }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 640px) {
+  .sw-watch-detail-page {
+    --pd-title: clamp(1.9rem, 7.4vw, 2.5rem);
+    --pd-body: 1.0625rem;
+    padding-top: calc(var(--header-height) + 16px);
+  }
+
+  .sw-watch-detail__breadcrumb {
+    margin-bottom: 18px;
+    font-size: 0.72rem;
+  }
+
+  .sw-watch-detail__gallery {
+    /* Edge to edge — the container padding is clawed back so the photograph
+       gets the full width it needs at this size. */
+    max-width: none;
+    width: calc(100% + var(--container-pad) * 2);
+    margin-inline: calc(var(--container-pad) * -1);
+  }
+
+  .sw-watch-detail__thumbs {
+    padding-inline: var(--container-pad);
+  }
+
+  .sw-watch-detail__desc {
+    max-width: none;
+  }
+
+  .sw-watch-detail__actions {
+    flex-direction: column;
+  }
+
+  .sw-watch-detail__cta,
+  .sw-watch-detail__buy {
+    width: 100%;
+    min-width: 0;
+    padding-inline: 20px;
+  }
+
+  .sw-watch-detail__secondary {
+    gap: 16px 28px;
+  }
+
+  .sw-watch-detail__pair-item {
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: 12px 14px;
+  }
+
+  .sw-watch-detail__pair-add {
+    grid-column: 2;
+    justify-self: start;
+  }
+
   .sw-watch-specs__grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+  }
+
+  .sw-lightbox__arrow {
+    font-size: 1.25rem;
+    padding: 8px;
+  }
+}
+
+@media (max-width: 380px) {
+  .sw-watch-detail__swatch {
+    width: 40px;
+    height: 40px;
+  }
+
+  .sw-watch-detail__nav {
+    width: 40px;
+    height: 40px;
   }
 }
 </style>

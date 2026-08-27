@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import type { Collection } from '@/types/models';
 import { fetchCollections } from '@/services/collections';
 import { useLocaleStore } from '@/stores/locale';
@@ -7,6 +7,14 @@ import SmartImage from '@/components/shared/SmartImage.vue';
 
 const locale = useLocaleStore();
 const collections = ref<Collection[]>([]);
+
+// Tsar Bomba splits its line-up by audience, so the page does too: the men's series
+// first, then Nucleus Femme. An audience with no collections drops out entirely.
+const groups = computed(() =>
+  (['men', 'women'] as const)
+    .map((gender) => ({ gender, items: collections.value.filter((c) => c.gender === gender) }))
+    .filter((group) => group.items.length > 0),
+);
 
 async function load() {
   collections.value = await fetchCollections();
@@ -26,23 +34,27 @@ watch(() => locale.lang, load);
       <h1 class="sw-h1">{{ locale.t('collectionList.title') }}</h1>
     </header>
 
-    <div class="sw-collections__list">
-      <RouterLink
-        v-for="collection in collections"
-        :key="collection._id"
-        :to="`/collections/${collection.slug}`"
-        class="sw-collections__item"
-      >
-        <div class="sw-collections__media">
-          <SmartImage :src="collection.image" :alt="collection.name" aspect-ratio="21 / 9" />
-        </div>
-        <div class="sw-collections__text">
-          <h2 class="sw-h2">{{ collection.name }}</h2>
-          <p class="sw-body">{{ collection.description }}</p>
-          <span class="sw-btn">{{ locale.t('collectionList.explore') }} <span class="sw-btn__arrow">&rarr;</span></span>
-        </div>
-      </RouterLink>
-    </div>
+    <section v-for="group in groups" :key="group.gender" class="sw-collections__group">
+      <h2 class="sw-collections__group-title">{{ locale.t(`collectionList.${group.gender}`) }}</h2>
+
+      <div class="sw-collections__list">
+        <RouterLink
+          v-for="collection in group.items"
+          :key="collection._id"
+          :to="`/collections/${collection.slug}`"
+          class="sw-collections__item"
+        >
+          <div class="sw-collections__media">
+            <SmartImage :src="collection.image" :alt="collection.name" aspect-ratio="21 / 9" />
+          </div>
+          <div class="sw-collections__text">
+            <h3 class="sw-h2">{{ collection.name }}</h3>
+            <p class="sw-body">{{ collection.description }}</p>
+            <span class="sw-btn">{{ locale.t('collectionList.explore') }} <span class="sw-btn__arrow">&rarr;</span></span>
+          </div>
+        </RouterLink>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -56,6 +68,20 @@ watch(() => locale.lang, load);
   flex-direction: column;
   gap: 8px;
   margin-bottom: 64px;
+}
+
+.sw-collections__group + .sw-collections__group {
+  margin-top: 112px;
+}
+
+.sw-collections__group-title {
+  font-family: var(--font-display, Georgia, serif);
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding-bottom: 20px;
+  margin-bottom: 56px;
+  border-bottom: 1px solid var(--color-border, rgba(255, 255, 255, 0.16));
 }
 
 .sw-collections__list {
