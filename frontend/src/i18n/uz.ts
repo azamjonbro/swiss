@@ -225,6 +225,9 @@ const uz: Dictionary = {
     searching: 'Qidirilmoqda…',
     noResults: 'Ushbu so‘rov bo‘yicha soat topilmadi:',
     close: 'Yopish',
+    suggested: 'Ommabop tanlovlar',
+    hint: 'Model nomi, brend yoki referens raqamini yozing',
+    resultCount: 'ta natija',
   },
   inquiry: {
     eyebrow: 'Maʼlumot so‘rash',

@@ -111,6 +111,11 @@ const WatchSchema = new Schema<IWatch>(
   { timestamps: true },
 );
 
-WatchSchema.index({ name: 'text', reference: 'text', shortDescription: 'text', 'variants.colorLabel': 'text' });
+// The text index this schema used to declare is gone: search moved to
+// utils/search.ts, which needs prefix and brand matching that `$text` cannot
+// do. Mongoose no longer creates it, but it survives in databases that already
+// have it — drop it there with
+//   db.watches.dropIndex('name_text_reference_text_shortDescription_text_variants.colorLabel_text')
+// so writes stop paying to maintain an index nothing reads.
 
 export const Watch = model<IWatch>('Watch', WatchSchema);

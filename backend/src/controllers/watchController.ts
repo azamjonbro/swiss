@@ -3,6 +3,7 @@ import { Watch } from '../models/Watch';
 import { ApiError } from '../utils/ApiError';
 import { toSlug } from '../utils/slug';
 import { Lang, localize, resolveLang } from '../utils/i18n';
+import { buildSearchFilter } from '../utils/search';
 import { requestRedeploy } from '../services/deployHook';
 
 const WATCH_FIELDS = ['name', 'description', 'shortDescription'];
@@ -55,7 +56,12 @@ export async function listWatches(req: Request, res: Response) {
   if (isNew !== undefined) filter.isNewArrival = isNew === 'true';
   if (availability) filter.availability = availability;
   if (color) filter['variants.colorSlug'] = String(color);
-  if (q) filter.$text = { $search: String(q) };
+  if (q) {
+    const search = await buildSearchFilter(String(q));
+    // A term that tokenises to nothing must not silently return the whole
+    // catalogue as if no search had been asked for.
+    if (search) Object.assign(filter, search);
+  }
 
   // The full Tsar Bomba catalogue is a little over 90 products with its accessories,
   // and the storefront filters client-side over one fetch, so the cap has to clear it.
@@ -116,7 +122,10 @@ export async function getWatchBySlug(req: Request, res: Response) {
 export async function adminListWatches(req: Request, res: Response) {
   const { q, page, limit } = req.query;
   const filter: Record<string, unknown> = {};
-  if (q) filter.$text = { $search: String(q) };
+  if (q) {
+    const search = await buildSearchFilter(String(q));
+    if (search) Object.assign(filter, search);
+  }
 
   const pageSize = Math.min(Number(limit) || 20, 100);
   const pageNum = Math.max(Number(page) || 1, 1);

@@ -24,6 +24,12 @@ export const useUiStore = defineStore('ui', () => {
   function openSearch() {
     isMenuOpen.value = false;
     isSearchOpen.value = true;
+    // iOS Safari raises the software keyboard only when focus() runs inside
+    // the user's own tap. Vue's re-render is a microtask later, by which point
+    // the gesture is spent and the field focuses silently with no keyboard —
+    // so the panel stays mounted (SearchOverlay hides it with opacity, never
+    // display) and the input is focused here, synchronously, instead.
+    document.querySelector<HTMLInputElement>('.sw-search__input')?.focus();
   }
   function closeSearch() {
     isSearchOpen.value = false;

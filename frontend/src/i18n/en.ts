@@ -223,6 +223,9 @@ const en = {
     searching: 'Searching…',
     noResults: 'No timepieces found for',
     close: 'Close',
+    suggested: 'Popular Selections',
+    hint: 'Type a model name, a brand, or a reference number',
+    resultCount: 'result(s)',
   },
   inquiry: {
     eyebrow: 'Request Information',

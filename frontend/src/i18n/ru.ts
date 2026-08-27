@@ -226,6 +226,9 @@ const ru: Dictionary = {
     searching: 'Поиск…',
     noResults: 'Часы не найдены по запросу',
     close: 'Закрыть',
+    suggested: 'Популярный выбор',
+    hint: 'Введите название модели, бренд или референс',
+    resultCount: 'результат(ов)',
   },
   inquiry: {
     eyebrow: 'Запрос информации',
