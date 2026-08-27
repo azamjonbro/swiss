@@ -17,6 +17,18 @@ import { env } from '../config/env';
 /** Well under the 50,000-URL / 50 MB limit, and small enough to fetch quickly. */
 const CHUNK_SIZE = 5000;
 
+/**
+ * The fixed routes, as a fallback.
+ *
+ * Which fixed routes exist is a fact the storefront build knows and this API
+ * does not: `/stores` appears only once `frontend/src/data/locations.json`
+ * holds a real address. So the frontend build writes its own
+ * `dist/sitemap-pages.xml`, and Vercel serves that file ahead of the rewrite
+ * that would otherwise land here — the same precedence that lets a prerendered
+ * product page beat the SPA catch-all. This list therefore only answers a
+ * request made directly against the API origin; every other section (brands,
+ * collections, product chunks) and the index itself are still served from here.
+ */
 const STATIC_PATHS = ['/', '/watches', '/brands', '/collections', '/about', '/contact'];
 
 interface SitemapEntry {

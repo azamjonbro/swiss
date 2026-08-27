@@ -12,13 +12,34 @@
  *     immediately rather than 404ing until the next build;
  *   - anything else → a real 404, with the SPA rendering its Not Found page.
  *
- * Deliberately dependency-free: it is on the critical path for unknown URLs,
- * so it must not carry a bundle or a cold-start penalty it does not need.
+ * Carries no third-party dependency — it is on the critical path for unknown
+ * URLs and must not pay a bundle or cold-start penalty it does not need. The
+ * one thing it does import is `src/seo/schema.mjs`, the pure module the app
+ * and the prerenderer already share, so the head it injects for a
+ * not-yet-prerendered product is built by exactly the same code as the head
+ * the next build will write to disk.
  */
 
+import {
+  brandNameOf,
+  createSite,
+  headTags,
+  pageTitle,
+  resolveSiteUrl,
+} from '../src/seo/schema.mjs';
+
 const API = (process.env.SEO_API_URL || 'https://swiss.techinfo.uz').replace(/\/+$/, '');
-const SITE_URL = (process.env.VITE_SITE_URL || process.env.SITE_URL || 'https://swisspremium.uz').replace(/\/+$/, '');
-const SITE_NAME = process.env.VITE_SITE_NAME || process.env.SITE_NAME || 'Swiss Premium';
+
+// Non-strict: this runs per request, and a config slip must not take the site
+// down. The build gate (vite.config.ts + prerender.mjs) is what guarantees the
+// value is set — this only decides what a warm lambda falls back to.
+const site = createSite({
+  url: resolveSiteUrl(process.env.VITE_SITE_URL || process.env.SITE_URL),
+  name: process.env.VITE_SITE_NAME || process.env.SITE_NAME,
+  contactEmail: process.env.VITE_CONTACT_EMAIL,
+  contactPhone: process.env.VITE_CONTACT_PHONE,
+});
+const SITE_NAME = site.name;
 
 /** Prerendered documents, cached for the lifetime of a warm instance. */
 const documentCache = new Map();
@@ -81,22 +102,33 @@ async function findEntity(lookup) {
   }
 }
 
-/** Enough head for a page the last build did not know about yet. */
+/**
+ * Enough head for a page the last build did not know about yet.
+ *
+ * Built through `headTags`, the same function the prerenderer calls, so this
+ * stopgap head and the permanent one agree on the title budget, the canonical
+ * form and the tag set.
+ */
 function injectMeta(shell, record, canonicalPath) {
-  const brand = record.brand && typeof record.brand === 'object' ? record.brand.name : '';
-  const title = `${[brand, record.name].filter(Boolean).join(' ')} | ${SITE_NAME}`;
-  const description = record.shortDescription || record.description || '';
-  const canonical = `${SITE_URL}/${canonicalPath}`;
+  const headline = [brandNameOf(record), record.name].filter(Boolean).join(' ').trim();
+  const tags = headTags(
+    {
+      title: pageTitle(headline, site),
+      description: record.shortDescription || record.description || '',
+      canonical: `/${canonicalPath}`,
+      type: 'product',
+    },
+    site,
+  );
 
   const head = [
-    `<title>${escapeHtml(title)}</title>`,
-    `<link rel="canonical" data-seo href="${escapeHtml(canonical)}" />`,
-    description ? `<meta name="description" data-seo content="${escapeHtml(description.slice(0, 300))}" />` : '',
-    `<meta property="og:title" data-seo content="${escapeHtml(title)}" />`,
-    `<meta property="og:url" data-seo content="${escapeHtml(canonical)}" />`,
-  ]
-    .filter(Boolean)
-    .join('\n    ');
+    `<title>${escapeHtml(tags.title)}</title>`,
+    `<link rel="canonical" data-seo href="${escapeHtml(tags.canonical)}" />`,
+    ...tags.metas.map((meta) => {
+      const attr = meta.property ? 'property' : 'name';
+      return `<meta ${attr}="${escapeHtml(meta.property ?? meta.name)}" data-seo content="${escapeHtml(meta.content)}" />`;
+    }),
+  ].join('\n    ');
 
   return shell.replace(/<title>[\s\S]*?<\/title>/i, head);
 }

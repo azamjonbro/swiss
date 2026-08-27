@@ -1,14 +1,23 @@
 <script setup lang="ts">
 import { useLocaleStore } from '@/stores/locale';
+import { site } from '@/utils/seo';
+import { telHref, STORES_PATH } from '@/seo/schema.mjs';
+import { hasStoreLocations } from '@/data/locations';
 
 const locale = useLocaleStore();
 const year = new Date().getFullYear();
+
+// Contact details come from VITE_CONTACT_EMAIL / VITE_CONTACT_PHONE and are
+// allowed to be unset. Unset renders nothing at all — a placeholder number in
+// a footer is read as a real one, by visitors and by structured-data parsers.
+const email = site.contactEmail ?? '';
+const phone = site.contactPhone ?? '';
 </script>
 
 <template>
   <footer class="sw-footer">
     <div class="sw-footer__top">
-      <RouterLink to="/" class="sw-footer__logo">SwissWatch</RouterLink>
+      <RouterLink to="/" class="sw-footer__logo">SwissWatch Premium</RouterLink>
 
       <nav class="sw-footer__col">
         <span class="sw-eyebrow">{{ locale.t('footer.explore') }}</span>
@@ -21,18 +30,21 @@ const year = new Date().getFullYear();
         <span class="sw-eyebrow">{{ locale.t('footer.maison') }}</span>
         <RouterLink to="/about">{{ locale.t('footer.about') }}</RouterLink>
         <RouterLink to="/contact">{{ locale.t('footer.contact') }}</RouterLink>
+        <!-- Linked only once a real boutique exists; the route is not even
+             registered while locations.json is empty. -->
+        <RouterLink v-if="hasStoreLocations" :to="STORES_PATH">{{ locale.t('stores.title') }}</RouterLink>
       </nav>
 
       <div class="sw-footer__col">
         <span class="sw-eyebrow">{{ locale.t('footer.connect') }}</span>
         <a href="https://instagram.com/swisswatch_premium" target="_blank" rel="noopener">{{ locale.t('footer.instagram') }}</a>
-        <a href="tel:+998000000000">+998 00 000 00 00</a>
-        <a href="mailto:concierge@swisswatch.uz">concierge@swisswatch.uz</a>
+        <a v-if="phone" :href="telHref(phone)">{{ phone }}</a>
+        <a v-if="email" :href="`mailto:${email}`">{{ email }}</a>
       </div>
     </div>
 
     <div class="sw-footer__bottom">
-      <p>&copy; {{ year }} SwissWatch. {{ locale.t('footer.rights') }}</p>
+      <p>&copy; {{ year }} SwissWatch Premium. {{ locale.t('footer.rights') }}</p>
       <p class="sw-footer__tagline">{{ locale.t('footer.tagline') }}</p>
     </div>
   </footer>

@@ -39,7 +39,7 @@ withDefaults(defineProps<Props>(), { size: 30, wordmark: true });
         S
       </text>
     </svg>
-    <span v-if="wordmark" class="sw-mark__word">SwissWatch</span>
+    <span v-if="wordmark" class="sw-mark__word">SwissWatch Premium</span>
   </span>
 </template>
 

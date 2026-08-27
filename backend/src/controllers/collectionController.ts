@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { Collection } from '../models/Collection';
 import { ApiError } from '../utils/ApiError';
 import { toSlug } from '../utils/slug';
+import { requestRedeploy } from '../services/deployHook';
 import { localize, localizeList, resolveLang } from '../utils/i18n';
 
 const COLLECTION_FIELDS = ['name', 'description'];
@@ -46,6 +47,7 @@ export async function adminCreateCollection(req: Request, res: Response) {
 
   const slug = body.slug ? toSlug(body.slug) : toSlug(body.name);
   const collection = await Collection.create({ ...body, slug });
+  requestRedeploy(`collection:create ${collection.slug}`);
   res.status(201).json(collection);
 }
 
@@ -55,11 +57,13 @@ export async function adminUpdateCollection(req: Request, res: Response) {
 
   const collection = await Collection.findByIdAndUpdate(req.params.id, body, { new: true, runValidators: true });
   if (!collection) throw new ApiError(404, 'Collection not found');
+  requestRedeploy(`collection:update ${collection.slug}`);
   res.json(collection);
 }
 
 export async function adminDeleteCollection(req: Request, res: Response) {
   const collection = await Collection.findByIdAndDelete(req.params.id);
   if (!collection) throw new ApiError(404, 'Collection not found');
+  requestRedeploy(`collection:delete ${collection.slug}`);
   res.json({ message: 'Collection deleted' });
 }

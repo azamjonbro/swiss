@@ -18,6 +18,90 @@
  */
 
 export const PRODUCT_BASE = '/products';
+export const STORES_PATH = '/stores';
+
+/**
+ * The brand name, spelled one way, everywhere. It is a proper noun: it is not
+ * translated, and it is not abbreviated in a title.
+ */
+export const SITE_NAME = 'SwissWatch Premium';
+
+/** Canonical production origin. */
+export const DEFAULT_SITE_URL = 'https://swisswatchpremium.uz';
+
+/** Google truncates a result title past roughly this width. */
+export const TITLE_MAX = 60;
+
+/**
+ * Validates a configured origin.
+ *
+ * A silent fallback to localhost is what produced the first bad sitemap, so
+ * `strict` (used by the production build and the prerenderer) throws instead
+ * of guessing. The runtime is lenient — it has a correct default and must not
+ * take the page down — but the build gate above it guarantees the value is set.
+ */
+export function resolveSiteUrl(raw, { strict = false, label = 'VITE_SITE_URL' } = {}) {
+  const value = String(raw ?? '').trim().replace(/\/+$/, '');
+  let problem = '';
+
+  if (!value) problem = 'is not set';
+  else if (!/^https?:\/\//i.test(value)) problem = `must be an absolute http(s) URL (got "${value}")`;
+  else {
+    let host = '';
+    try {
+      host = new URL(value).hostname;
+    } catch {
+      problem = `is not a parsable URL (got "${value}")`;
+    }
+    if (!problem && /^(localhost|127\.0\.0\.1|0\.0\.0\.0|\[::1\])$/i.test(host)) {
+      problem = `must not point at localhost (got "${value}")`;
+    }
+    if (!problem && /\.vercel\.app$/i.test(host)) {
+      problem = `must not point at a *.vercel.app preview host (got "${value}")`;
+    }
+  }
+
+  if (!problem) return value;
+  if (strict) {
+    throw new Error(
+      `[seo] ${label} ${problem}. Set it to ${DEFAULT_SITE_URL} for Production and Preview ` +
+        'before building: canonical, Open Graph and sitemap URLs are all derived from it.',
+    );
+  }
+  return DEFAULT_SITE_URL;
+}
+
+/**
+ * Builds the `site` record every metadata builder reads, so the running app,
+ * the prerenderer and the 404 function cannot disagree about who the site is.
+ *
+ * `contactEmail` and `contactPhone` are optional on purpose: the business may
+ * not have published either yet. Absent means absent — the UI renders nothing
+ * in their place and the JSON-LD omits the field, rather than shipping a
+ * placeholder that a crawler would read as fact.
+ */
+export function createSite({ url, name, contactEmail, contactPhone } = {}) {
+  const site = {
+    url: String(url ?? DEFAULT_SITE_URL).replace(/\/+$/, ''),
+    name: String(name || SITE_NAME),
+    // JPEG, not WebP: several social crawlers still refuse WebP previews.
+    defaultImage: '/images/swisswatch_hero.jpg',
+    logo: '/favicon.svg',
+    locale: 'en_US',
+    sameAs: ['https://instagram.com/swisswatch_premium'],
+  };
+  const email = String(contactEmail ?? '').trim();
+  const phone = String(contactPhone ?? '').trim();
+  if (email) site.contactEmail = email;
+  if (phone) site.contactPhone = phone;
+  return site;
+}
+
+/** `tel:` href for a display phone number — nothing but digits and a leading +. */
+export function telHref(phone) {
+  const clean = String(phone ?? '').replace(/[^\d+]/g, '');
+  return clean ? `tel:${clean}` : '';
+}
 
 export function productPath(slug) {
   return `${PRODUCT_BASE}/${slug}`;
@@ -38,8 +122,35 @@ export function absoluteUrl(site, pathOrUrl) {
   return `${site.url}${pathOrUrl.startsWith('/') ? '' : '/'}${pathOrUrl}`;
 }
 
+/**
+ * Trims one title segment to `max`, on a word boundary, with an ellipsis.
+ * Separate from `clampText`: a title has a much tighter budget than a
+ * description and must never lose the brand.
+ */
+export function clampTitleSegment(text, max) {
+  const clean = String(text ?? '')
+    .replace(/\s+/g, ' ')
+    .trim();
+  if (max <= 1) return '';
+  if (clean.length <= max) return clean;
+  const cut = clean.slice(0, max - 1);
+  const lastSpace = cut.lastIndexOf(' ');
+  const kept = lastSpace > max * 0.5 ? cut.slice(0, lastSpace) : cut;
+  return `${kept.replace(/[\s\-\u2013\u2014,;:.]+$/, '')}\u2026`;
+}
+
+/**
+ * `<headline> | SwissWatch Premium`, never wider than TITLE_MAX.
+ *
+ * When a product name overruns, the product segment is the one that gives —
+ * the brand segment is what makes the result identifiable in a SERP, so it is
+ * never truncated.
+ */
 export function pageTitle(headline, site) {
-  return headline ? `${headline} | ${site.name}` : site.name;
+  if (!headline) return site.name;
+  const suffix = ` | ${site.name}`;
+  const segment = clampTitleSegment(headline, TITLE_MAX - suffix.length);
+  return segment ? `${segment}${suffix}` : site.name;
 }
 
 /** Trims to a meta-description-sized string on a word boundary. */
@@ -208,6 +319,11 @@ export function staticSeo(key, site) {
       description: `Curated Swiss watch collections at ${site.name} — men's and women's lines assembled from the maisons we represent.`,
       canonical: '/collections',
     },
+    stores: {
+      title: pageTitle('Boutiques', site),
+      description: `Visit ${site.name} in person — addresses, opening hours and directions for every boutique we keep in Uzbekistan.`,
+      canonical: STORES_PATH,
+    },
     about: {
       title: pageTitle('About', site),
       description: `${site.name} is a curated showroom for authenticated luxury timepieces in Tashkent — how we source, examine and present every watch we list.`,
@@ -296,6 +412,18 @@ export function organizationSchema(site) {
   if (site.logo) org.logo = absoluteUrl(site, site.logo);
   // Only profiles that genuinely exist — an invented handle is worse than none.
   if (site.sameAs?.length) org.sameAs = site.sameAs;
+  if (site.contactEmail) org.email = site.contactEmail;
+  if (site.contactPhone) org.telephone = site.contactPhone;
+  // A contactPoint without a number is an empty shell, so it appears only once
+  // a real phone number has been configured.
+  if (site.contactPhone) {
+    org.contactPoint = {
+      '@type': 'ContactPoint',
+      contactType: 'sales',
+      telephone: site.contactPhone,
+      ...(site.contactEmail ? { email: site.contactEmail } : {}),
+    };
+  }
   return org;
 }
 
@@ -381,6 +509,67 @@ export function productSchema(watch, site) {
   }
 
   return product;
+}
+
+// ---------------------------------------------------------------------------
+// Physical boutiques
+// ---------------------------------------------------------------------------
+
+/**
+ * Drops entries that carry nothing worth publishing. A LocalBusiness needs at
+ * minimum a name and something a visitor could actually walk to; a half-filled
+ * record is a worse signal than no record, so it is skipped rather than padded.
+ */
+export function usableLocations(locations) {
+  return (Array.isArray(locations) ? locations : []).filter(
+    (loc) => loc && String(loc.name ?? '').trim() && String(loc.streetAddress ?? '').trim(),
+  );
+}
+
+/**
+ * One `JewelryStore` (a LocalBusiness subtype) per boutique.
+ *
+ * Every field is copied from `src/data/locations.json` and nothing else: no
+ * guessed opening hours, no invented coordinates, no price range. An empty
+ * array in, an empty array out — the caller emits no node at all.
+ */
+export function storeSchemas(locations, site) {
+  return usableLocations(locations).map((loc, index) => {
+    const address = {
+      '@type': 'PostalAddress',
+      streetAddress: loc.streetAddress,
+    };
+    if (loc.addressLocality) address.addressLocality = loc.addressLocality;
+    if (loc.addressRegion) address.addressRegion = loc.addressRegion;
+    if (loc.postalCode) address.postalCode = loc.postalCode;
+    if (loc.addressCountry) address.addressCountry = loc.addressCountry;
+
+    const node = {
+      '@type': 'JewelryStore',
+      '@id': `${site.url}${STORES_PATH}#store-${index + 1}`,
+      name: loc.name,
+      url: `${site.url}${STORES_PATH}`,
+      address,
+      parentOrganization: { '@id': `${site.url}/#organization` },
+    };
+
+    if (loc.telephone) node.telephone = loc.telephone;
+    if (Array.isArray(loc.openingHours) && loc.openingHours.length) node.openingHours = loc.openingHours;
+    if (loc.geo && typeof loc.geo.latitude === 'number' && typeof loc.geo.longitude === 'number') {
+      node.geo = { '@type': 'GeoCoordinates', latitude: loc.geo.latitude, longitude: loc.geo.longitude };
+    }
+    if (loc.mapUrl) node.hasMap = loc.mapUrl;
+
+    return node;
+  });
+}
+
+/** A boutique's address on one line, for the crawlable copy and the UI. */
+export function formatStoreAddress(loc) {
+  return [loc?.streetAddress, loc?.addressLocality, loc?.addressRegion, loc?.postalCode]
+    .map((part) => String(part ?? '').trim())
+    .filter(Boolean)
+    .join(', ');
 }
 
 /** Wraps one or more nodes in a single @graph document. */

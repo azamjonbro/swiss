@@ -5,28 +5,18 @@ import router from './router';
 import { useThemeStore } from '@/stores/theme';
 import { useLocaleStore } from '@/stores/locale';
 import { useAccountStore } from '@/stores/account';
-import { prefersReducedMotion } from '@/composables/useReducedMotion';
 import revealPlugin from '@/directives/reveal';
 import '@/assets/scss/global.scss';
 
-const app = createApp(App);
-
-app.use(createPinia());
-app.use(router);
-app.use(revealPlugin);
-
-// Instantiate before mount so the <html> theme/lang attributes are set
-// before first paint, avoiding a flash of the wrong theme or language.
-useThemeStore();
-useLocaleStore();
-
-// Resolve any stored customer session up front — not awaited, so it never delays
-// first paint. The router guard awaits the same in-flight promise when a deep
-// link into /account needs the answer before it can decide.
-void useAccountStore().restoreSession();
-
-app.mount('#app');
-
+/**
+ * Hides the loading panel.
+ *
+ * There is no minimum display time. The old one-second floor held an opaque
+ * panel over content that was already painted, which meant the browser's
+ * largest contentful paint was a spinner rather than the hero — a second of
+ * LCP given away for a transition nobody asked for. The panel now lives
+ * exactly as long as the app takes to become interactive.
+ */
 function hidePreloader() {
   const el = document.getElementById('sw-preloader');
   document.body.classList.remove('sw-loading');
@@ -40,7 +30,38 @@ function hidePreloader() {
   setTimeout(remove, 900);
 }
 
-const fontsReady = document.fonts?.ready ?? Promise.resolve();
-const minDisplay = new Promise<void>((resolve) => setTimeout(resolve, prefersReducedMotion() ? 150 : 1000));
+async function bootstrap() {
+  const app = createApp(App);
 
-Promise.all([fontsReady, minDisplay]).then(hidePreloader);
+  app.use(createPinia());
+  app.use(router);
+  app.use(revealPlugin);
+
+  // Instantiate before mount so the <html> theme/lang attributes are set
+  // before first paint, avoiding a flash of the wrong theme or language.
+  useThemeStore();
+  const locale = useLocaleStore();
+
+  // Resolve any stored customer session up front — not awaited, so it never delays
+  // first paint. The router guard awaits the same in-flight promise when a deep
+  // link into /account needs the answer before it can decide.
+  void useAccountStore().restoreSession();
+
+  // The only thing worth blocking the mount on: rendering before the active
+  // dictionary has arrived would paint raw translation keys. It is one small
+  // chunk, and the panel above is still covering the page while it lands.
+  await locale.ready();
+
+  app.mount('#app');
+
+  // `isReady` resolves when the first route component has actually rendered,
+  // which is the honest definition of "the app has mounted"; one frame later
+  // that render has been painted, and the panel has nothing left to hide.
+  await router.isReady();
+  requestAnimationFrame(hidePreloader);
+
+  // Everything below is off the critical path.
+  locale.prefetch();
+}
+
+void bootstrap();

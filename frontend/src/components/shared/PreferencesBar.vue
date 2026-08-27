@@ -15,7 +15,7 @@ const langOptions = computed(() => SUPPORTED_LANGS.map((l) => ({ value: l, label
 const currencyOptions = computed(() => currency.SUPPORTED.map((c) => ({ value: c, label: c })));
 
 function setLang(value: string) {
-  locale.setLang(value as Lang);
+  void locale.setLang(value as Lang);
 }
 
 function setCurrency(value: string) {
@@ -36,7 +36,17 @@ function setCurrency(value: string) {
 
     <span class="sw-prefs__divider" aria-hidden="true" />
 
-    <PrefDropdown :options="langOptions" :model-value="locale.lang" :label="locale.t('prefs.language')" @update:model-value="setLang" />
+    <!-- Hovering the switcher is the earliest reliable signal that another
+         dictionary is about to be needed; warming it here makes the swap
+         instant without loading all three up front. -->
+    <PrefDropdown
+      :options="langOptions"
+      :model-value="locale.lang"
+      :label="locale.t('prefs.language')"
+      @mouseenter="locale.prefetch()"
+      @focusin="locale.prefetch()"
+      @update:model-value="setLang"
+    />
 
     <span class="sw-prefs__divider" aria-hidden="true" />
 

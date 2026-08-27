@@ -1,6 +1,6 @@
 <script setup lang="ts">
 /**
- * A cinematic, single-focus filmstrip through the houses SwissWatch
+ * A cinematic, single-focus filmstrip through the houses SwissWatch Premium
  * represents — not a category grid. One house is centred and legible at a
  * time; its neighbours sit dimmed and partially visible either side, the
  * way a gallery filmstrip works rather than a SaaS carousel. Product

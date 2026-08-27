@@ -2,8 +2,16 @@
 import { ref } from 'vue';
 import { createInquiry } from '@/services/inquiries';
 import { useLocaleStore } from '@/stores/locale';
+import { site } from '@/utils/seo';
+import { telHref } from '@/seo/schema.mjs';
 
 const locale = useLocaleStore();
+
+// Empty is a legitimate state: the business has not published these yet. The
+// block disappears rather than showing a placeholder — and the Organization
+// JSON-LD omits the same fields, so the page and the markup agree.
+const contactEmail = site.contactEmail ?? '';
+const contactPhone = site.contactPhone ?? '';
 
 const name = ref('');
 const phone = ref('');
@@ -45,13 +53,13 @@ async function submit() {
           <span class="sw-eyebrow">{{ locale.t('contact.showroom') }}</span>
           <p class="sw-body">{{ locale.t('contact.showroomValue') }}</p>
         </div>
-        <div class="sw-contact__block">
+        <div v-if="contactPhone" class="sw-contact__block">
           <span class="sw-eyebrow">{{ locale.t('contact.phone') }}</span>
-          <a class="sw-body" href="tel:+998000000000">+998 00 000 00 00</a>
+          <a class="sw-body" :href="telHref(contactPhone)">{{ contactPhone }}</a>
         </div>
-        <div class="sw-contact__block">
+        <div v-if="contactEmail" class="sw-contact__block">
           <span class="sw-eyebrow">{{ locale.t('contact.email') }}</span>
-          <a class="sw-body" href="mailto:concierge@swisswatch.uz">concierge@swisswatch.uz</a>
+          <a class="sw-body" :href="`mailto:${contactEmail}`">{{ contactEmail }}</a>
         </div>
         <div class="sw-contact__block">
           <span class="sw-eyebrow">{{ locale.t('contact.instagram') }}</span>

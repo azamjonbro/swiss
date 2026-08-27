@@ -20,7 +20,7 @@ const uz: Dictionary = {
     watches: 'Soatlar',
     brands: 'Brendlar',
     newArrivals: 'Yangi kelganlar',
-    about: 'SwissWatch haqida',
+    about: 'SwissWatch Premium haqida',
     contact: 'Aloqa',
   },
   menu: {
@@ -51,9 +51,9 @@ const uz: Dictionary = {
     storyTitle: '1998 yildan beri vaqtga boshqacha nigoh.',
     storyLede: 'Jenevadagi ustaxona va Toshkentdagi ko‘rgazma zali orasida bitta standart o‘zgarmay qoladi.',
     storyBody:
-      'SwissWatch bitta e’tiqod bilan boshlangan: nafis soat u yaratilgan sabr bilan teng darajada o‘rganilishi, hujjatlashtirilishi va taqdim etilishi kerak. Yigirma yildan so‘ng ham usul o‘zgargani yo‘q — har bir nusxa shaxsan izlab topiladi, xizmat tarixiga solishtirib tekshiriladi va faqat hech qanday shartsiz kafolat berish mumkin bo‘lgandagina katalogga chiqariladi.',
+      'SwissWatch Premium bitta e’tiqod bilan boshlangan: nafis soat u yaratilgan sabr bilan teng darajada o‘rganilishi, hujjatlashtirilishi va taqdim etilishi kerak. Yigirma yildan so‘ng ham usul o‘zgargani yo‘q — har bir nusxa shaxsan izlab topiladi, xizmat tarixiga solishtirib tekshiriladi va faqat hech qanday shartsiz kafolat berish mumkin bo‘lgandagina katalogga chiqariladi.',
     storyCta: 'Hikoyamizni o‘qish',
-    storyPortraitAlt: 'Toshkentdagi SwissWatch ko‘rgazma zali',
+    storyPortraitAlt: 'Toshkentdagi SwissWatch Premium ko‘rgazma zali',
     storyDetailAlt: 'Mexanizmni lupa ostida ko‘rayotgan soatsoz',
     storyFactFoundedLabel: 'Tashkil topgan',
     storyFactFoundedValue: '1998',
@@ -81,8 +81,8 @@ const uz: Dictionary = {
     craft_finishing_body:
       'To‘g‘ri yotgan cho‘tka izlari, yorug‘likni bitta toza chiziqda ushlaydigan sayqallangan qirralar. Pardoz — manufaktura endi texnik ko‘rsatkichlar bilan raqobatlashmaydigan joy.',
     statement: 'Time, Refined.',
-    statementAlt: 'Past yorug‘likda suratga olingan SwissWatch soati',
-    heroImageAlt: 'Qorong‘i tosh ustida turgan SwissWatch soati',
+    statementAlt: 'Past yorug‘likda suratga olingan SwissWatch Premium soati',
+    heroImageAlt: 'Qorong‘i tosh ustida turgan SwissWatch Premium soati',
     heroEyebrow: '1998 — Jeneva / Toshkent',
     heroSub: 'Vaqt, mukammallashtirilgan.',
     discover: 'Kolleksiyani ko‘rish',
@@ -91,7 +91,7 @@ const uz: Dictionary = {
     introLine2: 'o‘lchanmaydi.',
     introLine3: 'U his qilinadi.',
     introCopy:
-      "SwissWatch dunyodagi eng muhim soatlarning haqiqiyligi tasdiqlangan tanlovini taqdim etadi — izlab topilgan, tekshirilgan va shu darajadagi kolleksiyaga munosib nafosat bilan namoyish etilgan.",
+      "SwissWatch Premium dunyodagi eng muhim soatlarning haqiqiyligi tasdiqlangan tanlovini taqdim etadi — izlab topilgan, tekshirilgan va shu darajadagi kolleksiyaga munosib nafosat bilan namoyish etilgan.",
     featuredEyebrow: 'Kolleksiya',
     featuredTitle: 'Vaqtning o‘ziga xos talqini.',
     viewAll: 'Barchasini ko‘rish',
@@ -104,7 +104,7 @@ const uz: Dictionary = {
     conciergeTitle: 'Mutaxassis doim yoningizda.',
     conciergeBody:
       "Nafis soat sotib olish — o‘ylab qilinadigan qaror. Mutaxassislarimiz holat, kelib chiqishi va tanlov bo‘yicha xarid oldidan, davomida va keyin ham siz bilan muloqotga tayyor.",
-    conciergeCta: 'SwissWatch bilan bog‘lanish',
+    conciergeCta: 'SwissWatch Premium bilan bog‘lanish',
   },
   brandsSection: {
     eyebrow: 'Biz vakillik qiladigan uylar',
@@ -240,7 +240,7 @@ const uz: Dictionary = {
     errorGeneric: 'Xatolik yuz berdi. Iltimos, qayta urinib ko‘ring.',
     thankYouEyebrow: 'Rahmat',
     thankYouTitle: 'So‘rovingiz qabul qilindi.',
-    thankYouBody: 'SwissWatch mutaxassisi tez orada siz bilan bog‘lanadi.',
+    thankYouBody: 'SwissWatch Premium mutaxassisi tez orada siz bilan bog‘lanadi.',
     close: 'Yopish',
   },
   cart: {
@@ -255,10 +255,10 @@ const uz: Dictionary = {
     close: 'Yopish',
   },
   about: {
-    eyebrow: 'SwissWatch haqida',
+    eyebrow: 'SwissWatch Premium haqida',
     title: 'Ishonchga qurilgan uy.',
     intro:
-      "SwissWatch oddiy bir e'tiqod asosida tashkil topgan: nafis soat o‘z ustaligiga teng darajadagi taqdimotga loyiq. Biz bozor emasmiz. Biz tanlab yig‘ilgan ko‘rgazma zalimiz — har bir nusxa shaxsan izlab topiladi, haqiqiyligi tasdiqlanadi va kolleksiyamizga qo‘shilishidan oldin katalogga kiritiladi.",
+      "SwissWatch Premium oddiy bir e'tiqod asosida tashkil topgan: nafis soat o‘z ustaligiga teng darajadagi taqdimotga loyiq. Biz bozor emasmiz. Biz tanlab yig‘ilgan ko‘rgazma zalimiz — har bir nusxa shaxsan izlab topiladi, haqiqiyligi tasdiqlanadi va kolleksiyamizga qo‘shilishidan oldin katalogga kiritiladi.",
     standardEyebrow: 'Bizning standartimiz',
     standardTitle: 'Murosasiz haqiqiylik tekshiruvi.',
     standardBody:
@@ -270,7 +270,7 @@ const uz: Dictionary = {
   },
   contact: {
     eyebrow: 'Aloqa',
-    title: 'SwissWatch bilan bog‘laning',
+    title: 'SwissWatch Premium bilan bog‘laning',
     intro: "Xarid, konsignatsiya yoki umumiy savollar bo‘yicha mutaxassislarimizga bevosita murojaat qiling yoki quyida xabar qoldiring.",
     showroom: 'Ko‘rgazma zali',
     showroomValue: 'Toshkent, O‘zbekiston',
@@ -287,7 +287,15 @@ const uz: Dictionary = {
     errorGeneric: 'Xatolik yuz berdi. Iltimos, qayta urinib ko‘ring.',
     thankYouEyebrow: 'Rahmat',
     thankYouTitle: 'Xabaringiz qabul qilindi.',
-    thankYouBody: 'SwissWatch mutaxassisi tez orada siz bilan bog‘lanadi.',
+    thankYouBody: 'SwissWatch Premium mutaxassisi tez orada siz bilan bog‘lanadi.',
+  },
+  stores: {
+    eyebrow: 'Tashrif',
+    title: 'Butiklar',
+    intro: 'Bizni shaxsan qayerdan topish mumkin. Katalogdagi har bir nusxani sotib olishdan oldin butikda ko‘rib chiqsa bo‘ladi.',
+    hours: 'Ish vaqti',
+    phone: 'Telefon',
+    directions: 'Yo‘nalish',
   },
   notFound: {
     eyebrow: 'Xatolik 404',
@@ -297,7 +305,7 @@ const uz: Dictionary = {
   },
   account: {
     // -- shared authentication frame --
-    brandEyebrow: 'SwissWatch Maison',
+    brandEyebrow: 'SwissWatch Premium Maison',
     brandStatement: 'Vaqt — sizning nomingizda.',
     brandNote:
       'So‘rovlaringizni kuzatib boring, saqlab qo‘ygan soatlaringizga qayting va mutaxassisingiz bilan bir so‘zni ikki marta takrorlamasdan bog‘laning.',
@@ -333,7 +341,7 @@ const uz: Dictionary = {
 
     // -- sign up --
     registerEyebrow: 'Ro‘yxatdan o‘tish',
-    registerTitle: 'SwissWatchga qo‘shiling',
+    registerTitle: 'SwissWatch Premiumga qo‘shiling',
     registerLede: 'Bir necha ma’lumot — va kolleksiyangiz doim yoningizda.',
     registerButton: 'Hisob yaratish',
     registeringButton: 'Yaratilmoqda…',
@@ -355,7 +363,7 @@ const uz: Dictionary = {
     forgotSentBody: 'Agar bu email hisobga bog‘langan bo‘lsa, parolni tiklash havolasi yuborildi. Havola bir soat davomida amal qiladi.',
     resetEyebrow: 'Parol',
     resetTitle: 'Yangi parol tanlang.',
-    resetLede: 'SwissWatch hisobingiz uchun yangi parol o‘rnating.',
+    resetLede: 'SwissWatch Premium hisobingiz uchun yangi parol o‘rnating.',
     resetButton: 'Parolni saqlash',
     resetDoneEyebrow: 'Tayyor',
     resetDoneTitle: 'Parolingiz yangilandi.',

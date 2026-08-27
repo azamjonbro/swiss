@@ -3,6 +3,7 @@ import { Watch } from '../models/Watch';
 import { ApiError } from '../utils/ApiError';
 import { toSlug } from '../utils/slug';
 import { Lang, localize, resolveLang } from '../utils/i18n';
+import { requestRedeploy } from '../services/deployHook';
 
 const WATCH_FIELDS = ['name', 'description', 'shortDescription'];
 const BRAND_FIELDS = ['name', 'description'];
@@ -147,6 +148,8 @@ export async function adminCreateWatch(req: Request, res: Response) {
 
   const slug = body.slug ? toSlug(body.slug) : toSlug(`${body.name}-${body.reference ?? ''}`);
   const watch = await Watch.create({ ...body, slug });
+  // The product has no prerendered page until the storefront rebuilds.
+  requestRedeploy(`watch:create ${watch.slug}`);
   res.status(201).json(watch);
 }
 
@@ -156,11 +159,13 @@ export async function adminUpdateWatch(req: Request, res: Response) {
 
   const watch = await Watch.findByIdAndUpdate(req.params.id, body, { new: true, runValidators: true });
   if (!watch) throw new ApiError(404, 'Timepiece not found');
+  requestRedeploy(`watch:update ${watch.slug}`);
   res.json(watch);
 }
 
 export async function adminDeleteWatch(req: Request, res: Response) {
   const watch = await Watch.findByIdAndDelete(req.params.id);
   if (!watch) throw new ApiError(404, 'Timepiece not found');
+  requestRedeploy(`watch:delete ${watch.slug}`);
   res.json({ message: 'Timepiece deleted' });
 }

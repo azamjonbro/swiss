@@ -9,6 +9,10 @@ import { useLockBodyScroll } from '@/composables/useLockBodyScroll';
 import { SUPPORTED_LANGS, LANG_LABELS, type Lang } from '@/i18n';
 import ThemeIcon from '@/components/shared/ThemeIcon.vue';
 import PrefDropdown from '@/components/shared/PrefDropdown.vue';
+import { site } from '@/utils/seo';
+
+/** The canonical domain, shown bare — derived, never typed out a second time. */
+const siteHost = site.url.replace(/^https?:\/\//i, '').replace(/\/+$/, '');
 
 const ui = useUiStore();
 const locale = useLocaleStore();
@@ -37,7 +41,7 @@ const langOptions = computed(() => SUPPORTED_LANGS.map((l) => ({ value: l, label
 const currencyOptions = computed(() => currency.SUPPORTED.map((c) => ({ value: c, label: c })));
 
 function setLang(value: string) {
-  locale.setLang(value as Lang);
+  void locale.setLang(value as Lang);
 }
 
 function setCurrency(value: string) {
@@ -70,7 +74,7 @@ function setCurrency(value: string) {
           </div>
           <div class="sw-menu__contact">
             <span class="sw-eyebrow">{{ locale.t('menu.visit') }}</span>
-            <p class="sw-body">swisswatch.uz</p>
+            <p class="sw-body">{{ siteHost }}</p>
           </div>
           <div class="sw-menu__contact">
             <span class="sw-eyebrow">{{ locale.t('menu.follow') }}</span>
@@ -96,6 +100,8 @@ function setCurrency(value: string) {
               :label="locale.t('prefs.language')"
               surface="dark"
               :compact="false"
+              @mouseenter="locale.prefetch()"
+              @focusin="locale.prefetch()"
               @update:model-value="setLang"
             />
           </div>

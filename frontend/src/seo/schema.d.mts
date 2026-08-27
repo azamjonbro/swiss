@@ -4,11 +4,16 @@
  * safety it gets from the rest of `src/`.
  */
 import type { Brand, Collection, Watch } from '@/types/models';
+import type { StoreLocation } from '@/data/locations';
 
 export interface SeoSite {
-  /** Production origin, no trailing slash — e.g. `https://swisspremium.uz`. */
+  /** Production origin, no trailing slash — e.g. `https://swisswatchpremium.uz`. */
   url: string;
   name: string;
+  /** Published contact address. Absent when the business has not published one. */
+  contactEmail?: string;
+  /** Published telephone number, in display form. Absent when unpublished. */
+  contactPhone?: string;
   /** Path or absolute URL used when a page has no image of its own. */
   defaultImage?: string;
   logo?: string;
@@ -49,6 +54,31 @@ export interface CrumbItem {
 export type JsonLdNode = Record<string, unknown>;
 
 export const PRODUCT_BASE: string;
+export const STORES_PATH: string;
+export const SITE_NAME: string;
+export const DEFAULT_SITE_URL: string;
+export const TITLE_MAX: number;
+
+export interface SiteInput {
+  url?: string;
+  name?: string;
+  contactEmail?: string;
+  contactPhone?: string;
+}
+
+export function resolveSiteUrl(
+  raw: string | null | undefined,
+  options?: { strict?: boolean; label?: string },
+): string;
+export function createSite(input?: SiteInput): SeoSite;
+export function telHref(phone?: string | null): string;
+export function clampTitleSegment(text: string | null | undefined, max: number): string;
+export function usableLocations(locations: readonly StoreLocation[] | null | undefined): StoreLocation[];
+export function storeSchemas(
+  locations: readonly StoreLocation[] | null | undefined,
+  site: SeoSite,
+): JsonLdNode[];
+export function formatStoreAddress(location: Partial<StoreLocation> | null | undefined): string;
 
 export function productPath(slug: string): string;
 export function brandPath(slug: string): string;

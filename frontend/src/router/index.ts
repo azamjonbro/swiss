@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, type RouteLocationGeneric, type RouteLocationNormalized } from 'vue-router';
 import { applyJsonLd, applySeo, site, siteJsonLd } from '@/utils/seo';
-import { staticSeo } from '@/seo/schema.mjs';
+import { staticSeo, STORES_PATH } from '@/seo/schema.mjs';
+import { hasStoreLocations } from '@/data/locations';
 import { useAccountStore } from '@/stores/account';
 
 const routes = [
@@ -58,6 +59,20 @@ const routes = [
     component: () => import('@/pages/CollectionDetail.vue'),
     meta: { headerTheme: 'light' },
   },
+  // Boutiques. The route exists only once `src/data/locations.json` holds a
+  // real address: with an empty file there is nothing to show, so the path
+  // falls through to the 404 route instead of rendering an empty page — and
+  // the prerenderer and the sitemap leave it out on the same condition.
+  ...(hasStoreLocations
+    ? [
+        {
+          path: STORES_PATH,
+          name: 'stores',
+          component: () => import('@/pages/Stores.vue'),
+          meta: { headerTheme: 'light' },
+        },
+      ]
+    : []),
   {
     path: '/about',
     name: 'about',

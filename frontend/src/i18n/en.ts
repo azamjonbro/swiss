@@ -18,7 +18,7 @@ const en = {
     watches: 'Watches',
     brands: 'Brands',
     newArrivals: 'New Arrivals',
-    about: 'About SwissWatch',
+    about: 'About SwissWatch Premium',
     contact: 'Contact',
   },
   menu: {
@@ -49,9 +49,9 @@ const en = {
     storyTitle: 'A different regard for time, since 1998.',
     storyLede: 'Between a Geneva workshop and a Tashkent showroom, one standard travels unchanged.',
     storyBody:
-      'SwissWatch began with a single obsession: that a fine watch deserves to be handled, documented and presented with the same patience it was built with. Two decades later the method has not changed â every piece is sourced in person, examined against its service record, and released only when it can be vouched for without qualification.',
+      'SwissWatch Premium began with a single obsession: that a fine watch deserves to be handled, documented and presented with the same patience it was built with. Two decades later the method has not changed â every piece is sourced in person, examined against its service record, and released only when it can be vouched for without qualification.',
     storyCta: 'Read our story',
-    storyPortraitAlt: 'The SwissWatch showroom in Tashkent',
+    storyPortraitAlt: 'The SwissWatch Premium showroom in Tashkent',
     storyDetailAlt: 'A watchmaker examining a movement under loupe',
     storyFactFoundedLabel: 'Founded',
     storyFactFoundedValue: '1998',
@@ -79,8 +79,8 @@ const en = {
     craft_finishing_body:
       'Brushing that runs true, polished chamfers that catch light in one clean line. Finishing is where a manufacture stops competing on specification.',
     statement: 'Time, Refined.',
-    statementAlt: 'A SwissWatch timepiece photographed in low light',
-    heroImageAlt: 'A SwissWatch timepiece resting on dark stone',
+    statementAlt: 'A SwissWatch Premium timepiece photographed in low light',
+    heroImageAlt: 'A SwissWatch Premium timepiece resting on dark stone',
     heroEyebrow: '1998 — Geneva / Tashkent',
     heroSub: 'Time, refined.',
     discover: 'Discover Collection',
@@ -89,7 +89,7 @@ const en = {
     introLine2: 'measured.',
     introLine3: 'It is experienced.',
     introCopy:
-      "SwissWatch curates an authenticated selection of the world's most consequential timepieces — sourced, verified, and presented with the discretion a collection of this caliber deserves.",
+      "SwissWatch Premium curates an authenticated selection of the world's most consequential timepieces — sourced, verified, and presented with the discretion a collection of this caliber deserves.",
     featuredEyebrow: 'The Collection',
     featuredTitle: 'A singular interpretation of time.',
     viewAll: 'View All',
@@ -102,7 +102,7 @@ const en = {
     conciergeTitle: 'A specialist, always available.',
     conciergeBody:
       'Acquiring a fine watch is a considered decision. Our specialists are available to discuss condition, provenance, and fit — before, during, and after your acquisition.',
-    conciergeCta: 'Contact SwissWatch',
+    conciergeCta: 'Contact SwissWatch Premium',
   },
   brandsSection: {
     eyebrow: 'Houses We Represent',
@@ -238,7 +238,7 @@ const en = {
     errorGeneric: 'Something went wrong. Please try again.',
     thankYouEyebrow: 'Thank You',
     thankYouTitle: 'Your inquiry has been received.',
-    thankYouBody: 'A SwissWatch specialist will contact you shortly.',
+    thankYouBody: 'A SwissWatch Premium specialist will contact you shortly.',
     close: 'Close',
   },
   cart: {
@@ -253,10 +253,10 @@ const en = {
     close: 'Close',
   },
   about: {
-    eyebrow: 'About SwissWatch',
+    eyebrow: 'About SwissWatch Premium',
     title: 'A house built on trust.',
     intro:
-      'SwissWatch was founded on a simple conviction: that a fine timepiece deserves a presentation equal to its craftsmanship. We are not a marketplace. We are a curated showroom — every reference personally sourced, authenticated, and catalogued before it reaches our collection.',
+      'SwissWatch Premium was founded on a simple conviction: that a fine timepiece deserves a presentation equal to its craftsmanship. We are not a marketplace. We are a curated showroom — every reference personally sourced, authenticated, and catalogued before it reaches our collection.',
     standardEyebrow: 'Our Standard',
     standardTitle: 'Authentication without compromise.',
     standardBody:
@@ -268,7 +268,7 @@ const en = {
   },
   contact: {
     eyebrow: 'Contact',
-    title: 'Speak with SwissWatch',
+    title: 'Speak with SwissWatch Premium',
     intro: 'For acquisitions, consignments, or general inquiries, reach our specialists directly or send a message below.',
     showroom: 'Showroom',
     showroomValue: 'Tashkent, Uzbekistan',
@@ -285,7 +285,15 @@ const en = {
     errorGeneric: 'Something went wrong. Please try again.',
     thankYouEyebrow: 'Thank You',
     thankYouTitle: 'Your message has been received.',
-    thankYouBody: 'A SwissWatch specialist will contact you shortly.',
+    thankYouBody: 'A SwissWatch Premium specialist will contact you shortly.',
+  },
+  stores: {
+    eyebrow: 'Visit',
+    title: 'Boutiques',
+    intro: 'Where to find us in person. Every piece in the catalogue can be examined in the boutique before it is acquired.',
+    hours: 'Opening hours',
+    phone: 'Phone',
+    directions: 'Directions',
   },
   notFound: {
     eyebrow: 'Error 404',
@@ -295,7 +303,7 @@ const en = {
   },
   account: {
     // -- shared authentication frame --
-    brandEyebrow: 'SwissWatch Maison',
+    brandEyebrow: 'SwissWatch Premium Maison',
     brandStatement: 'Time, kept in your name.',
     brandNote:
       'Follow your acquisition requests, return to the timepieces you have set aside, and reach your specialist without repeating a word.',
@@ -331,7 +339,7 @@ const en = {
 
     // -- sign up --
     registerEyebrow: 'Create Account',
-    registerTitle: 'Join SwissWatch',
+    registerTitle: 'Join SwissWatch Premium',
     registerLede: 'A few details, and your collection is yours to follow.',
     registerButton: 'Create Account',
     registeringButton: 'Creating Account…',
@@ -353,7 +361,7 @@ const en = {
     forgotSentBody: 'If that email has an account, a password reset link has been sent. It expires in one hour.',
     resetEyebrow: 'Password',
     resetTitle: 'Choose a new password.',
-    resetLede: 'Set a new password for your SwissWatch account.',
+    resetLede: 'Set a new password for your SwissWatch Premium account.',
     resetButton: 'Update Password',
     resetDoneEyebrow: 'Done',
     resetDoneTitle: 'Your password has been updated.',

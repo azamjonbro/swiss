@@ -80,7 +80,7 @@ const themeMode = computed<'transparent' | 'veil' | 'light'>(() => {
         <span class="sw-header__menu-label">{{ ui.isMenuOpen ? locale.t('header.close') : locale.t('header.menu') }}</span>
       </button>
 
-      <RouterLink to="/" class="sw-header__logo" aria-label="SwissWatch" @click="ui.closeMenu">
+      <RouterLink to="/" class="sw-header__logo" aria-label="SwissWatch Premium" @click="ui.closeMenu">
         <BrandMark :size="30" />
       </RouterLink>
 

@@ -121,7 +121,7 @@ function handleDiscover() {
 
     <div ref="contentEl" class="sw-hero__content">
       <span ref="eyebrowEl" class="sw-eyebrow sw-hero__eyebrow">{{ locale.t('home.heroEyebrow') }}</span>
-      <h1 ref="titleEl" class="sw-hero__title">SwissWatch</h1>
+      <h1 ref="titleEl" class="sw-hero__title">SwissWatch Premium</h1>
       <p ref="subEl" class="sw-lede sw-hero__sub">{{ locale.t('home.heroSub') }}</p>
       <div ref="ctaEl" class="sw-hero__cta">
         <button class="sw-btn sw-btn--hero" type="button" @click="handleDiscover">

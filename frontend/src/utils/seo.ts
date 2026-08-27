@@ -7,29 +7,38 @@
  * — the app adopts them rather than duplicating them.
  */
 import {
+  createSite,
   headTags,
   jsonLdGraph,
   organizationSchema,
+  resolveSiteUrl,
+  storeSchemas,
   websiteSchema,
   type JsonLdNode,
   type PageSeo,
   type SeoSite,
 } from '@/seo/schema.mjs';
+import { storeLocations } from '@/data/locations';
 
 /**
- * The canonical origin. Set `VITE_SITE_URL` per environment; the default is
- * the production domain so a preview build can never emit localhost URLs into
- * canonical/OG tags.
+ * Who this site is, as one record shared with the prerenderer and the 404
+ * function (both call the same `createSite`).
+ *
+ * `VITE_SITE_URL` is validated at build time by the `site-env` plugin in
+ * `vite.config.ts`, which fails a production build outright when it is missing
+ * or points at localhost — so by the time this runs the value is known good.
+ * The lenient fallback here only ever covers `vite dev`.
+ *
+ * `VITE_CONTACT_EMAIL` / `VITE_CONTACT_PHONE` may legitimately be empty: the
+ * business has not published either yet. `createSite` drops empty values, the
+ * UI renders nothing in their place, and the JSON-LD omits the field.
  */
-export const site: SeoSite = {
-  url: String(import.meta.env.VITE_SITE_URL ?? 'https://swisspremium.uz').replace(/\/+$/, ''),
-  name: String(import.meta.env.VITE_SITE_NAME ?? 'Swiss Premium'),
-  // JPEG, not WebP: several social crawlers still refuse WebP previews.
-  defaultImage: '/images/swisswatch_hero.jpg',
-  logo: '/favicon.svg',
-  locale: 'en_US',
-  sameAs: ['https://instagram.com/swisswatch_premium'],
-};
+export const site: SeoSite = createSite({
+  url: resolveSiteUrl(import.meta.env.VITE_SITE_URL),
+  name: import.meta.env.VITE_SITE_NAME,
+  contactEmail: import.meta.env.VITE_CONTACT_EMAIL,
+  contactPhone: import.meta.env.VITE_CONTACT_PHONE,
+});
 
 const MANAGED = 'data-seo';
 const JSONLD_ID = 'data-seo-jsonld';
@@ -109,6 +118,14 @@ export function applyJsonLd(nodes: (JsonLdNode | null | undefined)[]) {
 /** Site-level identity, emitted on the homepage. */
 export function siteJsonLd(): JsonLdNode[] {
   return [organizationSchema(site), websiteSchema(site)];
+}
+
+/**
+ * The boutiques, as JewelryStore nodes. Empty while `locations.json` is empty —
+ * `applyJsonLd` then writes nothing at all rather than an empty node.
+ */
+export function storesJsonLd(): JsonLdNode[] {
+  return storeSchemas(storeLocations, site);
 }
 
 export type { PageSeo, JsonLdNode };

@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swisswatchpremium.uz/schemas/locations.json",
+  "title": "SwissWatch Premium boutiques",
+  "description": "Physical boutiques. Leave the array empty until real addresses exist — an empty array emits no LocalBusiness structured data and keeps /stores off the site entirely.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "name",
+      "streetAddress",
+      "addressLocality",
+      "addressRegion",
+      "postalCode",
+      "addressCountry",
+      "telephone",
+      "openingHours",
+      "geo",
+      "mapUrl"
+    ],
+    "properties": {
+      "name": { "type": "string", "minLength": 1 },
+      "streetAddress": { "type": "string", "minLength": 1 },
+      "addressLocality": { "type": "string" },
+      "addressRegion": { "type": "string" },
+      "postalCode": { "type": "string" },
+      "addressCountry": { "const": "UZ" },
+      "telephone": { "type": "string" },
+      "openingHours": {
+        "type": "array",
+        "description": "schema.org opening-hours strings, e.g. \"Mo-Sa 10:00-20:00\".",
+        "items": { "type": "string", "pattern": "^[A-Za-z,\\-]+ \\d{2}:\\d{2}-\\d{2}:\\d{2}$" }
+      },
+      "geo": {
+        "type": ["object", "null"],
+        "additionalProperties": false,
+        "required": ["latitude", "longitude"],
+        "properties": {
+          "latitude": { "type": "number", "minimum": -90, "maximum": 90 },
+          "longitude": { "type": "number", "minimum": -180, "maximum": 180 }
+        }
+      },
+      "mapUrl": { "type": ["string", "null"], "format": "uri" }
+    }
+  }
+}

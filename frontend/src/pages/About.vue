@@ -14,7 +14,7 @@ const networkImage = '/images/swisswatch_network.jpg';
 <template>
   <div class="sw-about">
     <section class="sw-about__hero">
-      <SmartImage :src="aboutImage" alt="The SwissWatch atelier" eager />
+      <SmartImage :src="aboutImage" alt="The SwissWatch Premium atelier" eager />
       <div class="sw-about__hero-overlay" />
       <div class="sw-about__hero-content">
         <span class="sw-eyebrow">{{ locale.t('about.eyebrow') }}</span>

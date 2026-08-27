@@ -32,6 +32,7 @@ import {
   breadcrumbSchema,
   collectionPath,
   collectionSeo,
+  formatStoreAddress,
   headTags,
   itemListSchema,
   jsonLdGraph,
@@ -39,29 +40,42 @@ import {
   productPath,
   productSchema,
   staticSeo,
+  storeSchemas,
+  STORES_PATH,
+  usableLocations,
   watchFullName,
   watchImageAlt,
   watchImages,
   watchSeo,
   websiteSchema,
 } from '../src/seo/schema.mjs';
+import { loadEnvFiles, readSiteEnv } from './site-env.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = join(ROOT, 'dist');
 
-const API = (process.env.SEO_API_URL ?? 'https://swiss.techinfo.uz').replace(/\/+$/, '');
+// `vite build` has already exited by the time this runs, so nothing has loaded
+// the project's .env files for us. Real environment variables (Vercel) win.
+const ENV = { ...loadEnvFiles(ROOT, 'production'), ...process.env };
+
+// `strict`: the prerenderer writes canonical, Open Graph and JSON-LD URLs into
+// static HTML that a crawler will read as final. A wrong origin here is not
+// recoverable at runtime, so a missing or localhost VITE_SITE_URL fails the
+// build rather than guessing.
+const { site, apiUrl: API } = readSiteEnv(ENV, { strict: true });
+
 /** Language the crawlable copy is written in. The SPA still localises at runtime. */
-const LANG = process.env.SEO_LANG ?? 'en';
+const LANG = ENV.SEO_LANG ?? 'en';
 const PAGE_SIZE = 60;
 
-const site = {
-  url: String(process.env.VITE_SITE_URL ?? process.env.SITE_URL ?? 'https://swisspremium.uz').replace(/\/+$/, ''),
-  name: String(process.env.VITE_SITE_NAME ?? process.env.SITE_NAME ?? 'Swiss Premium'),
-  defaultImage: '/images/swisswatch_hero.jpg',
-  logo: '/favicon.svg',
-  locale: 'en_US',
-  sameAs: ['https://instagram.com/swisswatch_premium'],
-};
+/**
+ * Physical boutiques, read from the app's own data file. Empty until real
+ * addresses exist — and while it is empty `/stores` is not written, not
+ * linked, not listed in the sitemap, and emits no LocalBusiness node.
+ */
+const LOCATIONS = usableLocations(
+  JSON.parse(await readFile(join(ROOT, 'src/data/locations.json'), 'utf8').catch(() => '[]')),
+);
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -235,6 +249,44 @@ function listingBody({ heading, description, crumbs, items, itemsHeading }) {
   ].join('');
 }
 
+/** The boutiques page. Only ever called when at least one boutique exists. */
+function storesBody(locations) {
+  const trail = [
+    { name: 'Home', path: '/' },
+    { name: 'Boutiques', path: STORES_PATH },
+  ];
+  return [
+    '<main>',
+    crumbsHtml(trail),
+    `<h1>${escapeHtml('Boutiques')}</h1>`,
+    `<p>${escapeHtml(staticSeo('stores', site).description)}</p>`,
+    '<ul>',
+    ...locations.map((loc) =>
+      [
+        '<li>',
+        `<h2>${escapeHtml(loc.name)}</h2>`,
+        `<p>${escapeHtml(formatStoreAddress(loc))}</p>`,
+        loc.telephone ? `<p>${escapeHtml(loc.telephone)}</p>` : '',
+        Array.isArray(loc.openingHours) && loc.openingHours.length
+          ? `<p>${escapeHtml(loc.openingHours.join('; '))}</p>`
+          : '',
+        loc.mapUrl ? `<p>${link(loc.mapUrl, 'Directions')}</p>` : '',
+        '</li>',
+      ].join(''),
+    ),
+    '</ul>',
+    '</main>',
+  ].join('');
+}
+
+/** The site's own primary links, with /stores appearing only once it exists. */
+const exploreLinks = () => [
+  { name: 'Swiss watches catalog', path: '/watches' },
+  { name: 'Watch brands', path: '/brands' },
+  { name: 'Watch collections', path: '/collections' },
+  ...(LOCATIONS.length ? [{ name: 'Boutiques', path: STORES_PATH }] : []),
+];
+
 const linkListBody = ({ heading, description, links, linksHeading }) =>
   [
     '<main>',
@@ -315,9 +367,7 @@ async function main() {
       description: staticSeo('home', site).description,
       linksHeading: 'Explore',
       links: [
-        { name: 'Swiss watches catalog', path: '/watches' },
-        { name: 'Watch brands', path: '/brands' },
-        { name: 'Watch collections', path: '/collections' },
+        ...exploreLinks(),
         { name: `About ${site.name}`, path: '/about' },
         { name: 'Contact us', path: '/contact' },
         ...(catalog?.watches ?? [])
@@ -480,24 +530,73 @@ async function main() {
         heading: seo.title.split(' | ')[0],
         description: seo.description,
         linksHeading: 'Explore',
-        links: [
-          { name: 'Swiss watches catalog', path: '/watches' },
-          { name: 'Watch brands', path: '/brands' },
-          { name: 'Watch collections', path: '/collections' },
-        ],
+        links: exploreLinks(),
       }),
     });
   }
 
+  // -- boutiques ------------------------------------------------------------
+  // Written only when real addresses exist. While `locations.json` is empty
+  // there is no /stores document, so the catch-all in `api/spa.js` answers the
+  // path with a real 404 — exactly as it does for any other unknown URL.
+  if (LOCATIONS.length) {
+    await page({
+      filePath: 'stores.html',
+      seo: staticSeo('stores', site),
+      nodes: [
+        ...storeSchemas(LOCATIONS, site),
+        breadcrumbSchema(
+          [
+            { name: 'Home', path: '/' },
+            { name: 'Boutiques', path: STORES_PATH },
+          ],
+          site,
+        ),
+        itemListSchema(
+          LOCATIONS.map((loc) => ({ name: loc.name, path: STORES_PATH })),
+          site,
+          'Boutiques',
+        ),
+      ],
+      body: storesBody(LOCATIONS),
+    });
+  }
+
+  // -- sitemap: the static pages section -------------------------------------
+  // Which fixed routes exist is a fact the frontend build knows and the API
+  // does not — /stores appears only once `locations.json` is filled. Vercel
+  // serves a file on disk ahead of a rewrite, so this static document takes
+  // precedence over the API's copy of the same section; every other section
+  // (brands, collections, product chunks) still comes from the API, and the
+  // sitemap index that lists them all is unchanged.
+  await writeStaticPagesSitemap();
+
   console.log(
     `[prerender] ${written.length} pages → ${allProducts.length} products, ${catalog?.brands.length ?? 0} brands, ${
       catalog?.collections.length ?? 0
-    } collections`,
+    } collections, ${LOCATIONS.length} boutiques`,
   );
+}
+
+/** `/sitemap-pages.xml` — the fixed routes, absolute, on the canonical origin. */
+async function writeStaticPagesSitemap() {
+  const paths = ['/', '/watches', '/brands', '/collections', ...(LOCATIONS.length ? [STORES_PATH] : []), '/about', '/contact'];
+  const body = paths
+    .map((path) => `  <url>\n    <loc>${escapeHtml(absoluteUrl(site, path))}</loc>\n  </url>`)
+    .join('\n');
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${body}\n</urlset>\n`;
+  await writeFile(join(DIST, 'sitemap-pages.xml'), xml, 'utf8');
 }
 
 main().catch((error) => {
   // A prerender failure must never take the deployment down: the SPA still
-  // works, it just loses the crawlable copy until the next build.
+  // works, it just loses the crawlable copy until the next build. A
+  // misconfigured origin is the exception — shipping the wrong canonical host
+  // into the index is not something a later build can undo, so it fails hard.
+  if (/^\[seo\]/.test(error.message)) {
+    console.error(error.message);
+    process.exitCode = 1;
+    return;
+  }
   console.warn(`[prerender] skipped: ${error.message}`);
 });

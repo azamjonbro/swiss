@@ -1,4 +1,4 @@
-# https://swisspremium.uz
+# https://swisswatchpremium.uz
 
 User-agent: *
 Allow: /
@@ -14,4 +14,4 @@ Disallow: /_shell
 # they carry rel=canonical to /watches plus a noindex directive, so they pass
 # link equity to the products without being indexed themselves.
 
-Sitemap: https://swisspremium.uz/sitemap.xml
+Sitemap: https://swisswatchpremium.uz/sitemap.xml

@@ -157,4 +157,39 @@ python3 backend/scripts/remove-product-bg.py tsarbomba_tb8228a    # or just thes
   video source is set.
 - `npm run build` in `frontend/` and `admin/` type-checks with `vue-tsc` and produces a production
   build; `npm run build` in `backend/` compiles TypeScript to `dist/`.
+
+## SEO and rendering
+
+The storefront is a Vue SPA. To make it indexable without migrating to an SSR framework, `npm run
+build` in `frontend/` runs `scripts/prerender.mjs` after `vite build`: it reads the live catalog from
+the API and writes one static HTML file per indexable route into `dist/` — each with its own title,
+description, canonical, Open Graph tags, JSON-LD and a crawlable copy of the page's content. Vercel
+serves those files straight from the filesystem; Vue mounts over them in the browser.
+
+- **One source of truth.** `frontend/src/seo/schema.mjs` builds every title, description, canonical
+  path and JSON-LD node. The running app applies it to the DOM (`src/utils/seo.ts`); the prerenderer
+  serialises the same output to HTML. They cannot drift.
+- **URLs.** Products live at `/products/:slug`. The old `/watches/:slug` is a permanent redirect
+  (308 at the Vercel edge, mirrored in the router); `/watches` remains the catalog listing.
+- **Filters.** `/watches?color=…&sort=…` canonicalises to `/watches` and carries `noindex, follow`,
+  so filter combinations never become indexable pages.
+- **404s.** Anything with no prerendered file falls through to `frontend/api/spa.js`, which asks the
+  API whether the slug exists: a product added since the last deploy gets a 200, everything else gets
+  a real 404 rather than a soft 200.
+- **Sitemaps.** `/sitemap.xml` is a sitemap index served by the backend, with `/sitemap-pages.xml`,
+  `/sitemap-brands.xml`, `/sitemap-collections.xml` and chunked `/sitemap-products-N.xml` behind it.
+- **After a catalog change**, redeploy the frontend (or hit a Vercel deploy hook) so the new product
+  gets its prerendered page — until then it is served live by the fallback function, and the sitemap
+  already lists it.
+
+Environment variables (see `frontend/.env.example`, `backend/.env.example`):
+
+| Variable | Where | Purpose |
+| --- | --- | --- |
+| `VITE_SITE_URL` | frontend build + runtime | Canonical origin (`https://swisspremium.uz`) |
+| `VITE_SITE_NAME` | frontend build + runtime | Brand name in titles and structured data |
+| `SEO_API_URL` | frontend build | API the prerenderer reads the catalog from |
+| `SEO_LANG` | frontend build | Language of the prerendered copy (default `en`) |
+| `SITE_URL` | backend | Canonical origin used in sitemap URLs |
+
 # swiss
