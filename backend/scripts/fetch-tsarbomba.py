@@ -241,7 +241,11 @@ def main() -> None:
         entries.append({
             "type": "watch",
             "reference": reference,
-            "title": re.sub(r"[（(]\s*(Ship from [A-Z.]+|US|EU|DE)\s*[)）]", "", product["title"]).strip(),
+            # Regional warehouse suffixes are noise on a single-market storefront, and the
+            # brand writes some titles with full-width brackets that read wrong in Latin text.
+            "title": re.sub(
+                r"\s*[（(]\s*(Ship from [A-Z.]+|US|EU|DE)\s*[)）]", "", product["title"]
+            ).replace("（", " (").replace("）", ")").replace("  ", " ").strip(),
             "handle": handle,
             "series": series.get(handle) or next(
                 (s for _, s in SERIES_COLLECTIONS if s.lower() in product["title"].lower()), "Elemental"

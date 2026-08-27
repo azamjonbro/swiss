@@ -310,8 +310,11 @@ function buildCopy(entry: ImportEntry, colorCount: number) {
 }
 
 /** Product URL slug; see the call site for why the reference is sometimes dropped. */
-function slugFor(brandName: string, name: string, reference: string): string {
+function slugFor(brandName: string, name: string, reference: string, type: string): string {
   const base = toSlug(`${brandName}-${name}`);
+  // An accessory has no model number — the fetcher derives its "reference" from the
+  // title — so the name alone is its identity. Appending anything only ever repeats it.
+  if (type === 'accessory') return base;
   const ref = toSlug(reference);
   if (!ref || base === ref || base.endsWith(`-${ref}`)) return base;
   return toSlug(`${base}-${ref}`);
@@ -336,8 +339,8 @@ async function run() {
   // ("tsar-bomba-elemental-tb8208a-tb8208a"). Normalising here keeps the URLs the same
   // whichever path a product came in through.
   let renamed = 0;
-  for (const product of await Watch.find({}, { name: 1, reference: 1, slug: 1 })) {
-    const wanted = slugFor(brand.name, product.name, product.reference);
+  for (const product of await Watch.find({}, { name: 1, reference: 1, slug: 1, type: 1 })) {
+    const wanted = slugFor(brand.name, product.name, product.reference, product.type);
     if (wanted === product.slug || (await Watch.exists({ slug: wanted }))) continue;
     await Watch.updateOne({ _id: product._id }, { slug: wanted });
     renamed += 1;
@@ -358,7 +361,7 @@ async function run() {
     // In both cases appending the reference stutters — "…-tb8228a-tb8228a",
     // "…-cubic-zirconia-bezel-cubic-zirconia-bezel" — so it is appended only when the
     // name does not already end with it.
-    const slug = slugFor(brand.name, name, entry.reference);
+    const slug = slugFor(brand.name, name, entry.reference, entry.type);
     if (await Watch.exists({ slug })) {
       skipped += 1;
       continue;
