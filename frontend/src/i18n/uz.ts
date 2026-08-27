@@ -20,7 +20,7 @@ const uz: Dictionary = {
     watches: 'Soatlar',
     brands: 'Brendlar',
     newArrivals: 'Yangi kelganlar',
-    about: 'SwissWatch Premium haqida',
+    about: 'Biz haqimizda',
     contact: 'Aloqa',
   },
   menu: {

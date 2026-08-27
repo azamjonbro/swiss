@@ -20,7 +20,7 @@ const ru: Dictionary = {
     watches: 'Часы',
     brands: 'Бренды',
     newArrivals: 'Новинки',
-    about: 'О SwissWatch Premium',
+    about: 'О нас',
     contact: 'Контакты',
   },
   menu: {

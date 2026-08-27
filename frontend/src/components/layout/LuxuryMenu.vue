@@ -58,7 +58,7 @@ function setCurrency(value: string) {
             v-for="(link, i) in links"
             :key="link.to"
             class="sw-menu__item"
-            :style="{ transitionDelay: `${i * 60}ms` }"
+            :style="{ transitionDelay: `${180 + i * 60}ms` }"
             @mouseenter="hoveredTo = link.to"
           >
             <RouterLink class="sw-menu__link" :to="link.to" @click="ui.closeMenu">{{ link.label }}</RouterLink>
@@ -146,7 +146,7 @@ function setCurrency(value: string) {
 .sw-menu__content {
   display: flex;
   flex-direction: column;
-  padding: calc(var(--header-height) + 40px) var(--container-pad) 60px;
+  padding: calc(var(--header-height) + 28px) var(--container-pad) 44px;
 }
 
 .sw-menu__visual {
@@ -222,7 +222,10 @@ function setCurrency(value: string) {
 }
 
 .sw-menu-enter-active .sw-menu__item {
-  transition: opacity 0.6s var(--ease-luxury), transform 0.6s var(--ease-luxury);
+  /* The per-item delay is set inline in the template (an inline
+     transition-delay beats anything declared here), offset so the links begin
+     after the wipe has opened rather than racing it. */
+  transition: opacity 0.55s var(--ease-luxury), transform 0.55s var(--ease-luxury);
 }
 
 .sw-menu-enter-from .sw-menu__item {
@@ -232,7 +235,7 @@ function setCurrency(value: string) {
 
 .sw-menu__link {
   font-family: var(--font-serif);
-  font-size: clamp(2.2rem, 6vw, 4.2rem);
+  font-size: clamp(1.9rem, 4.4vw, 3.1rem);
   font-weight: 400;
   letter-spacing: -0.01em;
   transition: opacity var(--dur-fast) var(--ease-out), padding-left var(--dur-fast) var(--ease-out);
@@ -246,8 +249,8 @@ function setCurrency(value: string) {
 
 .sw-menu__footer {
   display: flex;
-  gap: 64px;
-  margin-top: 64px;
+  gap: 56px;
+  margin-top: 44px;
 }
 
 /* The label and its value are both inline elements, so a short value (an
@@ -273,9 +276,9 @@ function setCurrency(value: string) {
 
 .sw-menu__prefs {
   display: flex;
-  gap: 48px;
-  margin-top: 32px;
-  padding-top: 32px;
+  gap: 44px;
+  margin-top: 26px;
+  padding-top: 26px;
   border-top: 1px solid rgba(255, 255, 255, 0.14);
 }
 
@@ -312,13 +315,41 @@ function setCurrency(value: string) {
   opacity: 1;
 }
 
-.sw-menu-enter-active,
-.sw-menu-leave-active {
-  transition: opacity var(--dur-mid) var(--ease-luxury);
+/* The panel used to cross-fade, which on a full-screen black surface reads as
+   the lights being switched rather than as a movement. It now wipes down from
+   the header on the way in and lifts back up on the way out — the same
+   direction the button sits in — so opening has a source. */
+.sw-menu-enter-active {
+  transition: clip-path 0.72s var(--ease-editorial), opacity 0.4s linear;
 }
+
+.sw-menu-leave-active {
+  transition: clip-path 0.5s var(--ease-out), opacity 0.35s linear 0.15s;
+}
+
 .sw-menu-enter-from,
 .sw-menu-leave-to {
+  clip-path: inset(0 0 100% 0);
   opacity: 0;
+}
+
+.sw-menu-enter-to,
+.sw-menu-leave-from {
+  clip-path: inset(0 0 0 0);
+  opacity: 1;
+}
+
+/* A wipe is movement; honour the setting that asks for none. */
+@media (prefers-reduced-motion: reduce) {
+  .sw-menu-enter-active,
+  .sw-menu-leave-active {
+    transition: opacity 0.2s linear;
+  }
+
+  .sw-menu-enter-from,
+  .sw-menu-leave-to {
+    clip-path: none;
+  }
 }
 
 @media (max-width: 640px) {

@@ -76,7 +76,9 @@ const themeMode = computed<'transparent' | 'veil' | 'light'>(() => {
         :aria-label="ui.isMenuOpen ? locale.t('header.close') : locale.t('header.menu')"
         @click="ui.toggleMenu"
       >
-        <span class="sw-header__menu-rule" aria-hidden="true" />
+        <span class="sw-header__menu-icon" :class="{ 'is-open': ui.isMenuOpen }" aria-hidden="true">
+          <span /><span />
+        </span>
         <span class="sw-header__menu-label">{{ ui.isMenuOpen ? locale.t('header.close') : locale.t('header.menu') }}</span>
       </button>
 
@@ -177,20 +179,63 @@ const themeMode = computed<'transparent' | 'veil' | 'light'>(() => {
   gap: 12px;
 }
 
-/* A 20px hairline standing in for a burger icon — the quietest possible
-   affordance. */
-.sw-header__menu-rule {
-  width: 20px;
-  height: 1px;
-  background: currentColor;
-  opacity: 0.55;
-  transition: width 0.6s var(--ease-editorial), opacity 0.6s var(--ease-editorial);
+/* Two hairlines rather than the usual three, the lower one short — the mark
+   reads as deliberate at this weight where a stack of equal bars reads as a
+   default. Hover evens them; open crosses them, so the button says which state
+   it is in without relying on the label beside it. */
+.sw-header__menu-icon {
+  position: relative;
+  flex: none;
+  width: 22px;
+  height: 9px;
 }
 
-.sw-header__menu-btn:hover .sw-header__menu-rule,
-.sw-header__menu-btn:focus-visible .sw-header__menu-rule {
-  width: 28px;
+.sw-header__menu-icon span {
+  position: absolute;
+  left: 0;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.62;
+  transition:
+    width 0.5s var(--ease-editorial),
+    transform 0.5s var(--ease-editorial),
+    opacity 0.5s var(--ease-editorial);
+}
+
+.sw-header__menu-icon span:first-child {
+  top: 0;
+  width: 100%;
+}
+
+.sw-header__menu-icon span:last-child {
+  bottom: 0;
+  width: 62%;
+}
+
+.sw-header__menu-btn:hover .sw-header__menu-icon span,
+.sw-header__menu-btn:focus-visible .sw-header__menu-icon span {
+  width: 100%;
   opacity: 1;
+}
+
+/* Both bars travel to the centre line, then cross. */
+.sw-header__menu-icon.is-open span {
+  width: 100%;
+  opacity: 1;
+}
+
+.sw-header__menu-icon.is-open span:first-child {
+  transform: translateY(4px) rotate(45deg);
+}
+
+.sw-header__menu-icon.is-open span:last-child {
+  transform: translateY(-4px) rotate(-45deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sw-header__menu-icon span {
+    transition: opacity 0.2s linear;
+  }
 }
 
 .sw-header__menu-label,
@@ -263,8 +308,8 @@ const themeMode = computed<'transparent' | 'veil' | 'light'>(() => {
     display: none;
   }
 
-  .sw-header__menu-rule {
-    width: 22px;
+  .sw-header__menu-icon {
+    width: 20px;
   }
 
   .sw-header__actions {

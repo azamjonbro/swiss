@@ -18,7 +18,7 @@ const en = {
     watches: 'Watches',
     brands: 'Brands',
     newArrivals: 'New Arrivals',
-    about: 'About SwissWatch Premium',
+    about: 'About Us',
     contact: 'Contact',
   },
   menu: {
