@@ -1,12 +1,15 @@
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import type { Collection, Watch } from '@/types/models';
 import { fetchCollectionBySlug } from '@/services/collections';
-import { useMeta } from '@/composables/useMeta';
+import { applyJsonLd, applySeo, site } from '@/utils/seo';
+import type { CrumbItem } from '@/seo/schema.mjs';
+import { breadcrumbSchema, collectionSeo, itemListSchema, productPath, staticSeo, watchFullName } from '@/seo/schema.mjs';
 import { useLocaleStore } from '@/stores/locale';
 import SmartImage from '@/components/shared/SmartImage.vue';
 import WatchCard from '@/components/watch/WatchCard.vue';
+import Breadcrumbs from '@/components/shared/Breadcrumbs.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -15,13 +18,35 @@ const locale = useLocaleStore();
 const collection = ref<Collection | null>(null);
 const notFound = ref(false);
 
+const crumbs = computed<CrumbItem[]>(() =>
+  collection.value
+    ? [
+        { name: locale.t('nav.home'), path: '/' },
+        { name: locale.t('nav.collections'), path: '/collections' },
+        { name: collection.value.name, path: `/collections/${collection.value.slug}` },
+      ]
+    : [],
+);
+
 async function load(slug: string) {
   notFound.value = false;
   try {
     collection.value = await fetchCollectionBySlug(slug);
-    useMeta(`${collection.value.name} — SwissWatch`, collection.value.description);
+    applySeo({ ...collectionSeo(collection.value, site), imageAlt: `${collection.value.name} collection` });
+    const pieces = (collection.value.watches as Watch[]).filter((w) => w && typeof w === 'object' && w.slug);
+    applyJsonLd([
+      breadcrumbSchema(crumbs.value, site),
+      itemListSchema(
+        pieces.map((w) => ({ name: watchFullName(w) || w.name, path: productPath(w.slug) })),
+        site,
+        collection.value.name,
+      ),
+    ]);
   } catch {
     notFound.value = true;
+    const seo = staticSeo('not-found', site);
+    if (seo) applySeo({ ...seo, canonical: route.path });
+    applyJsonLd([]);
   }
 }
 
@@ -45,7 +70,7 @@ watch(
 
   <article v-else-if="collection" class="sw-collection-detail">
     <section class="sw-collection-detail__hero">
-      <SmartImage :src="collection.image" :alt="collection.name" eager aspect-ratio="21 / 9" />
+      <SmartImage :src="collection.image" :alt="`${collection.name} watch collection`" eager aspect-ratio="21 / 9" />
       <div class="sw-collection-detail__overlay" />
       <div class="sw-collection-detail__content">
         <span class="sw-eyebrow">{{ locale.t('collectionDetail.curated') }}</span>
@@ -54,6 +79,8 @@ watch(
       </div>
     </section>
 
+    <Breadcrumbs class="sw-collection-detail__crumbs" :items="crumbs" />
+
     <section class="sw-collection-detail__grid">
       <WatchCard v-for="watch in (collection.watches as Watch[])" :key="watch._id" :watch="watch" />
     </section>
@@ -61,6 +88,10 @@ watch(
 </template>
 
 <style scoped>
+.sw-collection-detail__crumbs {
+  padding: 32px var(--container-pad) 0;
+}
+
 .sw-collection-detail__hero {
   position: relative;
   color: var(--sw-white);

@@ -4,10 +4,13 @@ import { useRoute, useRouter } from 'vue-router';
 import type { Brand, Watch } from '@/types/models';
 import { fetchBrandBySlug } from '@/services/brands';
 import { fetchWatches } from '@/services/watches';
-import { useMeta } from '@/composables/useMeta';
+import { applyJsonLd, applySeo, site } from '@/utils/seo';
+import type { CrumbItem } from '@/seo/schema.mjs';
+import { brandSeo, breadcrumbSchema, itemListSchema, productPath, staticSeo, watchFullName } from '@/seo/schema.mjs';
 import { useLocaleStore } from '@/stores/locale';
 import SmartImage from '@/components/shared/SmartImage.vue';
 import WatchCard from '@/components/watch/WatchCard.vue';
+import Breadcrumbs from '@/components/shared/Breadcrumbs.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -24,17 +27,44 @@ const notFound = ref(false);
 
 const hasMore = computed(() => watches.value.length < total.value);
 
+const crumbs = computed<CrumbItem[]>(() =>
+  brand.value
+    ? [
+        { name: locale.t('nav.home'), path: '/' },
+        { name: locale.t('nav.brands'), path: '/brands' },
+        { name: brand.value.name, path: `/brands/${brand.value.slug}` },
+      ]
+    : [],
+);
+
+/** Metadata for the maison, plus the trail and the list of pieces it holds. */
+function applyBrandSeo() {
+  if (!brand.value) return;
+  applySeo({ ...brandSeo(brand.value, site), imageAlt: `${brand.value.name} watches` });
+  applyJsonLd([
+    breadcrumbSchema(crumbs.value, site),
+    itemListSchema(
+      watches.value.map((w) => ({ name: watchFullName(w) || w.name, path: productPath(w.slug) })),
+      site,
+      `${brand.value.name} watches`,
+    ),
+  ]);
+}
+
 async function load(slug: string) {
   notFound.value = false;
   page.value = 1;
   try {
     brand.value = await fetchBrandBySlug(slug);
-    useMeta(`${brand.value.name} — SwissWatch`, brand.value.description);
     const data = await fetchWatches({ brand: brand.value._id, page: page.value, limit: PAGE_SIZE });
     watches.value = data.items;
     total.value = data.total;
+    applyBrandSeo();
   } catch {
     notFound.value = true;
+    const seo = staticSeo('not-found', site);
+    if (seo) applySeo({ ...seo, canonical: route.path });
+    applyJsonLd([]);
   }
 }
 
@@ -71,7 +101,7 @@ watch(
 
   <article v-else-if="brand" class="sw-brand-detail">
     <section class="sw-brand-detail__hero">
-      <SmartImage :src="brand.image" :alt="brand.name" eager aspect-ratio="21 / 9" />
+      <SmartImage :src="brand.image" :alt="`${brand.name} watches`" eager aspect-ratio="21 / 9" />
       <div class="sw-brand-detail__hero-overlay" />
       <div class="sw-brand-detail__hero-content">
         <span class="sw-eyebrow">{{ brand.country }}<template v-if="brand.founded"> &middot; {{ locale.t('brandDetail.est') }} {{ brand.founded }}</template></span>
@@ -80,6 +110,7 @@ watch(
     </section>
 
     <section class="sw-brand-detail__body">
+      <Breadcrumbs class="sw-brand-detail__crumbs" :items="crumbs" />
       <p class="sw-body-lg">{{ brand.description }}</p>
     </section>
 
@@ -100,6 +131,10 @@ watch(
 </template>
 
 <style scoped>
+.sw-brand-detail__crumbs {
+  margin-bottom: 20px;
+}
+
 .sw-brand-detail__hero {
   position: relative;
   color: var(--sw-white);
