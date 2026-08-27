@@ -184,6 +184,16 @@ function close() {
   transition: border-color var(--dur-fast) var(--ease-out);
 }
 
+/* Touch devices get 16px: below that, iOS Safari zooms the page on focus and
+   leaves it zoomed — and this modal opens over the product, so the visitor
+   loses the piece they were looking at. */
+@media (pointer: coarse) {
+  .sw-inquiry__field input,
+  .sw-inquiry__field textarea {
+    font-size: 1rem;
+  }
+}
+
 .sw-inquiry__field input:focus,
 .sw-inquiry__field textarea:focus {
   border-color: var(--accent);

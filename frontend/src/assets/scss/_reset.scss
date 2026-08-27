@@ -61,6 +61,20 @@ select {
   outline: none;
 }
 
+/* iOS Safari zooms the whole page in when a focused form control renders below
+   16px, and it never zooms back out — the visitor is left stranded at 1.3x.
+   Raising the controls is the only fix that keeps pinch-zoom working:
+   `maximum-scale=1, user-scalable=no` would take zoom away from everyone
+   (WCAG 1.4.4), and Safari has ignored it since iOS 10 anyway.
+   Anything already at or above 16px sets its own size and is untouched. */
+@media (pointer: coarse) {
+  input,
+  textarea,
+  select {
+    font-size: 1rem;
+  }
+}
+
 button {
   cursor: pointer;
 }

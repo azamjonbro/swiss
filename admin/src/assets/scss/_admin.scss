@@ -16,6 +16,17 @@
   font-size: 0.9rem;
 }
 
+/* 0.9rem is 14.4px, and iOS Safari zooms the page in on any focused control
+   under 16px without ever zooming back out. The admin is used from a phone
+   often enough — editing a watch on the shop floor — that it matters here too. */
+@media (pointer: coarse) {
+  .sw-admin input,
+  .sw-admin textarea,
+  .sw-admin select {
+    font-size: 1rem;
+  }
+}
+
 .sw-admin input:focus,
 .sw-admin textarea:focus,
 .sw-admin select:focus {

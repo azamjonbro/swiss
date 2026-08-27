@@ -253,6 +253,15 @@
   color: var(--text);
 }
 
+// Overrides the 0.9375rem above on touch, where a sub-16px control makes iOS
+// Safari zoom the page in on focus. The class beats the element-level guard in
+// _reset.scss, so it has to opt in here too.
+@media (pointer: coarse) {
+  .sw-field__input {
+    font-size: 1rem;
+  }
+}
+
 .sw-field__input:focus {
   outline: none;
 }
