@@ -18,6 +18,10 @@ export const env = {
   jwtExpiresIn: process.env.JWT_EXPIRES_IN ?? '7d',
   uploadDir: process.env.UPLOAD_DIR ?? 'src/uploads',
   clientUrl: process.env.CLIENT_URL ?? 'http://localhost:5173',
+  // Canonical public origin, used for sitemap URLs. Kept separate from
+  // CLIENT_URL, which also drives CORS and the links in transactional email
+  // and may legitimately point at a preview deployment.
+  siteUrl: (process.env.SITE_URL ?? process.env.CLIENT_URL ?? 'http://localhost:5173').replace(/\/+$/, ''),
   corsOrigins: (process.env.CORS_ORIGINS ?? `${process.env.CLIENT_URL ?? 'http://localhost:5173'},http://localhost:5175`)
     .split(',')
     .map((origin) => origin.trim())

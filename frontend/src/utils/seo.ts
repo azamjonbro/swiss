@@ -81,9 +81,16 @@ export function applySeo(seo: PageSeo) {
   }
 }
 
-/** Replaces the page's JSON-LD with a single @graph document. */
+/**
+ * Replaces the page's JSON-LD with a single @graph document. The Organization
+ * node is added to every graph: Product's `seller` and WebSite's `publisher`
+ * reference it by @id, and a dangling reference is worth nothing.
+ */
 export function applyJsonLd(nodes: (JsonLdNode | null | undefined)[]) {
   const usable = nodes.filter(Boolean) as JsonLdNode[];
+  if (usable.length && !usable.some((node) => node['@type'] === 'Organization')) {
+    usable.unshift(organizationSchema(site));
+  }
   let el = document.head.querySelector<HTMLScriptElement>(`script[${JSONLD_ID}]`);
 
   if (!usable.length) {

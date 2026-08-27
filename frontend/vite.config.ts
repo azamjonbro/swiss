@@ -20,7 +20,8 @@ export default defineConfig({
         target: 'http://localhost:4000',
         changeOrigin: true,
       },
-      '/sitemap.xml': {
+      // Both the index and its sections (/sitemap-products-1.xml, …).
+      '^/sitemap.*\\.xml$': {
         target: 'http://localhost:4000',
         changeOrigin: true,
       },

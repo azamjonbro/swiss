@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, type RouteLocationNormalized } from 'vue-router';
+import { createRouter, createWebHistory, type RouteLocationGeneric, type RouteLocationNormalized } from 'vue-router';
 import { applyJsonLd, applySeo, site, siteJsonLd } from '@/utils/seo';
 import { staticSeo } from '@/seo/schema.mjs';
 import { useAccountStore } from '@/stores/account';
@@ -22,7 +22,11 @@ const routes = [
     // crawler or a pasted link gets the status code, not just a client-side
     // hop) — /watches stays the catalog listing.
     path: '/watches/:slug',
-    redirect: (to) => ({ name: 'product-detail', params: { slug: to.params.slug }, query: to.query }),
+    redirect: (to: RouteLocationGeneric) => ({
+      name: 'product-detail',
+      params: { slug: to.params.slug },
+      query: to.query,
+    }),
   },
   {
     path: '/products/:slug',

@@ -4,6 +4,8 @@ import type { Brand } from '@/types/models';
 import { fetchBrands } from '@/services/brands';
 import { useLocaleStore } from '@/stores/locale';
 import SmartImage from '@/components/shared/SmartImage.vue';
+import { applyJsonLd, site } from '@/utils/seo';
+import { brandPath, itemListSchema } from '@/seo/schema.mjs';
 
 const locale = useLocaleStore();
 const brands = ref<Brand[]>([]);
@@ -12,6 +14,14 @@ const isLoading = ref(true);
 async function load() {
   try {
     brands.value = await fetchBrands();
+    // The maisons actually listed, in the order they are rendered.
+    applyJsonLd([
+      itemListSchema(
+        brands.value.map((b) => ({ name: b.name, path: brandPath(b.slug) })),
+        site,
+        'Watch brands',
+      ),
+    ]);
   } finally {
     isLoading.value = false;
   }
@@ -36,7 +46,7 @@ watch(() => locale.lang, load);
         class="sw-brand-list__item"
       >
         <div class="sw-brand-list__media">
-          <SmartImage :src="brand.image" :alt="brand.name" aspect-ratio="16 / 10" />
+          <SmartImage :src="brand.image" :alt="`${brand.name} watches`" aspect-ratio="16 / 10" />
         </div>
         <h2 class="sw-h3">{{ brand.name }}</h2>
         <p class="sw-body">{{ brand.description }}</p>

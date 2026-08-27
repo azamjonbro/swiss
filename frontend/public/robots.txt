@@ -1,5 +1,17 @@
+# https://swisspremium.uz
+
 User-agent: *
 Allow: /
-Disallow: /admin
 
-Sitemap: /sitemap.xml
+# Application surfaces: nothing to index, and crawling them spends budget that
+# belongs to the catalog. CSS, JavaScript, images and product media stay open —
+# Google needs them to render the pages it indexes.
+Disallow: /account
+Disallow: /admin
+Disallow: /_shell
+
+# Filter and sort URLs (/watches?color=…&sort=…) stay crawlable on purpose:
+# they carry rel=canonical to /watches plus a noindex directive, so they pass
+# link equity to the products without being indexed themselves.
+
+Sitemap: https://swisspremium.uz/sitemap.xml

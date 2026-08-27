@@ -115,17 +115,29 @@ export function availabilityUrl(availability) {
 // ---------------------------------------------------------------------------
 
 /**
- * Falls back to composing a description from the specs the record actually
- * has — never to a generic sentence repeated across every product.
+ * A product's meta description.
+ *
+ * The catalog stores a short blurb per product, but some of them are shared
+ * boilerplate ("Tsar Bomba accessory.") across a dozen records — identical
+ * descriptions are worth nothing in search. So a blurb that is missing or too
+ * short to distinguish anything is extended with the facts the record itself
+ * holds (model, reference, movement, case), which are unique per product.
+ * Nothing here is invented: every clause comes from a stored field.
  */
 function watchDescription(watch, site) {
-  const source = watch?.shortDescription || watch?.description;
-  if (source) return clampText(source);
+  const source = clampText(watch?.shortDescription || watch?.description, 200);
+  const facts = [
+    watch?.reference ? `ref. ${watch.reference}` : '',
+    watch?.movement,
+    [watch?.caseMaterial, watch?.caseSize].filter(Boolean).join(' '),
+  ].filter(Boolean);
 
-  const specs = [watch?.movement, [watch?.caseMaterial, watch?.caseSize].filter(Boolean).join(' ')].filter(Boolean);
-  const head = watchFullName(watch);
-  const tail = specs.length ? `${specs.join(', ')}.` : '';
-  return clampText(`${head}. ${tail} Available at ${site.name} in Tashkent, Uzbekistan.`);
+  if (source.length >= 80) return clampText(source);
+
+  const name = watchFullName(watch);
+  const detail = facts.length ? `${facts.join(', ')}.` : '';
+  const lead = source ? `${source} ` : '';
+  return clampText(`${lead}${name} — ${detail} Available at ${site.name} in Tashkent, Uzbekistan.`);
 }
 
 export function watchSeo(watch, site) {
@@ -221,8 +233,8 @@ export function staticSeo(key, site) {
     'account-settings': ['Settings', `Your ${site.name} account settings.`, '/account/settings'],
     'account-login': ['Sign In', `Sign in to your ${site.name} account.`, '/account/login'],
     'account-register': ['Create Account', `Create a ${site.name} account.`, '/account/register'],
-    'account-forgot-password': ['Reset Password', `Reset your ${site.name} password.`, '/account/forgot-password'],
-    'account-reset-password': ['Reset Password', `Choose a new ${site.name} password.`, '/account/reset-password'],
+    'account-forgot-password': ['Forgot Password', `Request a ${site.name} password reset link.`, '/account/forgot-password'],
+    'account-reset-password': ['Choose a New Password', `Set a new password for your ${site.name} account.`, '/account/reset-password'],
     'account-verify-email': ['Confirm Email', `Confirm your ${site.name} email address.`, '/account/verify-email'],
   };
 

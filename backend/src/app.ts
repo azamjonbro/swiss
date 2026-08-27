@@ -15,7 +15,7 @@ import brandRoutes from './routes/brandRoutes';
 import collectionRoutes from './routes/collectionRoutes';
 import inquiryRoutes from './routes/inquiryRoutes';
 import adminRoutes from './routes/adminRoutes';
-import { getSitemap } from './controllers/sitemapController';
+import { getSitemapIndex, getSitemapSection } from './controllers/sitemapController';
 
 const app = express();
 
@@ -41,7 +41,9 @@ if (env.nodeEnv !== 'test') app.use(morgan(env.nodeEnv === 'production' ? 'combi
 app.use('/uploads', express.static(path.join(process.cwd(), env.uploadDir)));
 
 app.get('/api/health', (_req, res) => res.json({ status: 'ok', service: 'swisswatch-api' }));
-app.get('/sitemap.xml', getSitemap);
+app.get('/sitemap.xml', getSitemapIndex);
+// `:section` swallows the ".xml" suffix; the controller strips it.
+app.get('/sitemap-:section', getSitemapSection);
 
 app.use('/api/auth', authRoutes);
 app.use('/api/account', accountRoutes);

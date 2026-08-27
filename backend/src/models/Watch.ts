@@ -43,6 +43,9 @@ export interface IWatch extends Document {
     ru?: { name?: string; description?: string; shortDescription?: string };
     uz?: { name?: string; description?: string; shortDescription?: string };
   };
+  // Supplied by `timestamps: true`; declared so sitemap lastmod can read them.
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 const LocalizedWatchFields = {

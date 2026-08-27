@@ -4,6 +4,8 @@ import type { Collection } from '@/types/models';
 import { fetchCollections } from '@/services/collections';
 import { useLocaleStore } from '@/stores/locale';
 import SmartImage from '@/components/shared/SmartImage.vue';
+import { applyJsonLd, site } from '@/utils/seo';
+import { collectionPath, itemListSchema } from '@/seo/schema.mjs';
 
 const locale = useLocaleStore();
 const collections = ref<Collection[]>([]);
@@ -18,6 +20,13 @@ const groups = computed(() =>
 
 async function load() {
   collections.value = await fetchCollections();
+  applyJsonLd([
+    itemListSchema(
+      collections.value.map((c) => ({ name: c.name, path: collectionPath(c.slug) })),
+      site,
+      'Watch collections',
+    ),
+  ]);
 }
 
 onMounted(load);
@@ -45,7 +54,7 @@ watch(() => locale.lang, load);
           class="sw-collections__item"
         >
           <div class="sw-collections__media">
-            <SmartImage :src="collection.image" :alt="collection.name" aspect-ratio="21 / 9" />
+            <SmartImage :src="collection.image" :alt="`${collection.name} watch collection`" aspect-ratio="21 / 9" />
           </div>
           <div class="sw-collections__text">
             <h3 class="sw-h2">{{ collection.name }}</h3>
