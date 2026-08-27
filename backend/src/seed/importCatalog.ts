@@ -27,6 +27,7 @@ interface ImportVariant {
 }
 
 interface ImportEntry {
+  type: 'watch' | 'accessory';
   reference: string;
   title: string;
   handle: string;
@@ -207,6 +208,26 @@ const MATERIAL: Record<string, [string, string, string]> = {
  * and the remaining spec fields are left blank for an editor to fill in.
  */
 function buildCopy(entry: ImportEntry, colorCount: number) {
+  if (entry.type === 'accessory') {
+    const forSeries = entry.series ? ` ${entry.series}` : '';
+    const finish = (count: number, en: string, ru: string, uz: string) =>
+      count > 1 ? [en, ru, uz] : ['', '', ''];
+    const [enTail, ruTail, uzTail] = finish(
+      colorCount,
+      ` Available in ${colorCount} finishes.`,
+      ` Доступен в ${colorCount} вариантах.`,
+      ` ${colorCount} ta variantda mavjud.`,
+    );
+    return {
+      shortDescription: `Tsar Bomba${forSeries} accessory.`,
+      shortDescriptionRu: `Аксессуар Tsar Bomba${forSeries}.`,
+      shortDescriptionUz: `Tsar Bomba${forSeries} aksessuari.`,
+      description: `${entry.title} — an official Tsar Bomba${forSeries} accessory.${enTail}`,
+      descriptionRu: `${entry.title} — оригинальный аксессуар Tsar Bomba${forSeries}.${ruTail}`,
+      descriptionUz: `${entry.title} — Tsar Bomba${forSeries} uchun original aksessuar.${uzTail}`,
+    };
+  }
+
   const movement = entry.movement ? MOVEMENT[entry.movement] : null;
   const material = entry.material ? MATERIAL[entry.material] : null;
   const audience = entry.women
@@ -306,6 +327,7 @@ async function run() {
   const entries: ImportEntry[] = JSON.parse(fs.readFileSync(file, 'utf8'));
 
   let inserted = 0;
+  let insertedAccessories = 0;
   let skipped = 0;
   for (const entry of entries) {
     const name = entry.title;
@@ -339,7 +361,7 @@ async function run() {
       reference: entry.reference,
       price: entry.price,
       currency: 'USD',
-      type: 'watch',
+      type: entry.type,
       gender: entry.women ? 'women' : 'men',
       variants,
       description: copy.description,
@@ -361,8 +383,11 @@ async function run() {
       },
     });
     inserted += 1;
+    if (entry.type === 'accessory') insertedAccessories += 1;
   }
-  console.log(`[import] watches: +${inserted} qo'shildi, ${skipped} allaqachon bor edi`);
+  console.log(
+    `[import] +${inserted - insertedAccessories} soat, +${insertedAccessories} aksessuar qo'shildi, ${skipped} allaqachon bor edi`,
+  );
 
   // Every watch — hand-seeded or imported — gets its audience and series from the brand's
   // own grouping, then the nine collections are rebuilt around that.
@@ -423,8 +448,23 @@ async function run() {
     if (collection && ids.length) {
       await Watch.updateMany({ _id: { $in: ids } }, { collectionRef: collection._id });
     }
+
+    // An accessory named for a series ("Reactor Interchangeable Strap") points at that
+    // collection too, so filtering the catalogue by collection finds the parts that go
+    // with it — but it stays out of the collection's own `watches` list, which the
+    // collection page renders as timepieces.
+    if (collection) {
+      const escaped = series.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      await Watch.updateMany(
+        { type: 'accessory', name: new RegExp(escaped, 'i') },
+        { collectionRef: collection._id },
+      );
+    }
     console.log(`[import] ${series.gender === 'women' ? 'AYOL ' : 'erkak'} ${series.name.padEnd(14)} ${ids.length} soat`);
   }
+
+  const accessories = await Watch.countDocuments({ type: 'accessory' });
+  console.log(`[import] aksessuarlar: ${accessories} ta`);
 
   await mongoose.disconnect();
 }

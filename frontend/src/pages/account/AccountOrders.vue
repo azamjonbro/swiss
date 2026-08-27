@@ -6,6 +6,7 @@ import { fetchOrders } from '@/services/account';
 import { formatDate, toBrandName, primaryImage } from '@/utils/format';
 import SmartImage from '@/components/shared/SmartImage.vue';
 import type { Inquiry, Watch } from '@/types/models';
+import { productPath } from '@/seo/schema.mjs';
 
 const locale = useLocaleStore();
 const currency = useCurrencyStore();
@@ -68,7 +69,7 @@ function statusLabel(status: string): string {
         <div class="sw-order__body">
           <span class="sw-meta sw-order__date">{{ formatDate(order.createdAt, locale.lang) }}</span>
 
-          <RouterLink v-if="watchOf(order)" class="sw-order__title" :to="`/watches/${watchOf(order)!.slug}`">
+          <RouterLink v-if="watchOf(order)" class="sw-order__title" :to="productPath(watchOf(order)!.slug)">
             <span class="sw-order__brand">{{ toBrandName(watchOf(order)!.brand) }}</span>
             {{ watchOf(order)!.name }}
           </RouterLink>

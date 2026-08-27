@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import type { Watch } from '@/types/models';
+import type { Watch, Collection } from '@/types/models';
 import { fetchWatches } from '@/services/watches';
 import { fetchBrandBySlug } from '@/services/brands';
+import { fetchCollections } from '@/services/collections';
 import { useLocaleStore } from '@/stores/locale';
 import { useCurrencyStore } from '@/stores/currency';
 import { colorSwatchHex, movementType } from '@/utils/format';
@@ -18,8 +19,12 @@ const currency = useCurrencyStore();
 // This storefront currently curates TSAR BOMBA exclusively — the catalog
 // always scopes to that brand's id rather than exposing a cross-brand filter.
 const allWatches = ref<Watch[]>([]);
+const collections = ref<Collection[]>([]);
 const isLoading = ref(true);
 
+const selectedGender = ref((route.query.gender as string) ?? '');
+const selectedCollection = ref((route.query.collection as string) ?? '');
+const selectedType = ref((route.query.type as string) ?? '');
 const selectedColor = ref((route.query.color as string) ?? '');
 const selectedMovement = ref((route.query.movement as string) ?? '');
 const selectedPriceBand = ref((route.query.price as string) ?? '');
@@ -88,8 +93,14 @@ async function load() {
   isLoading.value = true;
   try {
     const brand = await fetchBrandBySlug('tsar-bomba');
-    const data = await fetchWatches({ brand: brand._id, limit: 60 });
+    // `type: 'all'` pulls the accessories in alongside the watches so the grid can
+    // filter between them client-side; the limit clears the whole catalogue in one go.
+    const [data, cols] = await Promise.all([
+      fetchWatches({ brand: brand._id, type: 'all', limit: 150 }),
+      fetchCollections(),
+    ]);
     allWatches.value = data.items;
+    collections.value = cols;
   } finally {
     isLoading.value = false;
   }
@@ -99,9 +110,33 @@ onMounted(load);
 watch(() => locale.lang, load);
 
 // Facets are derived from the full TSAR BOMBA set — only values actually
-// present in the data become filter options, never invented ones. Collection
-// is deliberately absent here: nothing in the current catalog carries a real
-// collectionRef, so a "Collection" facet would just be fabricated taxonomy.
+// present in the data become filter options, never invented ones.
+const genderOptions = computed(() =>
+  (['men', 'women'] as const).filter((g) => allWatches.value.some((w) => w.gender === g)),
+);
+
+// Collection is a real facet now that every product carries a `collectionRef` taken
+// from the brand's own series grouping; only collections holding something in the
+// current result set are offered.
+const collectionOptions = computed(() => {
+  const present = new Set(allWatches.value.map((w) => collectionIdOf(w)).filter(Boolean));
+  return collections.value.filter((c) => present.has(c._id));
+});
+
+const typeOptions = computed(() =>
+  (['watch', 'accessory'] as const).filter((t) => allWatches.value.some((w) => (w.type ?? 'watch') === t)),
+);
+
+/** `collectionRef` arrives either populated or as a bare id, depending on the endpoint. */
+function collectionIdOf(w: Watch): string {
+  const ref = w.collectionRef as unknown;
+  if (!ref) return '';
+  return typeof ref === 'string' ? ref : ((ref as { _id?: string })._id ?? '');
+}
+
+function collectionLabel(id: string): string {
+  return collections.value.find((c) => c._id === id)?.name ?? id;
+}
 const colorOptions = computed(() => {
   const map = new Map<string, string>();
   for (const w of allWatches.value) {
@@ -146,6 +181,9 @@ function availabilityLabel(a: string): string {
 
 const filteredWatches = computed(() => {
   return allWatches.value.filter((w) => {
+    if (selectedGender.value && w.gender !== selectedGender.value) return false;
+    if (selectedCollection.value && collectionIdOf(w) !== selectedCollection.value) return false;
+    if (selectedType.value && (w.type ?? 'watch') !== selectedType.value) return false;
     if (isNewOnly.value && !w.isNewArrival) return false;
     if (selectedColor.value && !w.variants?.some((v) => v.colorSlug === selectedColor.value)) return false;
     if (selectedMovement.value && movementType(w.movement) !== selectedMovement.value) return false;
@@ -173,6 +211,27 @@ interface FilterChip {
 
 const activeFilterChips = computed<FilterChip[]>(() => {
   const chips: FilterChip[] = [];
+  if (selectedGender.value) {
+    chips.push({
+      key: 'gender',
+      label: locale.t(`watchList.gender_${selectedGender.value}`),
+      clear: () => (selectedGender.value = ''),
+    });
+  }
+  if (selectedCollection.value) {
+    chips.push({
+      key: 'collection',
+      label: collectionLabel(selectedCollection.value),
+      clear: () => (selectedCollection.value = ''),
+    });
+  }
+  if (selectedType.value) {
+    chips.push({
+      key: 'type',
+      label: locale.t(`watchList.type_${selectedType.value}`),
+      clear: () => (selectedType.value = ''),
+    });
+  }
   if (selectedColor.value) {
     const c = colorOptions.value.find((c) => c.colorSlug === selectedColor.value);
     chips.push({ key: 'color', label: c?.colorLabel ?? selectedColor.value, clear: () => (selectedColor.value = '') });
@@ -202,6 +261,9 @@ const activeFilterCount = computed(() => activeFilterChips.value.length);
 function syncQuery() {
   router.replace({
     query: {
+      gender: selectedGender.value || undefined,
+      collection: selectedCollection.value || undefined,
+      type: selectedType.value || undefined,
       color: selectedColor.value || undefined,
       movement: selectedMovement.value || undefined,
       price: selectedPriceBand.value || undefined,
@@ -212,9 +274,15 @@ function syncQuery() {
   });
 }
 
-watch([selectedColor, selectedMovement, selectedPriceBand, selectedAvailability, isNewOnly, sortKey], syncQuery);
+watch(
+  [selectedGender, selectedCollection, selectedType, selectedColor, selectedMovement, selectedPriceBand, selectedAvailability, isNewOnly, sortKey],
+  syncQuery,
+);
 
 function clearFilters() {
+  selectedGender.value = '';
+  selectedCollection.value = '';
+  selectedType.value = '';
   selectedColor.value = '';
   selectedMovement.value = '';
   selectedPriceBand.value = '';
@@ -330,6 +398,78 @@ function selectSort(key: string) {
                     <span class="sw-filterdrawer__swatch" :style="{ background: colorSwatchHex(c.colorSlug) }" />
                     {{ c.colorLabel }}
                     <span class="sw-filterdrawer__count">{{ colorCounts.get(c.colorSlug) ?? 0 }}</span>
+                  </button>
+                </div>
+              </details>
+
+              <details class="sw-filterdrawer__section" open>
+                <summary class="sw-label">{{ locale.t('watchList.filterGender') }}</summary>
+                <div class="sw-filterdrawer__list">
+                  <button
+                    class="sw-filterdrawer__option"
+                    :class="{ 'is-active': !selectedGender }"
+                    type="button"
+                    @click="selectedGender = ''"
+                  >
+                    {{ locale.t('watchList.allGenders') }}
+                  </button>
+                  <button
+                    v-for="g in genderOptions"
+                    :key="g"
+                    class="sw-filterdrawer__option"
+                    :class="{ 'is-active': selectedGender === g }"
+                    type="button"
+                    @click="selectedGender = g"
+                  >
+                    {{ locale.t(`watchList.gender_${g}`) }}
+                  </button>
+                </div>
+              </details>
+
+              <details class="sw-filterdrawer__section" open>
+                <summary class="sw-label">{{ locale.t('watchList.filterCollection') }}</summary>
+                <div class="sw-filterdrawer__list">
+                  <button
+                    class="sw-filterdrawer__option"
+                    :class="{ 'is-active': !selectedCollection }"
+                    type="button"
+                    @click="selectedCollection = ''"
+                  >
+                    {{ locale.t('watchList.allCollections') }}
+                  </button>
+                  <button
+                    v-for="c in collectionOptions"
+                    :key="c._id"
+                    class="sw-filterdrawer__option"
+                    :class="{ 'is-active': selectedCollection === c._id }"
+                    type="button"
+                    @click="selectedCollection = c._id"
+                  >
+                    {{ c.name }}
+                  </button>
+                </div>
+              </details>
+
+              <details class="sw-filterdrawer__section" open>
+                <summary class="sw-label">{{ locale.t('watchList.filterType') }}</summary>
+                <div class="sw-filterdrawer__list">
+                  <button
+                    class="sw-filterdrawer__option"
+                    :class="{ 'is-active': !selectedType }"
+                    type="button"
+                    @click="selectedType = ''"
+                  >
+                    {{ locale.t('watchList.allTypes') }}
+                  </button>
+                  <button
+                    v-for="t in typeOptions"
+                    :key="t"
+                    class="sw-filterdrawer__option"
+                    :class="{ 'is-active': selectedType === t }"
+                    type="button"
+                    @click="selectedType = t"
+                  >
+                    {{ locale.t(`watchList.type_${t}`) }}
                   </button>
                 </div>
               </details>

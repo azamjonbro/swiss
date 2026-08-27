@@ -8,6 +8,7 @@ import { fetchWatches } from '@/services/watches';
 import type { Watch } from '@/types/models';
 import { toBrandName, primaryImage } from '@/utils/format';
 import SmartImage from '@/components/shared/SmartImage.vue';
+import { productPath, watchImageAlt } from '@/seo/schema.mjs';
 
 const ui = useUiStore();
 const locale = useLocaleStore();
@@ -82,12 +83,12 @@ function close() {
           <RouterLink
             v-for="watch in results"
             :key="watch._id"
-            :to="`/watches/${watch.slug}`"
+            :to="productPath(watch.slug)"
             class="sw-search__result"
             @click="close"
           >
             <div class="sw-search__result-media">
-              <SmartImage :src="primaryImage(watch)" :alt="watch.name" />
+              <SmartImage :src="primaryImage(watch)" :alt="watchImageAlt(watch)" />
             </div>
             <div class="sw-search__result-info">
               <span class="sw-label">{{ toBrandName(watch.brand) }}</span>

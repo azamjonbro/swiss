@@ -9,7 +9,9 @@ export interface WatchQuery {
   isNew?: boolean;
   availability?: string;
   color?: string;
-  type?: 'watch' | 'accessory';
+  // 'all' returns watches and accessories in one listing.
+  type?: 'watch' | 'accessory' | 'all';
+  gender?: 'men' | 'women';
   q?: string;
   page?: number;
   limit?: number;

@@ -10,10 +10,20 @@ import { useCurrencyStore } from '@/stores/currency';
 import { useAccountStore } from '@/stores/account';
 import { useSavedStore } from '@/stores/saved';
 import { useCartStore } from '@/stores/cart';
-import { useMeta } from '@/composables/useMeta';
+import { applyJsonLd, applySeo, site } from '@/utils/seo';
+import type { CrumbItem } from '@/seo/schema.mjs';
+import {
+  breadcrumbSchema,
+  productPath,
+  productSchema,
+  staticSeo,
+  watchImageAlt,
+  watchSeo,
+} from '@/seo/schema.mjs';
 import SmartImage from '@/components/shared/SmartImage.vue';
 import SmartVideo from '@/components/shared/SmartVideo.vue';
 import RelatedProductsCarousel from '@/components/watch/RelatedProductsCarousel.vue';
+import Breadcrumbs from '@/components/shared/Breadcrumbs.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -160,15 +170,39 @@ async function load(slug: string) {
     if (!isValid && watchDoc.value.variants[0]) {
       router.replace({ query: { ...route.query, variant: watchDoc.value.variants[0].colorSlug } });
     }
-    useMeta(
-      `${toBrandName(watchDoc.value.brand)} ${watchDoc.value.name} — SwissWatch`,
-      watchDoc.value.shortDescription || watchDoc.value.description,
-    );
+    applyProductSeo(watchDoc.value);
   } catch {
     notFound.value = true;
+    // A slug that no longer resolves must not leave the previous product's
+    // title, canonical or Product schema standing — and must not be indexed.
+    const seo = staticSeo('not-found', site);
+    if (seo) applySeo({ ...seo, canonical: route.path });
+    applyJsonLd([]);
   } finally {
     isLoading.value = false;
   }
+}
+
+/** Home → Watches → Brand → this product, for the nav and the JSON-LD alike. */
+const crumbs = computed<CrumbItem[]>(() => {
+  if (!watchDoc.value) return [];
+  const trail: CrumbItem[] = [
+    { name: locale.t('nav.home'), path: '/' },
+    { name: locale.t('nav.watches'), path: '/watches' },
+  ];
+  if (brandSlug.value) trail.push({ name: brandName.value, path: `/brands/${brandSlug.value}` });
+  trail.push({ name: watchDoc.value.name, path: productPath(watchDoc.value.slug) });
+  return trail;
+});
+
+/**
+ * Product metadata and structured data, built from the record the API just
+ * returned — Product/Offer/Brand plus the breadcrumb trail the page renders.
+ */
+function applyProductSeo(watch: Watch) {
+  const seo = watchSeo(watch, site);
+  applySeo({ ...seo, imageAlt: watchImageAlt(watch) });
+  applyJsonLd([productSchema(watch, site), breadcrumbSchema(crumbs.value, site)]);
 }
 
 onMounted(() => load(route.params.slug as string));
@@ -260,13 +294,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
   </div>
 
   <template v-else-if="watchDoc">
-    <nav class="sw-watch-detail__breadcrumb" aria-label="Breadcrumb">
-      <RouterLink to="/">{{ locale.t('nav.home') }}</RouterLink>
-      <span aria-hidden="true">/</span>
-      <RouterLink to="/watches">{{ locale.t('nav.watches') }}</RouterLink>
-      <span aria-hidden="true">/</span>
-      <span aria-current="page">{{ watchDoc.name }}</span>
-    </nav>
+    <Breadcrumbs class="sw-watch-detail__breadcrumb" :items="crumbs" />
 
     <article class="sw-watch-detail">
       <div class="sw-watch-detail__gallery">
@@ -284,11 +312,11 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
               v-if="activeItem?.type === 'video'"
               :src="activeItem.src"
               :poster="selectedVariant?.images[0]"
-              :alt="watchDoc.name"
+              :alt="watchImageAlt(watchDoc)"
               playback-strategy="manual"
               object-fit="contain"
             />
-            <SmartImage v-else :src="activeItem?.src" :alt="watchDoc.name" eager object-fit="contain" />
+            <SmartImage v-else :src="activeItem?.src" :alt="watchImageAlt(watchDoc, activeIndex)" eager object-fit="contain" />
           </div>
 
           <button
@@ -335,7 +363,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
           >
             <SmartImage
               :src="item.type === 'video' ? selectedVariant?.images[0] : item.src"
-              :alt="item.type === 'video' ? `${watchDoc.name} video` : `${watchDoc.name} view ${i + 1}`"
+              :alt="item.type === 'video' ? `${watchImageAlt(watchDoc)} video` : watchImageAlt(watchDoc, i)"
               aspect-ratio="1 / 1"
               object-fit="contain"
             />
@@ -415,11 +443,11 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
           <span class="sw-label">{{ locale.t('watchDetail.pairItWith') }}</span>
           <ul class="sw-watch-detail__pair-list">
             <li v-for="accessory in watchDoc.accessories" :key="accessory._id" class="sw-watch-detail__pair-item">
-              <RouterLink :to="`/watches/${accessory.slug}`" class="sw-watch-detail__pair-media">
-                <SmartImage :src="accessory.variants[0]?.images[0]" :alt="accessory.name" aspect-ratio="1 / 1" object-fit="contain" />
+              <RouterLink :to="productPath(accessory.slug)" class="sw-watch-detail__pair-media" tabindex="-1" aria-hidden="true">
+                <SmartImage :src="accessory.variants[0]?.images[0]" :alt="watchImageAlt(accessory)" aspect-ratio="1 / 1" object-fit="contain" />
               </RouterLink>
               <div class="sw-watch-detail__pair-body">
-                <RouterLink :to="`/watches/${accessory.slug}`" class="sw-watch-detail__pair-name">{{ accessory.name }}</RouterLink>
+                <RouterLink :to="productPath(accessory.slug)" class="sw-watch-detail__pair-name">{{ accessory.name }}</RouterLink>
                 <span class="sw-watch-detail__pair-price">{{ currency.format(accessory.price) }}</span>
               </div>
               <button class="sw-watch-detail__pair-add" type="button" @click="addAccessoryToCart(accessory)">
@@ -433,7 +461,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
 
     <section v-if="watchDoc.description" class="sw-watch-story">
       <div class="sw-watch-story__media">
-        <SmartImage :src="storyImage" :alt="watchDoc.name" aspect-ratio="4 / 5" />
+        <SmartImage :src="storyImage" :alt="watchImageAlt(watchDoc, 1)" aspect-ratio="4 / 5" />
       </div>
       <div class="sw-watch-story__body">
         <span class="sw-eyebrow">{{ locale.t('watchDetail.theStory') }}</span>
@@ -469,7 +497,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
         {{ locale.t('watchDetail.close') }}
       </button>
       <button v-if="galleryItems.length > 1" class="sw-lightbox__arrow sw-lightbox__arrow--prev" type="button" aria-label="Previous" @click.stop="stepGallery(-1)">&larr;</button>
-      <SmartImage :src="activeItem?.src" :alt="watchDoc.name" eager object-fit="contain" />
+      <SmartImage :src="activeItem?.src" :alt="watchImageAlt(watchDoc, activeIndex)" eager object-fit="contain" />
       <button v-if="galleryItems.length > 1" class="sw-lightbox__arrow sw-lightbox__arrow--next" type="button" aria-label="Next" @click.stop="stepGallery(1)">&rarr;</button>
     </div>
   </transition>
@@ -489,23 +517,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
 }
 
 .sw-watch-detail__breadcrumb {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 4px 8px;
-  font-size: 0.78rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--text-muted);
   margin-bottom: 28px;
-}
-
-.sw-watch-detail__breadcrumb a {
-  transition: color var(--dur-fast) var(--ease-out);
-}
-
-.sw-watch-detail__breadcrumb a:hover {
-  color: var(--text);
 }
 
 .sw-watch-detail {
@@ -1118,7 +1130,6 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
 
   .sw-watch-detail__breadcrumb {
     margin-bottom: 18px;
-    font-size: 0.72rem;
   }
 
   .sw-watch-detail__gallery {

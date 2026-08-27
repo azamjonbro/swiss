@@ -42,8 +42,10 @@ export async function listWatches(req: Request, res: Response) {
 
   const filter: Record<string, unknown> = { isActive: true };
   // Accessories are surfaced only via "pair it with" on a product page, never
-  // in the main catalog grid, unless a caller explicitly asks for them.
-  filter.type = type === 'accessory' || type === 'watch' ? type : { $ne: 'accessory' };
+  // in the main catalog grid, unless a caller explicitly asks for them —
+  // `type=accessory` for the parts alone, `type=all` for one combined listing.
+  if (type === 'accessory' || type === 'watch') filter.type = type;
+  else if (type !== 'all') filter.type = { $ne: 'accessory' };
   if (gender === 'men' || gender === 'women') filter.gender = gender;
   if (category) filter.category = category;
   if (brand) filter.brand = brand;
@@ -54,7 +56,9 @@ export async function listWatches(req: Request, res: Response) {
   if (color) filter['variants.colorSlug'] = String(color);
   if (q) filter.$text = { $search: String(q) };
 
-  const pageSize = Math.min(Number(limit) || 24, 60);
+  // The full Tsar Bomba catalogue is a little over 90 products with its accessories,
+  // and the storefront filters client-side over one fetch, so the cap has to clear it.
+  const pageSize = Math.min(Number(limit) || 24, 150);
   const pageNum = Math.max(Number(page) || 1, 1);
 
   const [items, total] = await Promise.all([

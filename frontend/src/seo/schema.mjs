@@ -1,0 +1,377 @@
+/**
+ * Shared SEO builders — the single source of truth for titles, descriptions,
+ * canonical paths and JSON-LD.
+ *
+ * Imported by BOTH the running app (`src/utils/seo.ts`, which applies the
+ * result to the DOM) and the build-time prerenderer (`scripts/prerender.mjs`,
+ * which serialises it into static HTML), so a crawler and a browser can never
+ * disagree about a page's metadata. Plain `.mjs` on purpose: Node executes it
+ * directly during the build, Vite bundles it for the browser, and
+ * `schema.d.mts` types it for the TypeScript side.
+ *
+ * Everything here is pure — no DOM, no `import.meta.env`, no fetching. The
+ * caller passes a `site` object: `{ url, name }`.
+ *
+ * Nothing is invented. Every field below is emitted only when the real record
+ * carries it: no placeholder prices, no ratings, no reviews, no SKUs, no
+ * business details the database does not hold.
+ */
+
+export const PRODUCT_BASE = '/products';
+
+export function productPath(slug) {
+  return `${PRODUCT_BASE}/${slug}`;
+}
+
+export function brandPath(slug) {
+  return `/brands/${slug}`;
+}
+
+export function collectionPath(slug) {
+  return `/collections/${slug}`;
+}
+
+/** Absolute URL on the production origin. Already-absolute inputs pass through. */
+export function absoluteUrl(site, pathOrUrl) {
+  if (!pathOrUrl) return '';
+  if (/^https?:\/\//i.test(pathOrUrl) || pathOrUrl.startsWith('data:')) return pathOrUrl;
+  return `${site.url}${pathOrUrl.startsWith('/') ? '' : '/'}${pathOrUrl}`;
+}
+
+export function pageTitle(headline, site) {
+  return headline ? `${headline} | ${site.name}` : site.name;
+}
+
+/** Trims to a meta-description-sized string on a word boundary. */
+export function clampText(text, max = 158) {
+  const clean = String(text ?? '')
+    .replace(/\s+/g, ' ')
+    .trim();
+  if (clean.length <= max) return clean;
+  const cut = clean.slice(0, max - 1);
+  const lastSpace = cut.lastIndexOf(' ');
+  return `${(lastSpace > max * 0.6 ? cut.slice(0, lastSpace) : cut).replace(/[,;:.\s]+$/, '')}…`;
+}
+
+export function brandNameOf(watch) {
+  const brand = watch?.brand;
+  if (!brand) return '';
+  return typeof brand === 'string' ? '' : String(brand.name ?? '');
+}
+
+export function brandSlugOf(watch) {
+  const brand = watch?.brand;
+  if (!brand || typeof brand === 'string') return '';
+  return String(brand.slug ?? '');
+}
+
+/** Every image across every colorway, de-duplicated, first one first. */
+export function watchImages(watch) {
+  const seen = new Set();
+  for (const variant of watch?.variants ?? []) {
+    for (const src of variant?.images ?? []) {
+      if (src) seen.add(src);
+    }
+  }
+  return [...seen];
+}
+
+export function watchFullName(watch) {
+  const brand = brandNameOf(watch);
+  return [brand, watch?.name].filter(Boolean).join(' ').trim();
+}
+
+/**
+ * Product alt text: what the photograph actually shows, nothing stuffed in.
+ * "Tsar Bomba Elemental-TB8806Q Swiss watch" — accurate for a watch, and the
+ * type word is dropped for accessories, which are not watches.
+ */
+export function watchImageAlt(watch, index = 0) {
+  const base = watchFullName(watch) || String(watch?.name ?? '');
+  const kind = watch?.type === 'accessory' ? '' : ' watch';
+  return index > 0 ? `${base}${kind} — view ${index + 1}` : `${base}${kind}`;
+}
+
+/** schema.org ItemAvailability for the four states the catalog actually stores. */
+export function availabilityUrl(availability) {
+  switch (availability) {
+    case 'in-stock':
+      return 'https://schema.org/InStock';
+    case 'sold':
+      return 'https://schema.org/SoldOut';
+    case 'reserved':
+      // No "Reserved" member exists; the piece cannot be bought, so OutOfStock
+      // is the honest mapping.
+      return 'https://schema.org/OutOfStock';
+    case 'made-to-order':
+      return 'https://schema.org/BackOrder';
+    default:
+      return '';
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Per-entity metadata
+// ---------------------------------------------------------------------------
+
+/**
+ * Falls back to composing a description from the specs the record actually
+ * has — never to a generic sentence repeated across every product.
+ */
+function watchDescription(watch, site) {
+  const source = watch?.shortDescription || watch?.description;
+  if (source) return clampText(source);
+
+  const specs = [watch?.movement, [watch?.caseMaterial, watch?.caseSize].filter(Boolean).join(' ')].filter(Boolean);
+  const head = watchFullName(watch);
+  const tail = specs.length ? `${specs.join(', ')}.` : '';
+  return clampText(`${head}. ${tail} Available at ${site.name} in Tashkent, Uzbekistan.`);
+}
+
+export function watchSeo(watch, site) {
+  const images = watchImages(watch);
+  return {
+    title: pageTitle(watchFullName(watch), site),
+    description: watchDescription(watch, site),
+    canonical: productPath(watch.slug),
+    image: images[0] ?? '',
+    images,
+    type: 'product',
+    heading: watch.name,
+  };
+}
+
+export function brandSeo(brand, site) {
+  return {
+    title: pageTitle(`${brand.name} Watches`, site),
+    description:
+      clampText(brand.description) ||
+      clampText(`${brand.name} watches at ${site.name} — browse the ${brand.name} timepieces we carry in Tashkent, Uzbekistan.`),
+    canonical: brandPath(brand.slug),
+    image: brand.image || brand.logo || '',
+    type: 'website',
+    heading: brand.name,
+  };
+}
+
+export function collectionSeo(collection, site) {
+  return {
+    title: pageTitle(`${collection.name} Collection`, site),
+    description:
+      clampText(collection.description) ||
+      clampText(`The ${collection.name} collection at ${site.name} — Swiss watches selected for this line, in Tashkent, Uzbekistan.`),
+    canonical: collectionPath(collection.slug),
+    image: collection.image || '',
+    type: 'website',
+    heading: collection.name,
+  };
+}
+
+/**
+ * Static pages. Keyed by route name so the router, the pages and the
+ * prerenderer all read the same record.
+ *
+ * `robots: 'noindex, follow'` marks the application surfaces — account and
+ * authentication screens — which are crawlable but carry nothing to index.
+ */
+export function staticSeo(key, site) {
+  const pages = {
+    home: {
+      title: pageTitle('Swiss Watches', site),
+      description: `Authenticated Swiss watches in Tashkent, Uzbekistan. Browse automatic and quartz timepieces from the maisons ${site.name} represents — discover, inquire, acquire.`,
+      canonical: '/',
+    },
+    watches: {
+      title: pageTitle('Swiss Watches Catalog', site),
+      description: `Browse every Swiss watch available at ${site.name} — automatic and quartz timepieces, filterable by brand, colour, movement and availability, delivered across Uzbekistan.`,
+      canonical: '/watches',
+    },
+    brands: {
+      title: pageTitle('Watch Brands', site),
+      description: `The watch maisons represented at ${site.name} — explore each brand's timepieces available in Tashkent, Uzbekistan.`,
+      canonical: '/brands',
+    },
+    collections: {
+      title: pageTitle('Watch Collections', site),
+      description: `Curated Swiss watch collections at ${site.name} — men's and women's lines assembled from the maisons we represent.`,
+      canonical: '/collections',
+    },
+    about: {
+      title: pageTitle('About', site),
+      description: `${site.name} is a curated showroom for authenticated luxury timepieces in Tashkent — how we source, examine and present every watch we list.`,
+      canonical: '/about',
+    },
+    contact: {
+      title: pageTitle('Contact', site),
+      description: `Speak with a ${site.name} specialist in Tashkent about acquisitions, consignments and general enquiries.`,
+      canonical: '/contact',
+    },
+    'not-found': {
+      title: pageTitle('Page Not Found', site),
+      description: 'The page you are looking for no longer exists.',
+      canonical: '/404',
+      robots: 'noindex, follow',
+    },
+  };
+
+  const accountPages = {
+    account: ['Account', `Your ${site.name} account.`, '/account'],
+    'account-orders': ['Orders', `Your ${site.name} acquisition requests.`, '/account/orders'],
+    'account-saved': ['Saved', `Timepieces you have saved at ${site.name}.`, '/account/saved'],
+    'account-settings': ['Settings', `Your ${site.name} account settings.`, '/account/settings'],
+    'account-login': ['Sign In', `Sign in to your ${site.name} account.`, '/account/login'],
+    'account-register': ['Create Account', `Create a ${site.name} account.`, '/account/register'],
+    'account-forgot-password': ['Reset Password', `Reset your ${site.name} password.`, '/account/forgot-password'],
+    'account-reset-password': ['Reset Password', `Choose a new ${site.name} password.`, '/account/reset-password'],
+    'account-verify-email': ['Confirm Email', `Confirm your ${site.name} email address.`, '/account/verify-email'],
+  };
+
+  for (const [name, [heading, description, canonical]] of Object.entries(accountPages)) {
+    pages[name] = { title: pageTitle(heading, site), description, canonical, robots: 'noindex, follow' };
+  }
+
+  return pages[key];
+}
+
+// ---------------------------------------------------------------------------
+// Head tags
+// ---------------------------------------------------------------------------
+
+/**
+ * Normalises one page's SEO into the exact tag set both consumers write.
+ * `metas` entries carry either `name` or `property`, matching the attribute
+ * the tag must use.
+ */
+export function headTags(seo, site) {
+  const canonical = absoluteUrl(site, seo.canonical);
+  const image = absoluteUrl(site, seo.image || site.defaultImage || '');
+  const robots = seo.robots || 'index, follow';
+
+  const metas = [
+    { name: 'description', content: seo.description },
+    { name: 'robots', content: robots },
+    { property: 'og:type', content: seo.type || 'website' },
+    { property: 'og:site_name', content: site.name },
+    { property: 'og:title', content: seo.title },
+    { property: 'og:description', content: seo.description },
+    { property: 'og:url', content: canonical },
+    { property: 'og:locale', content: site.locale || 'en_US' },
+    { name: 'twitter:card', content: image ? 'summary_large_image' : 'summary' },
+    { name: 'twitter:title', content: seo.title },
+    { name: 'twitter:description', content: seo.description },
+  ];
+
+  if (image) {
+    metas.push({ property: 'og:image', content: image });
+    metas.push({ property: 'og:image:alt', content: seo.imageAlt || seo.title });
+    metas.push({ name: 'twitter:image', content: image });
+  }
+
+  return { title: seo.title, canonical, metas: metas.filter((m) => m.content) };
+}
+
+// ---------------------------------------------------------------------------
+// JSON-LD
+// ---------------------------------------------------------------------------
+
+export function organizationSchema(site) {
+  const org = {
+    '@type': 'Organization',
+    '@id': `${site.url}/#organization`,
+    name: site.name,
+    url: `${site.url}/`,
+  };
+  if (site.logo) org.logo = absoluteUrl(site, site.logo);
+  // Only profiles that genuinely exist — an invented handle is worse than none.
+  if (site.sameAs?.length) org.sameAs = site.sameAs;
+  return org;
+}
+
+export function websiteSchema(site) {
+  return {
+    '@type': 'WebSite',
+    '@id': `${site.url}/#website`,
+    name: site.name,
+    url: `${site.url}/`,
+    publisher: { '@id': `${site.url}/#organization` },
+  };
+}
+
+/** items: [{ name, path }] — ordered, root first, current page last. */
+export function breadcrumbSchema(items, site) {
+  return {
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: absoluteUrl(site, item.path),
+    })),
+  };
+}
+
+/** items: [{ name, path }] — the products actually rendered on a listing page. */
+export function itemListSchema(items, site, name) {
+  return {
+    '@type': 'ItemList',
+    name,
+    numberOfItems: items.length,
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      url: absoluteUrl(site, item.path),
+    })),
+  };
+}
+
+/**
+ * Product + Offer + Brand from the stored record only.
+ *
+ * Deliberately absent: aggregateRating and review (the application stores
+ * neither), and any condition/GTIN/MPN claim the catalog does not make.
+ */
+export function productSchema(watch, site) {
+  const url = absoluteUrl(site, productPath(watch.slug));
+  const images = watchImages(watch).map((src) => absoluteUrl(site, src));
+  const brand = brandNameOf(watch);
+
+  const product = {
+    '@type': 'Product',
+    '@id': `${url}#product`,
+    name: watchFullName(watch) || watch.name,
+    url,
+  };
+
+  if (images.length) product.image = images;
+  const description = watch.description || watch.shortDescription;
+  if (description) product.description = clampText(description, 500);
+  if (brand) product.brand = { '@type': 'Brand', name: brand };
+  // The reference is the manufacturer's model number, which is what MPN means;
+  // it doubles as the only stock identifier the catalog holds.
+  if (watch.reference) {
+    product.sku = watch.reference;
+    product.mpn = watch.reference;
+  }
+  if (watch.caseMaterial) product.material = watch.caseMaterial;
+  if (watch.color) product.color = watch.color;
+
+  const availability = availabilityUrl(watch.availability);
+  if (typeof watch.price === 'number' && watch.price > 0 && watch.currency) {
+    product.offers = {
+      '@type': 'Offer',
+      url,
+      price: watch.price,
+      priceCurrency: watch.currency,
+      ...(availability ? { availability } : {}),
+      seller: { '@id': `${site.url}/#organization` },
+    };
+  }
+
+  return product;
+}
+
+/** Wraps one or more nodes in a single @graph document. */
+export function jsonLdGraph(nodes) {
+  return JSON.stringify({ '@context': 'https://schema.org', '@graph': nodes.filter(Boolean) });
+}

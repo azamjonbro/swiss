@@ -1,0 +1,75 @@
+/**
+ * Types for `schema.mjs`. The implementation is plain ESM so the Node
+ * prerenderer can run it directly; these declarations give the app the same
+ * safety it gets from the rest of `src/`.
+ */
+import type { Brand, Collection, Watch } from '@/types/models';
+
+export interface SeoSite {
+  /** Production origin, no trailing slash — e.g. `https://swisspremium.uz`. */
+  url: string;
+  name: string;
+  /** Path or absolute URL used when a page has no image of its own. */
+  defaultImage?: string;
+  logo?: string;
+  locale?: string;
+  sameAs?: string[];
+}
+
+export interface PageSeo {
+  title: string;
+  description: string;
+  /** Canonical path (or absolute URL) for this page. */
+  canonical: string;
+  image?: string;
+  images?: string[];
+  imageAlt?: string;
+  type?: string;
+  robots?: string;
+  heading?: string;
+}
+
+export interface HeadMeta {
+  name?: string;
+  property?: string;
+  content: string;
+}
+
+export interface HeadTags {
+  title: string;
+  canonical: string;
+  metas: HeadMeta[];
+}
+
+export interface CrumbItem {
+  name: string;
+  path: string;
+}
+
+export type JsonLdNode = Record<string, unknown>;
+
+export const PRODUCT_BASE: string;
+
+export function productPath(slug: string): string;
+export function brandPath(slug: string): string;
+export function collectionPath(slug: string): string;
+export function absoluteUrl(site: SeoSite, pathOrUrl?: string | null): string;
+export function pageTitle(headline: string, site: SeoSite): string;
+export function clampText(text?: string | null, max?: number): string;
+export function brandNameOf(watch: Partial<Watch> | null | undefined): string;
+export function brandSlugOf(watch: Partial<Watch> | null | undefined): string;
+export function watchImages(watch: Partial<Watch> | null | undefined): string[];
+export function watchFullName(watch: Partial<Watch> | null | undefined): string;
+export function watchImageAlt(watch: Partial<Watch> | null | undefined, index?: number): string;
+export function availabilityUrl(availability?: string): string;
+export function watchSeo(watch: Watch, site: SeoSite): PageSeo;
+export function brandSeo(brand: Brand, site: SeoSite): PageSeo;
+export function collectionSeo(collection: Collection, site: SeoSite): PageSeo;
+export function staticSeo(key: string, site: SeoSite): PageSeo | undefined;
+export function headTags(seo: PageSeo, site: SeoSite): HeadTags;
+export function organizationSchema(site: SeoSite): JsonLdNode;
+export function websiteSchema(site: SeoSite): JsonLdNode;
+export function breadcrumbSchema(items: CrumbItem[], site: SeoSite): JsonLdNode;
+export function itemListSchema(items: CrumbItem[], site: SeoSite, name?: string): JsonLdNode;
+export function productSchema(watch: Watch, site: SeoSite): JsonLdNode;
+export function jsonLdGraph(nodes: (JsonLdNode | null | undefined)[]): string;

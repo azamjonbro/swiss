@@ -5,6 +5,7 @@ import { toBrandName, primaryImage, secondaryImage, colorSwatchHex, movementType
 import { useCurrencyStore } from '@/stores/currency';
 import { useLocaleStore } from '@/stores/locale';
 import SmartImage from '@/components/shared/SmartImage.vue';
+import { productPath, watchImageAlt } from '@/seo/schema.mjs';
 
 interface Props {
   watch: Watch;
@@ -35,11 +36,11 @@ const colorCount = computed(() => props.watch.variants?.length ?? 0);
 </script>
 
 <template>
-  <RouterLink :to="`/watches/${watch.slug}`" class="sw-watch-card" :class="`is-${size}`" data-cursor="View">
+  <RouterLink :to="productPath(watch.slug)" class="sw-watch-card" :class="`is-${size}`" data-cursor="View">
     <div class="sw-watch-card__media">
       <SmartImage
         :src="mainImage"
-        :alt="`${brandName} ${watch.name}`"
+        :alt="watchImageAlt(watch)"
         aspect-ratio="1 / 1"
         object-fit="contain"
         prefer-trimmed
@@ -48,7 +49,7 @@ const colorCount = computed(() => props.watch.variants?.length ?? 0);
       <SmartImage
         v-if="hoverImage"
         :src="hoverImage"
-        :alt="`${brandName} ${watch.name}`"
+        :alt="watchImageAlt(watch)"
         aspect-ratio="1 / 1"
         object-fit="contain"
         prefer-trimmed

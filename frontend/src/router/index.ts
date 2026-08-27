@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, type RouteLocationNormalized } from 'vue-router';
-import { setMetaTag, setCanonicalUrl } from '@/composables/useMeta';
+import { applyJsonLd, applySeo, site, siteJsonLd } from '@/utils/seo';
+import { staticSeo } from '@/seo/schema.mjs';
 import { useAccountStore } from '@/stores/account';
 
 const routes = [
@@ -7,79 +8,63 @@ const routes = [
     path: '/',
     name: 'home',
     component: () => import('@/pages/Home.vue'),
-    meta: {
-      headerTheme: 'transparent',
-      title: 'SwissWatch — Time, Refined.',
-      description: 'A digital luxury showroom for exceptional Swiss timepieces. Discover, inquire, acquire.',
-    },
+    meta: { headerTheme: 'transparent' },
   },
   {
     path: '/watches',
     name: 'watches',
     component: () => import('@/pages/WatchList.vue'),
-    meta: {
-      headerTheme: 'light',
-      title: 'Timepieces — SwissWatch',
-      description: 'Browse our authenticated collection of fine Swiss timepieces from the world’s foremost maisons.',
-    },
+    meta: { headerTheme: 'light' },
   },
   {
+    // Products live under /products/:slug. The former /watches/:slug is kept
+    // as a permanent redirect (mirrored by a 308 at the Vercel edge, so a
+    // crawler or a pasted link gets the status code, not just a client-side
+    // hop) — /watches stays the catalog listing.
     path: '/watches/:slug',
-    name: 'watch-detail',
+    redirect: (to) => ({ name: 'product-detail', params: { slug: to.params.slug }, query: to.query }),
+  },
+  {
+    path: '/products/:slug',
+    name: 'product-detail',
     component: () => import('@/pages/WatchDetail.vue'),
-    meta: { headerTheme: 'light', title: 'SwissWatch' },
+    meta: { headerTheme: 'light' },
   },
   {
     path: '/brands',
     name: 'brands',
     component: () => import('@/pages/BrandList.vue'),
-    meta: {
-      headerTheme: 'light',
-      title: 'Brands — SwissWatch',
-      description: 'The Swiss and international maisons represented in the SwissWatch collection.',
-    },
+    meta: { headerTheme: 'light' },
   },
   {
     path: '/brands/:slug',
     name: 'brand-detail',
     component: () => import('@/pages/BrandDetail.vue'),
-    meta: { headerTheme: 'light', title: 'SwissWatch' },
+    meta: { headerTheme: 'light' },
   },
   {
     path: '/collections',
     name: 'collections',
     component: () => import('@/pages/CollectionList.vue'),
-    meta: {
-      headerTheme: 'light',
-      title: 'Collections — SwissWatch',
-      description: 'Curated collections of fine timepieces, assembled by the SwissWatch team.',
-    },
+    meta: { headerTheme: 'light' },
   },
   {
     path: '/collections/:slug',
     name: 'collection-detail',
     component: () => import('@/pages/CollectionDetail.vue'),
-    meta: { headerTheme: 'light', title: 'SwissWatch' },
+    meta: { headerTheme: 'light' },
   },
   {
     path: '/about',
     name: 'about',
     component: () => import('@/pages/About.vue'),
-    meta: {
-      headerTheme: 'light',
-      title: 'About — SwissWatch',
-      description: 'SwissWatch is a curated showroom for authenticated luxury timepieces, built on trust.',
-    },
+    meta: { headerTheme: 'light' },
   },
   {
     path: '/contact',
     name: 'contact',
     component: () => import('@/pages/Contact.vue'),
-    meta: {
-      headerTheme: 'light',
-      title: 'Contact — SwissWatch',
-      description: 'Speak with a SwissWatch specialist about acquisitions, consignments, or general inquiries.',
-    },
+    meta: { headerTheme: 'light' },
   },
   // ---- Customer account ------------------------------------------------
   // Two records share the /account prefix on purpose: the signed-in section
@@ -90,26 +75,23 @@ const routes = [
   {
     path: '/account',
     component: () => import('@/layouts/AccountLayout.vue'),
-    meta: { headerTheme: 'light', requiresAuth: true, title: 'Account — SwissWatch' },
+    meta: { headerTheme: 'light', requiresAuth: true },
     children: [
       { path: '', name: 'account', component: () => import('@/pages/account/AccountOverview.vue') },
       {
         path: 'orders',
         name: 'account-orders',
         component: () => import('@/pages/account/AccountOrders.vue'),
-        meta: { title: 'Orders — SwissWatch' },
       },
       {
         path: 'saved',
         name: 'account-saved',
         component: () => import('@/pages/account/AccountSaved.vue'),
-        meta: { title: 'Saved — SwissWatch' },
       },
       {
         path: 'settings',
         name: 'account-settings',
         component: () => import('@/pages/account/AccountSettings.vue'),
-        meta: { title: 'Settings — SwissWatch' },
       },
     ],
   },
@@ -124,39 +106,29 @@ const routes = [
         path: 'login',
         name: 'account-login',
         component: () => import('@/pages/account/SignIn.vue'),
-        meta: {
-          requiresGuest: true,
-          title: 'Sign In — SwissWatch',
-          description: 'Sign in to your SwissWatch account to follow your acquisitions and saved timepieces.',
-        },
+        meta: { requiresGuest: true },
       },
       {
         path: 'register',
         name: 'account-register',
         component: () => import('@/pages/account/SignUp.vue'),
-        meta: {
-          requiresGuest: true,
-          title: 'Create Account — SwissWatch',
-          description: 'Create a SwissWatch account to save timepieces and follow your acquisition requests.',
-        },
+        meta: { requiresGuest: true },
       },
       {
         path: 'forgot-password',
         name: 'account-forgot-password',
         component: () => import('@/pages/account/ForgotPassword.vue'),
-        meta: { requiresGuest: true, title: 'Reset Password — SwissWatch' },
+        meta: { requiresGuest: true },
       },
       {
         path: 'reset-password',
         name: 'account-reset-password',
         component: () => import('@/pages/account/ResetPassword.vue'),
-        meta: { title: 'Reset Password — SwissWatch' },
       },
       {
         path: 'verify-email',
         name: 'account-verify-email',
         component: () => import('@/pages/account/VerifyEmail.vue'),
-        meta: { title: 'Confirm Email — SwissWatch' },
       },
     ],
   },
@@ -164,7 +136,7 @@ const routes = [
     path: '/:pathMatch(.*)*',
     name: 'not-found',
     component: () => import('@/pages/NotFound.vue'),
-    meta: { headerTheme: 'light', title: 'Page Not Found — SwissWatch' },
+    meta: { headerTheme: 'light' },
   },
 ];
 
@@ -196,17 +168,16 @@ router.beforeEach(async (to: RouteLocationNormalized) => {
 });
 
 router.afterEach((to: RouteLocationNormalized) => {
-  const title = to.meta.title as string | undefined;
-  const description = to.meta.description as string | undefined;
-  if (title) {
-    document.title = title;
-    setMetaTag('property', 'og:title', title);
-  }
-  if (description) {
-    setMetaTag('name', 'description', description);
-    setMetaTag('property', 'og:description', description);
-  }
-  setCanonicalUrl(to.path);
+  // Pages built from a single API record (product, brand, collection) own
+  // their metadata and apply it once the record has loaded; everything else is
+  // described entirely by the shared static record, keyed by route name.
+  // Canonical is always the bare path — filter and sort queries never mint a
+  // second indexable URL.
+  const seo = staticSeo(String(to.name ?? ''), site);
+  if (!seo) return;
+
+  applySeo({ ...seo, canonical: to.path === '/' ? '/' : to.path });
+  applyJsonLd(to.name === 'home' ? siteJsonLd() : []);
 });
 
 export default router;

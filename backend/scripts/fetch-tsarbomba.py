@@ -46,6 +46,18 @@ EXISTING = {
 }
 ALIAS = {"TB8215L": "TB8215", "TB8216TF": "TB8216", "TB8219L": "TB8219", "TB8229C": "TB8229", "T1": "T2C6101"}
 
+# Accessories seed.ts already carries, under the brand's own listing title.
+EXISTING_ACCESSORIES = {
+    "Atomic Interchangeable Bezel", "Atomic Interchangeable Crown", "Atomic Interchangeable Strap",
+    "Reactor Interchangeable Bezel", "Reactor Interchangeable Crown", "Reactor Interchangeable Strap",
+    "Dark Matter Interchangeable Automatic Watch Bezel", "Dark Matter Interchangeable Strap",
+    "Deployant Clasp",
+}
+
+# Listings that exist on the storefront but are not products: display-only pieces and
+# bare payment links, all priced at $0.
+NOT_A_PRODUCT = re.compile(r"payment link|atomic new|puebla|display only", re.I)
+
 SERIES_COLLECTIONS = [
     ("elemental-collection", "Elemental"),
     ("atomic-collection", "Atomic"),
@@ -75,6 +87,11 @@ NON_WATCH = re.compile(
     r"strap|bezel|crown|clasp|gift box|payment link|kit|accessor|watch head|sapphire|crystal|back cover|atomic new",
     re.I,
 )
+SERIES_IN_TITLE = [
+    ("Nucleus Femme", "Nucleus Femme"), ("Dark Matter", "Dark Matter"), ("Light Matter", "Light Matter"),
+    ("Elemental", "Elemental"), ("Atomic", "Atomic"), ("Neutron", "Neutron"), ("Electron", "Electron"),
+    ("Reactor", "Reactor"), ("Core Decay", "Reactor"), ("Parallax", "Reactor"), ("Skunk", "Skunk Works"),
+]
 REF_RE = re.compile(r"\b(TB\d{4}[A-Z]*(?:-II)?)\b", re.I)
 
 
@@ -173,6 +190,18 @@ def save_image(url: str, stem: str) -> str | None:
     return f"/uploads/images/{stem}.jpg"
 
 
+def download_variants(product: dict, stem: str, label_for_log: str) -> list[dict]:
+    """Fetch every colourway's photography for one listing, in catalogue naming order."""
+    variants = []
+    for index, (label, urls) in enumerate(colourways(product), start=1):
+        prefix = f"tsarbomba_{stem}" if index == 1 else f"tsarbomba_{stem}_c{index:02d}"
+        print(f"  {label_for_log:22} {label or 'default':24} {len(urls):3} rasm", flush=True)
+        images = [p for n, url in enumerate(urls, start=1) if (p := save_image(url, f"{prefix}_{n}"))]
+        if images:
+            variants.append({"colorLabel": label, "images": images})
+    return variants
+
+
 def main() -> None:
     IMAGES.mkdir(parents=True, exist_ok=True)
 
@@ -205,19 +234,12 @@ def main() -> None:
             continue
 
         handle = product["handle"]
-        stem_ref = key.lower().replace("-", "_")
-        groups = colourways(product)
-        variants = []
-        for index, (label, urls) in enumerate(groups, start=1):
-            prefix = f"tsarbomba_{stem_ref}" if index == 1 else f"tsarbomba_{stem_ref}_c{index:02d}"
-            print(f"  {key:12} {label or 'default':22} {len(urls):3} rasm")
-            images = [p for n, url in enumerate(urls, start=1) if (p := save_image(url, f"{prefix}_{n}"))]
-            if images:
-                variants.append({"colorLabel": label, "images": images})
+        variants = download_variants(product, key.lower().replace("-", "_"), key)
         if not variants:
             continue
 
         entries.append({
+            "type": "watch",
             "reference": reference,
             "title": re.sub(r"[（(]\s*(Ship from [A-Z.]+|US|EU|DE)\s*[)）]", "", product["title"]).strip(),
             "handle": handle,
@@ -235,9 +257,38 @@ def main() -> None:
             "variants": variants,
         })
 
+    # Straps, bezels, crowns, watch heads, crystals, kits and gift boxes. They hang off
+    # the same product model as a watch (type "accessory"), so the storefront can filter
+    # them in or out, and each one keeps the series its title names it for.
+    for product in products:
+        title = product["title"]
+        if not NON_WATCH.search(title) or NOT_A_PRODUCT.search(title) or title in EXISTING_ACCESSORIES:
+            continue
+        reference = re.sub(r"[^A-Z0-9]+", "-", title.upper()).strip("-")[:40]
+        variants = download_variants(product, re.sub(r"[^a-z0-9]+", "_", title.lower()).strip("_")[:44], title[:22])
+        if not variants:
+            continue
+        entries.append({
+            "type": "accessory",
+            "reference": reference,
+            "title": title,
+            "handle": product["handle"],
+            "series": next((s for needle, s in SERIES_IN_TITLE if needle.lower() in title.lower()), ""),
+            "women": "nucleus femme" in title.lower(),
+            "price": min(float(v["price"]) for v in product["variants"] if v["price"]),
+            "movement": "",
+            "material": "",
+            "chronograph": False,
+            "skeleton": False,
+            "sapphire": "sapphire" in title.lower(),
+            "interchangeable": "interchangeable" in title.lower(),
+            "variants": variants,
+        })
+
     OUT.write_text(json.dumps(entries, ensure_ascii=False, indent=2))
     photos = sum(len(v["images"]) for e in entries for v in e["variants"])
-    print(f"\n{len(entries)} model, {photos} rasm -> {OUT.relative_to(ROOT)}")
+    watches = sum(1 for e in entries if e["type"] == "watch")
+    print(f"\n{watches} model + {len(entries) - watches} aksessuar, {photos} rasm -> {OUT.relative_to(ROOT)}")
 
 
 if __name__ == "__main__":

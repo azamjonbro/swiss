@@ -86,110 +86,6 @@ interface WatchSeedEntry {
 // this schema stays a plain USD number — not an invented figure, just a
 // currency conversion of the real listed price.
 export const WATCHES: WatchSeedEntry[] = [
-                            {
-    brand: 'Tsar Bomba',
-    name: 'TB8208',
-    reference: 'TB8208CF',
-    relatedRefs: ['TB8204Q', 'TB8216', 'TB8213'],
-    images: [
-      '/uploads/images/tsarbomba_tb8208_1.jpg',
-      '/uploads/images/tsarbomba_tb8208_2.jpg',
-      '/uploads/images/tsarbomba_tb8208_3.jpg',
-    ],
-    videos: ['/uploads/videos/tsarbomba_tb8208.mp4'],
-    colorLabel: 'White',
-    colorLabelRu: 'Белый',
-    colorLabelUz: 'Oq',
-    variants: [
-      {
-        refSuffix: '07',
-        colorLabel: 'Red',
-        colorLabelRu: 'Красный',
-        colorLabelUz: 'Qizil',
-        images: ['/uploads/images/tsarbomba_tb8208_red_1.jpg', '/uploads/images/tsarbomba_tb8208_red_2.jpg'],
-        videos: ['/uploads/videos/tsarbomba_tb8208_red.mp4'],
-      },
-      {
-        refSuffix: '11',
-        colorLabel: 'Black / Blue',
-        colorLabelRu: 'Чёрный / синий',
-        colorLabelUz: "Qora / ko'k",
-        images: ['/uploads/images/tsarbomba_tb8208_black_blue_1.jpg', '/uploads/images/tsarbomba_tb8208_black_blue_2.jpg'],
-        videos: ['/uploads/videos/tsarbomba_tb8208_black_blue.mp4'],
-      },
-    ],
-    price: 499.99,
-    movement: 'Miyota, Automatic',
-    caseMaterial: 'Stainless Steel 316L, Carbon Fiber Bezel',
-    caseSize: '43 × 50.5 × 15.5mm',
-    dial: 'Open-heart skeletonized',
-    bracelet: 'Silicone strap, quick-release, 26mm',
-    waterResistance: '5 ATM / 50m',
-    shortDescription: 'A striking tonneau-shaped automatic skeleton watch with a carbon-fiber bezel and open-heart dial.',
-    shortDescriptionRu:
-      'Эффектные автоматические скелетон-часы бочкообразной формы с безелем из углеродного волокна и открытым циферблатом.',
-    shortDescriptionUz:
-      "Uglerod tolali bezel va ochiq skelet sirtqi taxtaga ega, bochkasimon shakldagi ta'sirchan avtomatik soat.",
-    descriptionRu:
-      'Смелая, трёхмерная, многослойная форма идеально сочетает механику и эстетику. Корпус имеет чёткие линии и ясные грани, отражая холодное визуальное напряжение, подобное городской кибер-архитектуре. Оснащены автоматическим механизмом Miyota, заключены в корпус 43 × 50,5 × 15,5 мм из нержавеющей стали 316L с безелем из углеродного волокна и дополнены скелетонированным циферблатом с открытым сердцем механизма.',
-    descriptionUz:
-      "Jasur, uch o'lchamli, ko'p qatlamli shakl mexanika va estetikani mukammal uyg'unlashtiradi. Korpus aniq chiziqlar va tiniq qirralarga ega bo'lib, shahar kiber-arxitekturasiga xos sovuq vizual tarangligini aks ettiradi. Avtomatik Miyota mexanizmi bilan jihozlangan, 43 × 50.5 × 15.5mm o'lchamdagi uglerod tolali bezelli zanglamas po'lat 316L korpusda joylashgan va mexanizm yuragi ochiq skelet sirtqi taxta bilan yakunlangan.",
-    featured: true,
-    isNew: false,
-    availability: 'in-stock',
-  },
-  {
-    brand: 'Tsar Bomba',
-    name: 'TB8204',
-    reference: 'TB8204Q',
-    relatedRefs: ['TB8208CF', 'TB8216', 'TB8229'],
-    images: [
-      '/uploads/images/tsarbomba_tb8204_1.jpg',
-      '/uploads/images/tsarbomba_tb8204_2.jpg',
-      '/uploads/images/tsarbomba_tb8204_3.jpg',
-    ],
-    videos: ['/uploads/videos/tsarbomba_tb8204.mp4'],
-    colorLabel: 'Black / Red',
-    colorLabelRu: 'Чёрный / красный',
-    colorLabelUz: 'Qora / qizil',
-    variants: [
-      {
-        refSuffix: '05',
-        colorLabel: 'Gold / Blue',
-        colorLabelRu: 'Золотой / синий',
-        colorLabelUz: "Oltin / ko'k",
-        images: ['/uploads/images/tsarbomba_tb8204_gold_blue_1.jpg', '/uploads/images/tsarbomba_tb8204_gold_blue_2.jpg'],
-        videos: ['/uploads/videos/tsarbomba_tb8204_gold_blue.mp4'],
-      },
-      {
-        refSuffix: '11',
-        colorLabel: 'Silver / Orange',
-        colorLabelRu: 'Серебристый / оранжевый',
-        colorLabelUz: "Kumush / to'q sariq",
-        images: ['/uploads/images/tsarbomba_tb8204_silver_orange_1.jpg', '/uploads/images/tsarbomba_tb8204_silver_orange_2.jpg'],
-        videos: ['/uploads/videos/tsarbomba_tb8204_silver_orange.mp4'],
-      },
-    ],
-    price: 219.99,
-    movement: 'Seiko, Quartz Chronograph',
-    caseMaterial: 'Stainless Steel 316L',
-    caseSize: '43 × 50.5 × 15.5mm',
-    dial: 'Black and red skeletonized, three-eye chronograph',
-    bracelet: 'Silicone strap, 26mm',
-    waterResistance: '5 ATM / 50m',
-    shortDescription: 'A bold chronograph pairing modern sport styling with a striking black-and-red skeletonized dial.',
-    shortDescriptionRu:
-      'Смелый хронограф, сочетающий современный спортивный стиль с эффектным чёрно-красным скелетонированным циферблатом.',
-    shortDescriptionUz:
-      "Zamonaviy sport uslubini ta'sirchan qora-qizil skelet sirtqi taxta bilan uyg'unlashtirgan jasur xronograf.",
-    descriptionRu:
-      'Элегантный дизайн, сочетающий современный спортивный стиль с изысканной текстурой, создаёт смелый и уверенный визуальный образ. Корпус из нержавеющей стали 316L устойчив к коррозии и износу. Оснащены кварцевым хронографом Seiko, заключены в корпус 43 × 50,5 × 15,5 мм и дополнены трёхглазым чёрно-красным скелетонированным циферблатом, где центральная секундная стрелка отвечает за хронограф.',
-    descriptionUz:
-      "Zamonaviy sport uslubini nafis tekstura bilan uyg'unlashtirgan nafis dizayn jasur va o'ziga ishongan vizual ko'rinish yaratadi. Zanglamas po'lat 316L korpus korroziya va yeyilishga chidamli. Seiko kvarts xronograf mexanizmi bilan jihozlangan, 43 × 50.5 × 15.5mm o'lchamdagi korpusda joylashgan va markaziy soniya strelkasi xronograf vazifasini bajaradigan uch ko'zli qora-qizil skelet sirtqi taxta bilan yakunlangan.",
-    featured: true,
-    isNew: false,
-    availability: 'in-stock',
-  },
   {
     brand: 'Tsar Bomba',
     name: 'Reactor',
@@ -1352,7 +1248,7 @@ export const WATCHES: WatchSeedEntry[] = [
   {
     brand: 'Tsar Bomba',
     name: 'Elemental-TB8208CF',
-    reference: 'TB8208CF-EL',
+    reference: 'TB8208CF',
     relatedRefs: ['TB8204Q', 'TB8208D', 'TB8213'],
     // white_2 leads: it's the plain studio 3/4 shot consistent with the rest
     // of the catalog grid — white_1 is the same angle but shot on a black

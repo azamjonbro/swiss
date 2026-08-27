@@ -61,6 +61,7 @@ export interface Watch {
   description: string;
   shortDescription: string;
   type: WatchType;
+  gender: 'men' | 'women';
   variants: WatchVariant[];
   category: CategoryRef | string;
   collectionRef?: string;
