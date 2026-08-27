@@ -154,6 +154,8 @@ const uz: Dictionary = {
     filterMovement: 'Mexanizm',
     filterAvailability: 'Mavjudligi',
     allColors: 'Barcha ranglar',
+    searchColors: 'Rang qidirish…',
+    noColorResults: 'Mos rang topilmadi.',
     allPrices: 'Barcha narxlar',
     allMovements: 'Barcha mexanizmlar',
     allAvailability: 'Barcha holatlar',

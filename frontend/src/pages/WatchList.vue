@@ -30,6 +30,11 @@ const selectedCollection = ref((route.query.collection as string) ?? '');
 // rather than something a visitor has to filter back out of the grid.
 const selectedType = ref((route.query.type as string) || 'watch');
 const selectedColor = ref((route.query.color as string) ?? '');
+// Local UI state only — never synced to the URL. The catalog carries 80+
+// distinct color names (Tsar Bomba's variant naming is far from consistent),
+// too many to browse as a flat list, so the color section gets a type-to-filter
+// search on top of it.
+const colorSearch = ref('');
 const selectedMovement = ref((route.query.movement as string) ?? '');
 const selectedPriceBand = ref((route.query.price as string) ?? '');
 const selectedAvailability = ref((route.query.availability as string) ?? '');
@@ -148,19 +153,39 @@ function collectionIdOf(w: Watch): string {
 function collectionLabel(id: string): string {
   return collections.value.find((c) => c._id === id)?.name ?? id;
 }
+// Accessory "variants" are rarely a color at all — strap colors are genuine,
+// but a lot of them are the accessory's own component/bundle name ("2-in-1
+// Display Box", "Atomic Series", a bare price code) standing in for a color
+// nobody entered. Mixing those into the watch color list is most of why it
+// felt overgrown, so the facet is scoped to whatever product type is
+// currently in view rather than built from the full unfiltered catalog.
+const colorScopeWatches = computed(() =>
+  selectedType.value === 'all'
+    ? allWatches.value
+    : allWatches.value.filter((w) => (w.type ?? 'watch') === selectedType.value),
+);
+
 const colorOptions = computed(() => {
   const map = new Map<string, string>();
-  for (const w of allWatches.value) {
+  for (const w of colorScopeWatches.value) {
     for (const v of w.variants ?? []) {
       if (v.colorLabel) map.set(v.colorSlug, v.colorLabel);
     }
   }
-  return Array.from(map, ([colorSlug, colorLabel]) => ({ colorSlug, colorLabel }));
+  return Array.from(map, ([colorSlug, colorLabel]) => ({ colorSlug, colorLabel })).sort((a, b) =>
+    a.colorLabel.localeCompare(b.colorLabel),
+  );
+});
+
+const filteredColorOptions = computed(() => {
+  const q = colorSearch.value.trim().toLowerCase();
+  if (!q) return colorOptions.value;
+  return colorOptions.value.filter((c) => c.colorLabel.toLowerCase().includes(q));
 });
 
 const colorCounts = computed(() => {
   const counts = new Map<string, number>();
-  for (const w of allWatches.value) {
+  for (const w of colorScopeWatches.value) {
     const slugs = new Set((w.variants ?? []).map((v) => v.colorSlug));
     for (const slug of slugs) counts.set(slug, (counts.get(slug) ?? 0) + 1);
   }
@@ -412,8 +437,16 @@ function selectSort(key: string) {
             <div class="sw-filterdrawer__body">
               <details class="sw-filterdrawer__section" open>
                 <summary class="sw-label">{{ locale.t('watchList.filterColor') }}</summary>
+                <input
+                  v-model="colorSearch"
+                  type="text"
+                  class="sw-filterdrawer__colorsearch"
+                  :placeholder="locale.t('watchList.searchColors')"
+                  :aria-label="locale.t('watchList.searchColors')"
+                />
                 <div class="sw-filterdrawer__colors">
                   <button
+                    v-if="!colorSearch"
                     class="sw-filterdrawer__color"
                     :class="{ 'is-active': !selectedColor }"
                     type="button"
@@ -423,7 +456,7 @@ function selectSort(key: string) {
                     {{ locale.t('watchList.allColors') }}
                   </button>
                   <button
-                    v-for="c in colorOptions"
+                    v-for="c in filteredColorOptions"
                     :key="c.colorSlug"
                     class="sw-filterdrawer__color"
                     :class="{ 'is-active': selectedColor === c.colorSlug }"
@@ -434,6 +467,9 @@ function selectSort(key: string) {
                     {{ c.colorLabel }}
                     <span class="sw-filterdrawer__count">{{ colorCounts.get(c.colorSlug) ?? 0 }}</span>
                   </button>
+                  <p v-if="colorSearch && filteredColorOptions.length === 0" class="sw-filterdrawer__colorempty">
+                    {{ locale.t('watchList.noColorResults') }}
+                  </p>
                 </div>
               </details>
 
@@ -814,11 +850,42 @@ function selectSort(key: string) {
   content: '−';
 }
 
+.sw-filterdrawer__colorsearch {
+  width: 100%;
+  margin-top: 18px;
+  padding: 8px 2px;
+  border: none;
+  border-bottom: 1px solid var(--hairline);
+  background: transparent;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  color: var(--text);
+}
+
+.sw-filterdrawer__colorsearch::placeholder {
+  color: var(--text-muted);
+}
+
+.sw-filterdrawer__colorsearch:focus {
+  outline: none;
+  border-bottom-color: var(--text);
+}
+
 .sw-filterdrawer__colors {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 10px 16px;
   margin-top: 18px;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.sw-filterdrawer__colorempty {
+  grid-column: 1 / -1;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  padding: 4px 0;
 }
 
 .sw-filterdrawer__color {

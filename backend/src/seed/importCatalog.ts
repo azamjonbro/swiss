@@ -160,7 +160,7 @@ const WOMEN_REFERENCES = new Set(['TB8215', 'TB8219', 'TB8220L', 'TB8231L', 'TB8
 const COLOR_RU: Record<string, string> = {
   black: 'чёрный', white: 'белый', blue: 'синий', red: 'красный', green: 'зелёный',
   yellow: 'жёлтый', orange: 'оранжевый', grey: 'серый', gray: 'серый', gold: 'золотой',
-  golden: 'золотой', silver: 'серебристый', sliver: 'серебристый', rose: 'розовый',
+  golden: 'золотой', silver: 'серебристый', rose: 'розовый',
   olive: 'оливковый', light: 'светлый', dark: 'тёмный', ceramic: 'керамика',
   carbon: 'карбон', fiber: 'волокно', lake: 'озёрный', klein: 'кляйн', elite: 'элитный',
   bull: 'бычий', passion: 'страстный', elegant: 'элегантный', cool: 'холодный',
@@ -171,13 +171,21 @@ const COLOR_RU: Record<string, string> = {
 const COLOR_UZ: Record<string, string> = {
   black: 'qora', white: 'oq', blue: "ko'k", red: 'qizil', green: 'yashil',
   yellow: 'sariq', orange: "to'q sariq", grey: 'kulrang', gray: 'kulrang', gold: 'oltin',
-  golden: 'oltin', silver: 'kumush', sliver: 'kumush', rose: 'pushti',
+  golden: 'oltin', silver: 'kumush', rose: 'pushti',
   olive: 'zaytun', light: 'och', dark: "to'q", ceramic: 'keramika',
   carbon: 'uglerod', fiber: 'tola', lake: "ko'l", klein: 'klyayn', elite: 'elit',
   bull: 'buqa', passion: 'ehtirosli', elegant: 'nafis', cool: 'sovuq',
   ghost: 'arvoh', diamond: 'olmos', zirconia: 'sirkoniy', titanium: 'titan',
   dynamic: 'dinamik', fluororubber: 'ftorkauchuk', pin: 'ignali', steel: "po'lat",
 };
+
+// tsarbomba.com's own product pages misspell "Silver" as "Sliver" throughout
+// a handful of Elemental listings — corrected on the way in rather than baked
+// into a colorSlug ("sliver-blue") that would silently fork away from every
+// other silver variant in color filtering.
+function normalizeColorLabel(label: string): string {
+  return label.replace(/\bSliver\b/gi, 'Silver');
+}
 
 function translateColor(label: string, dict: Record<string, string>): string {
   if (!label) return '';
@@ -369,14 +377,15 @@ async function run() {
 
     const usedSlugs = new Set<string>();
     const variants = entry.variants.map((variant, index) => {
-      let colorSlug = toSlug(variant.colorLabel || 'default') || 'default';
+      const colorLabel = normalizeColorLabel(variant.colorLabel);
+      let colorSlug = toSlug(colorLabel || 'default') || 'default';
       while (usedSlugs.has(colorSlug)) colorSlug = `${colorSlug}-${index + 1}`;
       usedSlugs.add(colorSlug);
       return {
         colorSlug,
-        colorLabel: variant.colorLabel,
-        colorLabelRu: translateColor(variant.colorLabel, COLOR_RU),
-        colorLabelUz: translateColor(variant.colorLabel, COLOR_UZ),
+        colorLabel,
+        colorLabelRu: translateColor(colorLabel, COLOR_RU),
+        colorLabelUz: translateColor(colorLabel, COLOR_UZ),
         images: variant.images,
         videos: [],
       };

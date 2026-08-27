@@ -152,6 +152,8 @@ const en = {
     filterMovement: 'Movement',
     filterAvailability: 'Availability',
     allColors: 'All Colors',
+    searchColors: 'Search colors…',
+    noColorResults: 'No colors match your search.',
     allPrices: 'All Prices',
     allMovements: 'All Movements',
     allAvailability: 'All Availability',

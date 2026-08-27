@@ -155,6 +155,8 @@ const ru: Dictionary = {
     filterMovement: 'Механизм',
     filterAvailability: 'Наличие',
     allColors: 'Все цвета',
+    searchColors: 'Поиск цвета…',
+    noColorResults: 'Цвета не найдены.',
     allPrices: 'Любая цена',
     allMovements: 'Любой механизм',
     allAvailability: 'Любое наличие',
