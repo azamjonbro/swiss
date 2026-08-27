@@ -86,7 +86,10 @@ export function createSite({ url, name, contactEmail, contactPhone } = {}) {
     name: String(name || SITE_NAME),
     // JPEG, not WebP: several social crawlers still refuse WebP previews.
     defaultImage: '/images/swisswatch_hero.jpg',
-    logo: '/favicon.svg',
+    // Raster, not the favicon SVG: Google's Organization logo has to be a
+    // raster image of at least 112x112 to be eligible at all, and an SVG is
+    // rejected outright. public/logo.png is the same mark at 512x512.
+    logo: '/logo.png',
     locale: 'en_US',
     sameAs: ['https://instagram.com/swisswatch_premium'],
   };
