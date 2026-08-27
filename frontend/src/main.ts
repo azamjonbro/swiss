@@ -52,12 +52,19 @@ async function bootstrap() {
   // chunk, and the panel above is still covering the page while it lands.
   await locale.ready();
 
+  // Before the mount, not after. Every route ships a prerendered copy of its
+  // HTML, and mounting replaces #app wholesale — so mounting with the route
+  // still unresolved rendered the shell around an empty <main>, snapping the
+  // footer up from the foot of the prerendered document to just under the
+  // header, then dropping it back a moment later when the chunk arrived. That
+  // one bounce was 0.657 CLS, the site's entire score. Waiting here means the
+  // first Vue render already contains the page, and the footer never moves.
+  await router.isReady();
+
   app.mount('#app');
 
-  // `isReady` resolves when the first route component has actually rendered,
-  // which is the honest definition of "the app has mounted"; one frame later
-  // that render has been painted, and the panel has nothing left to hide.
-  await router.isReady();
+  // One frame later that render has been painted, and the panel has nothing
+  // left to hide.
   requestAnimationFrame(hidePreloader);
 
   // Everything below is off the critical path.
