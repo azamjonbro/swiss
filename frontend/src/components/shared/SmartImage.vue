@@ -84,14 +84,29 @@ const displaySrc = computed(() => candidates.value[candidateIndex.value] ?? '');
  * photography is served from the API host and has no variants, so it keeps the
  * single-source path.
  */
+/**
+ * Product photography is resized by the API on request
+ * (backend/src/middleware/resizeImages.ts), so unlike the editorial set it
+ * needs no manifest — every allowed width of an existing file resolves, and a
+ * file that does not exist was already broken at its base URL. These have to
+ * match ALLOWED_WIDTHS on the server; anything else falls through to the
+ * full-size original.
+ */
+const UPLOAD_WIDTHS = [240, 480, 720, 960, 1440];
+
 const srcset = computed(() => {
-  const widths = imageWidths[displaySrc.value as keyof typeof imageWidths] as number[] | undefined;
+  const src = displaySrc.value;
+  if (!src) return undefined;
+
+  if (src.includes('/uploads/images/')) {
+    return UPLOAD_WIDTHS.map((w) => `${src}?w=${w} ${w}w`).join(', ');
+  }
+
+  const widths = imageWidths[src as keyof typeof imageWidths] as number[] | undefined;
   if (!widths?.length) return undefined;
-  const stem = displaySrc.value.replace(/\.webp$/, '');
+  const stem = src.replace(/\.webp$/, '');
   const max = Math.max(...widths);
-  return widths
-    .map((w) => (w === max ? `${displaySrc.value} ${w}w` : `${stem}-${w}.webp ${w}w`))
-    .join(', ');
+  return widths.map((w) => (w === max ? `${src} ${w}w` : `${stem}-${w}.webp ${w}w`)).join(', ');
 });
 
 watch(

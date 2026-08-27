@@ -90,6 +90,7 @@ watch(() => locale.lang, load);
               aspect-ratio="1 / 1"
               object-fit="contain"
               prefer-trimmed
+              sizes="(max-width: 720px) 22vw, 140px"
             />
           </li>
         </ul>

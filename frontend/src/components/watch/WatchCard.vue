@@ -44,6 +44,7 @@ const colorCount = computed(() => props.watch.variants?.length ?? 0);
         aspect-ratio="1 / 1"
         object-fit="contain"
         prefer-trimmed
+        sizes="(max-width: 460px) 92vw, (max-width: 980px) 47vw, 24vw"
         class="sw-watch-card__shot sw-watch-card__shot--main"
       />
       <SmartImage
@@ -53,6 +54,7 @@ const colorCount = computed(() => props.watch.variants?.length ?? 0);
         aspect-ratio="1 / 1"
         object-fit="contain"
         prefer-trimmed
+        sizes="(max-width: 460px) 92vw, (max-width: 980px) 47vw, 24vw"
         class="sw-watch-card__shot sw-watch-card__shot--hover"
       />
     </div>

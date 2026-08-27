@@ -6,6 +6,7 @@ import helmet from 'helmet';
 import path from 'path';
 import { env } from './config/env';
 import { notFoundHandler, errorHandler } from './middleware/error';
+import { resizeImages } from './middleware/resizeImages';
 
 import authRoutes from './routes/authRoutes';
 import accountRoutes from './routes/accountRoutes';
@@ -38,7 +39,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 if (env.nodeEnv !== 'test') app.use(morgan(env.nodeEnv === 'production' ? 'combined' : 'dev'));
 
-app.use('/uploads', express.static(path.join(process.cwd(), env.uploadDir)));
+// `?w=` is answered by the resizer; everything else falls straight through to
+// static, so existing URLs are untouched.
+const uploadRoot = path.join(process.cwd(), env.uploadDir);
+app.use('/uploads', resizeImages(uploadRoot, path.join(uploadRoot, '.resized')));
+app.use('/uploads', express.static(uploadRoot));
 
 app.get('/api/health', (_req, res) => res.json({ status: 'ok', service: 'swisswatch-api' }));
 app.get('/sitemap.xml', getSitemapIndex);

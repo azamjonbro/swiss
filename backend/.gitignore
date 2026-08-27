@@ -1,6 +1,10 @@
 node_modules
 dist
 .env
+# Derivatives the resize middleware writes on demand — regenerated on request,
+# never a source of truth.
+src/uploads/.resized/
+
 src/uploads/images/*
 src/uploads/videos/*
 !src/uploads/images/.gitkeep

@@ -164,6 +164,7 @@ function close() {
                   aspect-ratio="1 / 1"
                   object-fit="contain"
                   prefer-trimmed
+                  sizes="(max-width: 640px) 44vw, 240px"
                 />
               </div>
               <span class="sw-search__tile-brand">{{ toBrandName(watch.brand) }}</span>
@@ -193,6 +194,7 @@ function close() {
                   aspect-ratio="1 / 1"
                   object-fit="contain"
                   prefer-trimmed
+                  sizes="88px"
                 />
               </div>
               <span class="sw-search__result-brand">{{ toBrandName(watch.brand) }}</span>
