@@ -216,7 +216,12 @@ function handleDiscover() {
 .sw-hero__title {
   font-family: var(--font-serif);
   font-weight: 400;
-  font-size: clamp(3.75rem, 13vw, 12rem);
+  /* Sized against both axes. On a 13vw-only scale the title wrapped to two
+     lines that ate the full hero on any 16:10 laptop — the type covered the
+     dial, which is the one thing the photograph is there to show. The vh term
+     is what actually binds on a short viewport; the vw term still leads on a
+     wide, tall one. */
+  font-size: clamp(3rem, min(8.5vw, 14vh), 9rem);
   line-height: 0.86;
   letter-spacing: -0.035em;
   color: var(--sw-white);

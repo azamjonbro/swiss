@@ -62,23 +62,21 @@ withDefaults(defineProps<Props>(), { size: 30, wordmark: true });
   margin-right: -0.3em;
 }
 
-/* The header centres this lockup between two flanking columns; at phone widths
-   the full tracking makes it wide enough to collide with the actions on the
-   right, so the mark and the tracking both come in. */
+/* The header centres this lockup between two flanking columns, and the centre
+   column is free to grow past what they leave it. Tightening the tracking was
+   not enough — at 375px the Uzbek actions ("Qidiruv", "Savat") still ran into
+   the wordmark. Below the breakpoint that already strips the menu label and
+   the secondary actions, the tile stands alone: it is the logo, the name is
+   in the title, the hero and the footer, and this is the one arrangement that
+   cannot be broken by a longer locale string. */
 @media (max-width: 640px) {
-  .sw-mark {
-    gap: 9px;
-  }
-
   .sw-mark__glyph {
-    width: 25px;
-    height: 25px;
+    width: 28px;
+    height: 28px;
   }
 
   .sw-mark__word {
-    font-size: 0.8125rem;
-    letter-spacing: 0.16em;
-    margin-right: -0.16em;
+    display: none;
   }
 }
 </style>
