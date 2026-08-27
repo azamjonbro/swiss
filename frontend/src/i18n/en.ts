@@ -27,7 +27,7 @@ const en = {
   },
   footer: {
     explore: 'Explore',
-    maison: 'Maison',
+    maison: 'Company',
     connect: 'Connect',
     about: 'About',
     contact: 'Contact',
@@ -44,7 +44,7 @@ const en = {
   },
   home: {
     featuredNote:
-      'Three pieces, chosen this season from the houses we represent â each one authenticated before it is listed.',
+      'Three pieces, chosen this season from the brands we represent â each one authenticated before it is listed.',
     storyEyebrow: 'Our Story',
     storyTitle: 'A different regard for time, since 1998.',
     storyLede: 'Between a Geneva workshop and a Tashkent showroom, one standard travels unchanged.',
@@ -105,8 +105,8 @@ const en = {
     conciergeCta: 'Contact SwissWatch Premium',
   },
   brandsSection: {
-    eyebrow: 'Houses We Represent',
-    title: 'The Maisons',
+    eyebrow: 'Brands We Represent',
+    title: 'Premium Brands',
   },
   cta: {
     eyebrow: 'Begin Your Search',
@@ -117,12 +117,12 @@ const en = {
   category: {
     label: 'Category',
     discover: 'Discover',
-    eyebrow: 'Shop by House',
-    title: 'The Houses',
+    eyebrow: 'Shop by Brand',
+    title: 'Choose by Brand',
     est: 'Est.',
-    explore: 'Explore House',
-    prev: 'Previous house',
-    next: 'Next house',
+    explore: 'Explore Brand',
+    prev: 'Previous brand',
+    next: 'Next brand',
   },
   watchCard: {
     view: 'View Timepiece',
@@ -140,7 +140,6 @@ const en = {
     type_accessory: 'Accessories',
     eyebrow: 'The Collection',
     title: 'Timepieces',
-    allHouses: 'All Houses',
     clearFilters: 'Clear Filters',
     empty: 'No timepieces match your current selection.',
     count: 'timepiece(s)',
@@ -195,12 +194,12 @@ const en = {
     theStory: 'The Story',
   },
   brandList: {
-    eyebrow: 'The Maisons',
-    title: 'Brands',
+    eyebrow: 'Brands We Represent',
+    title: 'Premium Brands',
   },
   brandDetail: {
     notFoundEyebrow: 'Not Found',
-    notFoundTitle: 'This maison is not listed.',
+    notFoundTitle: 'This brand is not listed.',
     backToBrands: 'Back to Brands',
     est: 'Est.',
     availableTimepieces: 'Available Timepieces',
@@ -256,7 +255,7 @@ const en = {
   },
   about: {
     eyebrow: 'About SwissWatch Premium',
-    title: 'A house built on trust.',
+    title: 'Built on trust.',
     intro:
       'SwissWatch Premium was founded on a simple conviction: that a fine timepiece deserves a presentation equal to its craftsmanship. We are not a marketplace. We are a curated showroom — every reference personally sourced, authenticated, and catalogued before it reaches our collection.',
     standardEyebrow: 'Our Standard',
@@ -305,7 +304,7 @@ const en = {
   },
   account: {
     // -- shared authentication frame --
-    brandEyebrow: 'SwissWatch Premium Maison',
+    brandEyebrow: 'SwissWatch Premium',
     brandStatement: 'Time, kept in your name.',
     brandNote:
       'Follow your acquisition requests, return to the timepieces you have set aside, and reach your specialist without repeating a word.',

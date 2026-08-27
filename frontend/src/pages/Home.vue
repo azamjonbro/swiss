@@ -42,8 +42,15 @@ watch(() => locale.lang, load);
   <div class="sw-home">
     <HeroSection />
 
-    <!-- statement → selection → houses → story → craft → campaign → maisons -->
+    <!-- statement → brands → selection → filmstrip → story → craft → campaign -->
     <BrandIntro />
+
+    <!-- The brands sit directly under the opening statement rather than at the
+         foot of the page: "time is felt, not measured" is an argument about
+         provenance, and the houses behind the pieces are the evidence for it.
+         Buried at the bottom, past the campaign band, almost nobody reached
+         them. -->
+    <BrandSection v-if="brands.length" :brands="brands" />
 
     <FeaturedWatches v-if="featuredWatches.length" :watches="featuredWatches" />
 
@@ -54,8 +61,6 @@ watch(() => locale.lang, load);
     <CraftsmanshipSection />
 
     <EditorialStatement />
-
-    <BrandSection v-if="brands.length" :brands="brands" />
 
     <CtaSection />
   </div>

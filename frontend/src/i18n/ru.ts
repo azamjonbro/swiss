@@ -46,7 +46,7 @@ const ru: Dictionary = {
   },
   home: {
     featuredNote:
-      'Три экземпляра, отобранные в этом сезоне из представляемых нами домов — каждый проверен до публикации.',
+      'Три экземпляра, отобранные в этом сезоне из представляемых нами брендов — каждый проверен до публикации.',
     storyEyebrow: 'Наша история',
     storyTitle: 'Иной взгляд на время — с 1998 года.',
     storyLede:
@@ -108,8 +108,8 @@ const ru: Dictionary = {
     conciergeCta: 'Связаться с SwissWatch Premium',
   },
   brandsSection: {
-    eyebrow: 'Дома, которые мы представляем',
-    title: 'Дома моды',
+    eyebrow: 'Бренды, которые мы представляем',
+    title: 'Премиальные бренды',
   },
   cta: {
     eyebrow: 'Начните поиск',
@@ -120,12 +120,12 @@ const ru: Dictionary = {
   category: {
     label: 'Категория',
     discover: 'Смотреть',
-    eyebrow: 'Покупки по домам',
-    title: 'Дома часового искусства',
+    eyebrow: 'Покупки по брендам',
+    title: 'Выбрать по бренду',
     est: 'Основан в',
-    explore: 'Смотреть дом',
-    prev: 'Предыдущий дом',
-    next: 'Следующий дом',
+    explore: 'Смотреть бренд',
+    prev: 'Предыдущий бренд',
+    next: 'Следующий бренд',
   },
   watchCard: {
     view: 'Смотреть часы',
@@ -143,7 +143,6 @@ const ru: Dictionary = {
     type_accessory: 'Аксессуары',
     eyebrow: 'Коллекция',
     title: 'Часы',
-    allHouses: 'Все дома',
     clearFilters: 'Сбросить фильтры',
     empty: 'Часы, соответствующие вашему выбору, не найдены.',
     count: 'часов в наличии',
@@ -198,12 +197,12 @@ const ru: Dictionary = {
     theStory: 'История',
   },
   brandList: {
-    eyebrow: 'Дома моды',
-    title: 'Бренды',
+    eyebrow: 'Бренды, которые мы представляем',
+    title: 'Премиальные бренды',
   },
   brandDetail: {
     notFoundEyebrow: 'Не найдено',
-    notFoundTitle: 'Этот дом не представлен в каталоге.',
+    notFoundTitle: 'Этот бренд не представлен в каталоге.',
     backToBrands: 'Назад к брендам',
     est: 'Основан в',
     availableTimepieces: 'Доступные часы',
@@ -259,7 +258,7 @@ const ru: Dictionary = {
   },
   about: {
     eyebrow: 'О SwissWatch Premium',
-    title: 'Дом, построенный на доверии.',
+    title: 'Построено на доверии.',
     intro:
       'SwissWatch Premium был основан на простом убеждении: превосходные часы заслуживают презентации на уровне своего мастерства. Мы не маркетплейс. Мы курируемый шоурум — каждый экземпляр лично отобран, проверен на подлинность и каталогизирован, прежде чем попасть в нашу коллекцию.',
     standardEyebrow: 'Наш стандарт',
@@ -308,7 +307,7 @@ const ru: Dictionary = {
   },
   account: {
     // -- shared authentication frame --
-    brandEyebrow: 'SwissWatch Premium Maison',
+    brandEyebrow: 'SwissWatch Premium',
     brandStatement: 'Время — на ваше имя.',
     brandNote:
       'Следите за своими запросами, возвращайтесь к отложенным часам и общайтесь со специалистом, не повторяя ни слова.',

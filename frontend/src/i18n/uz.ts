@@ -46,7 +46,7 @@ const uz: Dictionary = {
   },
   home: {
     featuredNote:
-      'Biz vakillik qiladigan uylardan bu mavsumga tanlangan uchta soat — har biri katalogga kiritilishidan oldin haqiqiyligi tasdiqlangan.',
+      'Biz vakillik qiladigan brendlardan bu mavsumga tanlangan uchta soat — har biri katalogga kiritilishidan oldin haqiqiyligi tasdiqlangan.',
     storyEyebrow: 'Bizning hikoyamiz',
     storyTitle: '1998 yildan beri vaqtga boshqacha nigoh.',
     storyLede: 'Jenevadagi ustaxona va Toshkentdagi ko‘rgazma zali orasida bitta standart o‘zgarmay qoladi.',
@@ -107,8 +107,8 @@ const uz: Dictionary = {
     conciergeCta: 'SwissWatch Premium bilan bog‘lanish',
   },
   brandsSection: {
-    eyebrow: 'Biz vakillik qiladigan uylar',
-    title: 'Brend uylari',
+    eyebrow: 'Biz vakillik qiladigan brendlar',
+    title: 'Premium brendlar',
   },
   cta: {
     eyebrow: 'Qidiruvni boshlang',
@@ -119,12 +119,12 @@ const uz: Dictionary = {
   category: {
     label: 'Toifa',
     discover: 'Ko‘rish',
-    eyebrow: 'Uylar bo‘yicha xarid',
-    title: 'Uylar',
+    eyebrow: 'Brendlar bo‘yicha xarid',
+    title: 'Brend bo‘yicha tanlang',
     est: 'Tashkil topgan',
-    explore: 'Uyni ko‘rish',
-    prev: 'Oldingi uy',
-    next: 'Keyingi uy',
+    explore: 'Brendni ko‘rish',
+    prev: 'Oldingi brend',
+    next: 'Keyingi brend',
   },
   watchCard: {
     view: 'Soatni ko‘rish',
@@ -142,7 +142,6 @@ const uz: Dictionary = {
     type_accessory: 'Aksessuarlar',
     eyebrow: 'Kolleksiya',
     title: 'Soatlar',
-    allHouses: 'Barcha uylar',
     clearFilters: 'Filtrlarni tozalash',
     empty: 'Tanlovingizga mos soat topilmadi.',
     count: 'ta soat',
@@ -197,8 +196,8 @@ const uz: Dictionary = {
     theStory: 'Tarix',
   },
   brandList: {
-    eyebrow: 'Brend uylari',
-    title: 'Brendlar',
+    eyebrow: 'Biz vakillik qiladigan brendlar',
+    title: 'Premium brendlar',
   },
   brandDetail: {
     notFoundEyebrow: 'Topilmadi',
@@ -258,7 +257,7 @@ const uz: Dictionary = {
   },
   about: {
     eyebrow: 'SwissWatch Premium haqida',
-    title: 'Ishonchga qurilgan uy.',
+    title: 'Ishonch ustiga qurilgan.',
     intro:
       "SwissWatch Premium oddiy bir e'tiqod asosida tashkil topgan: nafis soat o‘z ustaligiga teng darajadagi taqdimotga loyiq. Biz bozor emasmiz. Biz tanlab yig‘ilgan ko‘rgazma zalimiz — har bir nusxa shaxsan izlab topiladi, haqiqiyligi tasdiqlanadi va kolleksiyamizga qo‘shilishidan oldin katalogga kiritiladi.",
     standardEyebrow: 'Bizning standartimiz',
@@ -307,7 +306,7 @@ const uz: Dictionary = {
   },
   account: {
     // -- shared authentication frame --
-    brandEyebrow: 'SwissWatch Premium Maison',
+    brandEyebrow: 'SwissWatch Premium',
     brandStatement: 'Vaqt — sizning nomingizda.',
     brandNote:
       'So‘rovlaringizni kuzatib boring, saqlab qo‘ygan soatlaringizga qayting va mutaxassisingiz bilan bir so‘zni ikki marta takrorlamasdan bog‘laning.',
