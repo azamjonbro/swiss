@@ -32,7 +32,19 @@
 
     <!-- The hero photograph is the LCP element on the homepage; start it in
          parallel with the module graph instead of after it. -->
-    <link rel="preload" as="image" href="/images/swisswatch_hero.webp" type="image/webp" fetchpriority="high" />
+    <!-- The candidate list has to match the one SmartImage builds from
+         src/data/image-widths.json. Preloading the bare full-size file while
+         the element resolves to a narrower variant downloads both and preloads
+         neither usefully, so the set is mirrored here. -->
+    <link
+      rel="preload"
+      as="image"
+      href="/images/swisswatch_hero.webp"
+      imagesrcset="/images/swisswatch_hero-480.webp 480w, /images/swisswatch_hero-960.webp 960w, /images/swisswatch_hero.webp 1376w"
+      imagesizes="100vw"
+      type="image/webp"
+      fetchpriority="high"
+    />
 
     <style>
       /* One variable file per subset — the same asset Google returns for the

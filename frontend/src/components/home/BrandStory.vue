@@ -27,7 +27,12 @@ const facts = computed(() => [
       <h2 v-reveal="0.08" class="sw-h1 sw-story__title">{{ locale.t('home.storyTitle') }}</h2>
 
       <figure v-reveal.clip class="sw-story__portrait">
-        <SmartImage :src="portrait" :alt="locale.t('home.storyPortraitAlt')" aspect-ratio="3 / 4" />
+        <SmartImage
+          :src="portrait"
+          :alt="locale.t('home.storyPortraitAlt')"
+          aspect-ratio="3 / 4"
+          sizes="(max-width: 900px) 92vw, 46vw"
+        />
       </figure>
 
       <p v-reveal class="sw-lede sw-story__lede">{{ locale.t('home.storyLede') }}</p>
@@ -40,7 +45,12 @@ const facts = computed(() => [
       </div>
 
       <figure v-reveal.clip class="sw-story__detail">
-        <SmartImage :src="detail" :alt="locale.t('home.storyDetailAlt')" aspect-ratio="4 / 3" />
+        <SmartImage
+          :src="detail"
+          :alt="locale.t('home.storyDetailAlt')"
+          aspect-ratio="4 / 3"
+          sizes="(max-width: 900px) 92vw, 34vw"
+        />
       </figure>
 
       <dl class="sw-story__facts">

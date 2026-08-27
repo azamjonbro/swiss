@@ -1,0 +1,40 @@
+{
+  "/images/swisswatch_about.webp": [
+    480,
+    960,
+    1376
+  ],
+  "/images/swisswatch_concierge.webp": [
+    480,
+    960,
+    1024
+  ],
+  "/images/swisswatch_hero.webp": [
+    480,
+    960,
+    1376
+  ],
+  "/images/swisswatch_network.webp": [
+    480,
+    960,
+    1024
+  ],
+  "/images/swisswatch_provenance.webp": [
+    480,
+    960,
+    1024
+  ],
+  "/images/swisswatch_standard.webp": [
+    480,
+    960,
+    1024
+  ],
+  "/images/tsarbomba_tb8204.webp": [
+    480,
+    896
+  ],
+  "/images/tsarbomba_tb8208.webp": [
+    480,
+    896
+  ]
+}

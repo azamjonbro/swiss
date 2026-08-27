@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, watch, onMounted } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { useUiStore } from '@/stores/ui';
 import { useLocaleStore } from '@/stores/locale';
 import { useCurrencyStore } from '@/stores/currency';
@@ -55,10 +55,26 @@ watch(query, (value) => {
   }, 260);
 });
 
+/**
+ * Suggestions are fetched the first time the panel opens, not on mount. The
+ * panel is mounted on every page so the input can be focused inside the tap
+ * that opens it — but that made its four product shots part of every page load
+ * for a panel most visits never open.
+ */
+async function loadSuggestions() {
+  if (suggestions.value.length) return;
+  try {
+    suggestions.value = (await fetchWatches({ featured: true, limit: 4 })).items;
+  } catch {
+    // The panel works without them; an empty strip is better than an error.
+  }
+}
+
 watch(
   () => ui.isSearchOpen,
   (open) => {
     if (open) {
+      void loadSuggestions();
       // Focus is also attempted synchronously from the header button, which is
       // what actually raises the keyboard on iOS. This is the fallback for
       // every other way the panel can be opened.
@@ -70,14 +86,6 @@ watch(
     }
   },
 );
-
-onMounted(async () => {
-  try {
-    suggestions.value = (await fetchWatches({ featured: true, limit: 4 })).items;
-  } catch {
-    // The panel works without them; an empty strip is better than an error.
-  }
-});
 
 function close() {
   ui.closeSearch();

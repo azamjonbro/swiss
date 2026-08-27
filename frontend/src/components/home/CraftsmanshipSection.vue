@@ -34,7 +34,12 @@ const details = computed(() => [
       <ol class="sw-craft__list">
         <li v-for="detail in details" :key="detail.key" class="sw-craft__item">
           <figure v-reveal.clip class="sw-craft__media">
-            <SmartImage :src="detail.image" :alt="detail.title" aspect-ratio="16 / 10" />
+            <SmartImage
+              :src="detail.image"
+              :alt="detail.title"
+              aspect-ratio="16 / 10"
+              sizes="(max-width: 900px) 92vw, 42vw"
+            />
           </figure>
           <div v-reveal="0.08" class="sw-craft__caption">
             <span class="sw-craft__index">{{ detail.index }}</span>
