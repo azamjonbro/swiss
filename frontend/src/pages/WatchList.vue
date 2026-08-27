@@ -9,6 +9,8 @@ import { useLocaleStore } from '@/stores/locale';
 import { useCurrencyStore } from '@/stores/currency';
 import { colorSwatchHex, movementType } from '@/utils/format';
 import { useLockBodyScroll } from '@/composables/useLockBodyScroll';
+import { applyJsonLd, applySeo, site } from '@/utils/seo';
+import { itemListSchema, productPath, staticSeo, watchFullName } from '@/seo/schema.mjs';
 import WatchCard from '@/components/watch/WatchCard.vue';
 
 const route = useRoute();
@@ -278,6 +280,30 @@ watch(
   [selectedGender, selectedCollection, selectedType, selectedColor, selectedMovement, selectedPriceBand, selectedAvailability, isNewOnly, sortKey],
   syncQuery,
 );
+
+/**
+ * The catalog is one indexable URL. Filter and sort state lives in the query
+ * string for sharing and back-button behaviour, so canonical always points at
+ * the bare /watches, and a filtered view is additionally marked noindex —
+ * every combination of eight filters must never become its own thin page.
+ * `follow` is kept so the products linked from a filtered view still get
+ * crawled.
+ */
+function applyListSeo() {
+  const seo = staticSeo('watches', site);
+  if (!seo) return;
+  const isFiltered = hasActiveFilters.value || sortKey.value !== 'newest';
+  applySeo({ ...seo, canonical: '/watches', robots: isFiltered ? 'noindex, follow' : 'index, follow' });
+  applyJsonLd([
+    itemListSchema(
+      sortedWatches.value.slice(0, 60).map((w) => ({ name: watchFullName(w) || w.name, path: productPath(w.slug) })),
+      site,
+      'Swiss watches',
+    ),
+  ]);
+}
+
+watch([hasActiveFilters, sortKey, sortedWatches], applyListSeo, { immediate: true });
 
 function clearFilters() {
   selectedGender.value = '';
