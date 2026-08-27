@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useLocaleStore } from '@/stores/locale';
+import BrandMark from '@/components/shared/BrandMark.vue';
 
 const locale = useLocaleStore();
 
@@ -23,6 +24,13 @@ const authImage = '/images/swisswatch_provenance.jpg';
 
     <section class="sw-auth__panel">
       <div class="sw-auth__panel-inner">
+        <!-- The house mark, above the form on every auth screen. Signing in is
+             the one place a visitor stops to check whose site they are handing
+             a password to, and the column carried no identification at all. -->
+        <RouterLink to="/" class="sw-auth__mark" :aria-label="locale.t('account.brandEyebrow')">
+          <BrandMark :size="34" :wordmark="false" />
+        </RouterLink>
+
         <RouterView v-slot="{ Component, route }">
           <transition name="sw-auth-swap" mode="out-in">
             <component :is="Component" :key="route.path" />

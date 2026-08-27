@@ -24,6 +24,15 @@
   position: relative;
   overflow: hidden;
   background: var(--sw-obsidian);
+  // The register form runs past a laptop viewport (six fields), and without
+  // this the photograph scrolled away with it, leaving the visitor filling in
+  // a form beside a blank column. Pinned, the panel holds the frame while only
+  // the form moves. `align-self: start` is what lets a grid item stick at all —
+  // a stretched item has no room to move within its track.
+  position: sticky;
+  top: var(--header-height);
+  align-self: start;
+  height: calc(100vh - var(--header-height));
 }
 
 .sw-auth__media-img {
@@ -103,6 +112,12 @@
 .sw-auth__panel-inner {
   width: 100%;
   max-width: 430px;
+}
+
+.sw-auth__mark {
+  display: inline-flex;
+  margin-bottom: clamp(28px, 4vw, 44px);
+  color: var(--text);
 }
 
 .sw-auth-form {
@@ -564,9 +579,13 @@
     min-height: 0;
   }
 
-  // On a phone the photograph becomes a compact editorial band above the form
-  // rather than a column beside it.
+  // Stacked, so the pinning from the two-column layout has to come off — left
+  // on, the band would stick at full viewport height above the form.
   .sw-auth__media {
+    position: relative;
+    top: auto;
+    height: auto;
+    align-self: stretch;
     min-height: 38vh;
     aspect-ratio: 16 / 10;
   }
@@ -626,15 +645,33 @@
   }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 640px) {
+  // On a phone the photograph cost more than it gave: a 281px band plus its
+  // statement pushed the first field 580px down the page, so signing in began
+  // with three quarters of a screen of scrolling past a picture. The band goes
+  // and the house mark carries the brand instead — the form now opens on the
+  // first screen, which is the whole job of this page.
   .sw-auth__media {
-    min-height: 30vh;
-    aspect-ratio: 4 / 3;
+    display: none;
   }
 
+  .sw-auth {
+    padding-top: 0;
+  }
+
+  .sw-auth__panel {
+    min-height: calc(100svh - var(--header-height));
+    padding-top: calc(var(--header-height) + 24px);
+  }
+
+  .sw-auth__mark {
+    margin-bottom: 22px;
+  }
+
+  // First name / last name stay paired: two short fields side by side cost the
+  // register form a whole row of height it does not have on a phone.
   .sw-auth-form__row {
-    grid-template-columns: 1fr;
-    gap: 0;
+    gap: 14px;
   }
 
   .sw-detail-row {
