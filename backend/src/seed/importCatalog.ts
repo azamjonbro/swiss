@@ -309,6 +309,15 @@ function buildCopy(entry: ImportEntry, colorCount: number) {
   return { shortDescription, shortDescriptionRu, shortDescriptionUz, description, descriptionRu, descriptionUz };
 }
 
+/** Product URL slug; see the call site for why the reference is sometimes dropped. */
+function slugFor(brandName: string, name: string, reference: string): string {
+  const base = toSlug(`${brandName}-${name}`);
+  const ref = toSlug(reference);
+  return !ref || base === base.replace(new RegExp(`-?${ref}$`), '') === false && base.endsWith(ref)
+    ? base
+    : toSlug(`${base}-${ref}`);
+}
+
 function seriesOf(name: string): string {
   for (const [pattern, series] of SERIES_BY_NAME) {
     if (pattern.test(name)) return series;
@@ -331,7 +340,13 @@ async function run() {
   let skipped = 0;
   for (const entry of entries) {
     const name = entry.title;
-    const slug = toSlug(`${brand.name}-${name}-${entry.reference}`);
+    // Watches are addressed brand-name-reference ("tsar-bomba-dark-matter-4-tb8604"),
+    // but tsarbomba.com names most of its listings after the model number itself, and
+    // an accessory has no model number at all (the fetcher derives one from the title).
+    // In both cases appending the reference stutters — "…-tb8228a-tb8228a",
+    // "…-cubic-zirconia-bezel-cubic-zirconia-bezel" — so it is appended only when the
+    // name does not already end with it.
+    const slug = slugFor(brand.name, name, entry.reference);
     if (await Watch.exists({ slug })) {
       skipped += 1;
       continue;

@@ -26,7 +26,9 @@ const isLoading = ref(true);
 
 const selectedGender = ref((route.query.gender as string) ?? '');
 const selectedCollection = ref((route.query.collection as string) ?? '');
-const selectedType = ref((route.query.type as string) ?? '');
+// Watches are the catalogue; straps, bezels and crowns are opt-in from this facet
+// rather than something a visitor has to filter back out of the grid.
+const selectedType = ref((route.query.type as string) || 'watch');
 const selectedColor = ref((route.query.color as string) ?? '');
 const selectedMovement = ref((route.query.movement as string) ?? '');
 const selectedPriceBand = ref((route.query.price as string) ?? '');
@@ -125,9 +127,16 @@ const collectionOptions = computed(() => {
   return collections.value.filter((c) => present.has(c._id));
 });
 
-const typeOptions = computed(() =>
-  (['watch', 'accessory'] as const).filter((t) => allWatches.value.some((w) => (w.type ?? 'watch') === t)),
-);
+const typeOptions = computed(() => {
+  const present = (['watch', 'accessory'] as const).filter((t) =>
+    allWatches.value.some((w) => (w.type ?? 'watch') === t),
+  );
+  return present.length > 1 ? [...present, 'all' as const] : present;
+});
+
+function typeLabel(t: string): string {
+  return t === 'all' ? locale.t('watchList.allTypes') : locale.t(`watchList.type_${t}`);
+}
 
 /** `collectionRef` arrives either populated or as a bare id, depending on the endpoint. */
 function collectionIdOf(w: Watch): string {
@@ -185,7 +194,7 @@ const filteredWatches = computed(() => {
   return allWatches.value.filter((w) => {
     if (selectedGender.value && w.gender !== selectedGender.value) return false;
     if (selectedCollection.value && collectionIdOf(w) !== selectedCollection.value) return false;
-    if (selectedType.value && (w.type ?? 'watch') !== selectedType.value) return false;
+    if (selectedType.value !== 'all' && (w.type ?? 'watch') !== selectedType.value) return false;
     if (isNewOnly.value && !w.isNewArrival) return false;
     if (selectedColor.value && !w.variants?.some((v) => v.colorSlug === selectedColor.value)) return false;
     if (selectedMovement.value && movementType(w.movement) !== selectedMovement.value) return false;
@@ -227,11 +236,11 @@ const activeFilterChips = computed<FilterChip[]>(() => {
       clear: () => (selectedCollection.value = ''),
     });
   }
-  if (selectedType.value) {
+  if (selectedType.value !== 'watch') {
     chips.push({
       key: 'type',
-      label: locale.t(`watchList.type_${selectedType.value}`),
-      clear: () => (selectedType.value = ''),
+      label: typeLabel(selectedType.value),
+      clear: () => (selectedType.value = 'watch'),
     });
   }
   if (selectedColor.value) {
@@ -265,7 +274,7 @@ function syncQuery() {
     query: {
       gender: selectedGender.value || undefined,
       collection: selectedCollection.value || undefined,
-      type: selectedType.value || undefined,
+      type: selectedType.value !== 'watch' ? selectedType.value : undefined,
       color: selectedColor.value || undefined,
       movement: selectedMovement.value || undefined,
       price: selectedPriceBand.value || undefined,
@@ -308,7 +317,7 @@ watch([hasActiveFilters, sortKey, sortedWatches], applyListSeo, { immediate: tru
 function clearFilters() {
   selectedGender.value = '';
   selectedCollection.value = '';
-  selectedType.value = '';
+  selectedType.value = 'watch';
   selectedColor.value = '';
   selectedMovement.value = '';
   selectedPriceBand.value = '';
@@ -480,14 +489,6 @@ function selectSort(key: string) {
                 <summary class="sw-label">{{ locale.t('watchList.filterType') }}</summary>
                 <div class="sw-filterdrawer__list">
                   <button
-                    class="sw-filterdrawer__option"
-                    :class="{ 'is-active': !selectedType }"
-                    type="button"
-                    @click="selectedType = ''"
-                  >
-                    {{ locale.t('watchList.allTypes') }}
-                  </button>
-                  <button
                     v-for="t in typeOptions"
                     :key="t"
                     class="sw-filterdrawer__option"
@@ -495,7 +496,7 @@ function selectSort(key: string) {
                     type="button"
                     @click="selectedType = t"
                   >
-                    {{ locale.t(`watchList.type_${t}`) }}
+                    {{ typeLabel(t) }}
                   </button>
                 </div>
               </details>
