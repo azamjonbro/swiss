@@ -10,8 +10,15 @@ backend/    Node.js, Express, TypeScript, MongoDB, Mongoose, JWT — serves both
 ```
 
 The admin panel is a fully independent app — its own `package.json`, dev server, and visual identity
-(sans-serif type, blue accent) distinct from the storefront's luxury branding (serif type, burgundy
+(Inter, blue accent) distinct from the storefront's luxury branding (DM Sans throughout, burgundy
 accent). It talks to the same backend API.
+
+The house mark — a Swiss cross on a crimson tile, taken from the boutique logo — is inlined at each
+site it appears (`frontend/src/components/shared/BrandMark.vue`, both `favicon.svg` files, the
+storefront preloader in `frontend/index.html`, the admin sidebar and login card) rather than shared
+as one asset: it carries three flat fills, so a single `currentColor` file could not express it. Its
+two colours live in `frontend/src/assets/scss/_variables.scss` as `--sw-crimson` / `--sw-crimson-deep`
+and are deliberately separate from `--accent`, which stays the UI burgundy.
 
 ## Prerequisites
 
@@ -184,12 +191,32 @@ serves those files straight from the filesystem; Vue mounts over them in the bro
 
 Environment variables (see `frontend/.env.example`, `backend/.env.example`):
 
-| Variable | Where | Purpose |
-| --- | --- | --- |
-| `VITE_SITE_URL` | frontend build + runtime | Canonical origin (`https://swisspremium.uz`) |
-| `VITE_SITE_NAME` | frontend build + runtime | Brand name in titles and structured data |
-| `SEO_API_URL` | frontend build | API the prerenderer reads the catalog from |
-| `SEO_LANG` | frontend build | Language of the prerendered copy (default `en`) |
-| `SITE_URL` | backend | Canonical origin used in sitemap URLs |
+| Variable | Where | Required | Purpose |
+| --- | --- | --- | --- |
+| `VITE_SITE_URL` | frontend build + runtime | **yes** | Canonical origin (`https://swisswatchpremium.uz`) |
+| `VITE_SITE_NAME` | frontend build + runtime | no | Brand name in titles and structured data (default `SwissWatch Premium`) |
+| `VITE_API_URL` | frontend runtime | no | Backend origin when it is not same-origin. Leave empty on Vercel — `vercel.json` rewrites `/api` and `/uploads` to the API host |
+| `VITE_CONTACT_EMAIL` | frontend build + runtime | no | Published contact email — footer, contact page, and the JSON-LD `contactPoint` |
+| `VITE_CONTACT_PHONE` | frontend build + runtime | no | Published contact phone, same three places. Written for display (`+998 88 500 20 20`); `telHref()` strips it to a dialable `tel:` |
+| `SEO_API_URL` | frontend build | no | API the prerenderer reads the catalog from (default `https://swiss.techinfo.uz`) |
+| `SEO_LANG` | frontend build | no | Language of the prerendered copy (default `en`) |
+| `SITE_URL` | backend | yes | Canonical origin used in sitemap URLs |
 
-# swiss
+Only `VITE_SITE_URL` has no fallback, and that is deliberate: a silent default to localhost is what
+produced the first bad sitemap, so `resolveSiteUrl` (`frontend/src/seo/schema.mjs`) refuses to build
+instead. It rejects an empty value, a relative one, `localhost`, **and any `*.vercel.app` host** — so
+Preview deployments need the real domain too, not the generated preview URL. Set it for both
+Production and Preview, or every build fails with:
+
+```
+[seo] VITE_SITE_URL is not set. Set it to https://swisswatchpremium.uz for
+Production and Preview before building
+```
+
+Contact details are the other deliberate omission: left empty they render nothing at all and drop out
+of the JSON-LD entirely, rather than shipping a placeholder number that visitors and structured-data
+parsers would both read as real.
+
+**Changing any of these in the Vercel dashboard does not rebuild the site.** Environment variables are
+read at build time, so after editing them either redeploy the latest deployment from the Deployments
+tab (with the build cache off) or push a commit.
