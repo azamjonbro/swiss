@@ -313,9 +313,8 @@ function buildCopy(entry: ImportEntry, colorCount: number) {
 function slugFor(brandName: string, name: string, reference: string): string {
   const base = toSlug(`${brandName}-${name}`);
   const ref = toSlug(reference);
-  return !ref || base === base.replace(new RegExp(`-?${ref}$`), '') === false && base.endsWith(ref)
-    ? base
-    : toSlug(`${base}-${ref}`);
+  if (!ref || base === ref || base.endsWith(`-${ref}`)) return base;
+  return toSlug(`${base}-${ref}`);
 }
 
 function seriesOf(name: string): string {
@@ -331,6 +330,19 @@ async function run() {
   const brand = await Brand.findOne({ slug: 'tsar-bomba' });
   const category = await Category.findOne();
   if (!brand || !category) throw new Error('Run `npm run seed` first — no brand or category found.');
+
+  // `seed.ts` builds its slugs as brand-name-reference unconditionally, which stutters
+  // for the listings tsarbomba.com names after the model number itself
+  // ("tsar-bomba-elemental-tb8208a-tb8208a"). Normalising here keeps the URLs the same
+  // whichever path a product came in through.
+  let renamed = 0;
+  for (const product of await Watch.find({}, { name: 1, reference: 1, slug: 1 })) {
+    const wanted = slugFor(brand.name, product.name, product.reference);
+    if (wanted === product.slug || (await Watch.exists({ slug: wanted }))) continue;
+    await Watch.updateOne({ _id: product._id }, { slug: wanted });
+    renamed += 1;
+  }
+  if (renamed) console.log(`[import] slug tozalandi: ${renamed} ta`);
 
   const file = path.join(__dirname, 'tsarbomba-import.json');
   const entries: ImportEntry[] = JSON.parse(fs.readFileSync(file, 'utf8'));
