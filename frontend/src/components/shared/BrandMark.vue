@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useId } from 'vue';
+
 interface Props {
   /** Mark height in px (the tile is square). */
   size?: number;
@@ -7,15 +9,24 @@ interface Props {
 }
 
 withDefaults(defineProps<Props>(), { size: 30, wordmark: true });
+
+// The tile is rounded by a clip path rather than by the CSS box, so the four
+// crimson panels below cannot leak an ivory corner. The mark renders more than
+// once per page (header, footer, auth panel), so the id has to be unique per
+// instance or the first one on the page would clip all of them.
+const clipId = `sw-mark-${useId()}`;
 </script>
 
 <template>
   <span class="sw-mark">
     <!--
-      The house mark: a painterly Swiss cross on a crimson tile, lifted from the
-      boutique logo. Two ivory bars over two deeper-red under-strokes give the
-      hand-painted layering; it is built from three flat fills so it stays clean
-      from 16px (favicon) to full width, in either theme.
+      The house mark: the boutique's painterly Swiss cross. Not a centred plus
+      sign — the tile is cut into four crimson panels by two white channels
+      that are drawn, not measured: the vertical one leans right and opens out
+      towards the foot, the horizontal one rides high and lifts to the right,
+      and a thin crimson wedge splits the head of each stroke the way a second
+      pass of a brush would. Built from flat fills only, so it survives from a
+      16px favicon to a full-width lockup, in either theme.
     -->
     <svg
       class="sw-mark__glyph"
@@ -26,11 +37,18 @@ withDefaults(defineProps<Props>(), { size: 30, wordmark: true });
       aria-hidden="true"
       focusable="false"
     >
-      <rect width="40" height="40" rx="2" fill="var(--sw-crimson)" />
-      <rect x="23" y="6" width="3" height="28" rx="0.6" fill="var(--sw-crimson-deep)" />
-      <rect x="7.5" y="22" width="26" height="3" rx="0.6" fill="var(--sw-crimson-deep)" />
-      <rect x="16" y="5" width="7" height="30" rx="1" fill="var(--sw-ivory)" />
-      <rect x="5.5" y="15" width="28" height="7" rx="1" fill="var(--sw-ivory)" />
+      <defs>
+        <clipPath :id="clipId"><rect width="40" height="40" rx="1.5" /></clipPath>
+      </defs>
+      <g :clip-path="`url(#${clipId})`">
+        <rect width="40" height="40" fill="var(--sw-ivory)" />
+        <path d="M0 0H16.3L15.4 16.2L0 18Z" fill="var(--sw-crimson)" />
+        <path d="M20.1 0H40V14.6L20.6 16.6Z" fill="var(--sw-crimson)" />
+        <path d="M0 21.4L15.2 19.8L16.9 40H0Z" fill="var(--sw-crimson)" />
+        <path d="M20.9 17.4L40 17.6V40H21.9Z" fill="var(--sw-crimson)" />
+        <path d="M18.4 0H19.8L19.35 13.2Z" fill="var(--sw-crimson)" />
+        <path d="M0 18.8L11.2 19.75L0 19.9Z" fill="var(--sw-crimson)" />
+      </g>
     </svg>
     <span v-if="wordmark" class="sw-mark__word">SwissWatch Premium</span>
   </span>
@@ -46,7 +64,6 @@ withDefaults(defineProps<Props>(), { size: 30, wordmark: true });
 
 .sw-mark__glyph {
   flex: none;
-  border-radius: 2px;
 }
 
 .sw-mark__word {

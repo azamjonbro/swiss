@@ -238,12 +238,18 @@
           <circle class="sw-preloader__track" cx="60" cy="60" r="54" />
           <circle class="sw-preloader__sweep" cx="60" cy="60" r="54" />
         </svg>
+        <!-- The house mark, geometry mirrored from BrandMark.vue. -->
         <svg class="sw-preloader__mark" viewBox="0 0 40 40" aria-hidden="true">
-          <rect width="40" height="40" rx="2" fill="#ad2b39" />
-          <rect x="23" y="6" width="3" height="28" rx="0.6" fill="#7c1f29" />
-          <rect x="7.5" y="22" width="26" height="3" rx="0.6" fill="#7c1f29" />
-          <rect x="16" y="5" width="7" height="30" rx="1" fill="#f3efe7" />
-          <rect x="5.5" y="15" width="28" height="7" rx="1" fill="#f3efe7" />
+          <clipPath id="sw-preloader-mark-clip"><rect width="40" height="40" rx="1.5" /></clipPath>
+          <g clip-path="url(#sw-preloader-mark-clip)">
+            <rect width="40" height="40" fill="#f3efe7" />
+            <path d="M0 0H16.3L15.4 16.2L0 18Z" fill="#ad2b39" />
+            <path d="M20.1 0H40V14.6L20.6 16.6Z" fill="#ad2b39" />
+            <path d="M0 21.4L15.2 19.8L16.9 40H0Z" fill="#ad2b39" />
+            <path d="M20.9 17.4L40 17.6V40H21.9Z" fill="#ad2b39" />
+            <path d="M18.4 0H19.8L19.35 13.2Z" fill="#ad2b39" />
+            <path d="M0 18.8L11.2 19.75L0 19.9Z" fill="#ad2b39" />
+          </g>
         </svg>
       </div>
       <div class="sw-preloader__word">
