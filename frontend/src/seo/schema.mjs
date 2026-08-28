@@ -385,9 +385,11 @@ export function staticSeo(key, site) {
       // import the TypeScript dictionaries, so the values are mirrored here —
       // if one changes, change both, or the crawlable copy and the rendered
       // page disagree about what the page is called.
-      heading: 'The Art of Watchmaking — Luxury Watches in Uzbekistan',
-      title: pageTitle('Luxury Watches in Uzbekistan', site),
-      description: `Authenticated luxury timepieces in Tashkent, Uzbekistan. Browse automatic and quartz watches from the maisons ${site.name} represents — discover, inquire, acquire.`,
+      heading: site.name,
+      // `site.name` alone, not `pageTitle(site.name)` — the helper appends the
+      // house name as a suffix, which on this one page would say it twice.
+      title: site.name,
+      description: `Authenticated timepieces in Tashkent, Uzbekistan. Browse automatic and quartz watches from the maisons ${site.name} represents — discover, inquire, acquire.`,
       canonical: '/',
     },
     watches: {
@@ -416,7 +418,7 @@ export function staticSeo(key, site) {
     about: {
       heading: 'Built on trust.',
       title: pageTitle('About', site),
-      description: `${site.name} is a curated showroom for authenticated luxury timepieces in Tashkent — how we source, examine and present every watch we list.`,
+      description: `${site.name} is a curated showroom for authenticated timepieces in Tashkent — how we source, examine and present every watch we list.`,
       canonical: '/about',
     },
     contact: {
