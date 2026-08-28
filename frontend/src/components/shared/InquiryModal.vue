@@ -124,7 +124,11 @@ function close() {
 .sw-inquiry-backdrop {
   position: fixed;
   inset: 0;
-  z-index: 98;
+  /* Above the fixed header (100) and above the cart drawer (110), which is one
+     of the places this modal is opened from. Below 98 the header covered the
+     panel's own close button whenever the panel was tall enough to reach the
+     top 84px of the viewport — on a phone, always. */
+  z-index: 120;
   background: rgba(10, 10, 10, 0.55);
   backdrop-filter: blur(3px);
   display: flex;
@@ -146,8 +150,16 @@ function close() {
 
 .sw-inquiry__close {
   position: absolute;
-  top: 24px;
-  right: 24px;
+  /* Inset by 12px with 12px of padding: the word still reads 24px off the
+     corner, but the target around it is a full 44px. */
+  top: 12px;
+  right: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 12px;
   font-size: 0.7rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;

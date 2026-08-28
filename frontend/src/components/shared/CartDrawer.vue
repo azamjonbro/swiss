@@ -85,7 +85,10 @@ function checkout() {
 .sw-cart-backdrop {
   position: fixed;
   inset: 0;
-  z-index: 99;
+  /* Above the fixed header (z-index: 100), not below it. At 99 the header sat
+     on top of the drawer's own top 84px — exactly the strip holding the close
+     button — so the tap landed on the header and the drawer never closed. */
+  z-index: 110;
   background: rgba(10, 10, 10, 0.5);
   display: flex;
   justify-content: flex-end;
@@ -98,7 +101,9 @@ function checkout() {
   color: var(--text);
   display: flex;
   flex-direction: column;
-  padding: 32px clamp(20px, 3vw, 36px) 28px;
+  /* The top padding moved into the head, which is sticky and has to carry its
+     own. */
+  padding: 0 clamp(20px, 3vw, 36px) 28px;
   overflow-y: auto;
 }
 
@@ -106,7 +111,13 @@ function checkout() {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 24px;
+  /* The drawer is the scroll container, so a static head scrolled away with
+     the basket and left no way out of a full cart without scrolling back up. */
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--bg);
+  padding-block: 32px 24px;
   border-bottom: 1px solid var(--border);
 }
 
@@ -114,6 +125,13 @@ function checkout() {
   font-size: 0.7rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
+  /* The label is 11px tall; the target it sits in is not. Negative margin
+     pulls the padding back out so the word stays optically on the edge. */
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 4px 0 16px;
+  margin: -12px -4px -12px 0;
 }
 
 .sw-cart__empty {
