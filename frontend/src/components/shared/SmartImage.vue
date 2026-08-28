@@ -68,8 +68,8 @@ const candidates = computed(() => {
   // eighth of the JPEG's weight), so it is worth asking for by name.
   //
   // Product photography is not: the API re-encodes every `?w=` request to WebP
-  // whatever the source format is, so the sibling would buy nothing — and 912
-  // of the 2 706 uploads have no `.webp` next to them, which turned the guess
+  // whatever the source format is, so the sibling would buy nothing — and 917
+  // of the 2 498 originals have no `.webp` next to them, which turned the guess
   // into a guaranteed 404 and a second round trip (~0.5s each on this host)
   // before the real file was even requested.
   if (isJpgPng && !src.includes('/uploads/images/')) {
