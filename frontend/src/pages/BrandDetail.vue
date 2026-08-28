@@ -104,7 +104,14 @@ watch(
       <SmartImage :src="brand.image" :alt="`${brand.name} watches`" eager aspect-ratio="21 / 9" />
       <div class="sw-brand-detail__hero-overlay" />
       <div class="sw-brand-detail__hero-content">
-        <span class="sw-eyebrow">{{ brand.country }}<template v-if="brand.founded"> &middot; {{ locale.t('brandDetail.est') }} {{ brand.founded }}</template></span>
+        <!-- Country and founding year are both optional Brand fields, and
+             neither is invented when the record does not carry it: the eyebrow
+             renders only the parts that exist, separator included. -->
+        <span v-if="brand.country || brand.founded" class="sw-eyebrow"
+          ><template v-if="brand.country">{{ brand.country }}</template
+          ><template v-if="brand.country && brand.founded"> &middot; </template
+          ><template v-if="brand.founded">{{ locale.t('brandDetail.est') }} {{ brand.founded }}</template
+        ></span>
         <h1 class="sw-display">{{ brand.name }}</h1>
       </div>
     </section>

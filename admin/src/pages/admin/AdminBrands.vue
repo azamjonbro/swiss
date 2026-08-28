@@ -15,7 +15,8 @@ const emptyForm = {
   logo: '',
   image: '',
   website: '',
-  country: 'Switzerland',
+  // Left blank on purpose: see the note on `country` in backend Brand model.
+  country: '',
   founded: undefined as number | undefined,
   featured: false,
   isActive: true,

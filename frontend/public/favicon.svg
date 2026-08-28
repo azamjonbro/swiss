@@ -1,18 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!--
-    SwissWatch Premium — the house mark: the boutique's painterly Swiss cross.
-    Four crimson panels cut by two white channels that are drawn rather than
-    measured, with a thin crimson wedge splitting the head of each stroke.
-    Geometry mirrors src/components/shared/BrandMark.vue (40x40, scaled 1.6).
-  -->
-  <clipPath id="t"><rect width="64" height="64" rx="2.4"/></clipPath>
-  <g clip-path="url(#t)">
-    <rect width="64" height="64" fill="#f3efe7"/>
-    <path d="M0 0H26.08L24.64 25.92L0 28.8Z" fill="#ad2b39"/>
-    <path d="M32.16 0H64V23.36L32.96 26.56Z" fill="#ad2b39"/>
-    <path d="M0 34.24L24.32 31.68L27.04 64H0Z" fill="#ad2b39"/>
-    <path d="M33.44 27.84L64 28.16V64H35.04Z" fill="#ad2b39"/>
-    <path d="M29.44 0H31.68L30.96 21.12Z" fill="#ad2b39"/>
-    <path d="M0 30.08L17.92 31.6L0 31.84Z" fill="#ad2b39"/>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+  <!-- SwissWatch Premium — the house mark, traced from the boutique's logo.
+       Geometry is shared with src/components/shared/BrandMark.vue. -->
+  <rect width="40" height="40" fill="#f3efe7" />
+  <!-- Four crimson panels, the brush slivers that split the channels, and
+       the small centre stone: traced from the boutique's own logo. -->
+  <path d="M0 23.81L1.88 23.81L1.88 23.33L16.47 23.33L16.94 24.76L17.41 24.76L17.41 30.95L17.88 30.95L17.88 29.52L18.35 29.52L18.35 24.29L18.82 24.29L19.29 22.86L20.71 22.86L21.18 23.33L21.18 37.62L20.24 38.57L20.24 40L0 40Z" fill="#ad2b39" />
+  <path d="M23.06 19.05L23.53 18.57L32.94 18.57L32.94 19.05L38.59 19.05L40 20L40 40L24.94 40L23.53 38.57L23.53 22.86L24 22.38L32.94 22.38L32.94 21.9L23.53 21.43L23.06 20.95Z" fill="#ad2b39" />
+  <path d="M0 0L16.47 0L16.94 16.19L15.53 16.67L15.53 17.14L10.35 17.14L10.35 17.62L15.53 18.1L15.53 18.57L16.94 19.05L16.94 20.48L16 20.48L16 20.95L2.35 20.95L2.35 20.48L0 20.48Z" fill="#ad2b39" />
+  <path d="M18.82 6.19L19.29 6.19L19.29 0L40 0L40 15.71L37.65 15.71L37.65 16.19L28.24 16.19L28.24 16.67L25.88 16.19L25.88 16.67L23.53 16.67L23.53 16.19L22.59 16.19L22.59 7.14L22.12 7.14L22.12 15.71L21.18 16.67L19.29 16.67L18.82 16.19Z" fill="#ad2b39" />
+  <path d="M18.35 19.05L18.82 18.57L20.71 18.57L21.65 19.52L21.65 20.48L20.71 21.43L19.76 21.43L19.76 20.95L18.35 20.48Z" fill="#ad2b39" />
 </svg>

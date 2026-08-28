@@ -81,8 +81,8 @@ const en = {
     statement: 'Time, Refined.',
     statementAlt: 'A SwissWatch Premium timepiece photographed in low light',
     heroImageAlt: 'A SwissWatch Premium timepiece resting on dark stone',
-    heroTitle: 'Luxury Watches',
-    heroTitlePlace: 'in Uzbekistan',
+    heroTitle: 'The Art of Watchmaking',
+    heroTitlePlace: 'Luxury Watches in Uzbekistan',
     heroEyebrow: 'SwissWatch Premium',
     heroSub: 'Authentic timepieces from distinguished watchmakers.',
     discover: 'Discover Collection',
@@ -313,7 +313,7 @@ const en = {
     brandStatement: 'Time, kept in your name.',
     brandNote:
       'Follow your acquisition requests, return to the timepieces you have set aside, and reach your specialist without repeating a word.',
-    imageAlt: 'A Swiss timepiece resting on dark stone',
+    imageAlt: 'A timepiece resting on dark stone',
 
     // -- field labels --
     firstName: 'First Name',

@@ -33,7 +33,12 @@ const BrandSchema = new Schema<IBrand>(
     logo: { type: String, default: '' },
     image: { type: String, default: '' },
     website: { type: String, default: '' },
-    country: { type: String, default: 'Switzerland' },
+    // No default. Country of origin is a provenance claim shown on the brand
+    // page and in the maison strip on the home page; defaulting it to
+    // Switzerland stamped that claim onto every brand ever created, whether or
+    // not it was true. An empty string means "not recorded", and the UI simply
+    // omits the line.
+    country: { type: String, default: '' },
     founded: { type: Number },
     featured: { type: Boolean, default: false },
     isActive: { type: Boolean, default: true },

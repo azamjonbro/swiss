@@ -273,8 +273,9 @@ export function watchFullName(watch) {
 
 /**
  * Product alt text: what the photograph actually shows, nothing stuffed in.
- * "Tsar Bomba Elemental-TB8806Q Swiss watch" — accurate for a watch, and the
- * type word is dropped for accessories, which are not watches.
+ * "Tsar Bomba Elemental-TB8806Q watch" — the brand and reference the catalogue
+ * actually holds, and the type word is dropped for accessories, which are not
+ * watches. No provenance is asserted here that the record does not carry.
  */
 export function watchImageAlt(watch, index = 0) {
   const base = watchFullName(watch) || String(watch?.name ?? '');
@@ -361,7 +362,7 @@ export function collectionSeo(collection, site) {
     title: pageTitle(`${collection.name} Collection`, site),
     description:
       clampText(collection.description) ||
-      clampText(`The ${collection.name} collection at ${site.name} — Swiss watches selected for this line, in Tashkent, Uzbekistan.`),
+      clampText(`The ${collection.name} collection at ${site.name} — the timepieces selected for this line, in Tashkent, Uzbekistan.`),
     canonical: collectionPath(collection.slug),
     image: collection.image || '',
     type: 'website',
@@ -384,15 +385,15 @@ export function staticSeo(key, site) {
       // import the TypeScript dictionaries, so the values are mirrored here —
       // if one changes, change both, or the crawlable copy and the rendered
       // page disagree about what the page is called.
-      heading: 'Luxury Watches in Uzbekistan',
-      title: pageTitle('Swiss Watches', site),
-      description: `Authenticated Swiss watches in Tashkent, Uzbekistan. Browse automatic and quartz timepieces from the maisons ${site.name} represents — discover, inquire, acquire.`,
+      heading: 'The Art of Watchmaking — Luxury Watches in Uzbekistan',
+      title: pageTitle('Luxury Watches in Uzbekistan', site),
+      description: `Authenticated luxury timepieces in Tashkent, Uzbekistan. Browse automatic and quartz watches from the maisons ${site.name} represents — discover, inquire, acquire.`,
       canonical: '/',
     },
     watches: {
       heading: 'Timepieces',
-      title: pageTitle('Swiss Watches Catalog', site),
-      description: `Browse every Swiss watch available at ${site.name} — automatic and quartz timepieces, filterable by brand, colour, movement and availability, delivered across Uzbekistan.`,
+      title: pageTitle('Watch Catalogue', site),
+      description: `Browse every timepiece available at ${site.name} — automatic and quartz watches, filterable by brand, colour, movement and availability, delivered across Uzbekistan.`,
       canonical: '/watches',
     },
     brands: {
@@ -404,7 +405,7 @@ export function staticSeo(key, site) {
     collections: {
       heading: 'Collections',
       title: pageTitle('Watch Collections', site),
-      description: `Curated Swiss watch collections at ${site.name} — men's and women's lines assembled from the maisons we represent.`,
+      description: `Curated watch collections at ${site.name} — men's and women's lines assembled from the maisons we represent.`,
       canonical: '/collections',
     },
     stores: {

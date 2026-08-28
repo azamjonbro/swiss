@@ -341,7 +341,7 @@ function applyListSeo() {
     itemListSchema(
       sortedWatches.value.slice(0, 60).map((w) => ({ name: watchFullName(w) || w.name, path: productPath(w.slug) })),
       site,
-      'Swiss watches',
+      'Timepieces',
     ),
   ]);
 }

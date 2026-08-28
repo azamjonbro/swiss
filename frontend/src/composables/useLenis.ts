@@ -93,21 +93,41 @@ export function scrollTo(target: string | number | HTMLElement, options?: Record
  */
 const SCROLL_HOLD_MS = 600;
 
+let holdArmed = false;
 let holdDeadline = 0;
 let holdListenersBound = false;
 
 function releaseScrollHold(): void {
+  holdArmed = false;
   holdDeadline = 0;
 }
 
+function isHolding(): boolean {
+  if (!holdArmed) return false;
+  // A tab nobody is looking at cannot be scrolled by the reader — and it is
+  // exactly where a restored offset lands late, because the frames that would
+  // have carried it never ran. Hold until the tab is on screen again.
+  if (document.hidden) return true;
+  if (performance.now() < holdDeadline) return true;
+  holdArmed = false;
+  return false;
+}
+
 /**
- * The hold listens on `scroll` rather than on a frame loop: the offset the
- * browser restores arrives as a scroll event, and scroll events keep firing in
- * a backgrounded tab where requestAnimationFrame does not.
+ * The hold works off events rather than a frame loop: the offset the browser
+ * restores announces itself as a scroll, and a backgrounded tab that never
+ * paints a frame still runs timers.
  */
 function onHeldScroll(): void {
-  if (performance.now() >= holdDeadline) return;
+  if (!isHolding()) return;
   if (window.scrollY !== 0) scrollToTopNow();
+}
+
+/** The countdown is meant to run while the page is being read, not before. */
+function onVisibilityChange(): void {
+  if (!holdArmed || document.hidden) return;
+  holdDeadline = performance.now() + SCROLL_HOLD_MS;
+  onHeldScroll();
 }
 
 /** Any real input from the reader ends the hold on the spot. */
@@ -115,6 +135,7 @@ function bindHoldListeners(): void {
   if (holdListenersBound) return;
   holdListenersBound = true;
   window.addEventListener('scroll', onHeldScroll, { passive: true });
+  document.addEventListener('visibilitychange', onVisibilityChange);
   window.addEventListener('wheel', releaseScrollHold, { passive: true });
   window.addEventListener('touchstart', releaseScrollHold, { passive: true });
   window.addEventListener('keydown', releaseScrollHold);
@@ -149,11 +170,11 @@ function scrollToTopNow(): void {
 export function resetScroll(): void {
   scrollToTopNow();
   bindHoldListeners();
+  holdArmed = true;
   holdDeadline = performance.now() + SCROLL_HOLD_MS;
-  // A scroll event is the normal way the restored offset announces itself, but
-  // a tab that is not being painted does not dispatch one — the offset lands
-  // all the same, and the reader finds it there when they come back to the tab.
-  // Two timers cover that case; they cost nothing when the page is already up.
+  // A scroll event is the normal way the restored offset announces itself; the
+  // timers are the belt to that brace, and the one thing that still runs in a
+  // tab which is not painting frames.
   window.setTimeout(onHeldScroll, 80);
   window.setTimeout(onHeldScroll, 320);
 }

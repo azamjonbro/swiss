@@ -83,8 +83,8 @@ const uz: Dictionary = {
     statement: 'Time, Refined.',
     statementAlt: 'Past yorug‘likda suratga olingan SwissWatch Premium soati',
     heroImageAlt: 'Qorong‘i tosh ustida turgan SwissWatch Premium soati',
-    heroTitle: 'Hashamatli soatlar',
-    heroTitlePlace: 'O‘zbekistonda',
+    heroTitle: 'Soatsozlik san’ati',
+    heroTitlePlace: 'O‘zbekistonda hashamatli soatlar',
     heroEyebrow: 'SwissWatch Premium',
     heroSub: 'Nufuzli soatsozlik uylaridan asl soatlar.',
     discover: 'Kolleksiyani ko‘rish',
@@ -315,7 +315,7 @@ const uz: Dictionary = {
     brandStatement: 'Vaqt — sizning nomingizda.',
     brandNote:
       'So‘rovlaringizni kuzatib boring, saqlab qo‘ygan soatlaringizga qayting va mutaxassisingiz bilan bir so‘zni ikki marta takrorlamasdan bog‘laning.',
-    imageAlt: 'Qora tosh ustida turgan shveysar soati',
+    imageAlt: 'Qora tosh ustida turgan soat',
 
     // -- field labels --
     firstName: 'Ism',

@@ -84,8 +84,8 @@ const ru: Dictionary = {
     statement: 'Time, Refined.',
     statementAlt: 'Часы SwissWatch Premium в низком свете',
     heroImageAlt: 'Часы SwissWatch Premium на тёмном камне',
-    heroTitle: 'Часы класса люкс',
-    heroTitlePlace: 'в Узбекистане',
+    heroTitle: 'Искусство часового дела',
+    heroTitlePlace: 'Часы класса люкс в Узбекистане',
     heroEyebrow: 'SwissWatch Premium',
     heroSub: 'Подлинные часы от именитых часовых домов.',
     discover: 'Смотреть коллекцию',
@@ -316,7 +316,7 @@ const ru: Dictionary = {
     brandStatement: 'Время — на ваше имя.',
     brandNote:
       'Следите за своими запросами, возвращайтесь к отложенным часам и общайтесь со специалистом, не повторяя ни слова.',
-    imageAlt: 'Швейцарские часы на тёмном камне',
+    imageAlt: 'Часы на тёмном камне',
 
     // -- field labels --
     firstName: 'Имя',

@@ -289,7 +289,7 @@ function storesBody(locations) {
 
 /** The site's own primary links, with /stores appearing only once it exists. */
 const exploreLinks = () => [
-  { name: 'Swiss watches catalog', path: '/watches' },
+  { name: 'Watch catalogue', path: '/watches' },
   { name: 'Watch brands', path: '/brands' },
   { name: 'Watch collections', path: '/collections' },
   ...(LOCATIONS.length ? [{ name: 'Boutiques', path: STORES_PATH }] : []),
@@ -394,7 +394,7 @@ async function main() {
           itemListSchema(
             catalog.watches.map((w) => ({ name: watchFullName(w) || w.name, path: productPath(w.slug) })),
             site,
-            'Swiss watches',
+            'Timepieces',
           ),
           breadcrumbSchema(
             [

@@ -475,3 +475,88 @@ site correctly:
 verify `curl https://swisswatchpremium.uz/sitemap.xml` returns the right host, run
 Lighthouse, decide the Swiss question, get the address into `locations.json`, claim the
 Google Business Profile, and schedule the multilingual routing work.
+
+---
+
+## 17 — Brand positioning restored (2026-08-28)
+
+The audit above optimised the homepage into something that read as a landing page. This
+pass puts the maison back in front without giving up any of the technical work.
+
+### The hero
+
+`HeroSection.vue`, i18n ×3, `schema.mjs`
+
+The `<h1>` keeps the two-part structure introduced in A8, but the weight is reversed: the
+display line is now the brand's own voice and the descriptive line is its caption.
+
+| | Display line | Caption line |
+|---|---|---|
+| en | The Art of Watchmaking | Luxury Watches in Uzbekistan |
+| ru | Искусство часового дела | Часы класса люкс в Узбекистане |
+| uz | Soatsozlik san’ati | O‘zbekistonda hashamatli soatlar |
+
+`staticSeo('home').heading` is the two joined by an em dash, and the rendered `<h1>` emits
+that same dash inside a `.sw-visually-hidden` span — so the crawlable copy and the mounted
+app still produce byte-identical heading text (the A7 invariant), while on screen the line
+break does the separating and no punctuation is drawn.
+
+**Why not "Swiss Watches"**, which is what the brand name invites: §16's answer has not
+changed. The live catalogue is 54 watches under one brand, Tsar Bomba, founded 2021 — not a
+Swiss maison. A display headline is a claim about the products beneath it. Once Tissot,
+Rolex, Hublot or Longines are actually in the database, `home.heroTitle` in three files is
+the whole change.
+
+### Unsupported "Swiss" claims removed
+
+§16 listed six of these and left them as a business decision. Taken now, because the same
+rule that blocks "Swiss Watches" in the hero blocks them everywhere else:
+
+| Location | Was | Now |
+|---|---|---|
+| `schema.mjs` home `title` | Swiss Watches | Luxury Watches in Uzbekistan |
+| `schema.mjs` home `description` | Authenticated Swiss watches in… | Authenticated luxury timepieces in… |
+| `schema.mjs` watches `title` | Swiss Watches Catalog | Watch Catalogue |
+| `schema.mjs` watches `description` | Browse every Swiss watch… | Browse every timepiece… |
+| `schema.mjs` collections `description` | Curated Swiss watch collections… | Curated watch collections… |
+| `schema.mjs` collection fallback | Swiss watches selected for this line | the timepieces selected for this line |
+| `prerender.mjs`, `WatchList.vue` | ItemList named "Swiss watches" | "Timepieces" |
+| `i18n` account `imageAlt` | A Swiss timepiece resting on… | A timepiece resting on… |
+
+The replacements are true of the catalogue both before and after the brand expansion, so
+none of them needs revisiting when Swiss brands land.
+
+### Provenance is no longer fabricated
+
+`backend/src/models/Brand.ts`, `admin/AdminBrands.vue`, `BrandDetail.vue`
+
+`Brand.country` defaulted to `'Switzerland'` in the Mongoose schema *and* was pre-filled
+with it in the admin create form. Every brand ever created was therefore stamped Swiss
+whether or not it was — which is how the existing Tsar Bomba record came to display
+"Switzerland" on `/brands/tsar-bomba`. Both defaults are now empty; the brand-page eyebrow
+renders only the fields the record actually carries, separator included.
+
+**Outstanding, needs a human:** the stored `country` on the Tsar Bomba record still reads
+`Switzerland`. Correct it in the admin panel — it is visible copy on an indexable page.
+
+### Brand expansion readiness (verified, no code needed)
+
+The eight requirements for today's brand additions were already met by the existing
+architecture; adding rows to the `brands` collection is sufficient.
+
+| # | Requirement | Where it is already handled |
+|---|---|---|
+| 1 | Brand pages indexable | `headTags` default `index, follow`; `robots.txt` allows `/brands` |
+| 2 | Unique metadata | `brandSeo()` — per-brand title, description, canonical, OG |
+| 3 | In the sitemap | `sitemapController.ts` reads `Brand.find({ isActive: true })` |
+| 4 | Products → brand | `WatchDetail.vue` heading link; `productBody()` crumb + link |
+| 5 | Brand → products | `BrandDetail.vue` grid; `prerender.mjs` brand body `ItemList` |
+| 6 | Breadcrumbs | Home → Brands → *Brand*, `BreadcrumbList` on both copies |
+| 7 | Names from real data | `fetchBrands()` everywhere; no brand name is hardcoded anywhere |
+| 8 | No fabricated data | see "Provenance" above |
+
+A brand added between deploys is served 200 with correct metadata by `api/spa.js`, so it is
+reachable and indexable immediately; the next build writes its static document.
+
+**Superseded above:** the `/` rows in the §A8 and per-page validation tables still read
+"Luxury Watches in Tashkent". The shipped heading is the one in this section.
