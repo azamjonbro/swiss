@@ -3,6 +3,7 @@ import { applyJsonLd, applySeo, site, siteJsonLd } from '@/utils/seo';
 import { staticSeo, STORES_PATH } from '@/seo/schema.mjs';
 import { hasStoreLocations } from '@/data/locations';
 import { useAccountStore } from '@/stores/account';
+import { resetScroll } from '@/composables/useLenis';
 
 const routes = [
   {
@@ -163,8 +164,25 @@ export const router = createRouter({
   history: createWebHistory(),
   routes,
   scrollBehavior() {
-    return { top: 0 };
+    // A coordinate handed back to the router is not enough here: Lenis owns the
+    // scroll position, keeps its own target, and would animate back down to the
+    // old offset on the next wheel event — and it drops programmatic scrolls
+    // outright while an overlay has it stopped. resetScroll() puts the native
+    // scroller and Lenis back at the top together; `false` tells the router the
+    // position is already handled.
+    resetScroll();
+    return false;
   },
+});
+
+// `scrollRestoration` is a property of the individual history entry, not of the
+// session. vue-router sets it to 'manual' once, when the router is created, so
+// every entry pushed after that is back to the browser default — and a Back
+// into one of those had the browser re-applying that entry's old offset on top
+// of the reset above, landing the reader halfway down a page they just opened.
+// Re-asserting it as each entry becomes current is what actually holds.
+router.afterEach(() => {
+  if ('scrollRestoration' in window.history) window.history.scrollRestoration = 'manual';
 });
 
 router.beforeEach(async (to: RouteLocationNormalized) => {

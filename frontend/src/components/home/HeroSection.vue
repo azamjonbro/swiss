@@ -122,10 +122,18 @@ function handleDiscover() {
     <div ref="contentEl" class="sw-hero__content">
       <span ref="eyebrowEl" class="sw-eyebrow sw-hero__eyebrow">{{ locale.t('home.heroEyebrow') }}</span>
       <!-- The <h1> says what the page is, not who the shop is: the name is
-           already in the wordmark, the <title> and the Organization schema.
-           `home.heroTitle` is mirrored by `staticSeo('home').heading`, which is
-           what the prerendered copy of this page renders. -->
-      <h1 ref="titleEl" class="sw-hero__title">{{ locale.t('home.heroTitle') }}</h1>
+           already in the wordmark, the <title>, the Organization schema — and,
+           since it is what a visitor should read first, in the eyebrow above.
+           Two spans, one heading: the maison line carries the page at display
+           size and the place sits under it, quiet but present, so the reader
+           gets a premium headline and the crawler still gets a heading that
+           says what is sold and where. The two strings concatenate to exactly
+           `staticSeo('home').heading`, which is what the prerendered copy of
+           this page renders — change one, change the other. -->
+      <h1 ref="titleEl" class="sw-hero__title">
+        <span class="sw-hero__title-main">{{ locale.t('home.heroTitle') }}</span>{{ ' '
+        }}<span class="sw-hero__title-place">{{ locale.t('home.heroTitlePlace') }}</span>
+      </h1>
       <p ref="subEl" class="sw-lede sw-hero__sub">{{ locale.t('home.heroSub') }}</p>
       <div ref="ctaEl" class="sw-hero__cta">
         <button class="sw-btn sw-btn--hero" type="button" @click="handleDiscover">
@@ -232,6 +240,26 @@ function handleDiscover() {
   /* The serif's own sidebearing pushes the S off the grid; pull it back so the
      title optically aligns with the eyebrow above it. */
   margin-left: -0.045em;
+}
+
+.sw-hero__title-main {
+  display: block;
+}
+
+/* Sized off the title's own font-size so it tracks the display type down to
+   the smallest viewport, and set in the sans at eyebrow tracking so it reads
+   as a caption to the headline rather than a second headline. */
+.sw-hero__title-place {
+  display: block;
+  margin-top: clamp(10px, 1.6vh, 18px);
+  margin-left: 0.045em;
+  font-family: var(--font-sans);
+  font-size: clamp(0.6875rem, 0.16em, 1rem);
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: rgba(253, 252, 250, 0.68);
 }
 
 .sw-hero__sub {

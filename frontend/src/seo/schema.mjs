@@ -384,7 +384,7 @@ export function staticSeo(key, site) {
       // import the TypeScript dictionaries, so the values are mirrored here —
       // if one changes, change both, or the crawlable copy and the rendered
       // page disagree about what the page is called.
-      heading: 'Luxury Watches in Tashkent',
+      heading: 'Luxury Watches in Uzbekistan',
       title: pageTitle('Swiss Watches', site),
       description: `Authenticated Swiss watches in Tashkent, Uzbekistan. Browse automatic and quartz timepieces from the maisons ${site.name} represents — discover, inquire, acquire.`,
       canonical: '/',

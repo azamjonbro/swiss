@@ -2,7 +2,7 @@
 import { onMounted, onUnmounted, watch, nextTick } from 'vue';
 import { useRoute } from 'vue-router';
 import { useLocaleStore } from '@/stores/locale';
-import { initLenis, destroyLenis, scrollTo } from '@/composables/useLenis';
+import { initLenis, destroyLenis, resetScroll } from '@/composables/useLenis';
 import { ScrollTrigger } from '@/animations/gsap';
 import AppHeader from '@/components/layout/AppHeader.vue';
 import AppFooter from '@/components/layout/AppFooter.vue';
@@ -25,9 +25,14 @@ onUnmounted(() => {
 watch(
   () => route.path,
   async () => {
-    scrollTo(0, { immediate: true });
+    resetScroll();
     await nextTick();
     ScrollTrigger.refresh();
+    // ScrollTrigger.refresh() restores the scroll offset it measured before
+    // recalculating trigger positions, and on a route change that measurement
+    // can still be the outgoing page's. One more reset, a tick after the
+    // navigation, is cheap and settles the page at the top for good.
+    resetScroll();
   },
 );
 </script>
