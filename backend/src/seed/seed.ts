@@ -81,6 +81,36 @@ interface WatchSeedEntry {
   relatedRefs?: string[];
 }
 
+/**
+ * Fallback copy for a product whose record carries no written description.
+ *
+ * Assembled clause by clause from stored fields, and a clause whose field is
+ * empty is dropped rather than concatenated. The single-template version this
+ * replaces produced "...316L case, and finished with a  dial." for every watch
+ * with no `dial` value — a visible template hole that reached the product page,
+ * the meta description and the Product schema alike.
+ *
+ * Nothing is invented: an absent field simply goes unmentioned. Movement and
+ * case material keep the capitalisation they are stored with, because they are
+ * proper nouns ("Miyota", "Stainless Steel 316L") and lowercasing them read as
+ * machine output.
+ */
+function composeDescription(w: WatchSeedEntry): string {
+  const caseParts = [w.caseSize, w.caseMaterial].filter(Boolean).join(' ');
+  const clauses = [
+    w.movement ? `crafted with ${w.movement}` : '',
+    caseParts ? `housed in a ${caseParts} case` : '',
+    w.dial ? `finished with a ${w.dial.toLowerCase()} dial` : '',
+  ].filter(Boolean);
+
+  if (!clauses.length) return w.shortDescription;
+
+  const last = clauses.pop() as string;
+  const joined = clauses.length ? `${clauses.join(', ')}, and ${last}` : last;
+  const sentence = `${joined.charAt(0).toUpperCase()}${joined.slice(1)}.`;
+  return `${w.shortDescription} ${sentence}`;
+}
+
 // Prices sourced from tsarbomba.com (en-sg storefront) are listed in SGD.
 // Converted to USD at a fixed rate of 0.74 (SGD * 0.74) so every price in
 // this schema stays a plain USD number — not an invented figure, just a
@@ -2158,9 +2188,7 @@ async function seed() {
       price: w.price,
       currency: 'USD',
       type: w.type ?? 'watch',
-      description:
-        w.description ??
-        `${w.shortDescription} Crafted with ${w.movement.toLowerCase()}, housed in a ${w.caseSize} ${w.caseMaterial.toLowerCase()} case, and finished with a ${w.dial.toLowerCase()} dial.`,
+      description: w.description ?? composeDescription(w),
       shortDescription: w.shortDescription,
       variants,
       movement: w.movement,

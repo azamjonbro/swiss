@@ -81,6 +81,7 @@ const en = {
     statement: 'Time, Refined.',
     statementAlt: 'A SwissWatch Premium timepiece photographed in low light',
     heroImageAlt: 'A SwissWatch Premium timepiece resting on dark stone',
+    heroTitle: 'Luxury Watches in Tashkent',
     heroEyebrow: '1998 — Geneva / Tashkent',
     heroSub: 'Time, refined.',
     discover: 'Discover Collection',

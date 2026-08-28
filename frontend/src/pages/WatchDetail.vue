@@ -17,6 +17,7 @@ import {
   productPath,
   productSchema,
   staticSeo,
+  tidyDescription,
   watchImageAlt,
   watchSeo,
 } from '@/seo/schema.mjs';
@@ -373,12 +374,21 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
       </div>
 
       <div class="sw-watch-detail__info">
-        <RouterLink v-if="brandSlug" :to="`/brands/${brandSlug}`" class="sw-label sw-watch-detail__brand">
-          {{ brandName }}
-        </RouterLink>
-        <h1 class="sw-h1 sw-watch-detail__title">{{ watchDoc.name }}</h1>
+        <!-- Brand and model live in one <h1> so the heading reads as the whole
+             product name ("Tsar Bomba Atomic-TB8218"), matching the <title>,
+             the Product schema `name` and the prerendered copy. The two lines
+             are still styled separately, so nothing moves on screen, and the
+             brand keeps its link to the brand page. -->
+        <h1 class="sw-h1 sw-watch-detail__title">
+          <RouterLink
+            v-if="brandSlug"
+            :to="`/brands/${brandSlug}`"
+            class="sw-label sw-watch-detail__brand"
+          >{{ brandName }}</RouterLink>
+          <span class="sw-watch-detail__model">{{ watchDoc.name }}</span>
+        </h1>
         <p class="sw-watch-detail__price">{{ currency.format(watchDoc.price) }}</p>
-        <p class="sw-body-lg sw-watch-detail__desc">{{ watchDoc.shortDescription }}</p>
+        <p class="sw-body-lg sw-watch-detail__desc">{{ tidyDescription(watchDoc.shortDescription) }}</p>
 
         <div v-if="variants.length > 1" class="sw-watch-detail__colors">
           <span class="sw-label">{{ locale.t('watchDetail.color') }} — {{ selectedVariant?.colorLabel }}</span>
@@ -465,7 +475,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
       </div>
       <div class="sw-watch-story__body">
         <span class="sw-eyebrow">{{ locale.t('watchDetail.theStory') }}</span>
-        <p class="sw-body-lg">{{ watchDoc.description }}</p>
+        <p class="sw-body-lg">{{ tidyDescription(watchDoc.description) }}</p>
       </div>
     </section>
 
@@ -701,12 +711,23 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
 }
 
 .sw-watch-detail__brand {
+  display: block;
   color: var(--text-muted);
   font-size: var(--pd-label);
   letter-spacing: 0.18em;
 }
 
+/* The heading is a two-line block: the brand keeps the small label styling it
+   had as a sibling element, the model carries the title size. Splitting it this
+   way lets one <h1> hold the whole product name without changing the layout. */
 .sw-watch-detail__title {
+  font-size: var(--pd-label);
+  font-weight: inherit;
+  margin-top: 0;
+}
+
+.sw-watch-detail__model {
+  display: block;
   font-size: var(--pd-title);
   margin-top: 10px;
 }

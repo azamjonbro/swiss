@@ -6,6 +6,22 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0a0a0a" />
+
+    <!-- The intro panel below is a full-screen opaque overlay, and every route
+         ships a prerendered copy of its own content underneath it. Playing it on
+         every page view meant that content was hidden until the whole bundle had
+         booted — the one thing prerendering exists to avoid. It now plays once
+         per session: the first view gets the intro, every navigation and reload
+         after it paints the real page immediately. -->
+    <script>
+      try {
+        if (sessionStorage.getItem('sw-intro') === 'done') {
+          document.documentElement.classList.add('sw-intro-done');
+        }
+      } catch (e) {
+        /* storage disabled — fall through and play the intro */
+      }
+    </script>
     <!-- Fallback head only. Every route ships a prerendered copy of this file
          with its own title, description, canonical, Open Graph tags and
          JSON-LD (scripts/prerender.mjs), and the running app rewrites the same
@@ -89,6 +105,12 @@
         unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
           U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0,
           U+2113, U+2C60-2C7F, U+A720-A7FF;
+      }
+
+      /* Second and later views in a session: no panel at all, so the
+         prerendered markup is the first paint. */
+      .sw-intro-done #sw-preloader {
+        display: none;
       }
 
       #sw-preloader {
@@ -229,7 +251,21 @@
       </div>
       <div class="sw-preloader__eyebrow">Time, Refined</div>
     </div>
-    <script>document.body.classList.add('sw-loading');</script>
+    <script>
+      if (!document.documentElement.classList.contains('sw-intro-done')) {
+        document.body.classList.add('sw-loading');
+        // The panel must never outlive the boot it is covering. `main.ts` hides
+        // it the frame after mount; this is the floor for the case where the
+        // bundle 404s, a chunk stalls or JavaScript is off entirely — without
+        // it, a failed boot leaves a visitor staring at an opaque panel with
+        // fully rendered content sitting behind it.
+        setTimeout(function () {
+          document.body.classList.remove('sw-loading');
+          var el = document.getElementById('sw-preloader');
+          if (el) el.classList.add('sw-preloader--done');
+        }, 2500);
+      }
+    </script>
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
   </body>

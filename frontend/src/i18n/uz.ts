@@ -83,6 +83,7 @@ const uz: Dictionary = {
     statement: 'Time, Refined.',
     statementAlt: 'Past yorug‘likda suratga olingan SwissWatch Premium soati',
     heroImageAlt: 'Qorong‘i tosh ustida turgan SwissWatch Premium soati',
+    heroTitle: 'Toshkentda hashamatli soatlar',
     heroEyebrow: '1998 — Jeneva / Toshkent',
     heroSub: 'Vaqt, mukammallashtirilgan.',
     discover: 'Kolleksiyani ko‘rish',

@@ -20,6 +20,13 @@ import '@/assets/scss/global.scss';
 function hidePreloader() {
   const el = document.getElementById('sw-preloader');
   document.body.classList.remove('sw-loading');
+  // Marks the intro as played, so the rest of the session paints prerendered
+  // content on first frame instead of covering it (see index.html).
+  try {
+    sessionStorage.setItem('sw-intro', 'done');
+  } catch {
+    /* storage disabled — the intro simply plays again */
+  }
   // The hero holds its entrance until this fires, so the staged reveal isn't
   // played behind an opaque panel.
   window.dispatchEvent(new CustomEvent('sw:preloader-done'));

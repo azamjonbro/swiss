@@ -18,6 +18,8 @@ export interface SeoSite {
   defaultImage?: string;
   logo?: string;
   locale?: string;
+  /** Active language code (`uz` | `ru` | `en`) — drives `og:locale`. */
+  lang?: string;
   sameAs?: string[];
 }
 
@@ -32,6 +34,8 @@ export interface PageSeo {
   type?: string;
   robots?: string;
   heading?: string;
+  /** Language this page is rendered in; overrides `site.lang` for one page. */
+  lang?: string;
 }
 
 export interface HeadMeta {
@@ -57,7 +61,12 @@ export const PRODUCT_BASE: string;
 export const STORES_PATH: string;
 export const SITE_NAME: string;
 export const DEFAULT_SITE_URL: string;
+export const PRODUCTION_HOST: string;
 export const TITLE_MAX: number;
+export const DEFAULT_LANG: string;
+export const OG_LOCALES: Record<string, string>;
+export function ogLocale(lang?: string | null): string;
+export function tidyDescription(text?: string | null): string;
 
 export interface SiteInput {
   url?: string;

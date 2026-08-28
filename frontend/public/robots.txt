@@ -14,4 +14,12 @@ Disallow: /_shell
 # they carry rel=canonical to /watches plus a noindex directive, so they pass
 # link equity to the products without being indexed themselves.
 
+# /api is deliberately NOT disallowed. The storefront is a Vue app that fetches
+# its catalog from this same origin, so a crawler that cannot reach /api renders
+# every page empty — blocking it here would cost far more than the JSON it
+# hides. The endpoints are kept out of the index by an `X-Robots-Tag: noindex`
+# response header instead (vercel.json + the API's own middleware), which lets
+# Googlebot read them while rendering and still refuses to index them.
+# /uploads stays fully open: it is the product photography.
+
 Sitemap: https://swisswatchpremium.uz/sitemap.xml

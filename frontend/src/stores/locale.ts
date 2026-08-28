@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref, watch } from 'vue';
+import { setSeoLang } from '@/utils/seo';
 import {
   isLang,
   loadDictionary,
@@ -11,10 +12,47 @@ import {
 } from '@/i18n';
 
 const STORAGE_KEY = 'sw-lang';
+/** Used when nothing else resolves — the storefront's home market. */
+const FALLBACK_LANG: Lang = 'uz';
 
 function readStored(): Lang | null {
-  const stored = localStorage.getItem(STORAGE_KEY);
-  return isLang(stored) ? stored : null;
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    return isLang(stored) ? stored : null;
+  } catch {
+    // Private mode / storage disabled. Not a reason to fail to pick a language.
+    return null;
+  }
+}
+
+/**
+ * The language to open in when the visitor has not chosen one yet.
+ *
+ * This used to be a constant `'uz'`, which had an SEO consequence that was easy
+ * to miss: a crawler has no stored preference, so every page Google rendered
+ * came out in Uzbek — while the prerendered HTML it was compared against, the
+ * <title>, the meta description and the JSON-LD were all English. The page and
+ * its own structured data disagreed about what language they were in.
+ *
+ * Reading the browser's preference fixes both halves at once. Googlebot renders
+ * with an English locale and now stays on the English copy the metadata
+ * describes, and a Russian- or Uzbek-speaking visitor gets their own language
+ * instead of one hardcoded guess. A stored choice still wins over both.
+ */
+function preferredLang(): Lang {
+  const stored = readStored();
+  if (stored) return stored;
+
+  const candidates =
+    typeof navigator === 'undefined'
+      ? []
+      : [...(navigator.languages ?? []), navigator.language].filter(Boolean);
+
+  for (const tag of candidates) {
+    const base = String(tag).toLowerCase().split('-')[0];
+    if (isLang(base)) return base;
+  }
+  return FALLBACK_LANG;
 }
 
 function readNested(obj: Record<string, unknown>, path: string): string | undefined {
@@ -26,14 +64,20 @@ function readNested(obj: Record<string, unknown>, path: string): string | undefi
 }
 
 export const useLocaleStore = defineStore('locale', () => {
-  const lang = ref<Lang>(readStored() ?? 'uz');
+  const lang = ref<Lang>(preferredLang());
   const dictionary = ref<Dictionary | null>(null);
 
   watch(
     lang,
     (value) => {
-      localStorage.setItem(STORAGE_KEY, value);
+      try {
+        localStorage.setItem(STORAGE_KEY, value);
+      } catch {
+        /* storage disabled — the choice just does not survive the session */
+      }
       document.documentElement.setAttribute('lang', value);
+      // Keeps `og:locale` describing the language the page is actually in.
+      setSeoLang(value);
     },
     { immediate: true },
   );

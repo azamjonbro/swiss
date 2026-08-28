@@ -29,8 +29,37 @@ export const SITE_NAME = 'SwissWatch Premium';
 /** Canonical production origin. */
 export const DEFAULT_SITE_URL = 'https://swisswatchpremium.uz';
 
+/**
+ * The one hostname allowed to appear in a canonical, an Open Graph URL, a
+ * JSON-LD @id or a sitemap <loc>.
+ *
+ * Blocking localhost and *.vercel.app (below) only rules out the accidents that
+ * look wrong. It does not rule out the accident that looks right: a real,
+ * parsable, non-preview origin that simply is not this site. A cross-domain
+ * canonical is the one SEO mistake a later build cannot undo — Google honours
+ * it and deindexes the host that shipped it — so the production build pins the
+ * host rather than trusting whatever the environment happens to hold.
+ */
+export const PRODUCTION_HOST = 'swisswatchpremium.uz';
+
 /** Google truncates a result title past roughly this width. */
 export const TITLE_MAX = 60;
+
+/**
+ * Open Graph locale codes for the three languages the storefront speaks.
+ *
+ * `og:locale` has to describe the language the page is actually written in.
+ * Hardcoding one value meant an Uzbek page announced itself as `en_US` to every
+ * crawler and social preview that read it.
+ */
+export const OG_LOCALES = { uz: 'uz_UZ', ru: 'ru_RU', en: 'en_US' };
+export const DEFAULT_LANG = 'en';
+
+/** `uz` -> `uz_UZ`. Unknown or missing input falls back to the default language. */
+export function ogLocale(lang) {
+  const key = String(lang ?? '').toLowerCase().slice(0, 2);
+  return OG_LOCALES[key] ?? OG_LOCALES[DEFAULT_LANG];
+}
 
 /**
  * Validates a configured origin.
@@ -58,6 +87,11 @@ export function resolveSiteUrl(raw, { strict = false, label = 'VITE_SITE_URL' } 
     }
     if (!problem && /\.vercel\.app$/i.test(host)) {
       problem = `must not point at a *.vercel.app preview host (got "${value}")`;
+    }
+    // Only enforced for builds that write permanent URLs (strict). The lenient
+    // runtime path keeps its correct default instead of throwing on a page.
+    if (!problem && strict && host.toLowerCase() !== PRODUCTION_HOST) {
+      problem = `must be ${DEFAULT_SITE_URL} — the storefront's only canonical host (got "${value}")`;
     }
   }
 
@@ -156,6 +190,48 @@ export function pageTitle(headline, site) {
   return segment ? `${segment}${suffix}` : site.name;
 }
 
+/**
+ * Repairs sentences the catalog's own description generator left holes in.
+ *
+ * Product copy is assembled from stored fields, and a field that is empty used
+ * to be concatenated anyway: a watch with no `dial` value ends up described as
+ * "…316L case, and finished with a  dial." The double space is the tell — it is
+ * the gap where a value should have been, and it cannot occur in copy anyone
+ * wrote by hand.
+ *
+ * The generator is fixed at the source (backend/src/seed/seed.ts), but records
+ * created before that fix still carry the broken sentence, so the text is also
+ * repaired on the way out: any comma-delimited clause containing such a gap is
+ * dropped whole, rather than shipped to a crawler as evidence of generated
+ * filler. Nothing is added — this only removes a clause that says nothing.
+ */
+export function tidyDescription(text) {
+  const raw = String(text ?? '');
+  if (!/[ \t]{2,}/.test(raw)) return raw.replace(/\s+/g, ' ').trim();
+
+  const sentences = raw.split(/(?<=\.)\s+/).map((sentence) => {
+    // A sentence with no gap is left exactly as written — rebuilding a clean
+    // one is how the first attempt at this ended up doubling its full stop.
+    if (!/[ \t]{2,}/.test(sentence)) return sentence.trim();
+
+    const clauses = sentence.split(/,\s*/).filter((clause) => !/[ \t]{2,}/.test(clause));
+    if (!clauses.length) return '';
+
+    const rebuilt = clauses
+      .join(', ')
+      // Dropping a clause can leave the conjunction that introduced it dangling.
+      .replace(/[\s,;:.]+$/, '')
+      .replace(/,?\s*\band$/i, '')
+      .replace(/[\s,;:.]+$/, '');
+
+    if (!rebuilt) return '';
+    // The dropped clause may have been the one carrying the capital letter.
+    return `${rebuilt.charAt(0).toUpperCase()}${rebuilt.slice(1)}.`;
+  });
+
+  return sentences.filter(Boolean).join(' ').replace(/\s+/g, ' ').trim();
+}
+
 /** Trims to a meta-description-sized string on a word boundary. */
 export function clampText(text, max = 158) {
   const clean = String(text ?? '')
@@ -239,7 +315,7 @@ export function availabilityUrl(availability) {
  * Nothing here is invented: every clause comes from a stored field.
  */
 function watchDescription(watch, site) {
-  const source = clampText(watch?.shortDescription || watch?.description, 200);
+  const source = clampText(tidyDescription(watch?.shortDescription || watch?.description), 200);
   const facts = [
     watch?.reference ? `ref. ${watch.reference}` : '',
     watch?.movement,
@@ -303,21 +379,30 @@ export function collectionSeo(collection, site) {
 export function staticSeo(key, site) {
   const pages = {
     home: {
+      // Every `heading` below is kept identical to the string the mounted app
+      // renders as this route's <h1> (src/i18n/en.ts). The prerenderer cannot
+      // import the TypeScript dictionaries, so the values are mirrored here —
+      // if one changes, change both, or the crawlable copy and the rendered
+      // page disagree about what the page is called.
+      heading: 'Luxury Watches in Tashkent',
       title: pageTitle('Swiss Watches', site),
       description: `Authenticated Swiss watches in Tashkent, Uzbekistan. Browse automatic and quartz timepieces from the maisons ${site.name} represents — discover, inquire, acquire.`,
       canonical: '/',
     },
     watches: {
+      heading: 'Timepieces',
       title: pageTitle('Swiss Watches Catalog', site),
       description: `Browse every Swiss watch available at ${site.name} — automatic and quartz timepieces, filterable by brand, colour, movement and availability, delivered across Uzbekistan.`,
       canonical: '/watches',
     },
     brands: {
+      heading: 'Premium Brands',
       title: pageTitle('Watch Brands', site),
       description: `The watch maisons represented at ${site.name} — explore each brand's timepieces available in Tashkent, Uzbekistan.`,
       canonical: '/brands',
     },
     collections: {
+      heading: 'Collections',
       title: pageTitle('Watch Collections', site),
       description: `Curated Swiss watch collections at ${site.name} — men's and women's lines assembled from the maisons we represent.`,
       canonical: '/collections',
@@ -328,11 +413,13 @@ export function staticSeo(key, site) {
       canonical: STORES_PATH,
     },
     about: {
+      heading: 'Built on trust.',
       title: pageTitle('About', site),
       description: `${site.name} is a curated showroom for authenticated luxury timepieces in Tashkent — how we source, examine and present every watch we list.`,
       canonical: '/about',
     },
     contact: {
+      heading: 'Speak with SwissWatch Premium',
       title: pageTitle('Contact', site),
       description: `Speak with a ${site.name} specialist in Tashkent about acquisitions, consignments and general enquiries.`,
       canonical: '/contact',
@@ -378,6 +465,12 @@ export function headTags(seo, site) {
   const image = absoluteUrl(site, seo.image || site.defaultImage || '');
   const robots = seo.robots || 'index, follow';
 
+  // The language the page is actually written in — the prerenderer passes the
+  // language it rendered, the app passes the active locale. `og:locale` used to
+  // be a constant, which told every crawler that an Uzbek page was en_US.
+  const lang = String(seo.lang || site.lang || DEFAULT_LANG).toLowerCase().slice(0, 2);
+  const locale = ogLocale(lang);
+
   const metas = [
     { name: 'description', content: seo.description },
     { name: 'robots', content: robots },
@@ -386,7 +479,13 @@ export function headTags(seo, site) {
     { property: 'og:title', content: seo.title },
     { property: 'og:description', content: seo.description },
     { property: 'og:url', content: canonical },
-    { property: 'og:locale', content: site.locale || 'en_US' },
+    { property: 'og:locale', content: locale },
+    // The same URL serves all three languages, so the others are declared as
+    // alternates rather than as separate documents. This is a statement about
+    // what the page can render, not a claim that three URLs exist.
+    ...Object.values(OG_LOCALES)
+      .filter((value) => value !== locale)
+      .map((value) => ({ property: 'og:locale:alternate', content: value })),
     { name: 'twitter:card', content: image ? 'summary_large_image' : 'summary' },
     { name: 'twitter:title', content: seo.title },
     { name: 'twitter:description', content: seo.description },
@@ -487,7 +586,7 @@ export function productSchema(watch, site) {
   };
 
   if (images.length) product.image = images;
-  const description = watch.description || watch.shortDescription;
+  const description = tidyDescription(watch.description || watch.shortDescription);
   if (description) product.description = clampText(description, 500);
   if (brand) product.brand = { '@type': 'Brand', name: brand };
   // The reference is the manufacturer's model number, which is what MPN means;

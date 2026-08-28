@@ -84,6 +84,7 @@ const ru: Dictionary = {
     statement: 'Time, Refined.',
     statementAlt: 'Часы SwissWatch Premium в низком свете',
     heroImageAlt: 'Часы SwissWatch Premium на тёмном камне',
+    heroTitle: 'Часы класса люкс в Ташкенте',
     heroEyebrow: '1998 — Женева / Ташкент',
     heroSub: 'Время, доведённое до совершенства.',
     discover: 'Смотреть коллекцию',

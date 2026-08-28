@@ -3,7 +3,6 @@ import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import type { Watch, Collection } from '@/types/models';
 import { fetchWatches } from '@/services/watches';
-import { fetchBrandBySlug } from '@/services/brands';
 import { fetchCollections } from '@/services/collections';
 import { useLocaleStore } from '@/stores/locale';
 import { useCurrencyStore } from '@/stores/currency';
@@ -18,8 +17,19 @@ const router = useRouter();
 const locale = useLocaleStore();
 const currency = useCurrencyStore();
 
-// This storefront currently curates TSAR BOMBA exclusively — the catalog
-// always scopes to that brand's id rather than exposing a cross-brand filter.
+// The catalog is every active product the API returns. It used to resolve one
+// brand by slug and scope the query to its id, which meant the listing could
+// never show a second brand: adding one to the database left it invisible here,
+// reachable only from /brands/<slug>. The facets below are derived from
+// whatever comes back, so they widen on their own as the catalog does.
+/**
+ * The grid filters and sorts client-side, so it asks for the whole catalog at
+ * once. That is fine at the current size and has a hard ceiling rather than an
+ * open-ended one; past it the listing needs real pagination (see the note in
+ * SEO-AUDIT.md) instead of a larger number here.
+ */
+const CATALOG_LIMIT = 250;
+
 const allWatches = ref<Watch[]>([]);
 const collections = ref<Collection[]>([]);
 const isLoading = ref(true);
@@ -101,11 +111,10 @@ function sortLabel(key: string): string {
 async function load() {
   isLoading.value = true;
   try {
-    const brand = await fetchBrandBySlug('tsar-bomba');
     // `type: 'all'` pulls the accessories in alongside the watches so the grid can
     // filter between them client-side; the limit clears the whole catalogue in one go.
     const [data, cols] = await Promise.all([
-      fetchWatches({ brand: brand._id, type: 'all', limit: 150 }),
+      fetchWatches({ type: 'all', limit: CATALOG_LIMIT }),
       fetchCollections(),
     ]);
     allWatches.value = data.items;
@@ -118,7 +127,7 @@ async function load() {
 onMounted(load);
 watch(() => locale.lang, load);
 
-// Facets are derived from the full TSAR BOMBA set — only values actually
+// Facets are derived from the loaded catalog — only values actually
 // present in the data become filter options, never invented ones.
 const genderOptions = computed(() =>
   (['men', 'women'] as const).filter((g) => allWatches.value.some((w) => w.gender === g)),

@@ -41,6 +41,7 @@ import {
   productSchema,
   staticSeo,
   storeSchemas,
+  tidyDescription,
   STORES_PATH,
   usableLocations,
   watchFullName,
@@ -123,6 +124,10 @@ async function fetchAllWatches(params = '') {
  */
 function baseShell(html) {
   return html
+    // The shipped index.html is authored in English; the crawlable copy is
+    // whatever SEO_LANG says. A document that declares the wrong language is a
+    // worse signal than one that declares none.
+    .replace(/(<html\b[^>]*\blang=")[^"]*(")/i, `$1${LANG}$2`)
     .replace(/\n?\s*<script type="application\/ld\+json" data-seo-jsonld>[\s\S]*?<\/script>/gi, '')
     .replace(/\n?\s*<(?:meta|link)\b[^>]*\bdata-seo\b[^>]*>/gi, '')
     .replace(/\n?\s*<meta name="description"[^>]*>/gi, '')
@@ -132,7 +137,7 @@ function baseShell(html) {
 }
 
 function renderHead(seo) {
-  const tags = headTags(seo, site);
+  const tags = headTags({ lang: LANG, ...seo }, site);
   const lines = [
     `<link rel="canonical" data-seo href="${escapeHtml(tags.canonical)}" />`,
     ...tags.metas.map((meta) => {
@@ -215,7 +220,10 @@ function productBody(watch) {
     crumbsHtml(trail),
     '<article>',
     brand ? `<p>${link(brandPath(brand.slug), brand.name)}</p>` : '',
-    `<h1>${escapeHtml(watch.name)}</h1>`,
+    // Brand + model, matching the <title>, the Product schema `name` and the
+    // <h1> the mounted app renders. The bare model number on its own was not a
+    // heading anyone could search for.
+    `<h1>${escapeHtml(watchFullName(watch) || watch.name)}</h1>`,
     images[0]
       ? `<img src="${escapeHtml(absoluteUrl(site, images[0]))}" alt="${escapeHtml(watchImageAlt(watch))}" />`
       : '',
@@ -225,9 +233,9 @@ function productBody(watch) {
     // The long description often opens with the short one verbatim; printing
     // both would just repeat a sentence to the crawler.
     watch.shortDescription && !String(watch.description ?? '').startsWith(watch.shortDescription)
-      ? `<p>${escapeHtml(watch.shortDescription)}</p>`
+      ? `<p>${escapeHtml(tidyDescription(watch.shortDescription))}</p>`
       : '',
-    watch.description ? `<p>${escapeHtml(watch.description)}</p>` : '',
+    watch.description ? `<p>${escapeHtml(tidyDescription(watch.description))}</p>` : '',
     specs.length
       ? `<h2>Specifications</h2><dl>${specs
           .map(([label, value]) => `<dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd>`)
@@ -363,7 +371,7 @@ async function main() {
     seo: staticSeo('home', site),
     nodes: [organizationSchema(site), websiteSchema(site)],
     body: linkListBody({
-      heading: 'Swiss Watches',
+      heading: staticSeo('home', site).heading,
       description: staticSeo('home', site).description,
       linksHeading: 'Explore',
       links: [
@@ -398,7 +406,7 @@ async function main() {
         ]
       : [],
     body: listingBody({
-      heading: 'Swiss Watches',
+      heading: staticSeo('watches', site).heading,
       description: staticSeo('watches', site).description,
       crumbs: [
         { name: 'Home', path: '/' },
@@ -417,7 +425,7 @@ async function main() {
       ? [itemListSchema(catalog.brands.map((b) => ({ name: b.name, path: brandPath(b.slug) })), site, 'Watch brands')]
       : [],
     body: linkListBody({
-      heading: 'Watch Brands',
+      heading: staticSeo('brands', site).heading,
       description: staticSeo('brands', site).description,
       linksHeading: 'Maisons',
       links: (catalog?.brands ?? []).map((b) => ({ name: `${b.name} watches`, path: brandPath(b.slug) })),
@@ -468,7 +476,7 @@ async function main() {
         ]
       : [],
     body: linkListBody({
-      heading: 'Watch Collections',
+      heading: staticSeo('collections', site).heading,
       description: staticSeo('collections', site).description,
       linksHeading: 'Collections',
       links: (catalog?.collections ?? []).map((c) => ({ name: c.name, path: collectionPath(c.slug) })),
@@ -527,7 +535,7 @@ async function main() {
       filePath: `${key}.html`,
       seo,
       body: linkListBody({
-        heading: seo.title.split(' | ')[0],
+        heading: seo.heading ?? seo.title.split(' | ')[0],
         description: seo.description,
         linksHeading: 'Explore',
         links: exploreLinks(),
