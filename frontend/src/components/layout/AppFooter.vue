@@ -82,6 +82,20 @@ const phone = site.contactPhone ?? '';
   display: flex;
   flex-direction: column;
   gap: 14px;
+  /* A `1fr` track still refuses to shrink below its content's min-content
+     width, and this column holds an email address, which has no break
+     opportunity in it. Two of them forced the document 71px wider than a
+     390px phone — and because the overflow widened the layout viewport, the
+     fixed header stretched with it and cut off its own search control. The
+     `overflow-x: hidden` on body could never have caught that: it does not
+     clip fixed-position elements. */
+  min-width: 0;
+}
+
+/* Long unbreakable values — an email address, a phone number — wrap rather
+   than setting the floor for the whole grid. */
+.sw-footer__col a {
+  overflow-wrap: anywhere;
 }
 
 .sw-footer__col .sw-eyebrow {

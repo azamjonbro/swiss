@@ -331,5 +331,15 @@ const themeMode = computed<'transparent' | 'veil' | 'light'>(() => {
   .sw-header__actions {
     gap: 8px;
   }
+
+  /* At 320px the three-column row (menu · wordmark · actions) needs about
+     12px more than `--container-pad` leaves it. Everything else in the row is
+     already at its minimum — the labels are hidden, the tracking is tightened
+     and the gap is down to 8px — so the padding is what gives. It matters more
+     than it looks: the row's min-content width sets the layout viewport, so
+     those 12px put a horizontal scrollbar on every page of the site. */
+  .sw-header__inner {
+    padding-inline: 16px;
+  }
 }
 </style>
