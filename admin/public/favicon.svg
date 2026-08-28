@@ -1,10 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- SwissWatch Premium — the logo tile: a painterly Swiss cross on crimson. -->
-  <rect width="64" height="64" rx="3" fill="#ad2b39"/>
-  <!-- Deep-red under-strokes, offset down/right, for the hand-painted layering. -->
-  <rect x="37" y="10" width="5" height="45" rx="1" fill="#7c1f29"/>
-  <rect x="12" y="35" width="41" height="4.5" rx="1" fill="#7c1f29"/>
-  <!-- Ivory cross, set a touch left of centre with the bar riding high. -->
-  <rect x="25.5" y="8" width="11" height="48" rx="1.4" fill="#f3efe7"/>
-  <rect x="9" y="24" width="45" height="11" rx="1.4" fill="#f3efe7"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+  <!-- SwissWatch Premium — the house mark, traced from the boutique's own logo
+       artwork: the crimson tile, the four panels the painted cross cuts it into,
+       and the small stone at the crossing. Geometry is shared, path for path,
+       with the storefront BrandMark component. -->
+  <rect width="40" height="40" fill="#f3efe7" />
+  <path d="M0 0L16.06 0 16.74 16.74 15.2 16.97 1.26 17.6 16.57 18.29 16.86 18.46 16.86 21.14 0 20.46Z" fill="#ad2b39" />
+  <path d="M40 0L40 15.89 23.14 16.57 22.29 1.54 21.66 16.46 21.2 16.69 18.74 16.69 19.43 0Z" fill="#ad2b39" />
+  <path d="M21.43 21.31L18.86 21.31 18.57 21.14 18.69 18.46 21.43 18.51Z" fill="#ad2b39" />
+  <path d="M40 40L24.06 40 23.31 23.03 24.8 22.8 38.46 22.17 23.43 21.49 23.26 21.26 23.2 18.63 40 19.31Z" fill="#ad2b39" />
+  <path d="M0 40L0 23.89 17.03 23.26 17.77 38.51 18.46 23.37 18.69 23.09 21.31 23.09 20.63 40Z" fill="#ad2b39" />
 </svg>

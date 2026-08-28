@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
-  <!-- SwissWatch Premium — the house mark, traced from the boutique's logo.
-       Geometry is shared with src/components/shared/BrandMark.vue. -->
+  <!-- SwissWatch Premium — the house mark, traced from the boutique's own logo
+       artwork: the crimson tile, the four panels the painted cross cuts it into,
+       and the small stone at the crossing. Geometry is shared, path for path,
+       with frontend/src/components/shared/BrandMark.vue. -->
   <rect width="40" height="40" fill="#f3efe7" />
-  <!-- Four crimson panels, the brush slivers that split the channels, and
-       the small centre stone: traced from the boutique's own logo. -->
-  <path d="M0 23.81L1.88 23.81L1.88 23.33L16.47 23.33L16.94 24.76L17.41 24.76L17.41 30.95L17.88 30.95L17.88 29.52L18.35 29.52L18.35 24.29L18.82 24.29L19.29 22.86L20.71 22.86L21.18 23.33L21.18 37.62L20.24 38.57L20.24 40L0 40Z" fill="#ad2b39" />
-  <path d="M23.06 19.05L23.53 18.57L32.94 18.57L32.94 19.05L38.59 19.05L40 20L40 40L24.94 40L23.53 38.57L23.53 22.86L24 22.38L32.94 22.38L32.94 21.9L23.53 21.43L23.06 20.95Z" fill="#ad2b39" />
-  <path d="M0 0L16.47 0L16.94 16.19L15.53 16.67L15.53 17.14L10.35 17.14L10.35 17.62L15.53 18.1L15.53 18.57L16.94 19.05L16.94 20.48L16 20.48L16 20.95L2.35 20.95L2.35 20.48L0 20.48Z" fill="#ad2b39" />
-  <path d="M18.82 6.19L19.29 6.19L19.29 0L40 0L40 15.71L37.65 15.71L37.65 16.19L28.24 16.19L28.24 16.67L25.88 16.19L25.88 16.67L23.53 16.67L23.53 16.19L22.59 16.19L22.59 7.14L22.12 7.14L22.12 15.71L21.18 16.67L19.29 16.67L18.82 16.19Z" fill="#ad2b39" />
-  <path d="M18.35 19.05L18.82 18.57L20.71 18.57L21.65 19.52L21.65 20.48L20.71 21.43L19.76 21.43L19.76 20.95L18.35 20.48Z" fill="#ad2b39" />
+  <path d="M0 0L16.06 0 16.74 16.74 15.2 16.97 1.26 17.6 16.57 18.29 16.86 18.46 16.86 21.14 0 20.46Z" fill="#ad2b39" />
+  <path d="M40 0L40 15.89 23.14 16.57 22.29 1.54 21.66 16.46 21.2 16.69 18.74 16.69 19.43 0Z" fill="#ad2b39" />
+  <path d="M21.43 21.31L18.86 21.31 18.57 21.14 18.69 18.46 21.43 18.51Z" fill="#ad2b39" />
+  <path d="M40 40L24.06 40 23.31 23.03 24.8 22.8 38.46 22.17 23.43 21.49 23.26 21.26 23.2 18.63 40 19.31Z" fill="#ad2b39" />
+  <path d="M0 40L0 23.89 17.03 23.26 17.77 38.51 18.46 23.37 18.69 23.09 21.31 23.09 20.63 40Z" fill="#ad2b39" />
 </svg>
