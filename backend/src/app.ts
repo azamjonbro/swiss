@@ -91,7 +91,11 @@ app.get('/robots.txt', (_req, res) => {
 // static, so existing URLs are untouched.
 const uploadRoot = path.join(process.cwd(), env.uploadDir);
 app.use('/uploads', resizeImages(uploadRoot, path.join(uploadRoot, '.resized')));
-app.use('/uploads', express.static(uploadRoot, { maxAge: '1d' }));
+// A week, matching the derivatives the resizer serves. Product photography is
+// replaced by uploading a new file, not by overwriting one in place, so a long
+// freshness window costs nothing — and at `max-age=0` every image on a listing
+// page paid a revalidation round trip on every single view.
+app.use('/uploads', express.static(uploadRoot, { maxAge: '7d' }));
 
 app.get('/api/health', (_req, res) => res.json({ status: 'ok', service: 'swisswatch-api' }));
 app.get('/sitemap.xml', getSitemapIndex);
