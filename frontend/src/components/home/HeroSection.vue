@@ -121,21 +121,14 @@ function handleDiscover() {
 
     <div ref="contentEl" class="sw-hero__content">
       <span ref="eyebrowEl" class="sw-eyebrow sw-hero__eyebrow">{{ locale.t('home.heroEyebrow') }}</span>
-      <!-- The <h1> says what the page is, not who the shop is: the name is
-           already in the wordmark, the <title>, the Organization schema — and,
-           since it is what a visitor should read first, in the eyebrow above.
-           Two spans, one heading: the display line is the brand's own voice and
-           carries the page at poster size, the descriptive line sits under it,
-           quiet but present, so the reader gets a premium headline and the
-           crawler still gets a heading that says what is sold and where.
-           The three strings concatenate to exactly `staticSeo('home').heading`
-           — the em dash is spoken by a screen reader and read by a crawler but
-           never drawn, because on screen the line break already separates the
-           two halves. Change one, change the other. -->
+      <!-- The house name at display size, and it is the <h1>: this is the
+           storefront's front door, and what the page is *about* is the maison
+           itself — the catalogue pages below carry the descriptive headings.
+           One string, so the crawlable copy in `staticSeo('home').heading` and
+           what Vue renders here are the same characters; change one, change
+           the other. -->
       <h1 ref="titleEl" class="sw-hero__title">
-        <span class="sw-hero__title-main">{{ locale.t('home.heroTitle') }}</span
-        ><span class="sw-visually-hidden"> &mdash; </span
-        ><span class="sw-hero__title-place">{{ locale.t('home.heroTitlePlace') }}</span>
+        <span class="sw-hero__title-main">{{ locale.t('home.heroTitle') }}</span>
       </h1>
       <p ref="subEl" class="sw-lede sw-hero__sub">{{ locale.t('home.heroSub') }}</p>
       <div ref="ctaEl" class="sw-hero__cta">
@@ -251,25 +244,6 @@ function handleDiscover() {
      lines so it breaks as "The Art of / Watchmaking" rather than orphaning the
      last word on its own line. */
   text-wrap: balance;
-}
-
-/* Sized off the title's own font-size so it tracks the display type down to
-   the smallest viewport, and set in the sans at eyebrow tracking so it reads
-   as a caption to the headline rather than a second headline. */
-.sw-hero__title-place {
-  display: block;
-  margin-top: clamp(10px, 1.6vh, 18px);
-  margin-left: 0.045em;
-  /* Tracked-out capitals want a ceiling: at full container width the line runs
-     past the display type above it and stops reading as its caption. */
-  max-width: 28ch;
-  font-family: var(--font-sans);
-  font-size: clamp(0.6875rem, 0.16em, 1rem);
-  font-weight: 500;
-  letter-spacing: 0.24em;
-  line-height: 1.6;
-  text-transform: uppercase;
-  color: rgba(253, 252, 250, 0.68);
 }
 
 .sw-hero__sub {
