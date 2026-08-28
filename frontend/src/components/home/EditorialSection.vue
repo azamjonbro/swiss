@@ -45,7 +45,7 @@ onUnmounted(() => trigger?.kill());
 <template>
   <section ref="sectionEl" class="sw-editorial" :class="{ 'is-reverse': reverse }">
     <div ref="imageEl" class="sw-editorial__media">
-      <SmartImage :src="image" :alt="title" aspect-ratio="4 / 5" />
+      <SmartImage :src="image" :alt="title" aspect-ratio="4 / 5" sizes="(max-width: 860px) 92vw, 46vw" />
     </div>
     <div ref="textEl" class="sw-editorial__text">
       <span class="sw-eyebrow">{{ eyebrow }}</span>

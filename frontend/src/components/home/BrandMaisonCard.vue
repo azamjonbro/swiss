@@ -69,15 +69,15 @@ function onLinkClick(event: MouseEvent) {
     >
       <span class="sw-maison__frame">
         <span class="sw-maison__logo-layer">
-          <SmartImage :src="brand.logo" :alt="brand.name" />
+          <SmartImage :src="brand.logo" :alt="brand.name" sizes="(max-width: 560px) 46vw, 280px" />
         </span>
 
         <span v-if="primaryWatch" class="sw-maison__watch-layer" :class="{ 'has-two': secondaryWatch }">
           <span class="sw-maison__shot">
-            <SmartImage :src="primaryImage(primaryWatch)" :alt="primaryWatch.name" object-fit="contain" />
+            <SmartImage :src="primaryImage(primaryWatch)" :alt="primaryWatch.name" object-fit="contain" sizes="(max-width: 560px) 46vw, 280px" />
           </span>
           <span v-if="secondaryWatch" class="sw-maison__shot sw-maison__shot--alt">
-            <SmartImage :src="primaryImage(secondaryWatch)" :alt="secondaryWatch.name" object-fit="contain" />
+            <SmartImage :src="primaryImage(secondaryWatch)" :alt="secondaryWatch.name" object-fit="contain" sizes="(max-width: 560px) 46vw, 280px" />
           </span>
         </span>
 

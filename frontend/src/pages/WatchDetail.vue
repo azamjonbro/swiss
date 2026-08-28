@@ -317,7 +317,14 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
               playback-strategy="manual"
               object-fit="contain"
             />
-            <SmartImage v-else :src="activeItem?.src" :alt="watchImageAlt(watchDoc, activeIndex)" eager object-fit="contain" />
+            <SmartImage
+              v-else
+              :src="activeItem?.src"
+              :alt="watchImageAlt(watchDoc, activeIndex)"
+              eager
+              object-fit="contain"
+              sizes="(max-width: 1100px) 100vw, 640px"
+            />
           </div>
 
           <button
@@ -367,6 +374,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
               :alt="item.type === 'video' ? `${watchImageAlt(watchDoc)} video` : watchImageAlt(watchDoc, i)"
               aspect-ratio="1 / 1"
               object-fit="contain"
+              sizes="88px"
             />
             <span v-if="item.type === 'video'" class="sw-watch-detail__thumb-play" aria-hidden="true">&#9654;</span>
           </button>
@@ -458,7 +466,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
           <ul class="sw-watch-detail__pair-list">
             <li v-for="accessory in watchDoc.accessories" :key="accessory._id" class="sw-watch-detail__pair-item">
               <RouterLink :to="productPath(accessory.slug)" class="sw-watch-detail__pair-media" tabindex="-1" aria-hidden="true">
-                <SmartImage :src="accessory.variants[0]?.images[0]" :alt="watchImageAlt(accessory)" aspect-ratio="1 / 1" object-fit="contain" />
+                <SmartImage :src="accessory.variants[0]?.images[0]" :alt="watchImageAlt(accessory)" aspect-ratio="1 / 1" object-fit="contain" sizes="72px" />
               </RouterLink>
               <div class="sw-watch-detail__pair-body">
                 <RouterLink :to="productPath(accessory.slug)" class="sw-watch-detail__pair-name">{{ accessory.name }}</RouterLink>
@@ -475,7 +483,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
 
     <section v-if="watchDoc.description" class="sw-watch-story">
       <div class="sw-watch-story__media">
-        <SmartImage :src="storyImage" :alt="watchImageAlt(watchDoc, 1)" aspect-ratio="4 / 5" />
+        <SmartImage :src="storyImage" :alt="watchImageAlt(watchDoc, 1)" aspect-ratio="4 / 5" sizes="(max-width: 1100px) 92vw, 42vw" />
       </div>
       <div class="sw-watch-story__body">
         <span class="sw-eyebrow">{{ locale.t('watchDetail.theStory') }}</span>

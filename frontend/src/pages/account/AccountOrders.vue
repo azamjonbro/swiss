@@ -62,6 +62,7 @@ function statusLabel(status: string): string {
             :alt="watchOf(order)!.name"
             aspect-ratio="1 / 1"
             object-fit="contain"
+            sizes="96px"
           />
           <span v-else class="sw-order__media-placeholder" aria-hidden="true" />
         </div>

@@ -195,6 +195,7 @@ onUnmounted(() => {
                 :src="primaryImage(watchesFor(brand)[0])"
                 :alt="`${brand.name} ${watchesFor(brand)[0].name}`"
                 object-fit="contain"
+                sizes="(max-width: 1052px) 76vw, 800px"
               />
               <SmartImage
                 v-if="watchesFor(brand)[1]"
@@ -202,6 +203,7 @@ onUnmounted(() => {
                 :alt="`${brand.name} ${watchesFor(brand)[1].name}`"
                 object-fit="contain"
                 class="sw-houses__photo-alt"
+                sizes="(max-width: 1052px) 76vw, 800px"
               />
             </span>
             <span class="sw-houses__vignette" aria-hidden="true" />

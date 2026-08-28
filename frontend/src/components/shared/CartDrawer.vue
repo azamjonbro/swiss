@@ -44,7 +44,7 @@ function checkout() {
           <ul class="sw-cart__list">
             <li v-for="item in cart.items" :key="item.key" class="sw-cart__item">
               <div class="sw-cart__item-media">
-                <SmartImage :src="item.image" :alt="item.name" aspect-ratio="1 / 1" object-fit="contain" />
+                <SmartImage :src="item.image" :alt="item.name" aspect-ratio="1 / 1" object-fit="contain" sizes="88px" />
               </div>
               <div class="sw-cart__item-body">
                 <span class="sw-cart__item-brand">{{ item.brandName }}</span>
