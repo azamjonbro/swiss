@@ -378,14 +378,18 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
              product name ("Tsar Bomba Atomic-TB8218"), matching the <title>,
              the Product schema `name` and the prerendered copy. The two lines
              are still styled separately, so nothing moves on screen, and the
-             brand keeps its link to the brand page. -->
+             brand keeps its link to the brand page. The explicit {{ ' ' }} is
+             load-bearing: both children are display:block, and Vue's whitespace
+             condensing drops the newline between them, so without it the
+             heading's textContent reads "Tsar BombaAtomic-TB8218" — which is
+             what a crawler extracts, and it disagreed with the prerendered
+             copy. Verified in a real browser, not assumed. -->
         <h1 class="sw-h1 sw-watch-detail__title">
           <RouterLink
             v-if="brandSlug"
             :to="`/brands/${brandSlug}`"
             class="sw-label sw-watch-detail__brand"
-          >{{ brandName }}</RouterLink>
-          <span class="sw-watch-detail__model">{{ watchDoc.name }}</span>
+          >{{ brandName }}</RouterLink>{{ ' ' }}<span class="sw-watch-detail__model">{{ watchDoc.name }}</span>
         </h1>
         <p class="sw-watch-detail__price">{{ currency.format(watchDoc.price) }}</p>
         <p class="sw-body-lg sw-watch-detail__desc">{{ tidyDescription(watchDoc.shortDescription) }}</p>
