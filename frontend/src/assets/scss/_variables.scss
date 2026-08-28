@@ -24,6 +24,12 @@
   --sw-steel: #8e9095;
   --sw-platinum: #c8cacc;
 
+  // The site no longer follows the OS preference (see stores/theme.ts), so it
+  // has to say which scheme it is painting: without this a visitor on a dark
+  // desktop gets dark scrollbars, dark select menus and dark form controls
+  // over an ivory page.
+  color-scheme: light;
+
   // semantic tokens
   --bg: var(--sw-white);
   --bg-inverse: var(--sw-black);
@@ -82,6 +88,7 @@
 // several sections (footer, hero overlay, CTA band) are deliberately
 // always-dark regardless of site theme.
 :root[data-theme='dark'] {
+  color-scheme: dark;
   --bg: #141311;
   --bg-inverse: var(--sw-ivory);
   --text: var(--sw-ivory);
