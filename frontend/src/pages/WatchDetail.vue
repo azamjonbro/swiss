@@ -1037,10 +1037,19 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
   padding: clamp(16px, 5vw, 40px);
 }
 
+/* The image fills the whole padded box and paints its own opaque backing, so
+   the controls have to be lifted above it or they disappear behind the photo
+   on phones, where the padding is too small to leave them any clear margin. */
+.sw-lightbox :deep(.sw-smart-image) {
+  background: transparent;
+}
+
 .sw-lightbox__close {
   position: absolute;
-  top: 28px;
-  right: var(--container-pad);
+  top: 12px;
+  right: calc(var(--container-pad) - 12px);
+  z-index: 1;
+  padding: 16px 12px;
   color: var(--sw-white);
   font-size: 0.75rem;
   letter-spacing: 0.16em;
@@ -1051,6 +1060,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+  z-index: 1;
   color: var(--sw-white);
   font-size: 1.5rem;
   padding: 12px;
