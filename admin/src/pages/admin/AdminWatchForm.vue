@@ -106,6 +106,7 @@ async function loadWatch(id: string) {
     waterResistance: watch.waterResistance,
     availability: watch.availability,
     featured: watch.featured,
+    isNewArrival: watch.isNewArrival,
     isActive: watch.isActive,
     translations: {
       ru: { ...watch.translations?.ru },
