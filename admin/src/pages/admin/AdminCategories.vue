@@ -241,17 +241,20 @@ onMounted(load);
     <AdminModal
       :open="isFormOpen"
       :title="editingId ? locale.t('admin.editCategory') : locale.t('admin.newCategory')"
+      size="wide"
       @close="isFormOpen = false"
       @submit="submit"
     >
-      <label>
-        <span>{{ locale.t('admin.name') }}</span>
-        <input v-model="form.name" type="text" required />
-      </label>
-      <label>
-        <span>{{ locale.t('admin.tagline') }}</span>
-        <input v-model="form.tagline" type="text" />
-      </label>
+      <div class="sw-admin-grid sw-admin-grid--2">
+        <label>
+          <span>{{ locale.t('admin.name') }}</span>
+          <input v-model="form.name" type="text" required />
+        </label>
+        <label>
+          <span>{{ locale.t('admin.tagline') }}</span>
+          <input v-model="form.tagline" type="text" />
+        </label>
+      </div>
       <label>
         <span>{{ locale.t('admin.description') }}</span>
         <textarea v-model="form.description" rows="3" />
@@ -277,7 +280,10 @@ onMounted(load);
       <div class="sw-admin-grid sw-admin-grid--2">
         <div class="sw-cat__media">
           <span class="sw-admin-media-label">{{ locale.t('admin.image') }}</span>
-          <img v-if="form.image" :src="resolveMediaUrl(form.image)" class="sw-cat__preview" alt="" />
+          <div class="sw-cat__preview-wrap">
+            <img v-if="form.image" :src="resolveMediaUrl(form.image)" class="sw-cat__preview" alt="" />
+            <div v-else class="sw-cat__preview-empty"><AdminIcon name="image" :size="24" /></div>
+          </div>
           <MediaUploader
             :label="locale.t('admin.uploadImage')"
             accept="image/jpeg,image/png,image/webp,image/avif"
@@ -286,7 +292,10 @@ onMounted(load);
         </div>
         <div class="sw-cat__media">
           <span class="sw-admin-media-label">{{ locale.t('admin.video') }} ({{ locale.t('admin.optional') }})</span>
-          <video v-if="form.video" :src="resolveMediaUrl(form.video)" class="sw-cat__preview" muted />
+          <div class="sw-cat__preview-wrap">
+            <video v-if="form.video" :src="resolveMediaUrl(form.video)" class="sw-cat__preview" muted />
+            <div v-else class="sw-cat__preview-empty"><AdminIcon name="play" :size="24" /></div>
+          </div>
           <MediaUploader
             :label="locale.t('admin.uploadVideo')"
             accept="video/mp4,video/webm"
@@ -341,16 +350,32 @@ onMounted(load);
 }
 
 .sw-admin-media-label {
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--admin-text);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--admin-text-muted);
+}
+
+.sw-cat__preview-wrap {
+  width: 100%;
+  height: 160px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--admin-border);
+  overflow: hidden;
+  background: var(--admin-surface-2);
 }
 
 .sw-cat__preview {
   width: 100%;
-  height: 110px;
+  height: 100%;
   object-fit: cover;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--admin-border);
+}
+
+.sw-cat__preview-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: var(--admin-text-subtle);
 }
 </style>
