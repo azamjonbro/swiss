@@ -27,8 +27,8 @@ export const BRANDS = [
     founded: 2021,
     country: 'Switzerland',
     website: 'https://www.tsarbomba.com',
-    logo: '/uploads/images/tsar_bomba_logo.jpg',
-    image: '/uploads/images/tsar_bomba_logo.jpg',
+    logo: '/uploads/images/logo_tsar_bomba.jpg',
+    image: '/uploads/images/banner_tsar_bomba.jpg',
   },
   {
     name: 'Frederique Constant',
