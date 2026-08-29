@@ -204,13 +204,20 @@ onMounted(load);
     <AdminModal
       :open="isFormOpen"
       :title="editingId ? locale.t('admin.editBrand') : locale.t('admin.newBrand')"
+      size="wide"
       @close="isFormOpen = false"
       @submit="submit"
     >
-      <label>
-        <span>{{ locale.t('admin.name') }}</span>
-        <input v-model="form.name" type="text" required />
-      </label>
+      <div class="sw-admin-grid sw-admin-grid--2">
+        <label>
+          <span>{{ locale.t('admin.name') }}</span>
+          <input v-model="form.name" type="text" required />
+        </label>
+        <label>
+          <span>{{ locale.t('admin.website') }}</span>
+          <input v-model="form.website" type="text" placeholder="https://" />
+        </label>
+      </div>
       <label>
         <span>{{ locale.t('admin.description') }}</span>
         <textarea v-model="form.description" rows="3" />
@@ -223,10 +230,6 @@ onMounted(load);
       />
 
       <div class="sw-admin-grid sw-admin-grid--2">
-        <label>
-          <span>{{ locale.t('admin.website') }}</span>
-          <input v-model="form.website" type="text" placeholder="https://" />
-        </label>
         <label>
           <span>{{ locale.t('admin.country') }}</span>
           <input v-model="form.country" type="text" />
@@ -251,7 +254,10 @@ onMounted(load);
       <div class="sw-admin-grid sw-admin-grid--2">
         <div class="sw-brands__media">
           <span class="sw-brands__media-label">{{ locale.t('admin.logo') }}</span>
-          <img v-if="form.logo" :src="resolveMediaUrl(form.logo)" class="sw-brands__preview" alt="" />
+          <div class="sw-brands__preview-wrap">
+            <img v-if="form.logo" :src="resolveMediaUrl(form.logo)" class="sw-brands__preview" alt="" />
+            <div v-else class="sw-brands__preview-empty"><AdminIcon name="image" :size="24" /></div>
+          </div>
           <MediaUploader
             :label="locale.t('admin.uploadImage')"
             accept="image/jpeg,image/png,image/webp,image/avif"
@@ -260,7 +266,10 @@ onMounted(load);
         </div>
         <div class="sw-brands__media">
           <span class="sw-brands__media-label">{{ locale.t('admin.coverImage') }}</span>
-          <img v-if="form.image" :src="resolveMediaUrl(form.image)" class="sw-brands__preview" alt="" />
+          <div class="sw-brands__preview-wrap">
+            <img v-if="form.image" :src="resolveMediaUrl(form.image)" class="sw-brands__preview" alt="" />
+            <div v-else class="sw-brands__preview-empty"><AdminIcon name="image" :size="24" /></div>
+          </div>
           <MediaUploader
             :label="locale.t('admin.uploadImage')"
             accept="image/jpeg,image/png,image/webp,image/avif"
@@ -306,18 +315,33 @@ onMounted(load);
 }
 
 .sw-brands__media-label {
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--admin-text);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--admin-text-muted);
+}
+
+.sw-brands__preview-wrap {
+  width: 100%;
+  height: 160px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--admin-border);
+  overflow: hidden;
+  background: var(--admin-surface-2);
 }
 
 .sw-brands__preview {
   width: 100%;
-  height: 110px;
+  height: 100%;
   object-fit: contain;
   padding: 8px;
-  background: var(--admin-surface-2);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--admin-border);
+}
+
+.sw-brands__preview-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: var(--admin-text-subtle);
 }
 </style>
