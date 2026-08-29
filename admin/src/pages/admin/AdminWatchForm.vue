@@ -1,12 +1,21 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import type { Watch, Category, Brand, Collection, Availability } from '@/types/models';
+import type {
+  Watch,
+  Category,
+  Brand,
+  Collection,
+  Availability,
+  TranslationField,
+  Translations,
+} from '@/types/models';
 import { adminFetchWatch, adminCreateWatch, adminUpdateWatch } from '@/services/watches';
 import { adminFetchCategories } from '@/services/categories';
 import { adminFetchBrands } from '@/services/brands';
 import { adminFetchCollections } from '@/services/collections';
 import MediaUploader from '@/components/admin/MediaUploader.vue';
+import TranslationFields from '@/components/admin/TranslationFields.vue';
 import { resolveMediaUrl } from '@/utils/media';
 
 const route = useRoute();
@@ -17,6 +26,12 @@ const isEdit = computed(() => Boolean(route.params.id));
 const categories = ref<Category[]>([]);
 const brands = ref<Brand[]>([]);
 const collections = ref<Collection[]>([]);
+
+const TRANSLATION_FIELDS: TranslationField[] = [
+  { key: 'name', label: 'Name' },
+  { key: 'shortDescription', label: 'Short Description' },
+  { key: 'description', label: 'Full Description', type: 'textarea', rows: 4 },
+];
 
 const form = ref({
   name: '',
@@ -41,6 +56,7 @@ const form = ref({
   isActive: true,
   images: [] as string[],
   videos: [] as string[],
+  translations: {} as Translations,
 });
 
 const isSaving = ref(false);
@@ -83,6 +99,10 @@ async function loadWatch(id: string) {
     // variants (if any) pass through untouched on save via otherVariants.
     images: [...(watch.variants?.[0]?.images ?? [])],
     videos: [...(watch.variants?.[0]?.videos ?? [])],
+    translations: {
+      ru: { ...watch.translations?.ru },
+      uz: { ...watch.translations?.uz },
+    },
   };
   otherVariants.value = watch.variants?.slice(1) ?? [];
 }
@@ -212,6 +232,16 @@ async function submit() {
         <span>Full Description</span>
         <textarea v-model="form.description" rows="4" />
       </label>
+
+      <TranslationFields
+        v-model="form.translations"
+        :fields="TRANSLATION_FIELDS"
+        :base="{
+          name: form.name,
+          shortDescription: form.shortDescription,
+          description: form.description,
+        }"
+      />
 
       <div class="sw-admin-watch-form__grid">
         <label>

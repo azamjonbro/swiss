@@ -1,13 +1,19 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import type { Brand } from '@/types/models';
+import type { Brand, TranslationField, Translations } from '@/types/models';
 import { adminFetchBrands, adminCreateBrand, adminUpdateBrand, adminDeleteBrand } from '@/services/brands';
 import MediaUploader from '@/components/admin/MediaUploader.vue';
+import TranslationFields from '@/components/admin/TranslationFields.vue';
 import { resolveMediaUrl } from '@/utils/media';
 
 const brands = ref<Brand[]>([]);
 const isFormOpen = ref(false);
 const editingId = ref<string | null>(null);
+
+const TRANSLATION_FIELDS: TranslationField[] = [
+  { key: 'name', label: 'Name' },
+  { key: 'description', label: 'Description', type: 'textarea' },
+];
 
 const emptyForm = {
   name: '',
@@ -20,6 +26,7 @@ const emptyForm = {
   founded: undefined as number | undefined,
   featured: false,
   isActive: true,
+  translations: {} as Translations,
 };
 const form = ref({ ...emptyForm });
 
@@ -29,7 +36,7 @@ async function load() {
 
 function openCreate() {
   editingId.value = null;
-  form.value = { ...emptyForm };
+  form.value = { ...emptyForm, translations: {} };
   isFormOpen.value = true;
 }
 
@@ -45,6 +52,10 @@ function openEdit(brand: Brand) {
     founded: brand.founded,
     featured: brand.featured,
     isActive: brand.isActive,
+    translations: {
+      ru: { ...brand.translations?.ru },
+      uz: { ...brand.translations?.uz },
+    },
   };
   isFormOpen.value = true;
 }
@@ -112,6 +123,12 @@ onMounted(load);
           <span>Description</span>
           <textarea v-model="form.description" rows="3" />
         </label>
+        <TranslationFields
+          v-model="form.translations"
+          :fields="TRANSLATION_FIELDS"
+          :base="{ name: form.name, description: form.description }"
+        />
+
         <label>
           <span>Website</span>
           <input v-model="form.website" type="text" />

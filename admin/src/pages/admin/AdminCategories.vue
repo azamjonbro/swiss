@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import type { Category } from '@/types/models';
+import type { Category, TranslationField, Translations } from '@/types/models';
 import {
   adminFetchCategories,
   adminCreateCategory,
@@ -9,13 +9,29 @@ import {
   adminReorderCategories,
 } from '@/services/categories';
 import MediaUploader from '@/components/admin/MediaUploader.vue';
+import TranslationFields from '@/components/admin/TranslationFields.vue';
 import { resolveMediaUrl } from '@/utils/media';
 
 const categories = ref<Category[]>([]);
 const isFormOpen = ref(false);
 const editingId = ref<string | null>(null);
 
-const emptyForm = { name: '', tagline: '', description: '', image: '', video: '', featured: false, isActive: true };
+const TRANSLATION_FIELDS: TranslationField[] = [
+  { key: 'name', label: 'Name' },
+  { key: 'tagline', label: 'Tagline' },
+  { key: 'description', label: 'Description', type: 'textarea' },
+];
+
+const emptyForm = {
+  name: '',
+  tagline: '',
+  description: '',
+  image: '',
+  video: '',
+  featured: false,
+  isActive: true,
+  translations: {} as Translations,
+};
 const form = ref({ ...emptyForm });
 
 async function load() {
@@ -24,7 +40,7 @@ async function load() {
 
 function openCreate() {
   editingId.value = null;
-  form.value = { ...emptyForm };
+  form.value = { ...emptyForm, translations: {} };
   isFormOpen.value = true;
 }
 
@@ -38,6 +54,10 @@ function openEdit(category: Category) {
     video: category.video ?? '',
     featured: category.featured,
     isActive: category.isActive,
+    translations: {
+      ru: { ...category.translations?.ru },
+      uz: { ...category.translations?.uz },
+    },
   };
   isFormOpen.value = true;
 }
@@ -122,6 +142,12 @@ onMounted(load);
           <span>Description</span>
           <textarea v-model="form.description" rows="3" />
         </label>
+
+        <TranslationFields
+          v-model="form.translations"
+          :fields="TRANSLATION_FIELDS"
+          :base="{ name: form.name, tagline: form.tagline, description: form.description }"
+        />
 
         <div class="sw-admin-modal__check-row">
           <label class="sw-admin-modal__check">

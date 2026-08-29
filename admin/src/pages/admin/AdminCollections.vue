@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import type { Collection, Watch } from '@/types/models';
+import type { Collection, TranslationField, Translations, Watch } from '@/types/models';
 import {
   adminFetchCollections,
   adminCreateCollection,
@@ -9,6 +9,7 @@ import {
 } from '@/services/collections';
 import { adminFetchWatches } from '@/services/watches';
 import MediaUploader from '@/components/admin/MediaUploader.vue';
+import TranslationFields from '@/components/admin/TranslationFields.vue';
 import { resolveMediaUrl } from '@/utils/media';
 
 const collections = ref<Collection[]>([]);
@@ -16,7 +17,20 @@ const allWatches = ref<Watch[]>([]);
 const isFormOpen = ref(false);
 const editingId = ref<string | null>(null);
 
-const emptyForm = { name: '', description: '', image: '', watches: [] as string[], featured: false, isActive: true };
+const TRANSLATION_FIELDS: TranslationField[] = [
+  { key: 'name', label: 'Name' },
+  { key: 'description', label: 'Description', type: 'textarea' },
+];
+
+const emptyForm = {
+  name: '',
+  description: '',
+  image: '',
+  watches: [] as string[],
+  featured: false,
+  isActive: true,
+  translations: {} as Translations,
+};
 const form = ref({ ...emptyForm });
 
 async function load() {
@@ -31,7 +45,7 @@ function watchIdsOf(collection: Collection): string[] {
 
 function openCreate() {
   editingId.value = null;
-  form.value = { ...emptyForm };
+  form.value = { ...emptyForm, translations: {} };
   isFormOpen.value = true;
 }
 
@@ -44,6 +58,10 @@ function openEdit(collection: Collection) {
     watches: watchIdsOf(collection),
     featured: collection.featured,
     isActive: collection.isActive,
+    translations: {
+      ru: { ...collection.translations?.ru },
+      uz: { ...collection.translations?.uz },
+    },
   };
   isFormOpen.value = true;
 }
@@ -111,6 +129,12 @@ onMounted(load);
           <span>Description</span>
           <textarea v-model="form.description" rows="3" />
         </label>
+
+        <TranslationFields
+          v-model="form.translations"
+          :fields="TRANSLATION_FIELDS"
+          :base="{ name: form.name, description: form.description }"
+        />
 
         <label>
           <span>Watches</span>
