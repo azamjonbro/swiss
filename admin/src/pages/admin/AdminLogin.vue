@@ -5,6 +5,7 @@ import { useAuthStore } from '@/stores/auth';
 import { useLocaleStore } from '@/stores/locale';
 import AdminPreferencesBar from '@/components/admin/AdminPreferencesBar.vue';
 import AdminIcon from '@/components/shared/AdminIcon.vue';
+import BrandMark from '@/components/shared/BrandMark.vue';
 
 const router = useRouter();
 const route = useRoute();
@@ -39,19 +40,7 @@ async function submit() {
     </div>
 
     <form class="sw-login__card" @submit.prevent="submit">
-      <span class="sw-login__brand">
-        <svg class="sw-login__mark" viewBox="0 0 40 40" aria-hidden="true">
-          <rect width="40" height="40" rx="9" fill="#ad2b39" />
-          <rect x="23" y="6" width="3" height="28" rx="0.6" fill="#7c1f29" />
-          <rect x="7.5" y="22" width="26" height="3" rx="0.6" fill="#7c1f29" />
-          <rect x="16" y="5" width="7" height="30" rx="1" fill="#f3efe7" />
-          <rect x="5.5" y="15" width="28" height="7" rx="1" fill="#f3efe7" />
-        </svg>
-        <span class="sw-login__brand-text">
-          SwissWatch
-          <span>{{ locale.t('admin.consoleLabel') }}</span>
-        </span>
-      </span>
+      <BrandMark :size="38" :sublabel="locale.t('admin.consoleLabel')" class="sw-login__brand" />
 
       <p class="sw-login__sub">{{ locale.t('admin.signInSub') }}</p>
 
@@ -125,33 +114,7 @@ async function submit() {
 }
 
 .sw-login__brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-weight: 650;
-  font-size: 1.2rem;
-  letter-spacing: -0.015em;
-}
-
-.sw-login__mark {
-  flex: none;
-  width: 36px;
-  height: 36px;
-  border-radius: 9px;
-}
-
-.sw-login__brand-text {
-  line-height: 1.15;
-}
-
-.sw-login__brand-text span {
-  display: block;
-  margin-top: 2px;
-  font-size: 0.62rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--admin-text-subtle);
+  align-self: flex-start;
 }
 
 .sw-login__sub {

@@ -2,6 +2,7 @@
 import { computed } from 'vue';
 import { useLocaleStore } from '@/stores/locale';
 import AdminIcon from '@/components/shared/AdminIcon.vue';
+import BrandMark from '@/components/shared/BrandMark.vue';
 
 defineProps<{ open: boolean }>();
 const emit = defineEmits<{ close: [] }>();
@@ -38,17 +39,7 @@ const groups = computed(() => [
 
   <aside class="sw-sidebar" :class="{ 'is-open': open }">
     <RouterLink to="/" class="sw-sidebar__brand" aria-label="SwissWatch Admin" @click="emit('close')">
-      <svg class="sw-sidebar__mark" viewBox="0 0 40 40" aria-hidden="true">
-        <rect width="40" height="40" rx="9" fill="#ad2b39" />
-        <rect x="23" y="6" width="3" height="28" rx="0.6" fill="#7c1f29" />
-        <rect x="7.5" y="22" width="26" height="3" rx="0.6" fill="#7c1f29" />
-        <rect x="16" y="5" width="7" height="30" rx="1" fill="#f3efe7" />
-        <rect x="5.5" y="15" width="28" height="7" rx="1" fill="#f3efe7" />
-      </svg>
-      <span class="sw-sidebar__brand-text">
-        SwissWatch
-        <span>{{ locale.t('admin.consoleLabel') }}</span>
-      </span>
+      <BrandMark :size="30" :sublabel="locale.t('admin.consoleLabel')" />
     </RouterLink>
 
     <nav class="sw-sidebar__nav">
@@ -89,33 +80,7 @@ const groups = computed(() => [
 
 .sw-sidebar__brand {
   display: flex;
-  align-items: center;
-  gap: 11px;
   padding: 6px 8px;
-  font-weight: 650;
-  font-size: 1rem;
-  letter-spacing: -0.015em;
-}
-
-.sw-sidebar__mark {
-  flex: none;
-  width: 30px;
-  height: 30px;
-  border-radius: 8px;
-}
-
-.sw-sidebar__brand-text {
-  line-height: 1.15;
-}
-
-.sw-sidebar__brand-text span {
-  display: block;
-  margin-top: 2px;
-  font-size: 0.62rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--admin-text-subtle);
 }
 
 .sw-sidebar__nav {

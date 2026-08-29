@@ -35,6 +35,11 @@
   --admin-info: #2e5f8a;
   --admin-info-soft: #e4ecf3;
 
+  /* The logo tile's own colours, taken from the storefront's --sw-crimson /
+     --sw-ivory. Fixed in both themes: the mark does not repaint with the UI. */
+  --brand-crimson: #ad2b39;
+  --brand-ivory: #f3efe7;
+
   --admin-sidebar-w: 244px;
   --admin-header-h: 64px;
 
