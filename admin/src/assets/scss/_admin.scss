@@ -47,9 +47,9 @@
    Form controls
 --------------------------------------------------------------------------- */
 
-.sw-admin input,
-.sw-admin textarea,
-.sw-admin select {
+input,
+textarea,
+select {
   width: 100%;
   font-family: var(--font-sans);
   background: var(--admin-surface);
@@ -63,14 +63,14 @@
   transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
 }
 
-.sw-admin textarea {
+textarea {
   resize: vertical;
   min-height: 76px;
 }
 
 /* Native select gets its own chevron; the default one sits badly against a
    custom border radius on Windows. */
-.sw-admin select {
+select {
   appearance: none;
   padding-right: 34px;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%236d6860' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -79,17 +79,17 @@
   background-size: 10px 6px;
 }
 
-:root[data-theme='dark'] .sw-admin select {
+:root[data-theme='dark'] select {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23a49d91' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
 
-.sw-admin select[multiple] {
+select[multiple] {
   background-image: none;
   padding-right: 12px;
 }
 
-.sw-admin input::placeholder,
-.sw-admin textarea::placeholder {
+input::placeholder,
+textarea::placeholder {
   color: var(--admin-text-subtle);
 }
 
@@ -97,35 +97,35 @@
    under 16px without ever zooming back out. The admin is used from a phone
    often enough — editing a watch on the shop floor — that it matters here too. */
 @media (pointer: coarse) {
-  .sw-admin input,
-  .sw-admin textarea,
-  .sw-admin select {
+  input,
+  textarea,
+  select {
     font-size: 1rem;
   }
 }
 
-.sw-admin input:hover,
-.sw-admin textarea:hover,
-.sw-admin select:hover {
+input:hover,
+textarea:hover,
+select:hover {
   border-color: var(--admin-text-subtle);
 }
 
-.sw-admin input:focus,
-.sw-admin textarea:focus,
-.sw-admin select:focus {
+input:focus,
+textarea:focus,
+select:focus {
   outline: none;
   border-color: var(--admin-accent);
   box-shadow: var(--shadow-ring);
 }
 
-.sw-admin input:disabled,
-.sw-admin textarea:disabled,
-.sw-admin select:disabled {
+input:disabled,
+textarea:disabled,
+select:disabled {
   opacity: 0.55;
   cursor: not-allowed;
 }
 
-.sw-admin label {
+label {
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -148,8 +148,8 @@
 }
 
 /* Checkbox / radio: the reset strips the native look, so restore a real one. */
-.sw-admin input[type='checkbox'],
-.sw-admin input[type='radio'] {
+input[type='checkbox'],
+input[type='radio'] {
   appearance: none;
   flex: none;
   width: 17px;
@@ -160,21 +160,21 @@
   cursor: pointer;
 }
 
-.sw-admin input[type='checkbox'] {
+input[type='checkbox'] {
   border-radius: 5px;
 }
 
-.sw-admin input[type='radio'] {
+input[type='radio'] {
   border-radius: var(--radius-full);
 }
 
-.sw-admin input[type='checkbox']:checked,
-.sw-admin input[type='radio']:checked {
+input[type='checkbox']:checked,
+input[type='radio']:checked {
   background-color: var(--admin-accent);
   border-color: var(--admin-accent);
 }
 
-.sw-admin input[type='checkbox']:checked {
+input[type='checkbox']:checked {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 6.4l2.3 2.3 4.7-5' fill='none' stroke='%23fff' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-size: 12px 12px;
   background-position: center;
