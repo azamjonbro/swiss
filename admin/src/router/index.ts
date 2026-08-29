@@ -91,7 +91,26 @@ export const router = createRouter({
   },
 });
 
+// Pages are lazy chunks whose filenames carry a content hash. A tab left open
+// across a deploy still holds the old entry bundle, so its imports point at
+// chunks the server no longer has: the navigation rejects and the link appears
+// to do nothing. Reload once onto the current build instead of failing silently.
+const RELOAD_FLAG = 'sw_admin_chunk_reload';
+
+router.onError((error, to) => {
+  const message = error instanceof Error ? error.message : String(error);
+  const isChunkError = /dynamically imported module|Importing a module script failed|Failed to fetch/i.test(message);
+  if (!isChunkError) return;
+
+  // One attempt only — if the reload does not fix it, let the error surface
+  // rather than trapping the admin in a refresh loop.
+  if (sessionStorage.getItem(RELOAD_FLAG)) return;
+  sessionStorage.setItem(RELOAD_FLAG, '1');
+  window.location.assign(to.fullPath);
+});
+
 router.afterEach((to: RouteLocationNormalized) => {
+  sessionStorage.removeItem(RELOAD_FLAG);
   const title = to.meta.title as string | undefined;
   if (title) document.title = title;
 });
