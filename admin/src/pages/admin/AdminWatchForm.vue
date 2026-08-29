@@ -474,21 +474,22 @@ async function submit() {
 .sw-wf__card {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 24px;
+  padding: 28px 32px;
 }
 
 .sw-wf__card-head {
   display: flex;
   flex-direction: column;
-  gap: 3px;
-  padding-bottom: 14px;
+  gap: 4px;
+  padding-bottom: 18px;
   border-bottom: 1px solid var(--admin-border);
 }
 
 .sw-wf__card-title {
-  font-size: 0.78rem;
+  font-size: 0.85rem;
   font-weight: 650;
-  letter-spacing: 0.09em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--admin-text-muted);
 }
@@ -503,8 +504,8 @@ async function submit() {
 
 .sw-wf__price-row {
   display: grid;
-  grid-template-columns: 1fr 92px;
-  gap: 12px;
+  grid-template-columns: 1fr 100px;
+  gap: 16px;
 }
 
 .sw-wf__notice {
@@ -527,7 +528,7 @@ async function submit() {
 .sw-wf__media-block {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .sw-wf__media-label {
@@ -544,8 +545,8 @@ async function submit() {
 
 .sw-wf__media-item {
   position: relative;
-  width: 84px;
-  height: 84px;
+  width: 96px;
+  height: 96px;
 }
 
 .sw-wf__media-item img,
@@ -580,7 +581,8 @@ async function submit() {
 .sw-wf__actions {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
+  margin-top: 8px;
 }
 
 @media (max-width: 1080px) {
