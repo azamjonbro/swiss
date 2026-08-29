@@ -189,12 +189,24 @@ onUnmounted(() => {
             @click="onStageClick(index)"
             @mouseenter="onStageEnter(index)"
           >
+            <!--
+              Eager, not lazy. This is a horizontally scrolled track, and the
+              browser only ever triggered lazy loads for the handful of stages
+              that started near the viewport — everything past roughly the
+              seventh house stayed an empty black card no matter how far the
+              visitor scrolled, because a stage that is already in the DOM and
+              simply moved sideways never re-enters the intersection the loader
+              is waiting on. The stage image IS this section's content, and a
+              plaque is 3-7 KB at the width actually requested, so there is
+              nothing to defer.
+            -->
             <span class="sw-houses__photo" :class="{ 'is-plaque': !watchesFor(brand)[0] }">
               <template v-if="watchesFor(brand)[0]">
                 <SmartImage
                   :src="primaryImage(watchesFor(brand)[0])"
                   :alt="`${brand.name} ${watchesFor(brand)[0].name}`"
                   object-fit="contain"
+                  eager
                   sizes="(max-width: 1052px) 76vw, 800px"
                 />
                 <SmartImage
@@ -202,6 +214,7 @@ onUnmounted(() => {
                   :src="primaryImage(watchesFor(brand)[1])"
                   :alt="`${brand.name} ${watchesFor(brand)[1].name}`"
                   object-fit="contain"
+                  eager
                   class="sw-houses__photo-alt"
                   sizes="(max-width: 1052px) 76vw, 800px"
                 />
@@ -210,6 +223,7 @@ onUnmounted(() => {
                 v-else-if="brand.logo"
                 :src="brand.logo"
                 :alt="brand.name"
+                eager
                 sizes="(max-width: 1052px) 76vw, 800px"
               />
             </span>
