@@ -314,7 +314,7 @@ const uz: Dictionary = {
     caseMaterial: 'Korpus materiali',
     caseSize: 'Korpus o‘lchami',
     dial: 'Siferblat',
-    bracelet: 'Brasletlar',
+    bracelet: 'Braslet',
     waterResistance: 'Suvga chidamlilik',
     newArrival: 'Yangi kelgan',
     activeOnSite: 'Faol (saytda ko‘rinadi)',
