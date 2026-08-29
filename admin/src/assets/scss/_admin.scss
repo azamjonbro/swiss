@@ -1,3 +1,7 @@
+/* ---------------------------------------------------------------------------
+   Shell
+--------------------------------------------------------------------------- */
+
 .sw-admin {
   min-height: 100vh;
   background: var(--admin-bg);
@@ -5,18 +9,91 @@
   font-family: var(--font-sans);
 }
 
+/* ---------------------------------------------------------------------------
+   Typography
+--------------------------------------------------------------------------- */
+
+.sw-admin-page-title {
+  font-family: var(--font-sans);
+  font-weight: 640;
+  font-size: 1.4rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.sw-admin-page-sub {
+  margin-top: 5px;
+  font-size: 0.85rem;
+  color: var(--admin-text-muted);
+}
+
+/* Page header: title block on the left, actions on the right. */
+.sw-admin-page-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+
+.sw-admin-page-head__actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ---------------------------------------------------------------------------
+   Form controls
+--------------------------------------------------------------------------- */
+
 .sw-admin input,
 .sw-admin textarea,
 .sw-admin select {
+  width: 100%;
   font-family: var(--font-sans);
   background: var(--admin-surface);
-  border: 1px solid var(--admin-border);
+  color: var(--admin-text);
+  border: 1px solid var(--admin-border-strong);
   border-radius: var(--radius-md);
-  padding: 10px 12px;
-  font-size: 0.9rem;
+  padding: 9px 12px;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  box-shadow: var(--shadow-xs);
+  transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
 }
 
-/* 0.9rem is 14.4px, and iOS Safari zooms the page in on any focused control
+.sw-admin textarea {
+  resize: vertical;
+  min-height: 76px;
+}
+
+/* Native select gets its own chevron; the default one sits badly against a
+   custom border radius on Windows. */
+.sw-admin select {
+  appearance: none;
+  padding-right: 34px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%236d6860' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 10px 6px;
+}
+
+:root[data-theme='dark'] .sw-admin select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23a49d91' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+.sw-admin select[multiple] {
+  background-image: none;
+  padding-right: 12px;
+}
+
+.sw-admin input::placeholder,
+.sw-admin textarea::placeholder {
+  color: var(--admin-text-subtle);
+}
+
+/* 0.875rem is 14px, and iOS Safari zooms the page in on any focused control
    under 16px without ever zooming back out. The admin is used from a phone
    often enough — editing a watch on the shop floor — that it matters here too. */
 @media (pointer: coarse) {
@@ -27,11 +104,25 @@
   }
 }
 
+.sw-admin input:hover,
+.sw-admin textarea:hover,
+.sw-admin select:hover {
+  border-color: var(--admin-text-subtle);
+}
+
 .sw-admin input:focus,
 .sw-admin textarea:focus,
 .sw-admin select:focus {
   outline: none;
   border-color: var(--admin-accent);
+  box-shadow: var(--shadow-ring);
+}
+
+.sw-admin input:disabled,
+.sw-admin textarea:disabled,
+.sw-admin select:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
 }
 
 .sw-admin label {
@@ -39,41 +130,239 @@
   flex-direction: column;
   gap: 6px;
   font-size: 0.8rem;
-  color: var(--admin-text-muted);
+  font-weight: 500;
+  color: var(--admin-text);
 }
+
+/* Helper line under a field. */
+.sw-admin-hint {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--admin-text-muted);
+  line-height: 1.5;
+}
+
+.sw-admin-error {
+  font-size: 0.8rem;
+  color: var(--admin-danger);
+}
+
+/* Checkbox / radio: the reset strips the native look, so restore a real one. */
+.sw-admin input[type='checkbox'],
+.sw-admin input[type='radio'] {
+  appearance: none;
+  flex: none;
+  width: 17px;
+  height: 17px;
+  padding: 0;
+  border: 1.5px solid var(--admin-border-strong);
+  background: var(--admin-surface);
+  cursor: pointer;
+}
+
+.sw-admin input[type='checkbox'] {
+  border-radius: 5px;
+}
+
+.sw-admin input[type='radio'] {
+  border-radius: var(--radius-full);
+}
+
+.sw-admin input[type='checkbox']:checked,
+.sw-admin input[type='radio']:checked {
+  background-color: var(--admin-accent);
+  border-color: var(--admin-accent);
+}
+
+.sw-admin input[type='checkbox']:checked {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 6.4l2.3 2.3 4.7-5' fill='none' stroke='%23fff' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-size: 12px 12px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* A checkbox and its text on one line, the whole row clickable. */
+.sw-admin-check {
+  flex-direction: row !important;
+  align-items: center;
+  gap: 9px;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* The boxed variant reads as a toggleable card — used for the flag rows. */
+.sw-admin-check--boxed {
+  padding: 10px 12px;
+  border: 1px solid var(--admin-border);
+  border-radius: var(--radius-md);
+  background: var(--admin-surface-2);
+  transition: border-color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
+}
+
+.sw-admin-check--boxed:hover {
+  border-color: var(--admin-border-strong);
+}
+
+.sw-admin-check--boxed:has(input:checked) {
+  border-color: var(--admin-accent);
+  background: var(--admin-accent-soft);
+}
+
+/* ---------------------------------------------------------------------------
+   Buttons
+--------------------------------------------------------------------------- */
 
 .sw-admin-btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 18px;
+  justify-content: center;
+  gap: 7px;
+  padding: 9px 15px;
   border-radius: var(--radius-md);
   font-size: 0.85rem;
-  font-weight: 500;
-  background: var(--admin-accent);
-  color: #fff;
-  transition: opacity var(--dur-fast) var(--ease-out);
+  font-weight: 550;
+  line-height: 1.2;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  background: var(--admin-ink);
+  color: var(--admin-ink-contrast);
+  box-shadow: var(--shadow-xs);
+  transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
 }
 
 .sw-admin-btn:hover {
-  opacity: 0.85;
+  background: var(--admin-ink-hover);
+  box-shadow: var(--shadow-sm);
+}
+
+.sw-admin-btn:active {
+  transform: translateY(1px);
+  box-shadow: none;
+}
+
+.sw-admin-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 .sw-admin-btn--ghost {
-  background: transparent;
+  background: var(--admin-surface);
   color: var(--admin-text);
-  border: 1px solid var(--admin-border);
+  border-color: var(--admin-border-strong);
+}
+
+.sw-admin-btn--ghost:hover {
+  background: var(--admin-surface-3);
+  border-color: var(--admin-text-subtle);
+}
+
+.sw-admin-btn--quiet {
+  background: transparent;
+  color: var(--admin-text-muted);
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.sw-admin-btn--quiet:hover {
+  background: var(--admin-surface-3);
+  color: var(--admin-text);
+  box-shadow: none;
 }
 
 .sw-admin-btn--danger {
-  background: #a3313f;
+  background: var(--admin-danger);
+  color: #fff;
 }
+
+.sw-admin-btn--danger:hover {
+  background: var(--admin-danger-hover);
+}
+
+.sw-admin-btn--sm {
+  padding: 6px 11px;
+  font-size: 0.8rem;
+  border-radius: var(--radius-sm);
+}
+
+.sw-admin-btn--block {
+  width: 100%;
+}
+
+/* Square icon-only button, used for row actions and toolbar affordances. */
+.sw-admin-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  flex: none;
+  border-radius: var(--radius-sm);
+  color: var(--admin-text-muted);
+  border: 1px solid transparent;
+  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+}
+
+.sw-admin-icon-btn:hover {
+  background: var(--admin-surface-3);
+  border-color: var(--admin-border);
+  color: var(--admin-text);
+}
+
+.sw-admin-icon-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  background: none;
+  border-color: transparent;
+}
+
+.sw-admin-icon-btn--danger:hover {
+  background: var(--admin-danger-soft);
+  border-color: transparent;
+  color: var(--admin-danger);
+}
+
+/* ---------------------------------------------------------------------------
+   Cards
+--------------------------------------------------------------------------- */
 
 .sw-admin-card {
   background: var(--admin-surface);
   border: 1px solid var(--admin-border);
   border-radius: var(--radius-lg);
-  padding: 24px;
+  padding: 22px;
+  box-shadow: var(--shadow-sm);
+}
+
+.sw-admin-card--flush {
+  padding: 0;
+  overflow: hidden;
+}
+
+.sw-admin-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 15px 20px;
+  border-bottom: 1px solid var(--admin-border);
+}
+
+.sw-admin-card__title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* ---------------------------------------------------------------------------
+   Tables
+--------------------------------------------------------------------------- */
+
+.sw-admin-table-wrap {
+  overflow-x: auto;
 }
 
 .sw-admin-table {
@@ -83,19 +372,310 @@
 }
 
 .sw-admin-table th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
   text-align: left;
-  padding: 12px 16px;
+  padding: 11px 18px;
+  background: var(--admin-surface-2);
   color: var(--admin-text-muted);
-  font-weight: 500;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  white-space: nowrap;
   border-bottom: 1px solid var(--admin-border);
 }
 
 .sw-admin-table td {
-  padding: 14px 16px;
+  padding: 13px 18px;
   border-bottom: 1px solid var(--admin-border);
   vertical-align: middle;
 }
 
-.sw-admin-table tr:hover td {
-  background: rgba(0, 0, 0, 0.015);
+.sw-admin-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.sw-admin-table tbody tr {
+  transition: background var(--dur-fast) var(--ease-out);
+}
+
+.sw-admin-table tbody tr:hover {
+  background: var(--admin-surface-2);
+}
+
+/* Right-aligned action cell; the buttons fade in on row hover on pointer
+   devices but stay visible on touch, where there is no hover. */
+.sw-admin-table__actions {
+  width: 1%;
+  white-space: nowrap;
+}
+
+.sw-admin-table__actions > div {
+  display: flex;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+@media (hover: hover) {
+  .sw-admin-table tbody tr .sw-admin-table__actions > div {
+    opacity: 0;
+    transition: opacity var(--dur-fast) var(--ease-out);
+  }
+
+  .sw-admin-table tbody tr:hover .sw-admin-table__actions > div,
+  .sw-admin-table tbody tr:focus-within .sw-admin-table__actions > div {
+    opacity: 1;
+  }
+}
+
+/* Primary identifying cell — name plus a secondary line. */
+.sw-admin-cell-title {
+  font-weight: 550;
+  color: var(--admin-text);
+}
+
+.sw-admin-cell-sub {
+  margin-top: 2px;
+  font-size: 0.78rem;
+  color: var(--admin-text-muted);
+}
+
+.sw-admin-cell-media {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sw-admin-thumb {
+  width: 40px;
+  height: 40px;
+  flex: none;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--admin-border);
+  background: var(--admin-surface-3);
+}
+
+.sw-admin-thumb--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--admin-text-subtle);
+}
+
+/* ---------------------------------------------------------------------------
+   Badges & pills
+--------------------------------------------------------------------------- */
+
+.sw-admin-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 550;
+  line-height: 1.5;
+  white-space: nowrap;
+  background: var(--admin-surface-3);
+  color: var(--admin-text-muted);
+}
+
+.sw-admin-badge--success {
+  background: var(--admin-success-soft);
+  color: var(--admin-success);
+}
+
+.sw-admin-badge--warning {
+  background: var(--admin-warning-soft);
+  color: var(--admin-warning);
+}
+
+.sw-admin-badge--danger {
+  background: var(--admin-danger-soft);
+  color: var(--admin-danger);
+}
+
+.sw-admin-badge--info {
+  background: var(--admin-info-soft);
+  color: var(--admin-info);
+}
+
+.sw-admin-badge--accent {
+  background: var(--admin-accent-soft);
+  color: var(--admin-accent);
+}
+
+.sw-admin-badge__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: currentColor;
+}
+
+/* A badge that toggles a boolean when clicked. */
+.sw-admin-toggle {
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: filter var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+}
+
+.sw-admin-toggle:hover {
+  filter: brightness(0.96);
+  border-color: currentColor;
+}
+
+/* ---------------------------------------------------------------------------
+   Toolbar
+--------------------------------------------------------------------------- */
+
+.sw-admin-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.sw-admin-search {
+  position: relative;
+  flex: 1;
+  min-width: 220px;
+  max-width: 380px;
+}
+
+.sw-admin-search input {
+  padding-left: 36px;
+}
+
+.sw-admin-search__icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--admin-text-subtle);
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Empty state
+--------------------------------------------------------------------------- */
+
+.sw-admin-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 56px 24px;
+  text-align: center;
+}
+
+.sw-admin-empty__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 6px;
+  border-radius: var(--radius-md);
+  background: var(--admin-surface-3);
+  color: var(--admin-text-subtle);
+}
+
+.sw-admin-empty__title {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.sw-admin-empty__body {
+  font-size: 0.85rem;
+  color: var(--admin-text-muted);
+  max-width: 340px;
+  line-height: 1.6;
+}
+
+/* ---------------------------------------------------------------------------
+   Skeleton loading
+--------------------------------------------------------------------------- */
+
+.sw-admin-skeleton {
+  border-radius: var(--radius-sm);
+  background: linear-gradient(
+    90deg,
+    var(--admin-surface-3) 25%,
+    var(--admin-surface-2) 37%,
+    var(--admin-surface-3) 63%
+  );
+  background-size: 400% 100%;
+  animation: sw-admin-shimmer 1.4s ease infinite;
+}
+
+@keyframes sw-admin-shimmer {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Form layout
+--------------------------------------------------------------------------- */
+
+/* A labelled group of fields inside a long form. */
+.sw-admin-section {
+  border: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px 0 0;
+  border-top: 1px solid var(--admin-border);
+}
+
+.sw-admin-section:first-of-type {
+  padding-top: 0;
+  border-top: none;
+}
+
+.sw-admin-section__head {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.sw-admin-section__title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--admin-text-muted);
+}
+
+.sw-admin-section__sub {
+  font-size: 0.78rem;
+  color: var(--admin-text-subtle);
+  line-height: 1.5;
+}
+
+.sw-admin-grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.sw-admin-grid--2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (max-width: 640px) {
+  .sw-admin-grid--2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sw-admin-field--wide {
+  grid-column: 1 / -1;
 }

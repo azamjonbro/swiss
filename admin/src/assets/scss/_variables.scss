@@ -1,29 +1,99 @@
 :root {
-  --admin-bg: #f6f5f3;
+  /* Surfaces, from the page ground up to the raised card. Warm neutrals rather
+     than pure grey so the admin sits in the same family as the storefront. */
+  --admin-bg: #f4f3f0;
   --admin-surface: #ffffff;
-  --admin-border: #e4e1da;
+  --admin-surface-2: #faf9f7;
+  --admin-surface-3: #f0eeea;
+
+  --admin-border: #e6e3dd;
+  --admin-border-strong: #d3cfc6;
+
   --admin-text: #171614;
-  --admin-text-muted: #767066;
-  --admin-accent: #2e5f8a;
-  --admin-sidebar-w: 240px;
+  --admin-text-muted: #6d6860;
+  --admin-text-subtle: #9a948a;
+
+  /* Burgundy, taken from the SwissWatch mark. Reserved for identity: the active
+     nav item, focus rings, links. Primary buttons stay ink so red never has to
+     mean both "confirm" and "destroy". */
+  --admin-accent: #a3283a;
+  --admin-accent-hover: #8d2032;
+  --admin-accent-soft: rgba(163, 40, 58, 0.08);
+  --admin-accent-contrast: #ffffff;
+
+  --admin-ink: #171614;
+  --admin-ink-hover: #302d28;
+  --admin-ink-contrast: #ffffff;
+
+  --admin-success: #2f6b43;
+  --admin-success-soft: #e3efe6;
+  --admin-warning: #8a5a12;
+  --admin-warning-soft: #f6eddc;
+  --admin-danger: #b02a37;
+  --admin-danger-hover: #93222d;
+  --admin-danger-soft: #f8e6e8;
+  --admin-info: #2e5f8a;
+  --admin-info-soft: #e4ecf3;
+
+  --admin-sidebar-w: 244px;
+  --admin-header-h: 64px;
 
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
   --ease-luxury: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-  --dur-fast: 0.3s;
-  --dur-mid: 0.6s;
+  --dur-fast: 0.16s;
+  --dur-mid: 0.28s;
 
-  --radius-sm: 0px;
-  --radius-md: 2px;
-  --radius-lg: 4px;
+  --radius-sm: 6px;
+  --radius-md: 9px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 999px;
+
+  --shadow-xs: 0 1px 2px rgba(23, 22, 20, 0.05);
+  --shadow-sm: 0 1px 3px rgba(23, 22, 20, 0.07), 0 1px 2px rgba(23, 22, 20, 0.04);
+  --shadow-md: 0 4px 12px rgba(23, 22, 20, 0.08), 0 2px 4px rgba(23, 22, 20, 0.04);
+  --shadow-lg: 0 18px 44px rgba(23, 22, 20, 0.14), 0 4px 12px rgba(23, 22, 20, 0.06);
+  --shadow-ring: 0 0 0 3px var(--admin-accent-soft);
 }
 
 :root[data-theme='dark'] {
-  --admin-bg: #171613;
-  --admin-surface: #201e1a;
-  --admin-border: #37342c;
-  --admin-text: #f3efe7;
-  --admin-text-muted: #a29a8c;
-  --admin-accent: #4f8fc4;
+  --admin-bg: #121110;
+  --admin-surface: #1a1917;
+  --admin-surface-2: #201e1c;
+  --admin-surface-3: #272522;
+
+  --admin-border: #2f2d29;
+  --admin-border-strong: #423f39;
+
+  --admin-text: #f3f0ea;
+  --admin-text-muted: #a49d91;
+  --admin-text-subtle: #7a7469;
+
+  --admin-accent: #d1566a;
+  --admin-accent-hover: #e0677b;
+  --admin-accent-soft: rgba(209, 86, 106, 0.14);
+  --admin-accent-contrast: #17100f;
+
+  /* In dark the "ink" button inverts to a light slab — same idea, still the
+     highest-contrast surface on the page. */
+  --admin-ink: #f3f0ea;
+  --admin-ink-hover: #ffffff;
+  --admin-ink-contrast: #171614;
+
+  --admin-success: #7cc494;
+  --admin-success-soft: rgba(124, 196, 148, 0.14);
+  --admin-warning: #dfae62;
+  --admin-warning-soft: rgba(223, 174, 98, 0.14);
+  --admin-danger: #e8697a;
+  --admin-danger-hover: #f07a8a;
+  --admin-danger-soft: rgba(232, 105, 122, 0.14);
+  --admin-info: #7fb3dd;
+  --admin-info-soft: rgba(127, 179, 221, 0.14);
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.45), 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.4);
 }
