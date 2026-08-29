@@ -512,6 +512,12 @@ async function submit() {
   min-width: 0;
 }
 
+/* The side column follows the page while the long left column scrolls. */
+.sw-wf__side {
+  position: sticky;
+  top: calc(var(--admin-header-h) + 20px);
+}
+
 .sw-wf__variants-header {
   display: flex;
   align-items: center;
