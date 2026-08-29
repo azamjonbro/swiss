@@ -2,6 +2,8 @@
 import { ref, onMounted } from 'vue';
 import type { Watch } from '@/types/models';
 import { adminFetchWatches, adminDeleteWatch, adminUpdateWatch } from '@/services/watches';
+import { adminFetchBrands } from '@/services/brands';
+import { adminFetchCategories } from '@/services/categories';
 import { toBrandName } from '@/utils/format';
 import { useLocaleStore } from '@/stores/locale';
 import { useToastStore } from '@/stores/toast';
@@ -20,11 +22,21 @@ const search = ref('');
 const activeQuery = ref('');
 const isLoading = ref(true);
 
+const brands = ref<any[]>([]);
+const categories = ref<any[]>([]);
+const filterBrand = ref('');
+const filterCategory = ref('');
+
 async function load() {
   isLoading.value = true;
   activeQuery.value = search.value.trim();
   try {
-    const data = await adminFetchWatches({ q: activeQuery.value || undefined, limit: 50 });
+    const data = await adminFetchWatches({ 
+      q: activeQuery.value || undefined,
+      brand: filterBrand.value || undefined,
+      category: filterCategory.value || undefined,
+      limit: 50 
+    });
     watches.value = data.items;
     total.value = data.total;
   } catch {
@@ -63,7 +75,13 @@ async function remove(watch: Watch) {
   await load();
 }
 
-onMounted(load);
+onMounted(async () => {
+  try {
+    brands.value = await adminFetchBrands();
+    categories.value = await adminFetchCategories();
+  } catch {}
+  load();
+});
 </script>
 
 <template>
@@ -81,13 +99,26 @@ onMounted(load);
       </div>
     </div>
 
-    <form class="sw-admin-toolbar" @submit.prevent="load">
+    <form class="sw-admin-toolbar" @submit.prevent="load" style="flex-wrap: wrap; gap: 14px;">
       <div class="sw-admin-search">
         <span class="sw-admin-search__icon"><AdminIcon name="search" :size="15" /></span>
         <input v-model="search" type="search" :placeholder="locale.t('admin.searchWatches')" />
       </div>
-      <button class="sw-admin-btn sw-admin-btn--ghost" type="submit">{{ locale.t('admin.search') }}</button>
-      <span v-if="!isLoading && watches.length" class="sw-watches__count">
+      
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <select v-model="filterBrand" @change="load" style="min-width: 140px; padding: 8px 12px; height: 38px;">
+          <option value="">{{ locale.t('admin.allBrands') || 'All Brands' }}</option>
+          <option v-for="b in brands" :key="b._id" :value="b._id">{{ b.name }}</option>
+        </select>
+        <select v-model="filterCategory" @change="load" style="min-width: 140px; padding: 8px 12px; height: 38px;">
+          <option value="">{{ locale.t('admin.allCategories') || 'All Categories' }}</option>
+          <option v-for="c in categories" :key="c._id" :value="c._id">{{ c.name }}</option>
+        </select>
+      </div>
+
+      <button class="sw-admin-btn sw-admin-btn--ghost" type="submit" style="height: 38px;">{{ locale.t('admin.search') }}</button>
+      
+      <span v-if="!isLoading && watches.length" class="sw-watches__count" style="margin-left: auto;">
         {{ watches.length }} / {{ total }} {{ locale.t('admin.countShown') }}
       </span>
     </form>

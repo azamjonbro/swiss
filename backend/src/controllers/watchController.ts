@@ -120,12 +120,14 @@ export async function getWatchBySlug(req: Request, res: Response) {
 // ---------- Admin ----------
 
 export async function adminListWatches(req: Request, res: Response) {
-  const { q, page, limit } = req.query;
+  const { q, page, limit, brand, category } = req.query;
   const filter: Record<string, unknown> = {};
   if (q) {
     const search = await buildSearchFilter(String(q));
     if (search) Object.assign(filter, search);
   }
+  if (brand) filter.brand = brand;
+  if (category) filter.category = category;
 
   const pageSize = Math.min(Number(limit) || 20, 100);
   const pageNum = Math.max(Number(page) || 1, 1);
