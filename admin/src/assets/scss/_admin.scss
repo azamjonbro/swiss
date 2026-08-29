@@ -54,12 +54,12 @@ select {
   font-family: var(--font-sans);
   background: var(--admin-surface);
   color: var(--admin-text);
-  border: 1px solid var(--admin-border-strong);
+  border: 1px solid var(--admin-border);
   border-radius: var(--radius-md);
-  padding: 9px 12px;
-  font-size: 0.875rem;
-  line-height: 1.45;
-  box-shadow: var(--shadow-xs);
+  padding: 12px 16px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
   transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
 }
 
@@ -72,10 +72,10 @@ textarea {
    custom border radius on Windows. */
 select {
   appearance: none;
-  padding-right: 34px;
+  padding-right: 40px;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%236d6860' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right 12px center;
+  background-position: right 16px center;
   background-size: 10px 6px;
 }
 
@@ -85,7 +85,7 @@ select {
 
 select[multiple] {
   background-image: none;
-  padding-right: 12px;
+  padding-right: 16px;
 }
 
 input::placeholder,
@@ -107,7 +107,7 @@ textarea::placeholder {
 input:hover,
 textarea:hover,
 select:hover {
-  border-color: var(--admin-text-subtle);
+  border-color: var(--admin-border-strong);
 }
 
 input:focus,
@@ -115,7 +115,7 @@ textarea:focus,
 select:focus {
   outline: none;
   border-color: var(--admin-accent);
-  box-shadow: var(--shadow-ring);
+  box-shadow: 0 0 0 3px var(--admin-accent-soft);
 }
 
 input:disabled,
@@ -128,10 +128,10 @@ select:disabled {
 label {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--admin-text);
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--admin-text-muted);
 }
 
 /* Helper line under a field. */
@@ -192,7 +192,7 @@ input[type='checkbox']:checked {
 
 /* The boxed variant reads as a toggleable card — used for the flag rows. */
 .sw-admin-check--boxed {
-  padding: 10px 12px;
+  padding: 14px 18px;
   border: 1px solid var(--admin-border);
   border-radius: var(--radius-md);
   background: var(--admin-surface-2);
@@ -659,7 +659,7 @@ input[type='checkbox']:checked {
 
 .sw-admin-grid {
   display: grid;
-  gap: 14px;
+  gap: 20px;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
 
