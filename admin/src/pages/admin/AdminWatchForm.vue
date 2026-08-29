@@ -60,24 +60,23 @@ const form = ref({
   featured: false,
   isNewArrival: false,
   isActive: true,
-  images: [] as string[],
-  videos: [] as string[],
   translations: {} as Translations,
 });
+
+const variants = ref<WatchVariant[]>([
+  {
+    colorSlug: 'default',
+    colorLabel: '',
+    colorLabelRu: '',
+    colorLabelUz: '',
+    images: [],
+    videos: [],
+  },
+]);
 
 const isSaving = ref(false);
 const isLoading = ref(false);
 const errorMessage = ref('');
-// Additional colourways beyond the one this simplified form edits — carried
-// through untouched so saving never drops a product's other variants.
-const otherVariants = ref<Watch['variants']>([]);
-// The primary colourway's own fields (slug and its translated labels) are not
-// editable here either, so keep the saved ones instead of writing blanks over
-// them — otherwise every edit wipes the Russian/Uzbek colour names.
-const primaryVariantMeta = ref<Pick<WatchVariant, 'colorSlug' | 'colorLabel' | 'colorLabelRu' | 'colorLabelUz'>>({
-  colorSlug: 'default',
-  colorLabel: '',
-});
 
 function brandIdOf(brand: Watch['brand']): string {
   return typeof brand === 'string' ? brand : brand._id;
@@ -107,28 +106,34 @@ async function loadWatch(id: string) {
     waterResistance: watch.waterResistance,
     availability: watch.availability,
     featured: watch.featured,
-    isNewArrival: watch.isNewArrival,
     isActive: watch.isActive,
-    // The form only edits a single colourway for now — the product's other
-    // variants (if any) pass through untouched on save via otherVariants.
-    images: [...(watch.variants?.[0]?.images ?? [])],
-    videos: [...(watch.variants?.[0]?.videos ?? [])],
     translations: {
       ru: { ...watch.translations?.ru },
       uz: { ...watch.translations?.uz },
     },
   };
 
-  const primary = watch.variants?.[0];
-  if (primary) {
-    primaryVariantMeta.value = {
-      colorSlug: primary.colorSlug || 'default',
-      colorLabel: primary.colorLabel ?? '',
-      colorLabelRu: primary.colorLabelRu,
-      colorLabelUz: primary.colorLabelUz,
-    };
+  if (watch.variants && watch.variants.length > 0) {
+    variants.value = watch.variants.map((v) => ({
+      colorSlug: v.colorSlug || 'default',
+      colorLabel: v.colorLabel || '',
+      colorLabelRu: v.colorLabelRu || '',
+      colorLabelUz: v.colorLabelUz || '',
+      images: [...(v.images || [])],
+      videos: [...(v.videos || [])],
+    }));
+  } else {
+    variants.value = [
+      {
+        colorSlug: 'default',
+        colorLabel: '',
+        colorLabelRu: '',
+        colorLabelUz: '',
+        images: [],
+        videos: [],
+      },
+    ];
   }
-  otherVariants.value = watch.variants?.slice(1) ?? [];
 }
 
 onMounted(async () => {
@@ -151,17 +156,30 @@ onMounted(async () => {
   }
 });
 
-function onImageUploaded(url: string) {
-  form.value.images.push(url);
+function onImageUploaded(vIndex: number, url: string) {
+  variants.value[vIndex].images.push(url);
 }
-function onVideoUploaded(url: string) {
-  form.value.videos.push(url);
+function onVideoUploaded(vIndex: number, url: string) {
+  variants.value[vIndex].videos.push(url);
 }
-function removeImage(index: number) {
-  form.value.images.splice(index, 1);
+function removeImage(vIndex: number, iIndex: number) {
+  variants.value[vIndex].images.splice(iIndex, 1);
 }
-function removeVideo(index: number) {
-  form.value.videos.splice(index, 1);
+function removeVideo(vIndex: number, iIndex: number) {
+  variants.value[vIndex].videos.splice(iIndex, 1);
+}
+function addVariant() {
+  variants.value.push({
+    colorSlug: '',
+    colorLabel: '',
+    colorLabelRu: '',
+    colorLabelUz: '',
+    images: [],
+    videos: [],
+  });
+}
+function removeVariant(vIndex: number) {
+  variants.value.splice(vIndex, 1);
 }
 
 async function submit() {
@@ -173,12 +191,10 @@ async function submit() {
 
   isSaving.value = true;
   try {
-    const { images, videos, ...rest } = form.value;
-    const primaryVariant = { ...primaryVariantMeta.value, images, videos };
     const payload = {
-      ...rest,
+      ...form.value,
       collectionRef: form.value.collectionRef || undefined,
-      variants: [primaryVariant, ...otherVariants.value],
+      variants: variants.value,
     };
     if (isEdit.value) {
       await adminUpdateWatch(route.params.id as string, payload);
@@ -318,26 +334,57 @@ async function submit() {
           </div>
         </section>
 
-        <section class="sw-admin-card sw-wf__card">
-          <header class="sw-wf__card-head">
-            <h2 class="sw-wf__card-title">{{ locale.t('admin.formMedia') }}</h2>
+        <div class="sw-wf__variants-header">
+          <h2 class="sw-wf__card-title">{{ locale.t('admin.variants') || 'Variants & Media' }}</h2>
+          <button type="button" class="sw-admin-btn sw-admin-btn--sm sw-admin-btn--ghost" @click="addVariant">
+            <AdminIcon name="plus" :size="14" /> {{ locale.t('admin.addVariant') || 'Add Variant' }}
+          </button>
+        </div>
+
+        <section v-for="(variant, vIndex) in variants" :key="vIndex" class="sw-admin-card sw-wf__card">
+          <header class="sw-wf__card-head" style="flex-direction: row; justify-content: space-between; align-items: center;">
+            <h3 class="sw-wf__card-title" style="margin: 0; color: var(--admin-text); font-size: 0.95rem;">
+              {{ locale.t('admin.variant') || 'Variant' }} {{ vIndex + 1 }}
+            </h3>
+            <button
+              v-if="variants.length > 1"
+              type="button"
+              class="sw-admin-btn sw-admin-btn--sm sw-admin-btn--danger"
+              @click="removeVariant(vIndex)"
+            >
+              <AdminIcon name="trash" :size="14" /> {{ locale.t('admin.remove') || 'Remove' }}
+            </button>
           </header>
 
-          <p v-if="otherVariants.length" class="sw-wf__notice">
-            <AdminIcon name="info" :size="15" />
-            <span>{{ locale.t('admin.otherVariants') }}</span>
-          </p>
+          <div class="sw-admin-grid sw-admin-grid--2">
+            <label>
+              <span>{{ locale.t('admin.colorSlug') || 'Color Slug (e.g. blue-dial)' }}</span>
+              <input v-model="variant.colorSlug" type="text" required />
+            </label>
+            <label>
+              <span>{{ locale.t('admin.colorLabel') || 'Color Name (EN)' }}</span>
+              <input v-model="variant.colorLabel" type="text" />
+            </label>
+            <label>
+              <span>{{ locale.t('admin.colorLabelRu') || 'Color Name (RU)' }}</span>
+              <input v-model="variant.colorLabelRu" type="text" />
+            </label>
+            <label>
+              <span>{{ locale.t('admin.colorLabelUz') || 'Color Name (UZ)' }}</span>
+              <input v-model="variant.colorLabelUz" type="text" />
+            </label>
+          </div>
 
           <div class="sw-wf__media-block">
             <span class="sw-wf__media-label">{{ locale.t('admin.images') }}</span>
-            <div v-if="form.images.length" class="sw-wf__media-list">
-              <div v-for="(img, i) in form.images" :key="img + i" class="sw-wf__media-item">
+            <div v-if="variant.images.length" class="sw-wf__media-list">
+              <div v-for="(img, i) in variant.images" :key="img + i" class="sw-wf__media-item">
                 <img :src="resolveMediaUrl(img)" alt="" />
                 <button
                   class="sw-wf__media-remove"
                   type="button"
                   :aria-label="locale.t('admin.remove')"
-                  @click="removeImage(i)"
+                  @click="removeImage(vIndex, i)"
                 >
                   <AdminIcon name="close" :size="12" />
                 </button>
@@ -346,20 +393,20 @@ async function submit() {
             <MediaUploader
               :label="locale.t('admin.uploadImage')"
               accept="image/jpeg,image/png,image/webp,image/avif"
-              @uploaded="(r) => onImageUploaded(r.url)"
+              @uploaded="(r) => onImageUploaded(vIndex, r.url)"
             />
           </div>
 
           <div class="sw-wf__media-block">
             <span class="sw-wf__media-label">{{ locale.t('admin.videos') }}</span>
-            <div v-if="form.videos.length" class="sw-wf__media-list">
-              <div v-for="(vid, i) in form.videos" :key="vid + i" class="sw-wf__media-item">
+            <div v-if="variant.videos.length" class="sw-wf__media-list">
+              <div v-for="(vid, i) in variant.videos" :key="vid + i" class="sw-wf__media-item">
                 <video :src="resolveMediaUrl(vid)" muted />
                 <button
                   class="sw-wf__media-remove"
                   type="button"
                   :aria-label="locale.t('admin.remove')"
-                  @click="removeVideo(i)"
+                  @click="removeVideo(vIndex, i)"
                 >
                   <AdminIcon name="close" :size="12" />
                 </button>
@@ -368,7 +415,7 @@ async function submit() {
             <MediaUploader
               :label="locale.t('admin.uploadVideo')"
               accept="video/mp4,video/webm"
-              @uploaded="(r) => onVideoUploaded(r.url)"
+              @uploaded="(r) => onVideoUploaded(vIndex, r.url)"
             />
           </div>
         </section>
@@ -465,10 +512,11 @@ async function submit() {
   min-width: 0;
 }
 
-/* The side column follows the page while the long left column scrolls. */
-.sw-wf__side {
-  position: sticky;
-  top: calc(var(--admin-header-h) + 20px);
+.sw-wf__variants-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
 }
 
 .sw-wf__card {
