@@ -25,6 +25,10 @@ export const BRANDS = [
     descriptionUz:
       "Tsar Bomba diqqatni tortadigan hayratlanarli mexanik dizaynlar va futuristik estetika bilan zamonaviy soatsozlik chegaralarini kengaytiradi.",
     founded: 2021,
+    country: 'Switzerland',
+    website: 'https://www.tsarbomba.com',
+    logo: '/uploads/images/tsar_bomba_logo.jpg',
+    image: '/uploads/images/tsar_bomba_logo.jpg',
   },
   {
     name: 'Frederique Constant',
@@ -35,6 +39,10 @@ export const BRANDS = [
     taglineUz: 'Hamyonbop hashamat.',
     descriptionUz: "Dizayn va sifatli soatsozlikka bo'lgan ehtiros. Frederique Constant hamyonbop narxlarda klassik va nafis dizayndagi go'zal, yuqori sifatli mexanik soatlarni yaratadi.",
     founded: 1988,
+    country: 'Switzerland',
+    website: 'https://www.frederiqueconstant.com',
+    logo: '/uploads/images/logo_frederique_constant.jpg',
+    image: '/uploads/images/banner_frederique_constant.jpg',
   },
   {
     name: 'Tissot',
@@ -45,6 +53,10 @@ export const BRANDS = [
     taglineUz: 'An\'analar bo\'yicha novatorlar.',
     descriptionUz: "Tissot mahorat va innovatsiyalar kashshofi bo'lib, klassik soatsozlikni zamonaviy texnologiyalar bilan uyg'unlashtirgan yuqori sifatli soatlarning keng assortimentini taklif etadi.",
     founded: 1853,
+    country: 'Switzerland',
+    website: 'https://www.tissotwatches.com',
+    logo: '/uploads/images/logo_tissot.jpg',
+    image: '/uploads/images/banner_tissot.jpg',
   },
   {
     name: 'Swiss Military Hanowa',
@@ -55,6 +67,10 @@ export const BRANDS = [
     taglineUz: 'Har doim nishonda.',
     descriptionUz: "Swiss Military Hanowa Shveytsariya aniqligi va sport dizaynini o'zida mujassam etib, ekstremal sharoitlarga va kundalik sarguzashtlarga bardosh beradigan mustahkam, ishonchli soatlarni taqdim etadi.",
     founded: 1963,
+    country: 'Switzerland',
+    website: 'https://www.swissmilitary-hanowa.com',
+    logo: '/uploads/images/logo_swiss_military_hanowa.jpg',
+    image: '/uploads/images/banner_swiss_military_hanowa.jpg',
   },
   {
     name: 'Saint Honoré',
@@ -65,6 +81,10 @@ export const BRANDS = [
     taglineUz: 'Parij nafisligi.',
     descriptionUz: "Parijning jo'shqin energiyasi va uslubidan ilhomlangan Saint Honoré soatlari fransuz nafisligi va an'anaviy Shveytsariya soatsozligining mukammal uyg'unligini ifodalaydi.",
     founded: 1885,
+    country: 'France',
+    website: 'https://www.sainthonore.com',
+    logo: '/uploads/images/logo_saint_honore.jpg',
+    image: '/uploads/images/banner_saint_honore.jpg',
   },
   {
     name: 'Cerruti 1881',
@@ -75,6 +95,10 @@ export const BRANDS = [
     taglineUz: 'Italiya modasining mohiyati.',
     descriptionUz: "Cerruti 1881 Italiya moda merosini soatsozlik dunyosiga olib kirib, zamonaviy nafislik va erkaklarga xos jozibani o'zida mujassam etgan uslubiy va murakkab soatlarni yaratadi.",
     founded: 1881,
+    country: 'Italy',
+    website: 'https://www.cerruti.com',
+    logo: '/uploads/images/logo_cerruti_1881.jpg',
+    image: '/uploads/images/banner_cerruti_1881.jpg',
   },
   {
     name: 'Roamer',
@@ -85,6 +109,10 @@ export const BRANDS = [
     taglineUz: '1888-yildan beri haqiqiy qadriyatlar.',
     descriptionUz: "Shveytsariyaning Roamer brendi klassik, nafis dizayndagi yuqori sifatli Shveytsariya soatlarini anglatadi va ishonchli hamda bardoshli vaqt o'lchash merosiga sodiq qoladi.",
     founded: 1888,
+    country: 'Switzerland',
+    website: 'https://www.roamer.ch',
+    logo: '/uploads/images/logo_roamer.jpg',
+    image: '/uploads/images/banner_roamer.jpg',
   },
   {
     name: 'West End Watch Co.',
@@ -95,6 +123,10 @@ export const BRANDS = [
     taglineUz: 'Afsonaviy meros.',
     descriptionUz: "Bir asrdan ortiq tarixga ega West End soatlari o'zining mustahkamligi va ishonchliligi bilan mashhur bo'lib, 1900-yillarning boshidan beri Yaqin Sharq va Osiyoda keng tarqalgan.",
     founded: 1886,
+    country: 'Switzerland',
+    website: 'https://www.westendwatchco.ch',
+    logo: '/uploads/images/logo_west_end_watch_co.jpg',
+    image: '/uploads/images/banner_west_end_watch_co.jpg',
   },
   {
     name: 'Seiko',
@@ -105,6 +137,10 @@ export const BRANDS = [
     taglineUz: 'Olg\'a intilib. Yuraklarga ta\'sir qilib.',
     descriptionUz: "Soatsozlik bo'yicha jahon yetakchisi Seiko ilg'or texnologiyalarni an'anaviy hunarmandchilik bilan uyg'unlashtiradi, u kvars soatlari va Spring Drive mexanizmini kashf etgani bilan mashhur.",
     founded: 1881,
+    country: 'Japan',
+    website: 'https://www.seikowatches.com',
+    logo: '/uploads/images/logo_seiko.jpg',
+    image: '/uploads/images/banner_seiko.jpg',
   },
   {
     name: 'Citizen',
@@ -115,6 +151,10 @@ export const BRANDS = [
     taglineUz: 'Yaxshilik hozirdan boshlanadi.',
     descriptionUz: "Citizen o'zining har qanday yorug'lik manbasidan quvvatlanuvchi eco-drive texnologiyasi hamda aniq va atrof-muhitga zarar yetkazmaydigan soatsozlikka sadoqati bilan dunyoga mashhur.",
     founded: 1918,
+    country: 'Japan',
+    website: 'https://www.citizenwatch.com',
+    logo: '/uploads/images/logo_citizen.jpg',
+    image: '/uploads/images/banner_citizen.jpg',
   },
   {
     name: 'Rado',
@@ -125,6 +165,29 @@ export const BRANDS = [
     taglineUz: 'Materiallar ustasi.',
     descriptionUz: "Rado o'zining yuqori texnologiyali keramikadan innovatsion foydalanishi, chizilishga chidamli, hipoalerjenik va favqulodda qulay, vizyoner dizaynga ega soatlar yaratishi bilan mashhur.",
     founded: 1917,
+    country: 'Switzerland',
+    website: 'https://www.rado.com',
+    logo: '/uploads/images/logo_rado.jpg',
+    image: '/uploads/images/banner_rado.jpg',
+  },
+  {
+    name: 'Jacques Philippe',
+    tagline: 'Modernly Traditional.',
+    description:
+      'Born in Switzerland, Jacques Philippe blends the timeless tradition of watchmaking with contemporary style — a philosophy the brand calls “Modernly Traditional”, pairing Swiss precision with designs made for every day.',
+    taglineRu: 'Современно традиционно.',
+    descriptionRu:
+      'Рожденный в Швейцарии, Jacques Philippe сочетает вековые традиции часового искусства с современным стилем — философию, которую бренд называет «Modernly Traditional», объединяя швейцарскую точность с дизайном для каждого дня.',
+    taglineUz: 'Zamonaviy an’anaviylik.',
+    descriptionUz:
+      'Shveytsariyada tug‘ilgan Jacques Philippe soatsozlikning ko‘p asrlik an’analarini zamonaviy uslub bilan uyg‘unlashtiradi — brend buni “Modernly Traditional” deb ataydi va Shveytsariya aniqligini har kunga mo‘ljallangan dizayn bilan birlashtiradi.',
+    // No founding year: the brand does not publish one, and the UI omits the
+    // line rather than showing a guess.
+    founded: undefined as number | undefined,
+    country: 'Switzerland',
+    website: 'https://www.jacquesphilippe.com',
+    logo: '/uploads/images/logo_jacques_philippe.jpg',
+    image: '/uploads/images/banner_jacques_philippe.jpg',
   }
 ];
 
@@ -2204,21 +2267,27 @@ async function seed() {
     const b = BRANDS[i];
     const slug = toSlug(b.name);
 
-    let logoImg = img(`${slug}-logo`, b.name);
-    if (b.name === 'Tsar Bomba') logoImg = '/uploads/images/tsar_bomba_logo.jpg';
-    else if (b.name === 'Rolex') logoImg = '/uploads/images/logo_rolex.jpg';
-    else if (b.name === 'Patek Philippe') logoImg = '/uploads/images/logo_patek.jpg';
-    else if (b.name === 'Audemars Piguet') logoImg = '/uploads/images/logo_ap.jpg';
-    else if (b.name === 'Vacheron Constantin') logoImg = '/uploads/images/logo_vacheron.jpg';
+    // `logo` and `image` are two different pictures, not one reused twice: the
+    // logo is the 4:5 plaque the maison cards and the houses filmstrip paint,
+    // while `image` is the wide banner BrandDetail runs at 21:9 and BrandList
+    // crops to 16:10. Feeding the square plaque to both left the banner
+    // slots cropping a wordmark down to its middle third.
+    const logoImg = b.logo || img(`${slug}-logo`, b.name);
+    const bannerImg = b.image || logoImg;
 
     const brand = await Brand.create({
       name: b.name,
       slug,
       description: b.description,
       logo: logoImg,
-      image: logoImg,
-      website: `https://www.${slug.replace(/-/g, '')}.com`,
-      country: 'Switzerland',
+      image: bannerImg,
+      // Country and website are per-brand facts carried in BRANDS above.
+      // Both used to be synthesised here — every brand was stamped
+      // `Switzerland` regardless of where it is actually from, and the site
+      // was derived as `www.<slug without dashes>.com`, which produced dead
+      // or parked domains for half the list.
+      website: b.website ?? '',
+      country: b.country ?? '',
       founded: b.founded,
       featured: i < 4,
       isActive: true,

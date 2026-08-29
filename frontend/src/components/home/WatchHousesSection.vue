@@ -189,20 +189,27 @@ onUnmounted(() => {
             @click="onStageClick(index)"
             @mouseenter="onStageEnter(index)"
           >
-            <span class="sw-houses__photo">
+            <span class="sw-houses__photo" :class="{ 'is-plaque': !watchesFor(brand)[0] }">
+              <template v-if="watchesFor(brand)[0]">
+                <SmartImage
+                  :src="primaryImage(watchesFor(brand)[0])"
+                  :alt="`${brand.name} ${watchesFor(brand)[0].name}`"
+                  object-fit="contain"
+                  sizes="(max-width: 1052px) 76vw, 800px"
+                />
+                <SmartImage
+                  v-if="watchesFor(brand)[1]"
+                  :src="primaryImage(watchesFor(brand)[1])"
+                  :alt="`${brand.name} ${watchesFor(brand)[1].name}`"
+                  object-fit="contain"
+                  class="sw-houses__photo-alt"
+                  sizes="(max-width: 1052px) 76vw, 800px"
+                />
+              </template>
               <SmartImage
-                v-if="watchesFor(brand)[0]"
-                :src="primaryImage(watchesFor(brand)[0])"
-                :alt="`${brand.name} ${watchesFor(brand)[0].name}`"
-                object-fit="contain"
-                sizes="(max-width: 1052px) 76vw, 800px"
-              />
-              <SmartImage
-                v-if="watchesFor(brand)[1]"
-                :src="primaryImage(watchesFor(brand)[1])"
-                :alt="`${brand.name} ${watchesFor(brand)[1].name}`"
-                object-fit="contain"
-                class="sw-houses__photo-alt"
+                v-else-if="brand.logo"
+                :src="brand.logo"
+                :alt="brand.name"
                 sizes="(max-width: 1052px) 76vw, 800px"
               />
             </span>
@@ -352,6 +359,19 @@ onUnmounted(() => {
   transform: translateX(-50%);
   -webkit-mask-image: radial-gradient(66% 64% at 50% 46%, #000 56%, transparent 100%);
   mask-image: radial-gradient(66% 64% at 50% 46%, #000 56%, transparent 100%);
+}
+
+/* A house whose pieces aren't in the catalogue yet has no photography to put
+   on the stage, and an empty stage reads as a broken card. It falls back to
+   that brand's own plaque, which is already cut to the same 4:5 as the
+   product shots, so it drops straight into this container. The mask comes
+   off for it: that fade is tuned to dissolve the edges of a watch on a
+   backdrop, and over a wordmark it eats the ends of the longer names. The
+   plaque's own ground is a shade above the stage's, so its edge still reads
+   as an inset card rather than a pasted rectangle. */
+.sw-houses__photo.is-plaque {
+  -webkit-mask-image: none;
+  mask-image: none;
 }
 
 .sw-houses__photo :deep(.sw-smart-image),

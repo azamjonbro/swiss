@@ -52,6 +52,9 @@ const secondaryWatch = computed(() => watches.value[1]);
 // link through to the brand page.
 function onLinkClick(event: MouseEvent) {
   if (!window.matchMedia('(hover: none)').matches) return;
+  // Nothing to preview means the tap has no second state to show, so it must
+  // follow the link on the first press rather than swallowing it.
+  if (!primaryWatch.value) return;
   if (!tapped.value) {
     event.preventDefault();
     tapped.value = true;
@@ -64,6 +67,7 @@ function onLinkClick(event: MouseEvent) {
     <RouterLink
       :to="`/brands/${brand.slug}`"
       class="sw-maison__link"
+      :class="{ 'has-reveal': primaryWatch }"
       data-cursor="View"
       @click="onLinkClick"
     >
@@ -136,10 +140,12 @@ function onLinkClick(event: MouseEvent) {
 }
 
 /* Recedes to a faint backdrop rather than disappearing outright — the plaque
-   is still there, just no longer the subject. */
-.sw-maison__link:hover .sw-maison__logo-layer,
-.sw-maison__link:focus-visible .sw-maison__logo-layer,
-.sw-maison.is-tapped .sw-maison__logo-layer {
+   is still there, just no longer the subject. Gated on there actually being
+   a photograph to hand over to: a brand with no pieces in the catalogue yet
+   would otherwise fade its plaque out on hover and leave an empty card. */
+.sw-maison__link.has-reveal:hover .sw-maison__logo-layer,
+.sw-maison__link.has-reveal:focus-visible .sw-maison__logo-layer,
+.sw-maison.is-tapped .sw-maison__link.has-reveal .sw-maison__logo-layer {
   opacity: 0.16;
   transform: scale(0.97);
   transition:
