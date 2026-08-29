@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import type { Collection, TranslationField, Translations, Watch } from '@/types/models';
 import {
   adminFetchCollections,
@@ -8,19 +8,33 @@ import {
   adminDeleteCollection,
 } from '@/services/collections';
 import { adminFetchWatches } from '@/services/watches';
+import { useLocaleStore } from '@/stores/locale';
+import { useToastStore } from '@/stores/toast';
+import { useConfirmStore } from '@/stores/confirm';
 import MediaUploader from '@/components/admin/MediaUploader.vue';
 import TranslationFields from '@/components/admin/TranslationFields.vue';
+import AdminModal from '@/components/admin/AdminModal.vue';
+import AdminEmpty from '@/components/admin/AdminEmpty.vue';
+import AdminIcon from '@/components/shared/AdminIcon.vue';
 import { resolveMediaUrl } from '@/utils/media';
+import { toBrandName } from '@/utils/format';
+
+const locale = useLocaleStore();
+const toasts = useToastStore();
+const confirm = useConfirmStore();
 
 const collections = ref<Collection[]>([]);
 const allWatches = ref<Watch[]>([]);
+const isLoading = ref(true);
 const isFormOpen = ref(false);
+const isSaving = ref(false);
 const editingId = ref<string | null>(null);
+const watchQuery = ref('');
 
-const TRANSLATION_FIELDS: TranslationField[] = [
-  { key: 'name', label: 'Name' },
-  { key: 'description', label: 'Description', type: 'textarea' },
-];
+const translationFields = computed<TranslationField[]>(() => [
+  { key: 'name', label: locale.t('admin.name') },
+  { key: 'description', label: locale.t('admin.description'), type: 'textarea' },
+]);
 
 const emptyForm = {
   name: '',
@@ -33,10 +47,31 @@ const emptyForm = {
 };
 const form = ref({ ...emptyForm });
 
+// Picking watches used to be a native <select multiple>, which hides most of the
+// list and needs ⌘-click to add a second entry. A filterable checkbox list shows
+// what is selected without any modifier keys.
+const filteredWatches = computed(() => {
+  const q = watchQuery.value.trim().toLowerCase();
+  if (!q) return allWatches.value;
+  return allWatches.value.filter(
+    (w) => w.name.toLowerCase().includes(q) || toBrandName(w.brand).toLowerCase().includes(q),
+  );
+});
+
 async function load() {
-  const [collectionsData, watchesData] = await Promise.all([adminFetchCollections(), adminFetchWatches({ limit: 100 })]);
-  collections.value = collectionsData;
-  allWatches.value = watchesData.items;
+  isLoading.value = true;
+  try {
+    const [collectionsData, watchesData] = await Promise.all([
+      adminFetchCollections(),
+      adminFetchWatches({ limit: 100 }),
+    ]);
+    collections.value = collectionsData;
+    allWatches.value = watchesData.items;
+  } catch {
+    toasts.error(locale.t('admin.loadFailed'));
+  } finally {
+    isLoading.value = false;
+  }
 }
 
 function watchIdsOf(collection: Collection): string[] {
@@ -45,12 +80,14 @@ function watchIdsOf(collection: Collection): string[] {
 
 function openCreate() {
   editingId.value = null;
-  form.value = { ...emptyForm, translations: {} };
+  watchQuery.value = '';
+  form.value = { ...emptyForm, watches: [], translations: {} };
   isFormOpen.value = true;
 }
 
 function openEdit(collection: Collection) {
   editingId.value = collection._id;
+  watchQuery.value = '';
   form.value = {
     name: collection.name,
     description: collection.description,
@@ -66,19 +103,41 @@ function openEdit(collection: Collection) {
   isFormOpen.value = true;
 }
 
+function toggleWatch(id: string) {
+  const list = form.value.watches;
+  form.value.watches = list.includes(id) ? list.filter((w) => w !== id) : [...list, id];
+}
+
 async function submit() {
-  if (editingId.value) {
-    await adminUpdateCollection(editingId.value, form.value as unknown as Partial<Collection>);
-  } else {
-    await adminCreateCollection(form.value as unknown as Partial<Collection>);
+  isSaving.value = true;
+  try {
+    const payload = form.value as unknown as Partial<Collection>;
+    if (editingId.value) {
+      await adminUpdateCollection(editingId.value, payload);
+    } else {
+      await adminCreateCollection(payload);
+    }
+    isFormOpen.value = false;
+    toasts.success(locale.t('admin.collectionSaved'));
+    await load();
+  } catch {
+    toasts.error(locale.t('admin.saveFailed'));
+  } finally {
+    isSaving.value = false;
   }
-  isFormOpen.value = false;
-  await load();
 }
 
 async function remove(collection: Collection) {
-  if (!confirm(`Delete "${collection.name}"?`)) return;
+  const ok = await confirm.ask({
+    title: locale.t('admin.deleteCollectionTitle'),
+    body: `“${collection.name}” — ${locale.t('admin.deleteConfirmBody')}`,
+    confirmLabel: locale.t('admin.confirmDelete'),
+    danger: true,
+  });
+  if (!ok) return;
+
   await adminDeleteCollection(collection._id);
+  toasts.success(locale.t('admin.collectionDeleted'));
   await load();
 }
 
@@ -86,118 +145,283 @@ onMounted(load);
 </script>
 
 <template>
-  <div class="sw-admin-collections">
-    <div class="sw-admin-collections__header">
-      <h1 class="sw-admin-page-title">Collections</h1>
-      <button class="sw-admin-btn" type="button" @click="openCreate">New Collection</button>
+  <div>
+    <div class="sw-admin-page-head">
+      <div>
+        <h1 class="sw-admin-page-title">{{ locale.t('admin.collections') }}</h1>
+        <p class="sw-admin-page-sub">{{ locale.t('admin.collectionsSub') }}</p>
+      </div>
+      <div class="sw-admin-page-head__actions">
+        <button class="sw-admin-btn" type="button" @click="openCreate">
+          <AdminIcon name="plus" :size="15" />
+          {{ locale.t('admin.newCollection') }}
+        </button>
+      </div>
     </div>
 
-    <div class="sw-admin-card sw-admin-collections__table-wrap">
-      <table class="sw-admin-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Watches</th>
-            <th>Featured</th>
-            <th>Active</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="collection in collections" :key="collection._id">
-            <td>{{ collection.name }}</td>
-            <td>{{ collection.watches.length }}</td>
-            <td>{{ collection.featured ? 'Yes' : 'No' }}</td>
-            <td>{{ collection.isActive ? 'Active' : 'Hidden' }}</td>
-            <td class="sw-admin-collections__actions">
-              <button type="button" @click="openEdit(collection)">Edit</button>
-              <button type="button" @click="remove(collection)">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="sw-admin-card sw-admin-card--flush">
+      <div v-if="isLoading" class="sw-coll__loading">
+        <div v-for="n in 3" :key="n" class="sw-admin-skeleton sw-coll__skeleton" />
+      </div>
+
+      <AdminEmpty
+        v-else-if="!collections.length"
+        icon="collection"
+        :title="locale.t('admin.emptyCollections')"
+        :body="locale.t('admin.emptyCollectionsBody')"
+      >
+        <button class="sw-admin-btn sw-admin-btn--sm" type="button" @click="openCreate">
+          <AdminIcon name="plus" :size="14" />
+          {{ locale.t('admin.newCollection') }}
+        </button>
+      </AdminEmpty>
+
+      <div v-else class="sw-admin-table-wrap">
+        <table class="sw-admin-table">
+          <thead>
+            <tr>
+              <th>{{ locale.t('admin.name') }}</th>
+              <th>{{ locale.t('admin.colWatches') }}</th>
+              <th>{{ locale.t('admin.colStatus') }}</th>
+              <th class="sw-admin-table__actions"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="collection in collections" :key="collection._id">
+              <td>
+                <div class="sw-admin-cell-media">
+                  <img v-if="collection.image" class="sw-admin-thumb" :src="resolveMediaUrl(collection.image)" alt="" />
+                  <span v-else class="sw-admin-thumb sw-admin-thumb--empty">
+                    <AdminIcon name="collection" :size="16" />
+                  </span>
+                  <div class="sw-admin-cell-title">{{ collection.name }}</div>
+                </div>
+              </td>
+              <td>
+                <span class="sw-admin-badge">{{ collection.watches.length }}</span>
+              </td>
+              <td>
+                <div class="sw-coll__badges">
+                  <span class="sw-admin-badge" :class="collection.isActive ? 'sw-admin-badge--success' : ''">
+                    <span class="sw-admin-badge__dot" />
+                    {{ collection.isActive ? locale.t('admin.active') : locale.t('admin.hidden') }}
+                  </span>
+                  <span v-if="collection.featured" class="sw-admin-badge sw-admin-badge--accent">
+                    {{ locale.t('admin.featured') }}
+                  </span>
+                </div>
+              </td>
+              <td class="sw-admin-table__actions">
+                <div>
+                  <button
+                    class="sw-admin-icon-btn"
+                    type="button"
+                    :aria-label="locale.t('admin.edit')"
+                    @click="openEdit(collection)"
+                  >
+                    <AdminIcon name="edit" :size="15" />
+                  </button>
+                  <button
+                    class="sw-admin-icon-btn sw-admin-icon-btn--danger"
+                    type="button"
+                    :aria-label="locale.t('admin.delete')"
+                    @click="remove(collection)"
+                  >
+                    <AdminIcon name="trash" :size="15" />
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
-    <div v-if="isFormOpen" class="sw-admin-modal-backdrop" @click.self="isFormOpen = false">
-      <form class="sw-admin-card sw-admin-modal" @submit.prevent="submit">
-        <h2 class="sw-admin-page-title">{{ editingId ? 'Edit Collection' : 'New Collection' }}</h2>
-        <label>
-          <span>Name</span>
-          <input v-model="form.name" type="text" required />
-        </label>
-        <label>
-          <span>Description</span>
-          <textarea v-model="form.description" rows="3" />
-        </label>
+    <AdminModal
+      :open="isFormOpen"
+      :title="editingId ? locale.t('admin.editCollection') : locale.t('admin.newCollection')"
+      size="wide"
+      @close="isFormOpen = false"
+      @submit="submit"
+    >
+      <label>
+        <span>{{ locale.t('admin.name') }}</span>
+        <input v-model="form.name" type="text" required />
+      </label>
+      <label>
+        <span>{{ locale.t('admin.description') }}</span>
+        <textarea v-model="form.description" rows="3" />
+      </label>
 
-        <TranslationFields
-          v-model="form.translations"
-          :fields="TRANSLATION_FIELDS"
-          :base="{ name: form.name, description: form.description }"
+      <TranslationFields
+        v-model="form.translations"
+        :fields="translationFields"
+        :base="{ name: form.name, description: form.description }"
+      />
+
+      <div class="sw-coll__picker">
+        <div class="sw-coll__picker-head">
+          <span class="sw-coll__picker-label">{{ locale.t('admin.colWatches') }}</span>
+          <span class="sw-admin-badge sw-admin-badge--accent">{{ form.watches.length }}</span>
+        </div>
+        <div class="sw-admin-search">
+          <span class="sw-admin-search__icon"><AdminIcon name="search" :size="15" /></span>
+          <input v-model="watchQuery" type="search" :placeholder="locale.t('admin.searchWatches')" />
+        </div>
+        <div class="sw-coll__list">
+          <label v-for="watch in filteredWatches" :key="watch._id" class="sw-coll__option">
+            <input
+              type="checkbox"
+              :checked="form.watches.includes(watch._id)"
+              @change="toggleWatch(watch._id)"
+            />
+            <span class="sw-coll__option-text">
+              <span class="sw-coll__option-name">{{ watch.name }}</span>
+              <span class="sw-coll__option-brand">{{ toBrandName(watch.brand) }}</span>
+            </span>
+          </label>
+          <p v-if="!filteredWatches.length" class="sw-coll__list-empty">{{ locale.t('admin.noSearchResults') }}</p>
+        </div>
+      </div>
+
+      <div class="sw-admin-grid sw-admin-grid--2">
+        <label class="sw-admin-check sw-admin-check--boxed">
+          <input v-model="form.featured" type="checkbox" />
+          <span>{{ locale.t('admin.featured') }}</span>
+        </label>
+        <label class="sw-admin-check sw-admin-check--boxed">
+          <input v-model="form.isActive" type="checkbox" />
+          <span>{{ locale.t('admin.active') }}</span>
+        </label>
+      </div>
+
+      <div class="sw-coll__media">
+        <span class="sw-coll__media-label">{{ locale.t('admin.coverImage') }}</span>
+        <img v-if="form.image" :src="resolveMediaUrl(form.image)" class="sw-coll__preview" alt="" />
+        <MediaUploader
+          :label="locale.t('admin.uploadImage')"
+          accept="image/jpeg,image/png,image/webp,image/avif"
+          @uploaded="(r) => (form.image = r.url)"
         />
+      </div>
 
-        <label>
-          <span>Watches</span>
-          <select v-model="form.watches" multiple class="sw-admin-collections__select">
-            <option v-for="watch in allWatches" :key="watch._id" :value="watch._id">{{ watch.name }}</option>
-          </select>
-        </label>
-
-        <div class="sw-admin-modal__check-row">
-          <label class="sw-admin-modal__check">
-            <input v-model="form.featured" type="checkbox" />
-            <span>Featured</span>
-          </label>
-          <label class="sw-admin-modal__check">
-            <input v-model="form.isActive" type="checkbox" />
-            <span>Active</span>
-          </label>
-        </div>
-
-        <div>
-          <span class="sw-label">Cover Image</span>
-          <img v-if="form.image" :src="resolveMediaUrl(form.image)" class="sw-admin-modal__preview" alt="" />
-          <MediaUploader
-            label="Upload Cover"
-            accept="image/jpeg,image/png,image/webp,image/avif"
-            @uploaded="(r) => (form.image = r.url)"
-          />
-        </div>
-
-        <div class="sw-admin-modal__actions">
-          <button class="sw-admin-btn" type="submit">Save</button>
-          <button class="sw-admin-btn sw-admin-btn--ghost" type="button" @click="isFormOpen = false">Cancel</button>
-        </div>
-      </form>
-    </div>
+      <template #footer>
+        <button class="sw-admin-btn sw-admin-btn--ghost" type="button" @click="isFormOpen = false">
+          {{ locale.t('admin.cancel') }}
+        </button>
+        <button class="sw-admin-btn" type="submit" :disabled="isSaving">
+          {{ isSaving ? locale.t('admin.saving') : locale.t('admin.save') }}
+        </button>
+      </template>
+    </AdminModal>
   </div>
 </template>
 
 <style scoped>
-.sw-admin-collections__header {
+.sw-coll__badges {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.sw-coll__loading {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.sw-coll__skeleton {
+  height: 66px;
+  border-radius: 0;
+}
+
+.sw-coll__picker {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sw-coll__picker-head {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
+  gap: 8px;
 }
 
-.sw-admin-collections__table-wrap {
-  padding: 0;
-  overflow-x: auto;
-}
-
-.sw-admin-collections__actions {
-  display: flex;
-  gap: 14px;
-}
-
-.sw-admin-collections__actions button {
+.sw-coll__picker-label {
   font-size: 0.8rem;
-  color: var(--admin-text-muted);
-  text-decoration: underline;
+  font-weight: 500;
+  color: var(--admin-text);
 }
 
-.sw-admin-collections__select {
-  min-height: 120px;
+.sw-coll__list {
+  max-height: 240px;
+  overflow-y: auto;
+  border: 1px solid var(--admin-border);
+  border-radius: var(--radius-md);
+  background: var(--admin-surface-2);
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.sw-coll__option {
+  flex-direction: row !important;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out);
+}
+
+.sw-coll__option:hover {
+  background: var(--admin-surface-3);
+}
+
+.sw-coll__option-text {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+}
+
+.sw-coll__option-name {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--admin-text);
+}
+
+.sw-coll__option-brand {
+  font-size: 0.75rem;
+  color: var(--admin-text-subtle);
+}
+
+.sw-coll__list-empty {
+  padding: 18px;
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--admin-text-subtle);
+}
+
+.sw-coll__media {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sw-coll__media-label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--admin-text);
+}
+
+.sw-coll__preview {
+  width: 100%;
+  max-width: 320px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--admin-border);
 }
 </style>
