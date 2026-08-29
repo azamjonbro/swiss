@@ -243,6 +243,7 @@ onMounted(load);
       size="wide"
       @close="isFormOpen = false"
       @submit="submit"
+    >
       <div class="sw-admin-grid sw-admin-grid--2">
         <label>
           <span>{{ locale.t('admin.name') }}</span>
