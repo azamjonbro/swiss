@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import type { Category, TranslationField, Translations } from '@/types/models';
 import {
   adminFetchCategories,
@@ -8,19 +8,31 @@ import {
   adminDeleteCategory,
   adminReorderCategories,
 } from '@/services/categories';
+import { useLocaleStore } from '@/stores/locale';
+import { useToastStore } from '@/stores/toast';
+import { useConfirmStore } from '@/stores/confirm';
 import MediaUploader from '@/components/admin/MediaUploader.vue';
 import TranslationFields from '@/components/admin/TranslationFields.vue';
+import AdminModal from '@/components/admin/AdminModal.vue';
+import AdminEmpty from '@/components/admin/AdminEmpty.vue';
+import AdminIcon from '@/components/shared/AdminIcon.vue';
 import { resolveMediaUrl } from '@/utils/media';
 
+const locale = useLocaleStore();
+const toasts = useToastStore();
+const confirm = useConfirmStore();
+
 const categories = ref<Category[]>([]);
+const isLoading = ref(true);
 const isFormOpen = ref(false);
+const isSaving = ref(false);
 const editingId = ref<string | null>(null);
 
-const TRANSLATION_FIELDS: TranslationField[] = [
-  { key: 'name', label: 'Name' },
-  { key: 'tagline', label: 'Tagline' },
-  { key: 'description', label: 'Description', type: 'textarea' },
-];
+const translationFields = computed<TranslationField[]>(() => [
+  { key: 'name', label: locale.t('admin.name') },
+  { key: 'tagline', label: locale.t('admin.tagline') },
+  { key: 'description', label: locale.t('admin.description'), type: 'textarea' },
+]);
 
 const emptyForm = {
   name: '',
@@ -35,7 +47,14 @@ const emptyForm = {
 const form = ref({ ...emptyForm });
 
 async function load() {
-  categories.value = await adminFetchCategories();
+  isLoading.value = true;
+  try {
+    categories.value = await adminFetchCategories();
+  } catch {
+    toasts.error(locale.t('admin.loadFailed'));
+  } finally {
+    isLoading.value = false;
+  }
 }
 
 function openCreate() {
@@ -63,18 +82,34 @@ function openEdit(category: Category) {
 }
 
 async function submit() {
-  if (editingId.value) {
-    await adminUpdateCategory(editingId.value, form.value);
-  } else {
-    await adminCreateCategory(form.value);
+  isSaving.value = true;
+  try {
+    if (editingId.value) {
+      await adminUpdateCategory(editingId.value, form.value);
+    } else {
+      await adminCreateCategory(form.value);
+    }
+    isFormOpen.value = false;
+    toasts.success(locale.t('admin.categorySaved'));
+    await load();
+  } catch {
+    toasts.error(locale.t('admin.saveFailed'));
+  } finally {
+    isSaving.value = false;
   }
-  isFormOpen.value = false;
-  await load();
 }
 
 async function remove(category: Category) {
-  if (!confirm(`Delete "${category.name}"?`)) return;
+  const ok = await confirm.ask({
+    title: locale.t('admin.deleteCategoryTitle'),
+    body: `“${category.name}” — ${locale.t('admin.deleteConfirmBody')}`,
+    confirmLabel: locale.t('admin.confirmDelete'),
+    danger: true,
+  });
+  if (!ok) return;
+
   await adminDeleteCategory(category._id);
+  toasts.success(locale.t('admin.categoryDeleted'));
   await load();
 }
 
@@ -91,187 +126,231 @@ onMounted(load);
 </script>
 
 <template>
-  <div class="sw-admin-categories">
-    <div class="sw-admin-categories__header">
-      <h1 class="sw-admin-page-title">Categories</h1>
-      <button class="sw-admin-btn" type="button" @click="openCreate">New Category</button>
-    </div>
-    <p class="sw-admin-categories__hint">Order controls the homepage horizontal scroll sequence.</p>
-
-    <div class="sw-admin-card sw-admin-categories__table-wrap">
-      <table class="sw-admin-table">
-        <thead>
-          <tr>
-            <th>Order</th>
-            <th>Name</th>
-            <th>Featured</th>
-            <th>Active</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(category, index) in categories" :key="category._id">
-            <td class="sw-admin-categories__order">
-              <button type="button" :disabled="index === 0" @click="move(index, -1)">&uarr;</button>
-              <button type="button" :disabled="index === categories.length - 1" @click="move(index, 1)">&darr;</button>
-            </td>
-            <td>{{ category.name }}</td>
-            <td>{{ category.featured ? 'Yes' : 'No' }}</td>
-            <td>{{ category.isActive ? 'Active' : 'Hidden' }}</td>
-            <td class="sw-admin-categories__actions">
-              <button type="button" @click="openEdit(category)">Edit</button>
-              <button type="button" @click="remove(category)">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+  <div>
+    <div class="sw-admin-page-head">
+      <div>
+        <h1 class="sw-admin-page-title">{{ locale.t('admin.categories') }}</h1>
+        <p class="sw-admin-page-sub">{{ locale.t('admin.categoriesSub') }}</p>
+      </div>
+      <div class="sw-admin-page-head__actions">
+        <button class="sw-admin-btn" type="button" @click="openCreate">
+          <AdminIcon name="plus" :size="15" />
+          {{ locale.t('admin.newCategory') }}
+        </button>
+      </div>
     </div>
 
-    <div v-if="isFormOpen" class="sw-admin-modal-backdrop" @click.self="isFormOpen = false">
-      <form class="sw-admin-card sw-admin-modal" @submit.prevent="submit">
-        <h2 class="sw-admin-page-title">{{ editingId ? 'Edit Category' : 'New Category' }}</h2>
-        <label>
-          <span>Name</span>
-          <input v-model="form.name" type="text" required />
-        </label>
-        <label>
-          <span>Tagline</span>
-          <input v-model="form.tagline" type="text" />
-        </label>
-        <label>
-          <span>Description</span>
-          <textarea v-model="form.description" rows="3" />
-        </label>
+    <div class="sw-admin-card sw-admin-card--flush">
+      <div v-if="isLoading" class="sw-cat__loading">
+        <div v-for="n in 4" :key="n" class="sw-admin-skeleton sw-cat__skeleton" />
+      </div>
 
-        <TranslationFields
-          v-model="form.translations"
-          :fields="TRANSLATION_FIELDS"
-          :base="{ name: form.name, tagline: form.tagline, description: form.description }"
-        />
+      <AdminEmpty
+        v-else-if="!categories.length"
+        icon="category"
+        :title="locale.t('admin.emptyCategories')"
+        :body="locale.t('admin.emptyCategoriesBody')"
+      >
+        <button class="sw-admin-btn sw-admin-btn--sm" type="button" @click="openCreate">
+          <AdminIcon name="plus" :size="14" />
+          {{ locale.t('admin.newCategory') }}
+        </button>
+      </AdminEmpty>
 
-        <div class="sw-admin-modal__check-row">
-          <label class="sw-admin-modal__check">
-            <input v-model="form.featured" type="checkbox" />
-            <span>Featured</span>
-          </label>
-          <label class="sw-admin-modal__check">
-            <input v-model="form.isActive" type="checkbox" />
-            <span>Active</span>
-          </label>
-        </div>
+      <div v-else class="sw-admin-table-wrap">
+        <table class="sw-admin-table">
+          <thead>
+            <tr>
+              <th class="sw-cat__order-col">{{ locale.t('admin.colOrder') }}</th>
+              <th>{{ locale.t('admin.name') }}</th>
+              <th>{{ locale.t('admin.colStatus') }}</th>
+              <th class="sw-admin-table__actions"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(category, index) in categories" :key="category._id">
+              <td>
+                <div class="sw-cat__order">
+                  <button
+                    class="sw-admin-icon-btn"
+                    type="button"
+                    :aria-label="locale.t('admin.moveUp')"
+                    :disabled="index === 0"
+                    @click="move(index, -1)"
+                  >
+                    <AdminIcon name="arrowUp" :size="14" />
+                  </button>
+                  <button
+                    class="sw-admin-icon-btn"
+                    type="button"
+                    :aria-label="locale.t('admin.moveDown')"
+                    :disabled="index === categories.length - 1"
+                    @click="move(index, 1)"
+                  >
+                    <AdminIcon name="arrowDown" :size="14" />
+                  </button>
+                </div>
+              </td>
+              <td>
+                <div class="sw-admin-cell-media">
+                  <img v-if="category.image" class="sw-admin-thumb" :src="resolveMediaUrl(category.image)" alt="" />
+                  <span v-else class="sw-admin-thumb sw-admin-thumb--empty"><AdminIcon name="image" :size="16" /></span>
+                  <div>
+                    <div class="sw-admin-cell-title">{{ category.name }}</div>
+                    <div v-if="category.tagline" class="sw-admin-cell-sub">{{ category.tagline }}</div>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="sw-cat__badges">
+                  <span class="sw-admin-badge" :class="category.isActive ? 'sw-admin-badge--success' : ''">
+                    <span class="sw-admin-badge__dot" />
+                    {{ category.isActive ? locale.t('admin.active') : locale.t('admin.hidden') }}
+                  </span>
+                  <span v-if="category.featured" class="sw-admin-badge sw-admin-badge--accent">
+                    {{ locale.t('admin.featured') }}
+                  </span>
+                </div>
+              </td>
+              <td class="sw-admin-table__actions">
+                <div>
+                  <button
+                    class="sw-admin-icon-btn"
+                    type="button"
+                    :aria-label="locale.t('admin.edit')"
+                    @click="openEdit(category)"
+                  >
+                    <AdminIcon name="edit" :size="15" />
+                  </button>
+                  <button
+                    class="sw-admin-icon-btn sw-admin-icon-btn--danger"
+                    type="button"
+                    :aria-label="locale.t('admin.delete')"
+                    @click="remove(category)"
+                  >
+                    <AdminIcon name="trash" :size="15" />
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
-        <div>
-          <span class="sw-label">Image</span>
-          <img v-if="form.image" :src="resolveMediaUrl(form.image)" class="sw-admin-modal__preview" alt="" />
+    <AdminModal
+      :open="isFormOpen"
+      :title="editingId ? locale.t('admin.editCategory') : locale.t('admin.newCategory')"
+      @close="isFormOpen = false"
+      @submit="submit"
+    >
+      <label>
+        <span>{{ locale.t('admin.name') }}</span>
+        <input v-model="form.name" type="text" required />
+      </label>
+      <label>
+        <span>{{ locale.t('admin.tagline') }}</span>
+        <input v-model="form.tagline" type="text" />
+      </label>
+      <label>
+        <span>{{ locale.t('admin.description') }}</span>
+        <textarea v-model="form.description" rows="3" />
+      </label>
+
+      <TranslationFields
+        v-model="form.translations"
+        :fields="translationFields"
+        :base="{ name: form.name, tagline: form.tagline, description: form.description }"
+      />
+
+      <div class="sw-admin-grid sw-admin-grid--2">
+        <label class="sw-admin-check sw-admin-check--boxed">
+          <input v-model="form.featured" type="checkbox" />
+          <span>{{ locale.t('admin.featured') }}</span>
+        </label>
+        <label class="sw-admin-check sw-admin-check--boxed">
+          <input v-model="form.isActive" type="checkbox" />
+          <span>{{ locale.t('admin.active') }}</span>
+        </label>
+      </div>
+
+      <div class="sw-admin-grid sw-admin-grid--2">
+        <div class="sw-cat__media">
+          <span class="sw-admin-media-label">{{ locale.t('admin.image') }}</span>
+          <img v-if="form.image" :src="resolveMediaUrl(form.image)" class="sw-cat__preview" alt="" />
           <MediaUploader
-            label="Upload Image"
+            :label="locale.t('admin.uploadImage')"
             accept="image/jpeg,image/png,image/webp,image/avif"
             @uploaded="(r) => (form.image = r.url)"
           />
         </div>
-
-        <div>
-          <span class="sw-label">Video (optional)</span>
-          <MediaUploader label="Upload Video" accept="video/mp4,video/webm" @uploaded="(r) => (form.video = r.url)" />
+        <div class="sw-cat__media">
+          <span class="sw-admin-media-label">{{ locale.t('admin.video') }} ({{ locale.t('admin.optional') }})</span>
+          <video v-if="form.video" :src="resolveMediaUrl(form.video)" class="sw-cat__preview" muted />
+          <MediaUploader
+            :label="locale.t('admin.uploadVideo')"
+            accept="video/mp4,video/webm"
+            @uploaded="(r) => (form.video = r.url)"
+          />
         </div>
+      </div>
 
-        <div class="sw-admin-modal__actions">
-          <button class="sw-admin-btn" type="submit">Save</button>
-          <button class="sw-admin-btn sw-admin-btn--ghost" type="button" @click="isFormOpen = false">Cancel</button>
-        </div>
-      </form>
-    </div>
+      <template #footer>
+        <button class="sw-admin-btn sw-admin-btn--ghost" type="button" @click="isFormOpen = false">
+          {{ locale.t('admin.cancel') }}
+        </button>
+        <button class="sw-admin-btn" type="submit" :disabled="isSaving">
+          {{ isSaving ? locale.t('admin.saving') : locale.t('admin.save') }}
+        </button>
+      </template>
+    </AdminModal>
   </div>
 </template>
 
 <style scoped>
-.sw-admin-categories__header {
+.sw-cat__order-col {
+  width: 1%;
+}
+
+.sw-cat__order {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 8px;
+  gap: 4px;
 }
 
-.sw-admin-categories__hint {
-  font-size: 0.8rem;
-  color: var(--admin-text-muted);
-  margin-bottom: 20px;
-}
-
-.sw-admin-categories__table-wrap {
-  padding: 0;
-  overflow-x: auto;
-}
-
-.sw-admin-categories__order {
+.sw-cat__badges {
   display: flex;
   gap: 6px;
+  flex-wrap: wrap;
 }
 
-.sw-admin-categories__order button {
-  width: 24px;
-  height: 24px;
-  border: 1px solid var(--admin-border);
-  border-radius: var(--radius-md);
-}
-
-.sw-admin-categories__order button:disabled {
-  opacity: 0.3;
-}
-
-.sw-admin-categories__actions {
-  display: flex;
-  gap: 14px;
-}
-
-.sw-admin-categories__actions button {
-  font-size: 0.8rem;
-  color: var(--admin-text-muted);
-  text-decoration: underline;
-}
-
-.sw-admin-modal-backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: 50;
-  background: rgba(10, 10, 10, 0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-}
-
-.sw-admin-modal {
-  width: 100%;
-  max-width: 480px;
-  max-height: 90vh;
-  overflow-y: auto;
+.sw-cat__loading {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 1px;
 }
 
-.sw-admin-modal__check-row {
+.sw-cat__skeleton {
+  height: 66px;
+  border-radius: 0;
+}
+
+.sw-cat__media {
   display: flex;
-  gap: 20px;
-}
-
-.sw-admin-modal__check {
-  flex-direction: row;
-  align-items: center;
+  flex-direction: column;
   gap: 8px;
 }
 
-.sw-admin-modal__preview {
-  width: 100%;
-  max-height: 140px;
-  object-fit: cover;
-  border-radius: var(--radius-md);
-  margin-bottom: 8px;
+.sw-admin-media-label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--admin-text);
 }
 
-.sw-admin-modal__actions {
-  display: flex;
-  gap: 12px;
+.sw-cat__preview {
+  width: 100%;
+  height: 110px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--admin-border);
 }
 </style>
