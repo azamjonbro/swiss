@@ -9,6 +9,7 @@ import type {
   Availability,
   TranslationField,
   Translations,
+  WatchVariant,
 } from '@/types/models';
 import { adminFetchWatch, adminCreateWatch, adminUpdateWatch } from '@/services/watches';
 import { adminFetchCategories } from '@/services/categories';
@@ -64,6 +65,13 @@ const errorMessage = ref('');
 // Additional colourways beyond the one this simplified form edits — carried
 // through untouched so saving never drops a product's other variants.
 const otherVariants = ref<Watch['variants']>([]);
+// The primary colourway's own fields (slug and its translated labels) are not
+// editable here either, so keep the saved ones instead of writing blanks over
+// them — otherwise every edit wipes the Russian/Uzbek colour names.
+const primaryVariantMeta = ref<Pick<WatchVariant, 'colorSlug' | 'colorLabel' | 'colorLabelRu' | 'colorLabelUz'>>({
+  colorSlug: 'default',
+  colorLabel: '',
+});
 
 function brandIdOf(brand: Watch['brand']): string {
   return typeof brand === 'string' ? brand : brand._id;
@@ -104,6 +112,15 @@ async function loadWatch(id: string) {
       uz: { ...watch.translations?.uz },
     },
   };
+  const primary = watch.variants?.[0];
+  if (primary) {
+    primaryVariantMeta.value = {
+      colorSlug: primary.colorSlug || 'default',
+      colorLabel: primary.colorLabel ?? '',
+      colorLabelRu: primary.colorLabelRu,
+      colorLabelUz: primary.colorLabelUz,
+    };
+  }
   otherVariants.value = watch.variants?.slice(1) ?? [];
 }
 
@@ -143,7 +160,7 @@ async function submit() {
   isSaving.value = true;
   try {
     const { images, videos, ...rest } = form.value;
-    const primaryVariant = { colorSlug: 'default', colorLabel: '', images, videos };
+    const primaryVariant = { ...primaryVariantMeta.value, images, videos };
     const payload = {
       ...rest,
       collectionRef: form.value.collectionRef || undefined,
