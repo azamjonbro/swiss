@@ -188,57 +188,6 @@ export const BRANDS = [
     website: 'https://www.jacquesphilippe.com',
     logo: '/uploads/images/logo_jacques_philippe.jpg',
     image: '/uploads/images/banner_jacques_philippe.jpg',
-  },
-  {
-    name: 'Orient',
-    tagline: 'Mechanical, in-house, since 1950.',
-    description:
-      'Orient has built its own mechanical movements in-house since 1950, pairing genuine automatic watchmaking with classic design at a price that put Japanese horology within everyday reach.',
-    taglineRu: 'Механика собственного производства с 1950 года.',
-    descriptionRu:
-      'С 1950 года Orient производит собственные механические механизмы, сочетая настоящее автоматическое часовое искусство с классическим дизайном по цене, сделавшей японскую часовую традицию доступной каждый день.',
-    taglineUz: '1950-yildan beri o‘z mexanikasi.',
-    descriptionUz:
-      'Orient 1950-yildan beri o‘z mexanik mexanizmlarini ishlab chiqaradi va haqiqiy avtomatik soatsozlikni klassik dizayn bilan, yapon soatsozligini kundalik hayotga yaqinlashtirgan narxda uyg‘unlashtiradi.',
-    founded: 1950,
-    country: 'Japan',
-    website: 'https://www.orient-watch.com',
-    logo: '/uploads/images/logo_orient.jpg',
-    image: '/uploads/images/banner_orient.jpg',
-  },
-  {
-    name: 'Casio',
-    tagline: 'Electronics on the wrist.',
-    description:
-      'Casio brought electronics to the wrist. The shock resistance of G-SHOCK and the solar and radio-controlled timekeeping behind Edifice and Pro Trek turned durability and precision into everyday features.',
-    taglineRu: 'Электроника на запястье.',
-    descriptionRu:
-      'Casio принесла электронику на запястье. Ударопрочность G-SHOCK и солнечное питание с радиосинхронизацией в Edifice и Pro Trek превратили надежность и точность в повседневные качества.',
-    taglineUz: 'Bilakdagi elektronika.',
-    descriptionUz:
-      'Casio elektronikani bilakka olib chiqdi. G-SHOCK’ning zarbaga chidamliligi hamda Edifice va Pro Trek ortidagi quyosh quvvati va radio-sinxronlash mustahkamlik bilan aniqlikni kundalik xususiyatga aylantirdi.',
-    founded: 1946,
-    country: 'Japan',
-    website: 'https://www.casio.com',
-    logo: '/uploads/images/logo_casio.jpg',
-    image: '/uploads/images/banner_casio.jpg',
-  },
-  {
-    name: 'Maurice Lacroix',
-    tagline: 'Swiss manufacture since 1975.',
-    description:
-      'A Swiss manufacture founded in 1975, Maurice Lacroix is known for the Masterpiece and Aikon collections, where in-house complications meet a deliberately contemporary design language.',
-    taglineRu: 'Швейцарская мануфактура с 1975 года.',
-    descriptionRu:
-      'Швейцарская мануфактура, основанная в 1975 году. Maurice Lacroix известна коллекциями Masterpiece и Aikon, где собственные усложнения сочетаются с подчеркнуто современным дизайном.',
-    taglineUz: '1975-yildan beri Shveytsariya manufakturasi.',
-    descriptionUz:
-      '1975-yilda tashkil etilgan Shveytsariya manufakturasi. Maurice Lacroix Masterpiece va Aikon kolleksiyalari bilan mashhur bo‘lib, ularda o‘z murakkabliklari atayin zamonaviy dizayn tili bilan uchrashadi.',
-    founded: 1975,
-    country: 'Switzerland',
-    website: 'https://www.mauricelacroix.com',
-    logo: '/uploads/images/logo_maurice_lacroix.jpg',
-    image: '/uploads/images/banner_maurice_lacroix.jpg',
   }
 ];
 
