@@ -4,6 +4,10 @@ const uz: Dictionary = {
   common: {
     under: 'Gacha',
   },
+  testMode: {
+    label: 'Sinov rejimi',
+    note: 'Sayt hali sozlanmoqda. Narxlar taxminiy va yakuniy bo‘lmasligi mumkin — buyurtma berishdan oldin aniqlashtiring.',
+  },
   a11y: {
     skipToContent: 'Asosiy qismga o‘tish',
   },

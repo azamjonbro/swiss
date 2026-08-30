@@ -1,4 +1,8 @@
 const en = {
+  testMode: {
+    label: 'Test mode',
+    note: 'This site is still being set up. Prices are indicative and may not be final — please confirm before ordering.',
+  },
   a11y: {
     skipToContent: 'Skip to content',
   },
