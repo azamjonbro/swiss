@@ -11,6 +11,12 @@
  *
  * Not dismissible. It is a statement about the accuracy of prices on the page,
  * so it has to still be there on the page where a price is read.
+ *
+ * It moves, because a strip that never changes stops being read after the
+ * first visit. Three quiet signals rather than one loud one: it rises into
+ * place a beat after the page settles, the crimson dot keeps a slow pulse,
+ * and a faint sheen crosses the bar every few seconds. All of it stops under
+ * prefers-reduced-motion, where the bar simply sits there.
  */
 import { useLocaleStore } from '@/stores/locale';
 
@@ -39,12 +45,15 @@ const locale = useLocaleStore();
   color: var(--sw-ivory);
   border-top: 1px solid rgba(253, 252, 250, 0.14);
   padding: 9px var(--container-pad);
+  overflow: hidden;
+  animation: sw-testmode-rise 0.7s var(--ease-editorial) 0.9s both;
   /* The bar states a fact about the page; it is not a control. Letting clicks
      through keeps it from stealing taps meant for the footer beneath it. */
   pointer-events: none;
 }
 
 .sw-testmode__inner {
+  position: relative;
   display: flex;
   align-items: baseline;
   justify-content: center;
@@ -55,12 +64,76 @@ const locale = useLocaleStore();
 }
 
 .sw-testmode__dot {
+  position: relative;
   align-self: center;
   width: 6px;
   height: 6px;
   border-radius: 50%;
   background: var(--sw-crimson);
   flex: none;
+  animation: sw-testmode-pulse 2.4s ease-in-out infinite;
+}
+
+/* The halo is a separate ring so the dot itself keeps its exact size and the
+   glow can grow past it without nudging the baseline of the text beside it. */
+.sw-testmode__dot::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1px solid var(--sw-crimson);
+  animation: sw-testmode-halo 2.4s ease-out infinite;
+}
+
+/* A slow highlight travelling the width of the bar. Sits under the text and
+   ignores pointer events, so it can never interfere with what is beneath. */
+.sw-testmode::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    transparent 38%,
+    rgba(173, 43, 57, 0.22) 50%,
+    transparent 62%
+  );
+  transform: translate3d(-100%, 0, 0);
+  animation: sw-testmode-sheen 7s var(--ease-editorial) 2s infinite;
+  pointer-events: none;
+}
+
+@keyframes sw-testmode-rise {
+  from { transform: translate3d(0, 100%, 0); }
+  to   { transform: translate3d(0, 0, 0); }
+}
+
+@keyframes sw-testmode-pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.35; }
+}
+
+@keyframes sw-testmode-halo {
+  0%   { transform: scale(0.7); opacity: 0.9; }
+  70%  { transform: scale(2.4); opacity: 0; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+
+@keyframes sw-testmode-sheen {
+  0%        { transform: translate3d(-100%, 0, 0); }
+  55%, 100% { transform: translate3d(100%, 0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sw-testmode,
+  .sw-testmode__dot,
+  .sw-testmode__dot::after,
+  .sw-testmode::before {
+    animation: none;
+  }
+
+  .sw-testmode::before {
+    display: none;
+  }
 }
 
 .sw-testmode__label {
