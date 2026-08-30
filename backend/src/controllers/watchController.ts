@@ -63,9 +63,13 @@ export async function listWatches(req: Request, res: Response) {
     if (search) Object.assign(filter, search);
   }
 
-  // The full Tsar Bomba catalogue is a little over 90 products with its accessories,
-  // and the storefront filters client-side over one fetch, so the cap has to clear it.
-  const pageSize = Math.min(Number(limit) || 24, 150);
+  // The storefront's catalogue page fetches once and filters client-side, so
+  // this cap has to clear the whole catalogue or products simply vanish from
+  // it. It was set for the ~90 Tsar Bomba products; with Roamer, Cerruti and
+  // Swiss Military Hanowa added the catalogue is past 290, and a 150 cap was
+  // silently withholding half of it. Kept bounded rather than removed — an
+  // open limit is a cheap way to ask the server for everything at once.
+  const pageSize = Math.min(Number(limit) || 24, 600);
   const pageNum = Math.max(Number(page) || 1, 1);
 
   const [items, total] = await Promise.all([

@@ -28,7 +28,7 @@ const currency = useCurrencyStore();
  * open-ended one; past it the listing needs real pagination (see the note in
  * SEO-AUDIT.md) instead of a larger number here.
  */
-const CATALOG_LIMIT = 250;
+const CATALOG_LIMIT = 600;
 
 const allWatches = ref<Watch[]>([]);
 const collections = ref<Collection[]>([]);
