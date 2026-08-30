@@ -27,8 +27,8 @@ export const BRANDS = [
     founded: 2021,
     country: 'Switzerland',
     website: 'https://www.tsarbomba.com',
-    logo: '/uploads/images/logo_tsar_bomba.jpg',
-    image: '/uploads/images/banner_tsar_bomba.jpg',
+    logo: '/uploads/images/logo_tsar_bomba.28fef520.jpg',
+    image: '/uploads/images/banner_tsar_bomba.bcb51fce.jpg',
   },
   {
     name: 'Frederique Constant',
@@ -41,8 +41,8 @@ export const BRANDS = [
     founded: 1988,
     country: 'Switzerland',
     website: 'https://www.frederiqueconstant.com',
-    logo: '/uploads/images/logo_frederique_constant.jpg',
-    image: '/uploads/images/banner_frederique_constant.jpg',
+    logo: '/uploads/images/logo_frederique_constant.9781baab.jpg',
+    image: '/uploads/images/banner_frederique_constant.ea9c73f9.jpg',
   },
   {
     name: 'Tissot',
@@ -55,8 +55,8 @@ export const BRANDS = [
     founded: 1853,
     country: 'Switzerland',
     website: 'https://www.tissotwatches.com',
-    logo: '/uploads/images/logo_tissot.jpg',
-    image: '/uploads/images/banner_tissot.jpg',
+    logo: '/uploads/images/logo_tissot.efa4d80c.jpg',
+    image: '/uploads/images/banner_tissot.7a7ec8a6.jpg',
   },
   {
     name: 'Swiss Military Hanowa',
@@ -69,8 +69,8 @@ export const BRANDS = [
     founded: 1963,
     country: 'Switzerland',
     website: 'https://www.swissmilitary-hanowa.com',
-    logo: '/uploads/images/logo_swiss_military_hanowa.jpg',
-    image: '/uploads/images/banner_swiss_military_hanowa.jpg',
+    logo: '/uploads/images/logo_swiss_military_hanowa.8aaf6171.jpg',
+    image: '/uploads/images/banner_swiss_military_hanowa.6623c135.jpg',
   },
   {
     name: 'Saint Honoré',
@@ -83,8 +83,8 @@ export const BRANDS = [
     founded: 1885,
     country: 'France',
     website: 'https://www.sainthonore.com',
-    logo: '/uploads/images/logo_saint_honore.jpg',
-    image: '/uploads/images/banner_saint_honore.jpg',
+    logo: '/uploads/images/logo_saint_honore.2a46358e.jpg',
+    image: '/uploads/images/banner_saint_honore.73256938.jpg',
   },
   {
     name: 'Cerruti 1881',
@@ -97,8 +97,8 @@ export const BRANDS = [
     founded: 1881,
     country: 'Italy',
     website: 'https://www.cerruti.com',
-    logo: '/uploads/images/logo_cerruti_1881.jpg',
-    image: '/uploads/images/banner_cerruti_1881.jpg',
+    logo: '/uploads/images/logo_cerruti_1881.4bab1a5c.jpg',
+    image: '/uploads/images/banner_cerruti_1881.71eb119f.jpg',
   },
   {
     name: 'Roamer',
@@ -111,8 +111,8 @@ export const BRANDS = [
     founded: 1888,
     country: 'Switzerland',
     website: 'https://www.roamer.ch',
-    logo: '/uploads/images/logo_roamer.jpg',
-    image: '/uploads/images/banner_roamer.jpg',
+    logo: '/uploads/images/logo_roamer.67013a72.jpg',
+    image: '/uploads/images/banner_roamer.2a55576d.jpg',
   },
   {
     name: 'West End Watch Co.',
@@ -125,8 +125,8 @@ export const BRANDS = [
     founded: 1886,
     country: 'Switzerland',
     website: 'https://www.westendwatchco.ch',
-    logo: '/uploads/images/logo_west_end_watch_co.jpg',
-    image: '/uploads/images/banner_west_end_watch_co.jpg',
+    logo: '/uploads/images/logo_west_end_watch_co.b2d2c97f.jpg',
+    image: '/uploads/images/banner_west_end_watch_co.a7b655f4.jpg',
   },
   {
     name: 'Seiko',
@@ -139,8 +139,8 @@ export const BRANDS = [
     founded: 1881,
     country: 'Japan',
     website: 'https://www.seikowatches.com',
-    logo: '/uploads/images/logo_seiko.jpg',
-    image: '/uploads/images/banner_seiko.jpg',
+    logo: '/uploads/images/logo_seiko.24fccce1.jpg',
+    image: '/uploads/images/banner_seiko.a2596694.jpg',
   },
   {
     name: 'Citizen',
@@ -153,8 +153,8 @@ export const BRANDS = [
     founded: 1918,
     country: 'Japan',
     website: 'https://www.citizenwatch.com',
-    logo: '/uploads/images/logo_citizen.jpg',
-    image: '/uploads/images/banner_citizen.jpg',
+    logo: '/uploads/images/logo_citizen.86625bf0.jpg',
+    image: '/uploads/images/banner_citizen.d486772d.jpg',
   },
   {
     name: 'Rado',
@@ -167,8 +167,8 @@ export const BRANDS = [
     founded: 1917,
     country: 'Switzerland',
     website: 'https://www.rado.com',
-    logo: '/uploads/images/logo_rado.jpg',
-    image: '/uploads/images/banner_rado.jpg',
+    logo: '/uploads/images/logo_rado.6df31661.jpg',
+    image: '/uploads/images/banner_rado.65fe3ea3.jpg',
   },
   {
     name: 'Jacques Philippe',
@@ -186,8 +186,8 @@ export const BRANDS = [
     founded: undefined as number | undefined,
     country: 'Switzerland',
     website: 'https://www.jacquesphilippe.com',
-    logo: '/uploads/images/logo_jacques_philippe.jpg',
-    image: '/uploads/images/banner_jacques_philippe.jpg',
+    logo: '/uploads/images/logo_jacques_philippe.72298d44.jpg',
+    image: '/uploads/images/banner_jacques_philippe.401ad744.jpg',
   }
 ];
 
