@@ -56,6 +56,6 @@ export function readSiteEnv(env, { strict = false } = {}) {
       contactEmail: env.VITE_CONTACT_EMAIL,
       contactPhone: env.VITE_CONTACT_PHONE,
     }),
-    apiUrl: String(env.SEO_API_URL || 'https://swiss.techinfo.uz').replace(/\/+$/, ''),
+    apiUrl: String(env.SEO_API_URL || 'https://swiss.sds-max.uz').replace(/\/+$/, ''),
   };
 }

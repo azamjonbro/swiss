@@ -38,10 +38,10 @@
     }
   ],
   "rewrites": [
-    { "source": "/api/:path*", "destination": "https://swiss.techinfo.uz/api/:path*" },
-    { "source": "/uploads/:path*", "destination": "https://swiss.techinfo.uz/uploads/:path*" },
-    { "source": "/sitemap.xml", "destination": "https://swiss.techinfo.uz/sitemap.xml" },
-    { "source": "/sitemap-:section.xml", "destination": "https://swiss.techinfo.uz/sitemap-:section.xml" },
+    { "source": "/api/:path*", "destination": "https://swiss.sds-max.uz/api/:path*" },
+    { "source": "/uploads/:path*", "destination": "https://swiss.sds-max.uz/uploads/:path*" },
+    { "source": "/sitemap.xml", "destination": "https://swiss.sds-max.uz/sitemap.xml" },
+    { "source": "/sitemap-:section.xml", "destination": "https://swiss.sds-max.uz/sitemap-:section.xml" },
     { "source": "/(.*)", "destination": "/api/spa" }
   ]
 }

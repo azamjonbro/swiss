@@ -28,7 +28,7 @@ import {
   resolveSiteUrl,
 } from '../src/seo/schema.mjs';
 
-const API = (process.env.SEO_API_URL || 'https://swiss.techinfo.uz').replace(/\/+$/, '');
+const API = (process.env.SEO_API_URL || 'https://swiss.sds-max.uz').replace(/\/+$/, '');
 
 // Non-strict: this runs per request, and a config slip must not take the site
 // down. The build gate (vite.config.ts + prerender.mjs) is what guarantees the
