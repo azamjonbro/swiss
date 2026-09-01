@@ -118,8 +118,13 @@ export function createSite({ url, name, contactEmail, contactPhone } = {}) {
   const site = {
     url: String(url ?? DEFAULT_SITE_URL).replace(/\/+$/, ''),
     name: String(name || SITE_NAME),
-    // JPEG, not WebP: several social crawlers still refuse WebP previews.
-    defaultImage: '/images/sainthonore_monceau.jpg',
+    // The share card, not the hero file: 1200x630 is the size every social
+    // crawler crops to, and at ~95 KB it is inside the budget WhatsApp gives a
+    // preview before it silently falls back to a text-only card. JPEG, not
+    // WebP: several of those crawlers still refuse WebP.
+    defaultImage: '/og/sainthonore-monceau.jpg',
+    defaultImageWidth: 1200,
+    defaultImageHeight: 630,
     // Raster, not the favicon SVG: Google's Organization logo has to be a
     // raster image of at least 112x112 to be eligible at all, and an SVG is
     // rejected outright. public/logo.png is the same mark at 512x512.
@@ -466,6 +471,11 @@ export function staticSeo(key, site) {
 export function headTags(seo, site) {
   const canonical = absoluteUrl(site, seo.canonical);
   const image = absoluteUrl(site, seo.image || site.defaultImage || '');
+  // Dimensions are only declared for the share card, the one image whose size
+  // this module knows. A crawler that is told the size renders the large card
+  // straight away instead of fetching the file to measure it first — and a
+  // wrong number is worse than none, so product photography declares nothing.
+  const sizedImage = !seo.image && site.defaultImage && site.defaultImageWidth;
   const robots = seo.robots || 'index, follow';
 
   // The language the page is actually written in — the prerenderer passes the
@@ -497,6 +507,11 @@ export function headTags(seo, site) {
   if (image) {
     metas.push({ property: 'og:image', content: image });
     metas.push({ property: 'og:image:alt', content: seo.imageAlt || seo.title });
+    if (sizedImage) {
+      metas.push({ property: 'og:image:type', content: 'image/jpeg' });
+      metas.push({ property: 'og:image:width', content: String(site.defaultImageWidth) });
+      metas.push({ property: 'og:image:height', content: String(site.defaultImageHeight) });
+    }
     metas.push({ name: 'twitter:image', content: image });
   }
 

@@ -16,6 +16,9 @@ export interface SeoSite {
   contactPhone?: string;
   /** Path or absolute URL used when a page has no image of its own. */
   defaultImage?: string;
+  /** Pixel size of `defaultImage`, declared to crawlers as `og:image:width/height`. */
+  defaultImageWidth?: number;
+  defaultImageHeight?: number;
   logo?: string;
   locale?: string;
   /** Active language code (`uz` | `ru` | `en`) — drives `og:locale`. */
