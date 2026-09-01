@@ -79,8 +79,8 @@ const en = {
     craft_finishing_body:
       'Brushing that runs true, polished chamfers that catch light in one clean line. Finishing is where a manufacture stops competing on specification.',
     statement: 'Time, Refined.',
-    statementAlt: 'A SwissWatch Premium timepiece photographed in low light',
-    heroImageAlt: 'The Saint Honoré Monceau tourbillon, its skeleton dial open on a dark ground',
+    statementAlt: 'The Saint Honoré Monceau tourbillon in steel, photographed in low light',
+    heroImageAlt: 'The Saint Honoré Monceau tourbillon standing on dark stone',
     heroTitle: 'SwissWatch Premium',
     heroEyebrow: 'The Art of Watchmaking',
     heroSub: 'Authentic timepieces from distinguished watchmakers.',

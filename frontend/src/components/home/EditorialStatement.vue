@@ -7,7 +7,7 @@ interface Props {
   image?: string;
 }
 
-withDefaults(defineProps<Props>(), { image: '/images/swisswatch_hero.jpg' });
+withDefaults(defineProps<Props>(), { image: '/images/sainthonore_monceau_steel.jpg' });
 
 const locale = useLocaleStore();
 </script>
@@ -51,12 +51,13 @@ const locale = useLocaleStore();
 }
 
 /* A macro crop, not the establishing shot: the frame pushes in on the case and
-   bracelet so the campaign band reads as its own photograph even when it is
-   handed the same source file as the hero. */
+   the tourbillon so the campaign band reads as its own photograph. The origin
+   follows the piece in the source frame — it stands centred, its dial a little
+   above the middle. */
 .sw-statement-band__media :deep(.sw-smart-image__img) {
-  object-position: 34% 58%;
+  object-position: 50% 46%;
   transform: scale(1.45);
-  transform-origin: 34% 58%;
+  transform-origin: 50% 46%;
   filter: contrast(1.05) saturate(0.86) brightness(0.8);
 }
 

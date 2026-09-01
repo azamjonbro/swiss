@@ -23,7 +23,7 @@ useLockBodyScroll(computed(() => ui.isMenuOpen));
 
 const links = computed(() => [
   { label: locale.t('nav.collections'), to: '/collections', image: '/images/swisswatch_provenance.jpg' },
-  { label: locale.t('nav.watches'), to: '/watches', image: '/images/swisswatch_hero.jpg' },
+  { label: locale.t('nav.watches'), to: '/watches', image: '/images/sainthonore_monceau_steel.jpg' },
   { label: locale.t('nav.brands'), to: '/brands', image: '/images/swisswatch_network.jpg' },
   { label: locale.t('nav.newArrivals'), to: '/watches?isNew=true', image: '/images/tsarbomba_tb8208.jpg' },
   { label: locale.t('nav.about'), to: '/about', image: '/images/swisswatch_about.jpg' },

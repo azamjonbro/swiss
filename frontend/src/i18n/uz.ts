@@ -81,8 +81,8 @@ const uz: Dictionary = {
     craft_finishing_body:
       'To‘g‘ri yotgan cho‘tka izlari, yorug‘likni bitta toza chiziqda ushlaydigan sayqallangan qirralar. Pardoz — manufaktura endi texnik ko‘rsatkichlar bilan raqobatlashmaydigan joy.',
     statement: 'Time, Refined.',
-    statementAlt: 'Past yorug‘likda suratga olingan SwissWatch Premium soati',
-    heroImageAlt: 'Qorong‘i fonda turgan Saint Honoré Monceau turbiyonli, skeleton siferblatli soati',
+    statementAlt: 'Past yorug‘likda suratga olingan po‘lat korpusli Saint Honoré Monceau turbiyonli soati',
+    heroImageAlt: 'Qorong‘i tosh ustida turgan Saint Honoré Monceau turbiyonli soati',
     heroTitle: 'SwissWatch Premium',
     heroEyebrow: 'Soatsozlik san’ati',
     heroSub: 'Nufuzli soatsozlik uylaridan asl soatlar.',
