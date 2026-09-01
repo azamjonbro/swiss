@@ -83,7 +83,7 @@ const ru: Dictionary = {
       'Ровная щётка и полированные фаски, ловящие свет одной чистой линией. Здесь мануфактура перестаёт соревноваться в характеристиках.',
     statement: 'Time, Refined.',
     statementAlt: 'Часы SwissWatch Premium в низком свете',
-    heroImageAlt: 'Часы SwissWatch Premium на тёмном камне',
+    heroImageAlt: 'Часы Saint Honoré Monceau с турбийоном и скелетонированным циферблатом на тёмном фоне',
     heroTitle: 'SwissWatch Premium',
     heroEyebrow: 'Искусство часового дела',
     heroSub: 'Подлинные часы от именитых часовых домов.',

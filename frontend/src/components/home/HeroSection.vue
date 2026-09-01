@@ -7,7 +7,10 @@ import { useLocaleStore } from '@/stores/locale';
 import SmartImage from '@/components/shared/SmartImage.vue';
 
 const locale = useLocaleStore();
-const heroImage = '/images/swisswatch_hero.jpg';
+// The Saint Honoré Monceau tourbillon, a piece the house actually carries,
+// composed on a studio-dark ground: the type sits over the left third, so
+// the case is set right of centre and still survives a phone's centre crop.
+const heroImage = '/images/sainthonore_monceau.jpg';
 
 const mediaEl = ref<HTMLElement | null>(null);
 const frameEl = ref<HTMLElement | null>(null);

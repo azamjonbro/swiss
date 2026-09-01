@@ -119,7 +119,7 @@ export function createSite({ url, name, contactEmail, contactPhone } = {}) {
     url: String(url ?? DEFAULT_SITE_URL).replace(/\/+$/, ''),
     name: String(name || SITE_NAME),
     // JPEG, not WebP: several social crawlers still refuse WebP previews.
-    defaultImage: '/images/swisswatch_hero.jpg',
+    defaultImage: '/images/sainthonore_monceau.jpg',
     // Raster, not the favicon SVG: Google's Organization logo has to be a
     // raster image of at least 112x112 to be eligible at all, and an SVG is
     // rejected outright. public/logo.png is the same mark at 512x512.
