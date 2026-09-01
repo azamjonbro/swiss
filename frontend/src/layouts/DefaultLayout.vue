@@ -10,7 +10,6 @@ import LuxuryMenu from '@/components/layout/LuxuryMenu.vue';
 import SearchOverlay from '@/components/search/SearchOverlay.vue';
 import InquiryModal from '@/components/shared/InquiryModal.vue';
 import CartDrawer from '@/components/shared/CartDrawer.vue';
-import TestModeNotice from '@/components/layout/TestModeNotice.vue';
 
 const route = useRoute();
 const locale = useLocaleStore();
@@ -52,7 +51,6 @@ watch(
     <!-- The authentication screens are full-viewport compositions; the footer
          would break their frame, so those routes opt out of it. -->
     <AppFooter v-if="!route.meta.hideFooter" />
-    <TestModeNotice />
   </div>
 </template>
 
@@ -69,9 +67,6 @@ watch(
   min-height: 100svh;
   display: flex;
   flex-direction: column;
-  /* Reserve the standing notice's strip so it never sits on top of the last
-     line of the footer. */
-  padding-bottom: var(--testmode-height, 44px);
 }
 
 .sw-app-main {
