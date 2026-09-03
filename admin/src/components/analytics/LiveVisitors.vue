@@ -7,10 +7,10 @@ import type { AnalyticsLive } from '@/types/analytics';
 /**
  * Who is on the site right now.
  *
- * "Right now" is DataFast's definition, not ours: it counts a visitor active
- * for ten minutes after their last pageview, and that window is fixed on
- * their side. The panel says so in its subtitle rather than implying a
- * live-to-the-second reading it cannot deliver.
+ * "Right now" means a visitor whose last pageview landed inside the window the
+ * API reports — a few minutes, not a live-to-the-second feed. The subtitle
+ * states the window rather than letting the number imply more precision than
+ * a polled endpoint can carry.
  */
 const props = defineProps<{ data: AnalyticsLive | null; isLoading: boolean; hasError: boolean }>();
 
@@ -41,9 +41,9 @@ function systemOf(device: string | null, browser: string | null, os: string | nu
 /**
  * How long ago the visitor was last seen.
  *
- * DataFast's realtime map reports when the session started; `lastSeenAt` only
- * arrives from the visitors endpoint. Whichever is present is labelled for
- * what it is, so "3m" never silently changes meaning between rows.
+ * `lastSeenAt` is what the row is really about; the session start is the
+ * fallback. Whichever is used is named in the cell's tooltip, so "3m" never
+ * silently changes meaning between rows.
  */
 function sinceOf(visitor: { lastSeenAt: string | null; sessionStartedAt: string | null }): string {
   const stamp = visitor.lastSeenAt ?? visitor.sessionStartedAt;

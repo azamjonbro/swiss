@@ -13,12 +13,12 @@ import BreakdownList from '@/components/analytics/BreakdownList.vue';
 import LiveVisitors from '@/components/analytics/LiveVisitors.vue';
 
 /**
- * Visitor analytics, read from DataFast through this project's own API.
+ * Visitor analytics, aggregated from this project's own database.
  *
  * The page makes exactly two kinds of request: one `summary` per date range,
  * and a `live` poll on a timer. Everything on screen below the live panel
- * comes out of that single summary payload, which is what keeps the page
- * inside DataFast's request budget no matter how often a range is reopened.
+ * comes out of that single summary payload, so changing the range is one
+ * round trip rather than a dozen.
  */
 const locale = useLocaleStore();
 
@@ -71,16 +71,10 @@ function isAbort(err: unknown): boolean {
   return name === 'CanceledError' || name === 'AbortError' || code === 'ERR_CANCELED';
 }
 
-/**
- * Turns a failed request into something the reader can act on.
- *
- * The two cases worth separating are "nobody has configured this yet" and
- * "the provider pushed back" — one is a setup task, the other is a wait.
- */
+/** Turns a failed request into something the reader can act on. */
 function messageFor(err: unknown): string {
   const status = (err as { response?: { status?: number } })?.response?.status;
-  const code = (err as { response?: { data?: { code?: string } } })?.response?.data?.code;
-  if (code === 'DATAFAST_NOT_CONFIGURED' || status === 503) return locale.t('admin.analyticsNotConfigured');
+  if (status === 503) return locale.t('admin.analyticsNotConfigured');
   if (status === 429) return locale.t('admin.analyticsRateLimited');
   return locale.t('admin.loadFailed');
 }
@@ -196,6 +190,10 @@ const goals = computed(() => summary.value?.goals ?? []);
           :unavailable="failed.has('referrers')" />
         <BreakdownList :title="locale.t('admin.analyticsTopPages')" :rows="summary?.pages ?? []"
           :unavailable="failed.has('pages')" :note="locale.t('admin.analyticsPagesNote')" :limit="10" />
+        <BreakdownList :title="locale.t('admin.analyticsEntryPages')" :rows="summary?.entryPages ?? []"
+          :unavailable="failed.has('entryPages')" />
+        <BreakdownList :title="locale.t('admin.analyticsExitPages')" :rows="summary?.exitPages ?? []"
+          :unavailable="failed.has('exitPages')" />
         <BreakdownList :title="locale.t('admin.analyticsCampaigns')" :rows="summary?.campaigns ?? []"
           :unavailable="failed.has('campaigns')" />
         <BreakdownList :title="locale.t('admin.analyticsCountries')" :rows="summary?.countries ?? []"

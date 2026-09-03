@@ -62,7 +62,10 @@ function width(value: number): string {
       <li v-for="row in visible" :key="row.label" class="sw-bd__row">
         <span class="sw-bd__bar" :style="{ width: width(row.visitors) }" aria-hidden="true" />
         <span class="sw-bd__label" :title="row.label">{{ row.label }}</span>
-        <span class="sw-bd__share">{{ share(row.visitors) }}</span>
+        <span class="sw-bd__share">
+          <template v-if="row.views">{{ row.views.toLocaleString() }} ×</template>
+          <template v-else>{{ share(row.visitors) }}</template>
+        </span>
         <span class="sw-bd__value">{{ row.visitors.toLocaleString() }}</span>
       </li>
     </ol>

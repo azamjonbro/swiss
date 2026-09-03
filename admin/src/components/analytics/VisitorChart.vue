@@ -92,9 +92,12 @@ function tickLabel(timestamp?: string): string {
   if (!timestamp) return '';
   const date = new Date(timestamp);
   if (Number.isNaN(date.getTime())) return '';
+  // The backend cuts buckets in the site's timezone and hands the local
+  // wall-clock time back with a trailing Z. Formatting in UTC therefore prints
+  // exactly the bucket it was counted in; any other zone would shift it.
   return props.interval === 'hour'
-    ? date.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })
-    : date.toLocaleDateString(undefined, { day: 'numeric', month: 'short' });
+    ? date.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' })
+    : date.toLocaleDateString(undefined, { day: 'numeric', month: 'short', timeZone: 'UTC' });
 }
 
 /* ---- hover ---- */
@@ -129,8 +132,12 @@ function fullLabel(timestamp?: string): string {
   const date = new Date(timestamp);
   if (Number.isNaN(date.getTime())) return '';
   return props.interval === 'hour'
-    ? date.toLocaleString(undefined, { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })
-    : date.toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' });
+    ? date.toLocaleString(undefined, {
+        day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', timeZone: 'UTC',
+      })
+    : date.toLocaleDateString(undefined, {
+        weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC',
+      });
 }
 </script>
 
