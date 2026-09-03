@@ -46,6 +46,7 @@
     { "source": "/uploads/:path*", "destination": "https://swiss.sds-max.uz/uploads/:path*" },
     { "source": "/sitemap.xml", "destination": "https://swiss.sds-max.uz/sitemap.xml" },
     { "source": "/sitemap-:section.xml", "destination": "https://swiss.sds-max.uz/sitemap-:section.xml" },
+    { "source": "/datafast-events", "destination": "https://datafa.st/api/events" },
     { "source": "/(.*)", "destination": "/api/spa" }
   ]
 }
