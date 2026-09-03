@@ -59,4 +59,27 @@ export const env = {
    * logged no-op — see `services/deployHook.ts`.
    */
   deployHookUrl: (process.env.VERCEL_DEPLOY_HOOK_URL ?? '').trim(),
+
+  /**
+   * The storefront's own hostname, derived from SITE_URL.
+   *
+   * Analytics needs it to recognise a referrer that is the storefront itself:
+   * without the check, every visitor moving from one page to the next is
+   * classified as a referral from swisswatchpremium.uz, and the site becomes
+   * its own biggest traffic source.
+   */
+  siteHost: (() => {
+    try {
+      return new URL(siteUrl()).hostname;
+    } catch {
+      return 'swisswatchpremium.uz';
+    }
+  })(),
+
+  /**
+   * Where a day starts for the analytics dashboard. Left at UTC, "today" would
+   * begin at 05:00 in Tashkent and the daily figures would never match what
+   * the boutique actually sees.
+   */
+  analyticsTimezone: (process.env.ANALYTICS_TIMEZONE ?? 'Asia/Tashkent').trim(),
 };

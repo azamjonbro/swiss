@@ -4,6 +4,7 @@ import { createInquiry } from '@/services/inquiries';
 import { useLocaleStore } from '@/stores/locale';
 import { site } from '@/utils/seo';
 import { telHref } from '@/seo/schema.mjs';
+import { trackGoal } from '@/utils/analytics';
 
 const locale = useLocaleStore();
 
@@ -55,15 +56,15 @@ async function submit() {
         </div>
         <div v-if="contactPhone" class="sw-contact__block">
           <span class="sw-eyebrow">{{ locale.t('contact.phone') }}</span>
-          <a class="sw-body" :href="telHref(contactPhone)">{{ contactPhone }}</a>
+          <a class="sw-body" :href="telHref(contactPhone)" @click="trackGoal('phone_click')">{{ contactPhone }}</a>
         </div>
         <div v-if="contactEmail" class="sw-contact__block">
           <span class="sw-eyebrow">{{ locale.t('contact.email') }}</span>
-          <a class="sw-body" :href="`mailto:${contactEmail}`">{{ contactEmail }}</a>
+          <a class="sw-body" :href="`mailto:${contactEmail}`" @click="trackGoal('email_click')">{{ contactEmail }}</a>
         </div>
         <div class="sw-contact__block">
           <span class="sw-eyebrow">{{ locale.t('contact.instagram') }}</span>
-          <a class="sw-body" href="https://instagram.com/swisswatch_premium" target="_blank" rel="noopener">
+          <a class="sw-body" href="https://instagram.com/swisswatch_premium" target="_blank" rel="noopener" @click="trackGoal('instagram_click')">
             @swisswatch_premium
           </a>
         </div>

@@ -5,6 +5,7 @@ import { useLocaleStore } from '@/stores/locale';
 import { useAccountStore } from '@/stores/account';
 import { useLockBodyScroll } from '@/composables/useLockBodyScroll';
 import { createInquiry } from '@/services/inquiries';
+import { trackGoal } from '@/utils/analytics';
 
 const ui = useUiStore();
 const locale = useLocaleStore();
@@ -53,6 +54,9 @@ async function submit() {
       watch: ui.inquiryWatch?.id,
       message: message.value,
     });
+    // There is no checkout on this storefront: a submitted inquiry IS the
+    // conversion, so this is the goal the funnel ends on.
+    trackGoal('inquiry_submitted', ui.inquiryWatch?.id);
     isSubmitted.value = true;
     if (!account.user) {
       name.value = '';

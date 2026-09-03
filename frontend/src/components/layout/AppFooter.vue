@@ -13,6 +13,7 @@ const year = new Date().getFullYear();
 // a footer is read as a real one, by visitors and by structured-data parsers.
 const email = site.contactEmail ?? '';
 const phone = site.contactPhone ?? '';
+import { trackGoal } from '@/utils/analytics';
 </script>
 
 <template>
@@ -41,9 +42,9 @@ const phone = site.contactPhone ?? '';
 
       <div class="sw-footer__col">
         <span class="sw-eyebrow">{{ locale.t('footer.connect') }}</span>
-        <a href="https://instagram.com/swisswatch_premium" target="_blank" rel="noopener">{{ locale.t('footer.instagram') }}</a>
-        <a v-if="phone" :href="telHref(phone)">{{ phone }}</a>
-        <a v-if="email" :href="`mailto:${email}`">{{ email }}</a>
+        <a href="https://instagram.com/swisswatch_premium" target="_blank" rel="noopener" @click="trackGoal('instagram_click')">{{ locale.t('footer.instagram') }}</a>
+        <a v-if="phone" :href="telHref(phone)" @click="trackGoal('phone_click')">{{ phone }}</a>
+        <a v-if="email" :href="`mailto:${email}`" @click="trackGoal('email_click')">{{ email }}</a>
       </div>
     </div>
 

@@ -6,6 +6,7 @@ import { useLocaleStore } from '@/stores/locale';
 import { useCurrencyStore } from '@/stores/currency';
 import { useLockBodyScroll } from '@/composables/useLockBodyScroll';
 import SmartImage from '@/components/shared/SmartImage.vue';
+import { trackGoal } from '@/utils/analytics';
 
 const ui = useUiStore();
 const cart = useCartStore();
@@ -19,6 +20,7 @@ function close() {
 
 function checkout() {
   if (!cart.items.length) return;
+  trackGoal('checkout_start');
   const first = cart.items[0];
   ui.openInquiry({ id: first.watchId, name: locale.t('cart.title') }, cart.buildInquiryMessage());
 }

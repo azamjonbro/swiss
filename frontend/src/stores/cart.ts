@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref, computed, watch } from 'vue';
+import { trackGoal } from '@/utils/analytics';
 
 export interface CartItem {
   key: string;
@@ -53,10 +54,13 @@ export const useCartStore = defineStore('cart', () => {
     const existing = items.value.find((i) => i.key === item.key);
     if (existing) existing.quantity += quantity;
     else items.value.push({ ...item, quantity });
+    trackGoal('add_to_cart', item.slug);
   }
 
   function remove(key: string) {
+    const removed = items.value.find((i) => i.key === key);
     items.value = items.value.filter((i) => i.key !== key);
+    if (removed) trackGoal('remove_from_cart', removed.slug);
   }
 
   function setQuantity(key: string, quantity: number) {

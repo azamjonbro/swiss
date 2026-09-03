@@ -3,6 +3,7 @@ import { ref, computed, watch } from 'vue';
 import { api } from '@/services/api';
 import { useAccountStore } from '@/stores/account';
 import type { Watch } from '@/types/models';
+import { trackGoal } from '@/utils/analytics';
 
 /**
  * Saved timepieces live on the customer's account, so this store mirrors the
@@ -60,6 +61,9 @@ export const useSavedStore = defineStore('saved', () => {
       } else {
         const { data } = await api.post('/account/saved', { watchId });
         ids.value = data.savedIds ?? [];
+        // On a storefront with no checkout, saving a piece is the clearest
+        // signal of intent short of an inquiry.
+        trackGoal('product_saved', watchId);
       }
       return true;
     } finally {

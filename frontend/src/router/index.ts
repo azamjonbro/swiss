@@ -4,6 +4,7 @@ import { staticSeo, STORES_PATH } from '@/seo/schema.mjs';
 import { hasStoreLocations } from '@/data/locations';
 import { useAccountStore } from '@/stores/account';
 import { resetScroll } from '@/composables/useLenis';
+import { trackPageview } from '@/utils/analytics';
 
 const routes = [
   {
@@ -205,6 +206,11 @@ router.beforeEach(async (to: RouteLocationNormalized) => {
 });
 
 router.afterEach((to: RouteLocationNormalized) => {
+  // One pageview per settled navigation. `afterEach` rather than a watcher, so
+  // a redirect (/watches/:slug -> /products/:slug) is counted once, at the
+  // destination, instead of twice.
+  trackPageview(to.path);
+
   // Pages built from a single API record (product, brand, collection) own
   // their metadata and apply it once the record has loaded; everything else is
   // described entirely by the shared static record, keyed by route name.

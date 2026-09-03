@@ -16,6 +16,7 @@ import brandRoutes from './routes/brandRoutes';
 import collectionRoutes from './routes/collectionRoutes';
 import inquiryRoutes from './routes/inquiryRoutes';
 import adminRoutes from './routes/adminRoutes';
+import trackRoutes from './routes/trackRoutes';
 import { getSitemapIndex, getSitemapSection } from './controllers/sitemapController';
 
 const app = express();
@@ -110,6 +111,8 @@ app.use('/api/brands', brandRoutes);
 app.use('/api/collections', collectionRoutes);
 app.use('/api/inquiries', inquiryRoutes);
 app.use('/api/admin', adminRoutes);
+// The storefront's analytics beacon. Public: every visitor calls it.
+app.use('/api/track', trackRoutes);
 
 app.use(notFoundHandler);
 app.use(errorHandler);

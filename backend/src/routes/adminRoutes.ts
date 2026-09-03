@@ -35,12 +35,16 @@ import {
 } from '../controllers/inquiryController';
 import { uploadMedia, uploadMultipleMedia } from '../controllers/mediaController';
 import { getDashboardStats } from '../controllers/dashboardController';
+import analyticsRoutes from './analyticsRoutes';
 
 const router = Router();
 
 router.use(requireAuth);
 
 router.get('/dashboard', getDashboardStats);
+
+// Visitor analytics. Inherits requireAuth from above.
+router.use('/analytics', analyticsRoutes);
 
 router.get('/watches', adminListWatches);
 router.get('/watches/:id', adminGetWatch);
