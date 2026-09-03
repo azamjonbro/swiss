@@ -35,11 +35,39 @@ function publicUser(user: UserDoc) {
   };
 }
 
-async function issueVerificationEmail(user: UserDoc) {
+/**
+ * Sends a transactional email, reporting whether it actually went out.
+ *
+ * Delivery is a side effect of these endpoints, never their purpose, and it
+ * depends on a third party that can be misconfigured or down. Letting it throw
+ * meant a failed send turned a *successful* registration into a 500: the
+ * account was created, the caller was told it had failed, and every retry then
+ * answered "email already taken" while sign-in answered "confirm your email
+ * first". That is a dead end no visitor can get out of, and it happened in
+ * production the moment the SMTP password stopped being accepted.
+ *
+ * The failure is logged for whoever runs the server and reported to the caller
+ * as a fact about the email, not as a failure of what they asked for.
+ */
+async function trySendEmail(send: () => Promise<void>, context: string): Promise<boolean> {
+  try {
+    await send();
+    return true;
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error(`[email] ${context} could not be delivered`, err);
+    return false;
+  }
+}
+
+async function issueVerificationEmail(user: UserDoc): Promise<boolean> {
   const rawToken = user.createEmailVerificationToken();
   await user.save();
   const verifyUrl = `${env.clientUrl}/account/verify-email?token=${rawToken}`;
-  await sendVerificationEmail(user.email, user.firstName || user.name, verifyUrl);
+  return trySendEmail(
+    () => sendVerificationEmail(user.email, user.firstName || user.name, verifyUrl),
+    `verification email to ${user.email}`,
+  );
 }
 
 function requireString(value: unknown, field: string): string {
@@ -69,16 +97,41 @@ export async function register(req: Request, res: Response) {
     throw new ApiError(400, `Password must be at least ${MIN_PASSWORD_LENGTH} characters`, 'PASSWORD_SHORT');
   }
 
-  if (await User.exists({ email })) throw new ApiError(409, 'An account with this email already exists', 'EMAIL_TAKEN');
+  const existing = await User.findOne({ email });
+  if (existing) {
+    // A registration that never got confirmed is not a taken email — it is the
+    // same person trying again, usually because the first link never arrived.
+    // Re-issuing beats answering "already exists" to someone who cannot sign
+    // in either. No new information is disclosed: the old code already
+    // revealed that the address was registered.
+    if (!existing.isEmailVerified) {
+      const resent = await issueVerificationEmail(existing);
+      return res.status(200).json({
+        message: resent
+          ? 'This address is already registered but not yet confirmed. A new confirmation link is on its way.'
+          : 'This address is already registered but not yet confirmed, and the confirmation email could not be sent. Please contact us.',
+        emailSent: resent,
+        pendingVerification: true,
+      });
+    }
+    throw new ApiError(409, 'An account with this email already exists', 'EMAIL_TAKEN');
+  }
+
   if (await User.exists({ phone })) {
     throw new ApiError(409, 'An account with this phone number already exists', 'PHONE_TAKEN');
   }
 
   const user = await User.create({ firstName, lastName, email, phone, password });
-  await issueVerificationEmail(user);
+  const emailSent = await issueVerificationEmail(user);
 
+  // 201 either way: the account exists, which is what was asked for. The
+  // message is the one thing that changes, so the visitor is never told to go
+  // and check an inbox nothing was sent to.
   res.status(201).json({
-    message: 'Account created. Check your email to confirm your address before signing in.',
+    message: emailSent
+      ? 'Account created. Check your email to confirm your address before signing in.'
+      : 'Account created, but the confirmation email could not be sent. Please contact us so we can activate your account.',
+    emailSent,
   });
 }
 
@@ -111,6 +164,9 @@ export async function resendVerification(req: Request, res: Response) {
   if (user && !user.isEmailVerified) await issueVerificationEmail(user);
 
   res.json({ message: 'If that email has a pending account, a new confirmation link has been sent.' });
+  // Deliberately not reporting whether the send succeeded: doing so would
+  // answer "does this address have a pending account?", which is exactly what
+  // the uniform response above exists to hide.
 }
 
 /* ------------------------------------------------------------------ */
@@ -174,7 +230,13 @@ export async function forgotPassword(req: Request, res: Response) {
     const rawToken = user.createPasswordResetToken();
     await user.save({ validateBeforeSave: false });
     const resetUrl = `${env.clientUrl}/account/reset-password?token=${rawToken}`;
-    await sendPasswordResetEmail(user.email, user.firstName || user.name, resetUrl);
+    // Must not throw. A send failure here used to answer 500 for a registered
+    // address and 200 for an unknown one — turning the uniform response below
+    // into a reliable way to test whether an email has an account.
+    await trySendEmail(
+      () => sendPasswordResetEmail(user.email, user.firstName || user.name, resetUrl),
+      `password reset email to ${user.email}`,
+    );
   }
 
   // Unconditional response — the endpoint must not reveal which emails exist.

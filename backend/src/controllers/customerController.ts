@@ -91,7 +91,9 @@ export async function adminListCustomers(req: Request, res: Response) {
  * pieces they saved and the requests they raised.
  */
 export async function adminGetCustomer(req: Request, res: Response) {
-  const { id } = req.params;
+  // Express 5 types a route param as `string | string[]`; only a single value
+  // can ever reach this route, but the id must be narrowed before it is used.
+  const id = String(req.params.id ?? '');
   if (!Types.ObjectId.isValid(id)) throw new ApiError(400, 'Invalid customer id');
 
   const user = await User.findById(id)

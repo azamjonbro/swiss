@@ -355,6 +355,7 @@ const uz: Dictionary = {
     registerSuccessEyebrow: 'Deyarli tayyor',
     registerSuccessTitle: 'Email manzilingizni tasdiqlang.',
     registerSuccessBody: 'Pochtangizga tasdiqlash havolasi yubordik. Hisobingizni faollashtirish uchun uni oching, so‘ng tizimga kiring.',
+    registerSuccessNoEmail: 'Hisobingiz yaratildi, lekin tasdiqlash xati yuborilmadi. Biz bilan bog‘laning — hisobingizni qo‘lda faollashtiramiz.',
 
     // -- password recovery --
     forgotEyebrow: 'Parol',

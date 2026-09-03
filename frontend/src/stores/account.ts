@@ -57,9 +57,15 @@ export const useAccountStore = defineStore('account', () => {
     localStorage.removeItem(STORAGE_KEY);
   }
 
-  async function register(payload: RegisterPayload): Promise<string> {
+  /**
+   * `emailSent` is false when the account was created but the confirmation
+   * email could not be delivered — a real state the server reports rather than
+   * failing the registration over. The caller has to say something different
+   * in that case, so it is passed through instead of only the message.
+   */
+  async function register(payload: RegisterPayload): Promise<{ message: string; emailSent: boolean }> {
     const { data } = await api.post('/account/register', payload);
-    return data.message as string;
+    return { message: data.message as string, emailSent: data.emailSent !== false };
   }
 
   /** `identifier` accepts either an email address or a phone number. */

@@ -17,6 +17,8 @@ const confirmPassword = ref('');
 const isSubmitting = ref(false);
 const isSubmitted = ref(false);
 const errorMessage = ref('');
+// False when the account exists but no confirmation email could be delivered.
+const emailSent = ref(true);
 const invalidField = ref<string>('');
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -49,13 +51,14 @@ async function submit() {
 
   isSubmitting.value = true;
   try {
-    await account.register({
+    const result = await account.register({
       firstName: firstName.value.trim(),
       lastName: lastName.value.trim(),
       email: email.value.trim(),
       phone: phone.value.trim(),
       password: password.value,
     });
+    emailSent.value = result.emailSent;
     isSubmitted.value = true;
   } catch (err: unknown) {
     const response = (err as { response?: { status?: number; data?: { code?: string } } })?.response;
@@ -145,7 +148,9 @@ async function submit() {
   <div v-else class="sw-auth-form">
     <span class="sw-eyebrow">{{ locale.t('account.registerSuccessEyebrow') }}</span>
     <h1 class="sw-auth-form__title">{{ locale.t('account.registerSuccessTitle') }}</h1>
-    <p class="sw-body sw-auth-form__lede">{{ locale.t('account.registerSuccessBody') }}</p>
+    <p class="sw-body sw-auth-form__lede">
+      {{ emailSent ? locale.t('account.registerSuccessBody') : locale.t('account.registerSuccessNoEmail') }}
+    </p>
     <p class="sw-auth-form__note">{{ email }}</p>
 
     <div class="sw-auth-form__actions">

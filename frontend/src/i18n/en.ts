@@ -353,6 +353,7 @@ const en = {
     registerSuccessEyebrow: 'Almost There',
     registerSuccessTitle: 'Confirm your email address.',
     registerSuccessBody: 'We sent a confirmation link to your inbox. Open it to activate your account, then sign in.',
+    registerSuccessNoEmail: 'Your account was created, but we could not send the confirmation email. Please contact us and we will activate it for you.',
 
     // -- password recovery --
     forgotEyebrow: 'Password',

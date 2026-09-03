@@ -356,6 +356,7 @@ const ru: Dictionary = {
     registerSuccessEyebrow: 'Почти готово',
     registerSuccessTitle: 'Подтвердите свой email.',
     registerSuccessBody: 'Мы отправили ссылку для подтверждения на вашу почту. Откройте её, чтобы активировать аккаунт, затем войдите.',
+    registerSuccessNoEmail: 'Аккаунт создан, но письмо с подтверждением отправить не удалось. Свяжитесь с нами — мы активируем его вручную.',
 
     // -- password recovery --
     forgotEyebrow: 'Пароль',
