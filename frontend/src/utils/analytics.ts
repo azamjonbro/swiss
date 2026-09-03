@@ -49,7 +49,16 @@ interface QueuedEvent {
   ts: number;
 }
 
-const ENDPOINT = `${import.meta.env.VITE_API_URL ?? ''}/api/track`;
+/**
+ * Deliberately not under `/api/`.
+ *
+ * `/api/:path*` is rewritten straight to the backend, and a request that takes
+ * that route arrives with Vercel's own location instead of the visitor's — so
+ * every visit was being recorded from the edge region rather than from the
+ * person. This path is claimed by no rewrite except the one that hands it to
+ * `api/track.js`, which forwards the beacon with the real country attached.
+ */
+const ENDPOINT = '/sw-track';
 
 let enabled = false;
 let visitorId = '';
