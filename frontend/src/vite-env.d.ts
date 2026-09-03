@@ -10,6 +10,12 @@ interface ImportMetaEnv {
   readonly VITE_CONTACT_EMAIL?: string;
   /** Published telephone, display form. Empty is valid. */
   readonly VITE_CONTACT_PHONE?: string;
+  /**
+   * Cloudflare Turnstile SITE key. Public by design — it identifies the widget
+   * in the browser. Its secret partner lives only in the backend env as
+   * TURNSTILE_SECRET_KEY. Empty renders no widget and disables the check.
+   */
+  readonly VITE_TURNSTILE_SITE_KEY?: string;
 }
 
 interface ImportMeta {

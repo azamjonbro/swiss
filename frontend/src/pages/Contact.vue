@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { createInquiry } from '@/services/inquiries';
 import { useLocaleStore } from '@/stores/locale';
 import { site } from '@/utils/seo';
 import { telHref } from '@/seo/schema.mjs';
 import { trackGoal } from '@/utils/analytics';
+import TurnstileWidget from '@/components/shared/TurnstileWidget.vue';
 
 const locale = useLocaleStore();
 
@@ -21,6 +22,11 @@ const message = ref('');
 const isSubmitting = ref(false);
 const isSubmitted = ref(false);
 const errorMessage = ref('');
+const captchaToken = ref('');
+const captcha = ref<InstanceType<typeof TurnstileWidget> | null>(null);
+
+const SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY ?? '';
+const needsCaptcha = computed(() => Boolean(SITE_KEY) && !captchaToken.value);
 
 async function submit() {
   if (!name.value || !phone.value || !email.value) {
@@ -30,7 +36,13 @@ async function submit() {
   isSubmitting.value = true;
   errorMessage.value = '';
   try {
-    await createInquiry({ name: name.value, phone: phone.value, email: email.value, message: message.value });
+    await createInquiry({
+      name: name.value,
+      phone: phone.value,
+      email: email.value,
+      message: message.value,
+      captchaToken: captchaToken.value,
+    });
     isSubmitted.value = true;
   } catch {
     errorMessage.value = locale.t('contact.errorGeneric');

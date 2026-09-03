@@ -7,6 +7,8 @@ export interface InquiryPayload {
   email: string;
   watch?: string;
   message?: string;
+  /** Cloudflare Turnstile token; the API refuses the form without it. */
+  captchaToken?: string;
 }
 
 export async function createInquiry(payload: InquiryPayload): Promise<{ message: string; inquiry: Inquiry }> {

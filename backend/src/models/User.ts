@@ -1,6 +1,5 @@
 import { Schema, model, Document, Types } from 'mongoose';
 import bcrypt from 'bcryptjs';
-import crypto from 'crypto';
 
 export interface IUser extends Document {
   firstName: string;
@@ -10,18 +9,11 @@ export interface IUser extends Document {
   email: string;
   phone?: string;
   password: string;
-  isEmailVerified: boolean;
-  emailVerificationTokenHash?: string;
-  emailVerificationExpires?: Date;
-  passwordResetTokenHash?: string;
-  passwordResetExpires?: Date;
   savedWatches: Types.ObjectId[];
   lastLoginAt?: Date;
   createdAt: Date;
   updatedAt: Date;
   comparePassword(candidate: string): Promise<boolean>;
-  createEmailVerificationToken(): string;
-  createPasswordResetToken(): string;
 }
 
 const UserSchema = new Schema<IUser>(
@@ -36,11 +28,6 @@ const UserSchema = new Schema<IUser>(
     // pre-phone accounts already in the database keep validating.
     phone: { type: String, trim: true, unique: true, sparse: true },
     password: { type: String, required: true, minlength: 8, select: false },
-    isEmailVerified: { type: Boolean, default: false },
-    emailVerificationTokenHash: { type: String, select: false },
-    emailVerificationExpires: { type: Date, select: false },
-    passwordResetTokenHash: { type: String, select: false },
-    passwordResetExpires: { type: Date, select: false },
     savedWatches: [{ type: Schema.Types.ObjectId, ref: 'Watch' }],
     lastLoginAt: { type: Date },
   },
@@ -68,22 +55,6 @@ UserSchema.pre('save', async function preSave() {
 
 UserSchema.methods.comparePassword = function comparePassword(candidate: string) {
   return bcrypt.compare(candidate, this.password);
-};
-
-// Returns the raw token (emailed to the user); only its SHA-256 hash is persisted,
-// mirroring standard password-reset-token hygiene so a DB read alone can't be used to verify.
-UserSchema.methods.createEmailVerificationToken = function createEmailVerificationToken(): string {
-  const rawToken = crypto.randomBytes(32).toString('hex');
-  this.emailVerificationTokenHash = crypto.createHash('sha256').update(rawToken).digest('hex');
-  this.emailVerificationExpires = new Date(Date.now() + 24 * 60 * 60 * 1000);
-  return rawToken;
-};
-
-UserSchema.methods.createPasswordResetToken = function createPasswordResetToken(): string {
-  const rawToken = crypto.randomBytes(32).toString('hex');
-  this.passwordResetTokenHash = crypto.createHash('sha256').update(rawToken).digest('hex');
-  this.passwordResetExpires = new Date(Date.now() + 60 * 60 * 1000);
-  return rawToken;
 };
 
 export const User = model<IUser>('User', UserSchema);

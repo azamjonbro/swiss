@@ -45,13 +45,7 @@ export const env = {
     .split(',')
     .map((origin) => origin.trim())
     .filter(Boolean),
-  smtp: {
-    host: process.env.SMTP_HOST,
-    port: Number(process.env.SMTP_PORT ?? 587),
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-    from: process.env.SMTP_FROM ?? 'SwissWatch Premium <concierge@swisswatchpremium.uz>',
-  },
+
   /**
    * Vercel Deploy Hook for the storefront. Catalog pages are prerendered at
    * build time, so a product added through the admin panel has no static page
@@ -82,4 +76,13 @@ export const env = {
    * the boutique actually sees.
    */
   analyticsTimezone: (process.env.ANALYTICS_TIMEZONE ?? 'Asia/Tashkent').trim(),
+
+  /**
+   * Cloudflare Turnstile secret, the half that must never leave the server.
+   *
+   * Its public counterpart is the site key, which the storefront ships in its
+   * bundle on purpose. Empty here disables captcha checking outright rather
+   * than rejecting every visitor — see services/turnstile.ts.
+   */
+  turnstileSecretKey: (process.env.TURNSTILE_SECRET_KEY ?? '').trim(),
 };

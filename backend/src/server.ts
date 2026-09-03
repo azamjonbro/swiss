@@ -1,9 +1,11 @@
 import app from './app';
 import { connectDatabase } from './config/db';
 import { env } from './config/env';
+import { warnIfDisabled } from './services/turnstile';
 
 async function main() {
   await connectDatabase();
+  warnIfDisabled();
   app.listen(env.port, () => {
     // eslint-disable-next-line no-console
     console.log(`[server] SwissWatch API listening on http://localhost:${env.port}`);

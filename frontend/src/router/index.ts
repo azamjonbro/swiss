@@ -135,22 +135,6 @@ const routes = [
         component: () => import('@/pages/account/SignUp.vue'),
         meta: { requiresGuest: true },
       },
-      {
-        path: 'forgot-password',
-        name: 'account-forgot-password',
-        component: () => import('@/pages/account/ForgotPassword.vue'),
-        meta: { requiresGuest: true },
-      },
-      {
-        path: 'reset-password',
-        name: 'account-reset-password',
-        component: () => import('@/pages/account/ResetPassword.vue'),
-      },
-      {
-        path: 'verify-email',
-        name: 'account-verify-email',
-        component: () => import('@/pages/account/VerifyEmail.vue'),
-      },
     ],
   },
   {

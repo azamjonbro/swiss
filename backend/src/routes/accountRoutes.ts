@@ -2,13 +2,9 @@ import { Router } from 'express';
 import rateLimit from 'express-rate-limit';
 import {
   register,
-  verifyEmail,
-  resendVerification,
   login,
   me,
   logout,
-  forgotPassword,
-  resetPassword,
   updateProfile,
   changePassword,
   listSaved,
@@ -18,6 +14,7 @@ import {
   listOrders,
 } from '../controllers/accountController';
 import { requireCustomerAuth } from '../middleware/customerAuth';
+import { requireCaptcha } from '../middleware/turnstile';
 
 const router = Router();
 
@@ -32,18 +29,14 @@ const authLimiter = rateLimit({
 });
 
 // --- public ---
-router.post('/register', authLimiter, register);
-router.get('/verify-email', verifyEmail);
-router.post('/resend-verification', authLimiter, resendVerification);
-router.post('/login', authLimiter, login);
-router.post('/forgot-password', authLimiter, forgotPassword);
-router.post('/reset-password', authLimiter, resetPassword);
+router.post('/register', authLimiter, requireCaptcha, register);
+router.post('/login', authLimiter, requireCaptcha, login);
 router.post('/logout', logout);
 
 // --- customer session required ---
 router.get('/me', requireCustomerAuth, me);
 router.patch('/profile', requireCustomerAuth, updateProfile);
-router.post('/change-password', requireCustomerAuth, changePassword);
+router.post('/change-password', requireCustomerAuth, requireCaptcha, changePassword);
 router.get('/saved', requireCustomerAuth, listSaved);
 router.get('/saved/ids', requireCustomerAuth, listSavedIds);
 router.post('/saved', requireCustomerAuth, addSaved);

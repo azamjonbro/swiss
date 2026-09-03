@@ -6,6 +6,7 @@ import { useAccountStore } from '@/stores/account';
 import { useLockBodyScroll } from '@/composables/useLockBodyScroll';
 import { createInquiry } from '@/services/inquiries';
 import { trackGoal } from '@/utils/analytics';
+import TurnstileWidget from '@/components/shared/TurnstileWidget.vue';
 
 const ui = useUiStore();
 const locale = useLocaleStore();
@@ -19,6 +20,11 @@ const message = ref('');
 const isSubmitting = ref(false);
 const isSubmitted = ref(false);
 const errorMessage = ref('');
+const captchaToken = ref('');
+const captcha = ref<InstanceType<typeof TurnstileWidget> | null>(null);
+
+const SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY ?? '';
+const needsCaptcha = computed(() => Boolean(SITE_KEY) && !captchaToken.value);
 
 watch(
   () => ui.isInquiryOpen,
@@ -53,6 +59,7 @@ async function submit() {
       email: email.value,
       watch: ui.inquiryWatch?.id,
       message: message.value,
+      captchaToken: captchaToken.value,
     });
     // There is no checkout on this storefront: a submitted inquiry IS the
     // conversion, so this is the goal the funnel ends on.
@@ -64,8 +71,14 @@ async function submit() {
       email.value = '';
     }
     message.value = '';
-  } catch {
-    errorMessage.value = locale.t('inquiry.errorGeneric');
+  } catch (err: unknown) {
+    // The token is single-use; a failed submission needs a fresh one.
+    captcha.value?.reset();
+    const code = (err as { response?: { data?: { code?: string } } })?.response?.data?.code;
+    errorMessage.value =
+      code === 'CAPTCHA_REQUIRED' || code === 'CAPTCHA_FAILED'
+        ? locale.t('account.captchaFailed')
+        : locale.t('inquiry.errorGeneric');
   } finally {
     isSubmitting.value = false;
   }

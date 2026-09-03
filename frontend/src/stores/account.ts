@@ -58,19 +58,20 @@ export const useAccountStore = defineStore('account', () => {
   }
 
   /**
-   * `emailSent` is false when the account was created but the confirmation
-   * email could not be delivered — a real state the server reports rather than
-   * failing the registration over. The caller has to say something different
-   * in that case, so it is passed through instead of only the message.
+   * Registering signs the customer straight in.
+   *
+   * There is no email confirmation step any more, so there is nothing to wait
+   * for between creating the account and using it.
    */
-  async function register(payload: RegisterPayload): Promise<{ message: string; emailSent: boolean }> {
-    const { data } = await api.post('/account/register', payload);
-    return { message: data.message as string, emailSent: data.emailSent !== false };
+  async function register(payload: RegisterPayload, captchaToken: string): Promise<CustomerUser> {
+    const { data } = await api.post('/account/register', { ...payload, captchaToken });
+    setSession(data.token, data.user);
+    return data.user;
   }
 
   /** `identifier` accepts either an email address or a phone number. */
-  async function login(identifier: string, password: string): Promise<CustomerUser> {
-    const { data } = await api.post('/account/login', { identifier, password });
+  async function login(identifier: string, password: string, captchaToken: string): Promise<CustomerUser> {
+    const { data } = await api.post('/account/login', { identifier, password, captchaToken });
     setSession(data.token, data.user);
     return data.user;
   }
@@ -113,34 +114,14 @@ export const useAccountStore = defineStore('account', () => {
     return restoreInFlight;
   }
 
-  async function resendVerification(email: string): Promise<string> {
-    const { data } = await api.post('/account/resend-verification', { email });
-    return data.message as string;
-  }
-
-  async function verifyEmail(verifyToken: string): Promise<string> {
-    const { data } = await api.get('/account/verify-email', { params: { token: verifyToken } });
-    return data.message as string;
-  }
-
-  async function forgotPassword(email: string): Promise<string> {
-    const { data } = await api.post('/account/forgot-password', { email });
-    return data.message as string;
-  }
-
-  async function resetPassword(resetToken: string, password: string): Promise<string> {
-    const { data } = await api.post('/account/reset-password', { token: resetToken, password });
-    return data.message as string;
-  }
-
   async function updateProfile(payload: ProfilePayload): Promise<string> {
     const { data } = await api.patch('/account/profile', payload);
     user.value = data.user;
     return data.message as string;
   }
 
-  async function changePassword(currentPassword: string, newPassword: string): Promise<string> {
-    const { data } = await api.post('/account/change-password', { currentPassword, newPassword });
+  async function changePassword(currentPassword: string, newPassword: string, captchaToken: string): Promise<string> {
+    const { data } = await api.post('/account/change-password', { currentPassword, newPassword, captchaToken });
     return data.message as string;
   }
 
@@ -156,10 +137,6 @@ export const useAccountStore = defineStore('account', () => {
     login,
     logout,
     restoreSession,
-    resendVerification,
-    verifyEmail,
-    forgotPassword,
-    resetPassword,
     updateProfile,
     changePassword,
   };

@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import { useRouter } from 'vue-router';
 import { useLocaleStore } from '@/stores/locale';
 import { useAccountStore } from '@/stores/account';
 import AuthField from '@/components/account/AuthField.vue';
+import TurnstileWidget from '@/components/shared/TurnstileWidget.vue';
 
+const router = useRouter();
 const locale = useLocaleStore();
 const account = useAccountStore();
 
@@ -15,10 +18,12 @@ const password = ref('');
 const confirmPassword = ref('');
 
 const isSubmitting = ref(false);
-const isSubmitted = ref(false);
 const errorMessage = ref('');
-// False when the account exists but no confirmation email could be delivered.
-const emailSent = ref(true);
+const captchaToken = ref('');
+const captcha = ref<InstanceType<typeof TurnstileWidget> | null>(null);
+
+const SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY ?? '';
+const needsCaptcha = computed(() => Boolean(SITE_KEY) && !captchaToken.value);
 const invalidField = ref<string>('');
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -51,19 +56,26 @@ async function submit() {
 
   isSubmitting.value = true;
   try {
-    const result = await account.register({
-      firstName: firstName.value.trim(),
-      lastName: lastName.value.trim(),
-      email: email.value.trim(),
-      phone: phone.value.trim(),
-      password: password.value,
-    });
-    emailSent.value = result.emailSent;
-    isSubmitted.value = true;
+    await account.register(
+      {
+        firstName: firstName.value.trim(),
+        lastName: lastName.value.trim(),
+        email: email.value.trim(),
+        phone: phone.value.trim(),
+        password: password.value,
+      },
+      captchaToken.value,
+    );
+    // Registering signs them in, so there is no confirmation step to send them
+    // to — take them straight to the account they just created.
+    router.replace('/account');
   } catch (err: unknown) {
     const response = (err as { response?: { status?: number; data?: { code?: string } } })?.response;
     const code = response?.data?.code;
-    if (code === 'EMAIL_TAKEN') fail('email', locale.t('account.errorEmailTaken'));
+    // The spent token has to be replaced before another attempt can succeed.
+    captcha.value?.reset();
+    if (code === 'CAPTCHA_REQUIRED' || code === 'CAPTCHA_FAILED') fail('', locale.t('account.captchaFailed'));
+    else if (code === 'EMAIL_TAKEN') fail('email', locale.t('account.errorEmailTaken'));
     else if (code === 'PHONE_TAKEN') fail('phone', locale.t('account.errorPhoneTaken'));
     else if (code === 'PHONE_INVALID') fail('phone', locale.t('account.errorPhoneInvalid'));
     else if (code === 'EMAIL_INVALID') fail('email', locale.t('account.errorEmailInvalid'));
@@ -76,7 +88,7 @@ async function submit() {
 </script>
 
 <template>
-  <div v-if="!isSubmitted" class="sw-auth-form">
+  <div class="sw-auth-form">
     <span class="sw-eyebrow">{{ locale.t('account.registerEyebrow') }}</span>
     <h1 class="sw-auth-form__title">{{ locale.t('account.registerTitle') }}</h1>
     <p class="sw-body sw-auth-form__lede">{{ locale.t('account.registerLede') }}</p>
@@ -128,10 +140,12 @@ async function submit() {
         />
       </div>
 
+      <TurnstileWidget ref="captcha" v-model="captchaToken" />
+
       <p v-if="errorMessage" class="sw-auth-form__error">{{ errorMessage }}</p>
 
       <div class="sw-auth-form__actions">
-        <button class="sw-btn sw-btn--solid sw-auth-submit" type="submit" :disabled="isSubmitting">
+        <button class="sw-btn sw-btn--solid sw-auth-submit" type="submit" :disabled="isSubmitting || needsCaptcha">
           {{ isSubmitting ? locale.t('account.registeringButton') : locale.t('account.registerButton') }}
         </button>
       </div>
@@ -145,18 +159,4 @@ async function submit() {
     </p>
   </div>
 
-  <div v-else class="sw-auth-form">
-    <span class="sw-eyebrow">{{ locale.t('account.registerSuccessEyebrow') }}</span>
-    <h1 class="sw-auth-form__title">{{ locale.t('account.registerSuccessTitle') }}</h1>
-    <p class="sw-body sw-auth-form__lede">
-      {{ emailSent ? locale.t('account.registerSuccessBody') : locale.t('account.registerSuccessNoEmail') }}
-    </p>
-    <p class="sw-auth-form__note">{{ email }}</p>
-
-    <div class="sw-auth-form__actions">
-      <RouterLink class="sw-btn sw-btn--solid sw-auth-submit" to="/account/login">
-        {{ locale.t('account.goToLogin') }}
-      </RouterLink>
-    </div>
-  </div>
 </template>

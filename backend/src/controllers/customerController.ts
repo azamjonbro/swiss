@@ -18,7 +18,7 @@ import { ApiError } from '../utils/ApiError';
  */
 
 /** Exactly what an admin may see about a customer. */
-const LIST_FIELDS = 'firstName lastName name email phone isEmailVerified savedWatches lastLoginAt createdAt';
+const LIST_FIELDS = 'firstName lastName name email phone savedWatches lastLoginAt createdAt';
 
 /** A search box is not a place to accept a regular expression. */
 function escapeRegex(value: string): string {
@@ -26,7 +26,7 @@ function escapeRegex(value: string): string {
 }
 
 export async function adminListCustomers(req: Request, res: Response) {
-  const { search, verified, page, limit } = req.query;
+  const { search, page, limit } = req.query;
 
   const filter: Record<string, unknown> = {};
 
@@ -34,10 +34,6 @@ export async function adminListCustomers(req: Request, res: Response) {
     const pattern = new RegExp(escapeRegex(search.trim()), 'i');
     filter.$or = [{ name: pattern }, { email: pattern }, { phone: pattern }];
   }
-
-  // Absent means "all"; only an explicit true/false narrows the list.
-  if (verified === 'true') filter.isEmailVerified = true;
-  if (verified === 'false') filter.isEmailVerified = false;
 
   const pageSize = Math.min(Number(limit) || 20, 100);
   const pageNum = Math.max(Number(page) || 1, 1);
@@ -72,7 +68,6 @@ export async function adminListCustomers(req: Request, res: Response) {
       name: user.name,
       email: user.email,
       phone: user.phone ?? '',
-      isEmailVerified: user.isEmailVerified,
       // The list needs the size of the wishlist, never its contents.
       savedCount: user.savedWatches?.length ?? 0,
       inquiryCount: inquiriesByUser.get(String(user._id)) ?? 0,
@@ -118,7 +113,6 @@ export async function adminGetCustomer(req: Request, res: Response) {
       name: user.name,
       email: user.email,
       phone: user.phone ?? '',
-      isEmailVerified: user.isEmailVerified,
       lastLoginAt: user.lastLoginAt ?? null,
       createdAt: user.createdAt,
     },
