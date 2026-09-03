@@ -217,11 +217,20 @@ const pendingCount = computed(() => rows.value.filter((row) => !row.isEmailVerif
       </button>
     </div>
 
+    <!-- AdminModal owns its own visibility and the body-scroll lock that goes
+         with it, so it takes `open` rather than being mounted with v-if. -->
     <AdminModal
-      v-if="isDetailOpen"
+      :open="isDetailOpen"
       :title="detail?.customer.name || locale.t('admin.customers')"
+      :subtitle="detail?.customer.email"
       @close="isDetailOpen = false"
     >
+      <template #footer>
+        <button type="button" class="sw-admin-btn sw-admin-btn--ghost" @click="isDetailOpen = false">
+          {{ locale.t('admin.customersClose') }}
+        </button>
+      </template>
+
       <div v-if="isDetailLoading" class="sw-cust__skeletons">
         <div v-for="n in 4" :key="n" class="sw-admin-skeleton sw-cust__skeleton" />
       </div>

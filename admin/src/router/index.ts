@@ -64,6 +64,12 @@ const routes = [
         meta: { titleKey: 'admin.collections' },
       },
       {
+        path: 'customers',
+        name: 'customers',
+        component: () => import('@/pages/admin/AdminCustomers.vue'),
+        meta: { titleKey: 'admin.customers' },
+      },
+      {
         path: 'inquiries',
         name: 'inquiries',
         component: () => import('@/pages/admin/AdminInquiries.vue'),
