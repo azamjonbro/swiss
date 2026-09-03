@@ -35,6 +35,7 @@ import {
 } from '../controllers/inquiryController';
 import { uploadMedia, uploadMultipleMedia } from '../controllers/mediaController';
 import { getDashboardStats } from '../controllers/dashboardController';
+import { adminListCustomers, adminGetCustomer } from '../controllers/customerController';
 import analyticsRoutes from './analyticsRoutes';
 
 const router = Router();
@@ -67,6 +68,11 @@ router.get('/collections', adminListCollections);
 router.post('/collections', adminCreateCollection);
 router.put('/collections/:id', adminUpdateCollection);
 router.delete('/collections/:id', adminDeleteCollection);
+
+// Registered storefront customers. Read-only: this panel reports, it does not
+// administer someone else's account.
+router.get('/customers', adminListCustomers);
+router.get('/customers/:id', adminGetCustomer);
 
 router.get('/inquiries', adminListInquiries);
 router.put('/inquiries/:id', adminUpdateInquiry);
