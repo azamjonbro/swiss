@@ -7,9 +7,29 @@ let rafHandler: ((time: number) => void) | null = null;
 let onScrollTriggerRefresh: (() => void) | null = null;
 let heightObserver: ResizeObserver | null = null;
 
+/**
+ * Lenis smooths the wheel, and nothing else: `syncTouch` is left at its default
+ * `false`, and on that setting Lenis bails out of every touch event and hands
+ * the gesture straight back to the browser (`isScrolling = 'native'`). So on a
+ * phone it smooths nothing — it just runs a rAF loop every frame and re-enters
+ * ScrollTrigger on every native scroll event, which is exactly the budget the
+ * scroll itself needs. Touch-only devices are better off without it, and every
+ * caller here already copes with a null instance (that is the reduced-motion
+ * path). Coarse-pointer *and* no hover, so a touchscreen laptop keeps smoothing.
+ */
+function isTouchOnly(): boolean {
+  return window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+}
+
 export function initLenis(): Lenis | null {
   if (lenis) return lenis;
   if (prefersReducedMotion()) return null;
+  if (isTouchOnly()) {
+    // ScrollTrigger still needs its one post-mount measurement; on the smooth
+    // path the refresh below does it.
+    ScrollTrigger.refresh();
+    return null;
+  }
 
   lenis = new Lenis({
     duration: 1.15,
@@ -96,10 +116,13 @@ const SCROLL_HOLD_MS = 600;
 let holdArmed = false;
 let holdDeadline = 0;
 let holdListenersBound = false;
+/** See `onVisibilityChange` — a hold gets one extension, never a stream. */
+let holdExtended = false;
 
 function releaseScrollHold(): void {
   holdArmed = false;
   holdDeadline = 0;
+  holdExtended = false;
 }
 
 function isHolding(): boolean {
@@ -123,10 +146,29 @@ function onHeldScroll(): void {
   if (window.scrollY !== 0) scrollToTopNow();
 }
 
-/** The countdown is meant to run while the page is being read, not before. */
+/**
+ * The countdown is meant to run while the page is being read, not before — so
+ * returning to the foreground restarts it. Once, though, not every time.
+ *
+ * `holdArmed` is only ever cleared lazily, by an `isHolding()` that happens to
+ * run past the deadline. A reader who opens a page and neither scrolls nor
+ * taps fires nothing that would call it, so the hold stays armed for the rest
+ * of the session — and re-arming the deadline unconditionally here handed
+ * every later app switch a fresh 600ms window in which any scroll that wasn't
+ * preceded by a touch (an offset the browser restores, a fling still carrying
+ * momentum from before the page was backgrounded) was yanked back to the top.
+ * On a phone, where switching away and back is constant, that reads as the
+ * home page throwing itself to the top at random.
+ *
+ * One extension still covers the case this exists for: a tab that was hidden
+ * when its restored offset landed. A second one never does.
+ */
 function onVisibilityChange(): void {
   if (!holdArmed || document.hidden) return;
-  holdDeadline = performance.now() + SCROLL_HOLD_MS;
+  if (!holdExtended) {
+    holdExtended = true;
+    holdDeadline = performance.now() + SCROLL_HOLD_MS;
+  }
   onHeldScroll();
 }
 
@@ -172,6 +214,7 @@ export function resetScroll(): void {
   bindHoldListeners();
   holdArmed = true;
   holdDeadline = performance.now() + SCROLL_HOLD_MS;
+  holdExtended = false;
   // A scroll event is the normal way the restored offset announces itself; the
   // timers are the belt to that brace, and the one thing that still runs in a
   // tab which is not painting frames.

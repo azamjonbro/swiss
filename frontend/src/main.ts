@@ -6,6 +6,11 @@ import { useThemeStore } from '@/stores/theme';
 import { useLocaleStore } from '@/stores/locale';
 import { useAccountStore } from '@/stores/account';
 import revealPlugin from '@/directives/reveal';
+// Lenis ships a stylesheet it genuinely depends on, and the one rule that
+// matters here is `html.lenis, html.lenis body { height: auto }` — it undoes
+// the `height: 100%` the reset puts on both. Without it the element Lenis
+// measures is pinned to the viewport instead of growing with the page.
+import 'lenis/dist/lenis.css';
 import '@/assets/scss/global.scss';
 
 /**

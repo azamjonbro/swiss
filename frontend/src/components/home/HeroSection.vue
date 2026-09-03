@@ -169,7 +169,6 @@ function handleDiscover() {
   position: absolute;
   /* Bleed past the edges so the parallax shift never exposes a seam. */
   inset: -12px;
-  will-change: transform;
 }
 
 .sw-hero__frame :deep(.sw-smart-image),
@@ -215,7 +214,18 @@ function handleDiscover() {
   max-width: var(--container-max);
   margin-inline: auto;
   padding: 0 var(--container-pad) clamp(72px, 11vh, 132px);
-  will-change: transform;
+}
+
+/* `will-change` only where something is actually going to change: the query
+   matches the pair `enableParallax()` tests before it will run at all. Left
+   unconditional, a phone promoted both of these — each one the full size of
+   the viewport — to their own compositor layers for a parallax that never
+   plays there, and paid for the memory on every frame of the scroll. */
+@media (hover: hover) and (pointer: fine) and (min-width: 900px) {
+  .sw-hero__frame,
+  .sw-hero__content {
+    will-change: transform;
+  }
 }
 
 .sw-hero__eyebrow {
