@@ -155,7 +155,23 @@ async function upsertSession({ visitorId, sessionId, pageviews, context, body, n
     // hammered by.
     const seenBefore = await AnalyticsSession.exists({ visitorId });
 
-    await AnalyticsSession.updateOne(
+    try {
+      await insertSession(seenBefore);
+    } catch (err) {
+      // Two batches for a brand-new session can both find no row and both try
+      // to create it; the unique index on sessionId lets exactly one win. The
+      // loser is not an error — the session exists now, so fall through and
+      // advance it, which is what it was going to do anyway.
+      if (!isDuplicateKey(err)) throw err;
+      await advanceSession();
+    }
+    return;
+  }
+
+  await advanceSession();
+
+  function insertSession(seenBefore: unknown) {
+    return AnalyticsSession.updateOne(
       { sessionId },
       {
         $setOnInsert: {
@@ -180,16 +196,21 @@ async function upsertSession({ visitorId, sessionId, pageviews, context, body, n
       },
       { upsert: true },
     );
-    return;
   }
 
-  await AnalyticsSession.updateOne(
-    { sessionId },
-    {
-      $set: { lastSeenAt: now, ...(exitPath ? { exitPath } : {}) },
-      $inc: { pageviews: pageviews.length },
-    },
-  );
+  function advanceSession() {
+    return AnalyticsSession.updateOne(
+      { sessionId },
+      {
+        $set: { lastSeenAt: now, ...(exitPath ? { exitPath } : {}) },
+        $inc: { pageviews: pageviews.length },
+      },
+    );
+  }
+}
+
+function isDuplicateKey(err: unknown): boolean {
+  return Boolean(err && typeof err === 'object' && (err as { code?: number }).code === 11000);
 }
 
 /** Exported for the session-expiry rule the storefront applies client-side. */
