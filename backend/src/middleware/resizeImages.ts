@@ -21,6 +21,31 @@ import sharp from 'sharp';
  * originals and every existing URL keep working exactly as before.
  */
 
+/**
+ * Bound what libvips keeps in memory between encodes.
+ *
+ * sharp's default cache grows to hundreds of megabytes of decoded pixel data
+ * and holds it: the catalogue's photography runs up to 4493px wide, and one
+ * listing page asks for dozens of derivatives at once. On the production box
+ * that pushed the process past the 300 MB pm2 ceiling, so pm2 killed and
+ * restarted it — 38 restarts, several seconds of uptime at a time, every
+ * in-flight request dropped with it.
+ *
+ * 64 MB is ample for a cache whose only job is to avoid re-decoding the same
+ * source within a burst; the derivatives themselves are already cached on
+ * disk, which is what actually saves the work.
+ */
+sharp.cache({ memory: 64, files: 20, items: 100 });
+
+/**
+ * One resize at a time.
+ *
+ * The default is one thread per core, and each concurrent encode holds its own
+ * copy of the decoded image. A single fork process serving a page of thumbnails
+ * does not need to decode them in parallel — it needs to not fall over.
+ */
+sharp.concurrency(1);
+
 /** The only widths that get served. An open parameter is an invitation to
  *  fill the disk with 10,000 one-pixel-apart renders. */
 const ALLOWED_WIDTHS = new Set([240, 480, 720, 960, 1440]);
