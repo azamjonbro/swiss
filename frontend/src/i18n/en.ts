@@ -335,13 +335,10 @@ const en = {
     signInLede: 'Welcome back. Sign in to continue where you left off.',
     signInButton: 'Sign In',
     signingInButton: 'Signing In…',
-    forgotPassword: 'Forgotten your password?',
     noAccount: 'Don’t have an account?',
     registerLink: 'Create One',
     invalidCredentials: 'Invalid credentials. Check your email or phone and password.',
-    emailNotVerified: 'Please confirm your email address before signing in.',
-    resendVerification: 'Resend confirmation email',
-
+    captchaFailed: 'Verification failed. Please try again.',
     // -- sign up --
     registerEyebrow: 'Create Account',
     registerTitle: 'Join SwissWatch Premium',
@@ -350,11 +347,6 @@ const en = {
     registeringButton: 'Creating Account…',
     haveAccount: 'Already have an account?',
     signInLink: 'Sign In',
-    registerSuccessEyebrow: 'Almost There',
-    registerSuccessTitle: 'Confirm your email address.',
-    registerSuccessBody: 'We sent a confirmation link to your inbox. Open it to activate your account, then sign in.',
-    registerSuccessNoEmail: 'Your account was created, but we could not send the confirmation email. Please contact us and we will activate it for you.',
-
     // -- password recovery --
     forgotEyebrow: 'Password',
     forgotTitle: 'Reset your password.',
@@ -383,8 +375,6 @@ const en = {
     verifyErrorEyebrow: 'Link Expired',
     verifyErrorTitle: 'This confirmation link is invalid or has expired.',
     verifyErrorBody: 'Request a new confirmation email from the sign-in page.',
-    goToLogin: 'Go to Sign In',
-
     // -- signed-in account --
     dashboardEyebrow: 'Account',
     navOverview: 'Overview',

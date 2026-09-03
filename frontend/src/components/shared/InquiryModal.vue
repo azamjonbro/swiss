@@ -118,9 +118,11 @@ function close() {
               <textarea v-model="message" rows="4" />
             </label>
 
-            <p v-if="errorMessage" class="sw-inquiry__error">{{ errorMessage }}</p>
+            <TurnstileWidget ref="captcha" v-model="captchaToken" />
 
-            <button class="sw-btn sw-btn--solid" type="submit" :disabled="isSubmitting">
+        <p v-if="errorMessage" class="sw-inquiry__error">{{ errorMessage }}</p>
+
+            <button class="sw-btn sw-btn--solid" type="submit" :disabled="isSubmitting || needsCaptcha">
               {{ isSubmitting ? locale.t('inquiry.sending') : locale.t('inquiry.send') }}
             </button>
           </form>

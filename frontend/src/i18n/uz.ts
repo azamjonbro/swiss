@@ -337,13 +337,10 @@ const uz: Dictionary = {
     signInLede: 'Xush kelibsiz. To‘xtagan joyingizdan davom etish uchun kiring.',
     signInButton: 'Kirish',
     signingInButton: 'Kirilmoqda…',
-    forgotPassword: 'Parolni unutdingizmi?',
     noAccount: 'Hisobingiz yo‘qmi?',
     registerLink: 'Ro‘yxatdan o‘tish',
     invalidCredentials: 'Ma’lumotlar noto‘g‘ri. Email yoki telefon va parolni tekshiring.',
-    emailNotVerified: 'Kirishdan oldin email manzilingizni tasdiqlang.',
-    resendVerification: 'Tasdiqlash xatini qayta yuborish',
-
+    captchaFailed: 'Tekshiruvdan o‘tilmadi. Qayta urinib ko‘ring.',
     // -- sign up --
     registerEyebrow: 'Ro‘yxatdan o‘tish',
     registerTitle: 'SwissWatch Premiumga qo‘shiling',
@@ -352,11 +349,6 @@ const uz: Dictionary = {
     registeringButton: 'Yaratilmoqda…',
     haveAccount: 'Hisobingiz bormi?',
     signInLink: 'Kirish',
-    registerSuccessEyebrow: 'Deyarli tayyor',
-    registerSuccessTitle: 'Email manzilingizni tasdiqlang.',
-    registerSuccessBody: 'Pochtangizga tasdiqlash havolasi yubordik. Hisobingizni faollashtirish uchun uni oching, so‘ng tizimga kiring.',
-    registerSuccessNoEmail: 'Hisobingiz yaratildi, lekin tasdiqlash xati yuborilmadi. Biz bilan bog‘laning — hisobingizni qo‘lda faollashtiramiz.',
-
     // -- password recovery --
     forgotEyebrow: 'Parol',
     forgotTitle: 'Parolni tiklash.',
@@ -385,8 +377,6 @@ const uz: Dictionary = {
     verifyErrorEyebrow: 'Havola muddati tugagan',
     verifyErrorTitle: 'Bu tasdiqlash havolasi yaroqsiz yoki muddati tugagan.',
     verifyErrorBody: 'Kirish sahifasidan yangi tasdiqlash xatini so‘rang.',
-    goToLogin: 'Kirish sahifasiga',
-
     // -- signed-in account --
     dashboardEyebrow: 'Hisob',
     navOverview: 'Umumiy',

@@ -338,13 +338,10 @@ const ru: Dictionary = {
     signInLede: 'С возвращением. Войдите, чтобы продолжить с того же места.',
     signInButton: 'Войти',
     signingInButton: 'Вход…',
-    forgotPassword: 'Забыли пароль?',
     noAccount: 'Нет аккаунта?',
     registerLink: 'Зарегистрироваться',
     invalidCredentials: 'Неверные данные. Проверьте email или телефон и пароль.',
-    emailNotVerified: 'Пожалуйста, подтвердите email перед входом.',
-    resendVerification: 'Отправить письмо повторно',
-
+    captchaFailed: 'Проверка не пройдена. Попробуйте ещё раз.',
     // -- sign up --
     registerEyebrow: 'Регистрация',
     registerTitle: 'Присоединяйтесь',
@@ -353,11 +350,6 @@ const ru: Dictionary = {
     registeringButton: 'Создание…',
     haveAccount: 'Уже есть аккаунт?',
     signInLink: 'Войти',
-    registerSuccessEyebrow: 'Почти готово',
-    registerSuccessTitle: 'Подтвердите свой email.',
-    registerSuccessBody: 'Мы отправили ссылку для подтверждения на вашу почту. Откройте её, чтобы активировать аккаунт, затем войдите.',
-    registerSuccessNoEmail: 'Аккаунт создан, но письмо с подтверждением отправить не удалось. Свяжитесь с нами — мы активируем его вручную.',
-
     // -- password recovery --
     forgotEyebrow: 'Пароль',
     forgotTitle: 'Восстановление пароля.',
@@ -386,8 +378,6 @@ const ru: Dictionary = {
     verifyErrorEyebrow: 'Ссылка недействительна',
     verifyErrorTitle: 'Эта ссылка для подтверждения недействительна или истекла.',
     verifyErrorBody: 'Запросите новое письмо для подтверждения со страницы входа.',
-    goToLogin: 'Перейти ко входу',
-
     // -- signed-in account --
     dashboardEyebrow: 'Аккаунт',
     navOverview: 'Обзор',

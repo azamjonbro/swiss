@@ -44,8 +44,14 @@ async function submit() {
       captchaToken: captchaToken.value,
     });
     isSubmitted.value = true;
-  } catch {
-    errorMessage.value = locale.t('contact.errorGeneric');
+  } catch (err: unknown) {
+    // Single-use token: a failed submission has to get a new one.
+    captcha.value?.reset();
+    const code = (err as { response?: { data?: { code?: string } } })?.response?.data?.code;
+    errorMessage.value =
+      code === 'CAPTCHA_REQUIRED' || code === 'CAPTCHA_FAILED'
+        ? locale.t('account.captchaFailed')
+        : locale.t('contact.errorGeneric');
   } finally {
     isSubmitting.value = false;
   }
@@ -102,9 +108,11 @@ async function submit() {
               <textarea v-model="message" rows="5" />
             </label>
 
+            <TurnstileWidget ref="captcha" v-model="captchaToken" />
+
             <p v-if="errorMessage" class="sw-contact__error">{{ errorMessage }}</p>
 
-            <button class="sw-btn sw-btn--solid" type="submit" :disabled="isSubmitting">
+            <button class="sw-btn sw-btn--solid" type="submit" :disabled="isSubmitting || needsCaptcha">
               {{ isSubmitting ? locale.t('contact.sending') : locale.t('contact.send') }}
             </button>
           </form>

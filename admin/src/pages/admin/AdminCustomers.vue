@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { ref, computed, watch, onUnmounted } from 'vue';
+import { ref, watch, onUnmounted } from 'vue';
 import { useLocaleStore } from '@/stores/locale';
 import { useToastStore } from '@/stores/toast';
 import { adminFetchCustomers, adminFetchCustomer } from '@/services/customers';
 import type { CustomerDetail, CustomerRow } from '@/types/customers';
 import AdminEmpty from '@/components/admin/AdminEmpty.vue';
 import AdminModal from '@/components/admin/AdminModal.vue';
-import AdminIcon from '@/components/shared/AdminIcon.vue';
 
 /**
  * Registered storefront customers.
@@ -26,7 +25,6 @@ const pages = ref(1);
 const isLoading = ref(true);
 
 const search = ref('');
-const verified = ref<'' | 'true' | 'false'>('');
 
 const detail = ref<CustomerDetail | null>(null);
 const isDetailOpen = ref(false);
@@ -42,11 +40,7 @@ async function load() {
   isLoading.value = true;
   try {
     const data = await adminFetchCustomers(
-      {
-        search: search.value.trim(),
-        verified: verified.value === '' ? undefined : verified.value === 'true',
-        page: page.value,
-      },
+      { search: search.value.trim(), page: page.value },
       controller.signal,
     );
     rows.value = data.items;
@@ -75,7 +69,7 @@ watch(search, () => {
   }, 300);
 });
 
-watch([verified, page], () => void load());
+watch(page, () => void load());
 void load();
 
 onUnmounted(() => {
@@ -115,7 +109,6 @@ function formatLastLogin(value: string | null): string {
   return value ? formatDate(value) : locale.t('admin.customersNeverSignedIn');
 }
 
-const pendingCount = computed(() => rows.value.filter((row) => !row.isEmailVerified).length);
 </script>
 
 <template>
@@ -132,18 +125,9 @@ const pendingCount = computed(() => rows.value.filter((row) => !row.isEmailVerif
           type="search"
           :placeholder="locale.t('admin.customersSearch')"
         />
-        <select v-model="verified" class="sw-cust__select">
-          <option value="">{{ locale.t('admin.customersAll') }}</option>
-          <option value="true">{{ locale.t('admin.customersVerified') }}</option>
-          <option value="false">{{ locale.t('admin.customersPending') }}</option>
-        </select>
       </div>
     </div>
 
-    <p v-if="!isLoading && rows.length && pendingCount" class="sw-cust__note">
-      <AdminIcon name="info" :size="15" />
-      {{ pendingCount }} {{ locale.t('admin.customersPendingNote') }}
-    </p>
 
     <div class="sw-admin-card sw-admin-card--flush">
       <div v-if="isLoading" class="sw-cust__skeletons">
@@ -162,7 +146,6 @@ const pendingCount = computed(() => rows.value.filter((row) => !row.isEmailVerif
             <tr>
               <th>{{ locale.t('admin.customersName') }}</th>
               <th>{{ locale.t('admin.customersContact') }}</th>
-              <th>{{ locale.t('admin.customersStatus') }}</th>
               <th>{{ locale.t('admin.customersActivity') }}</th>
               <th>{{ locale.t('admin.customersRegistered') }}</th>
               <th>{{ locale.t('admin.customersLastLogin') }}</th>
@@ -176,11 +159,6 @@ const pendingCount = computed(() => rows.value.filter((row) => !row.isEmailVerif
               <td>
                 <span class="sw-admin-cell-title">{{ row.email }}</span>
                 <span v-if="row.phone" class="sw-admin-cell-sub">{{ row.phone }}</span>
-              </td>
-              <td>
-                <span class="sw-admin-badge" :class="row.isEmailVerified ? 'sw-admin-badge--success' : ''">
-                  {{ row.isEmailVerified ? locale.t('admin.customersVerified') : locale.t('admin.customersPending') }}
-                </span>
               </td>
               <td class="sw-cust__activity">
                 <span v-if="row.inquiryCount">{{ row.inquiryCount }} {{ locale.t('admin.customersInquiriesShort') }}</span>
@@ -240,14 +218,6 @@ const pendingCount = computed(() => rows.value.filter((row) => !row.isEmailVerif
           <div>
             <dt>{{ locale.t('admin.customersContact') }}</dt>
             <dd>{{ detail.customer.email }}<br />{{ detail.customer.phone || '—' }}</dd>
-          </div>
-          <div>
-            <dt>{{ locale.t('admin.customersStatus') }}</dt>
-            <dd>
-              <span class="sw-admin-badge" :class="detail.customer.isEmailVerified ? 'sw-admin-badge--success' : ''">
-                {{ detail.customer.isEmailVerified ? locale.t('admin.customersVerified') : locale.t('admin.customersPending') }}
-              </span>
-            </dd>
           </div>
           <div>
             <dt>{{ locale.t('admin.customersRegistered') }}</dt>

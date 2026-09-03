@@ -7,7 +7,6 @@ export interface CustomerRow {
   name: string;
   email: string;
   phone: string;
-  isEmailVerified: boolean;
   /** Size of their wishlist, never its contents. */
   savedCount: number;
   inquiryCount: number;

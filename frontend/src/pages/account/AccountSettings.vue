@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref, watch, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useLocaleStore } from '@/stores/locale';
 import { useAccountStore } from '@/stores/account';
 import { useSavedStore } from '@/stores/saved';
 import AuthField from '@/components/account/AuthField.vue';
+import TurnstileWidget from '@/components/shared/TurnstileWidget.vue';
 
 const router = useRouter();
 const locale = useLocaleStore();
@@ -62,6 +63,11 @@ const confirmPassword = ref('');
 const isSavingPassword = ref(false);
 const passwordMessage = ref('');
 const passwordError = ref('');
+const captchaToken = ref('');
+const captcha = ref<InstanceType<typeof TurnstileWidget> | null>(null);
+
+const SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY ?? '';
+const needsCaptcha = computed(() => Boolean(SITE_KEY) && !captchaToken.value);
 
 async function savePassword() {
   passwordMessage.value = '';
@@ -82,16 +88,17 @@ async function savePassword() {
 
   isSavingPassword.value = true;
   try {
-    passwordMessage.value = await account.changePassword(currentPassword.value, newPassword.value);
+    passwordMessage.value = await account.changePassword(currentPassword.value, newPassword.value, captchaToken.value);
     currentPassword.value = '';
     newPassword.value = '';
     confirmPassword.value = '';
   } catch (err: unknown) {
     const code = (err as { response?: { data?: { code?: string } } })?.response?.data?.code;
-    passwordError.value =
-      code === 'CURRENT_PASSWORD_INVALID'
-        ? locale.t('account.errorCurrentPassword')
-        : locale.t('account.errorGeneric');
+    // Single-use token: the failed attempt spent it.
+    captcha.value?.reset();
+    if (code === 'CURRENT_PASSWORD_INVALID') passwordError.value = locale.t('account.errorCurrentPassword');
+    else if (code === 'CAPTCHA_REQUIRED' || code === 'CAPTCHA_FAILED') passwordError.value = locale.t('account.captchaFailed');
+    else passwordError.value = locale.t('account.errorGeneric');
   } finally {
     isSavingPassword.value = false;
   }
@@ -165,7 +172,9 @@ async function signOut() {
       />
 
       <div class="sw-account__form-actions">
-        <button class="sw-btn sw-btn--solid" type="submit" :disabled="isSavingPassword">
+        <TurnstileWidget ref="captcha" v-model="captchaToken" />
+
+        <button class="sw-btn sw-btn--solid" type="submit" :disabled="isSavingPassword || needsCaptcha">
           {{ isSavingPassword ? locale.t('account.savingButton') : locale.t('account.updatePassword') }}
         </button>
         <p v-if="passwordMessage" class="sw-account__form-message">{{ passwordMessage }}</p>
