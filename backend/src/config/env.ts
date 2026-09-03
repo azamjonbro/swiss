@@ -59,27 +59,4 @@ export const env = {
    * logged no-op — see `services/deployHook.ts`.
    */
   deployHookUrl: (process.env.VERCEL_DEPLOY_HOOK_URL ?? '').trim(),
-
-  /**
-   * DataFast analytics, read side.
-   *
-   * `apiKey` is the website key (`df_…`) and is a genuine secret: it can read
-   * every visitor record for the site and write goals against it. It lives
-   * here and only here — the storefront ships the *website id* instead, which
-   * is public, and the admin panel never talks to datafa.st at all. See
-   * `services/datafast.ts`.
-   *
-   * Unset is a supported state, not an error: the analytics endpoints answer
-   * 503 and the rest of the API is unaffected, so a local checkout or a
-   * deploy made before the DataFast account exists still runs.
-   *
-   * `timezone` decides where a day starts. Left at UTC, "today" on the
-   * dashboard would begin at 05:00 Tashkent time and the daily numbers would
-   * never line up with what the boutique actually sees.
-   */
-  datafast: {
-    apiKey: (process.env.DATAFAST_API_KEY ?? '').trim(),
-    apiUrl: (process.env.DATAFAST_API_URL ?? 'https://datafa.st/api/v1').replace(/\/+$/, ''),
-    timezone: (process.env.DATAFAST_TIMEZONE ?? 'Asia/Tashkent').trim(),
-  },
 };

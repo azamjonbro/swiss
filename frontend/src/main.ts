@@ -6,7 +6,6 @@ import { useThemeStore } from '@/stores/theme';
 import { useLocaleStore } from '@/stores/locale';
 import { useAccountStore } from '@/stores/account';
 import revealPlugin from '@/directives/reveal';
-import { initAnalytics } from '@/utils/analytics';
 // Lenis ships a stylesheet it genuinely depends on, and the one rule that
 // matters here is `html.lenis, html.lenis body { height: auto }` — it undoes
 // the `height: 100%` the reset puts on both. Without it the element Lenis
@@ -82,10 +81,6 @@ async function bootstrap() {
 
   // Everything below is off the critical path.
   locale.prefetch();
-  // Dynamically imports the DataFast SDK and starts pageview tracking. After
-  // the mount on purpose: it must never sit between the visitor and the first
-  // paint the preloader is waiting on.
-  initAnalytics();
 }
 
 void bootstrap();
