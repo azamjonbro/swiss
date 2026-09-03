@@ -22,6 +22,12 @@ const routes = [
         meta: { titleKey: 'admin.dashboard' },
       },
       {
+        path: 'analytics',
+        name: 'analytics',
+        component: () => import('@/pages/admin/AdminAnalytics.vue'),
+        meta: { titleKey: 'admin.analytics' },
+      },
+      {
         path: 'watches',
         name: 'watches',
         component: () => import('@/pages/admin/AdminWatches.vue'),

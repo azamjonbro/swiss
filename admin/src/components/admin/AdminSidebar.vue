@@ -12,7 +12,10 @@ const locale = useLocaleStore();
 const groups = computed(() => [
   {
     label: locale.t('admin.navOverview'),
-    links: [{ label: locale.t('admin.dashboard'), to: '/', icon: 'dashboard' }],
+    links: [
+      { label: locale.t('admin.dashboard'), to: '/', icon: 'dashboard' },
+      { label: locale.t('admin.analytics'), to: '/analytics', icon: 'analytics' },
+    ],
   },
   {
     label: locale.t('admin.navCatalog'),

@@ -1,16 +1,17 @@
 /**
  * Shapes returned by `/api/admin/analytics/*`.
  *
- * These mirror what the backend actually assembles from DataFast — no more.
- * Fields DataFast does not publish (pageviews per page, exit pages, time on
- * page) are absent here on purpose, so a component cannot bind to a number
- * that will never arrive.
+ * The figures come from this project's own database — the `analyticssessions`
+ * and `analyticsevents` collections the storefront's beacon writes to — so
+ * every field here is one the backend actually computes.
  */
 
 /** One row of a ranked breakdown: a name and how many visitors it accounts for. */
 export interface Slice {
   label: string;
   visitors: number;
+  /** Total views, on breakdowns where a page can be seen more than once. */
+  views?: number;
 }
 
 export interface GoalSlice {
@@ -46,15 +47,18 @@ export interface TimeseriesPoint {
 
 export interface AnalyticsSummary {
   range: { from: string; to: string; timezone: string; interval: 'hour' | 'day' };
-  /** Section names that failed upstream; those panels show as unavailable. */
+  /** Kept for per-panel failure states; always empty while data is local. */
   unavailable: string[];
   overview: Overview | null;
   timeseries: TimeseriesPoint[];
   referrers: Slice[];
-  /** Grouped by our backend from the referrer rows, not measured by DataFast. */
   channels: Slice[];
   campaigns: Slice[];
   pages: Slice[];
+  /** The page a visit started on. */
+  entryPages: Slice[];
+  /** The last page of a visit — where people leave. */
+  exitPages: Slice[];
   countries: Slice[];
   cities: Slice[];
   devices: Slice[];
@@ -76,7 +80,7 @@ export interface LiveVisitor {
 }
 
 export interface AnalyticsLive {
-  /** DataFast counts a visitor active for this many minutes. Fixed at 10. */
+  /** How recently a visitor must have acted to count as here now. */
   windowMinutes: number;
   count: number;
   visitors: LiveVisitor[];
