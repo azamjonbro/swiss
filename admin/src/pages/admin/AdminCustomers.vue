@@ -263,14 +263,8 @@ function formatLastLogin(value: string | null): string {
   flex-wrap: wrap;
 }
 
-.sw-cust__search,
-.sw-cust__select {
-  font: inherit;
+.sw-cust__search {
   font-size: 0.85rem;
-  color: var(--admin-text);
-  background: var(--admin-surface);
-  border: 1px solid var(--admin-border);
-  border-radius: var(--radius-md);
   padding: 8px 11px;
 }
 
@@ -278,12 +272,7 @@ function formatLastLogin(value: string | null): string {
   min-width: 200px;
 }
 
-.sw-cust__search:focus-visible,
-.sw-cust__select:focus-visible {
-  outline: none;
-  border-color: var(--admin-accent);
-  box-shadow: var(--shadow-ring);
-}
+
 
 .sw-cust__note {
   display: flex;

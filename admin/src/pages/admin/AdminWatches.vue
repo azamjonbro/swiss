@@ -343,22 +343,22 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+/**
+ * Only the things that differ from a form select: this one is toolbar-sized.
+ *
+ * Everything else — surface, border, radius, focus ring and the chevron — comes
+ * from the shared `select` rule. Re-declaring `background` here is what broke
+ * it before: the shorthand resets `background-image`, so the chevron vanished
+ * and the control was left with `appearance: none` and no arrow at all.
+ *
+ * The right padding has to keep clearing that chevron, which the shared rule
+ * paints 10px wide, 16px in from the right edge.
+ */
 .sw-watches__filter {
   min-width: 150px;
   height: 38px;
-  padding: 8px 12px;
-  font: inherit;
+  padding: 8px 40px 8px 12px;
   font-size: 0.85rem;
-  color: var(--admin-text);
-  background: var(--admin-surface);
-  border: 1px solid var(--admin-border);
-  border-radius: var(--radius-md);
-}
-
-.sw-watches__filter:focus-visible {
-  outline: none;
-  border-color: var(--admin-accent);
-  box-shadow: var(--shadow-ring);
 }
 
 /* Sits between the toolbar and the table, so the count and the destructive
