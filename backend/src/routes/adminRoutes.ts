@@ -8,6 +8,7 @@ import {
   adminCreateWatch,
   adminUpdateWatch,
   adminDeleteWatch,
+  adminBulkDeleteWatches,
 } from '../controllers/watchController';
 import {
   adminListCategories,
@@ -51,6 +52,9 @@ router.get('/watches', adminListWatches);
 router.get('/watches/:id', adminGetWatch);
 router.post('/watches', adminCreateWatch);
 router.put('/watches/:id', adminUpdateWatch);
+// Before the :id routes it shares a prefix with, so "bulk-delete" is never
+// read as a product id.
+router.post('/watches/bulk-delete', adminBulkDeleteWatches);
 router.delete('/watches/:id', adminDeleteWatch);
 
 router.get('/categories', adminListCategories);

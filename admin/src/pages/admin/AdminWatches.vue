@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, computed, watch as watchRef, onMounted } from 'vue';
 import type { Watch } from '@/types/models';
-import { adminFetchWatches, adminDeleteWatch, adminUpdateWatch } from '@/services/watches';
+import { adminFetchWatches, adminDeleteWatch, adminUpdateWatch, adminBulkDeleteWatches } from '@/services/watches';
 import { adminFetchBrands } from '@/services/brands';
 import { adminFetchCategories } from '@/services/categories';
-import { toBrandName } from '@/utils/format';
+import { localizedName } from '@/utils/format';
 import { useLocaleStore } from '@/stores/locale';
 import { useToastStore } from '@/stores/toast';
 import { useConfirmStore } from '@/stores/confirm';
@@ -27,24 +27,99 @@ const categories = ref<any[]>([]);
 const filterBrand = ref('');
 const filterCategory = ref('');
 
+/** The catalogue runs to a few hundred products; 50 a page keeps the table readable. */
+const PAGE_SIZE = 50;
+const page = ref(1);
+const pages = ref(1);
+
+/** Ids ticked on the current page. Cleared whenever the page or filter changes,
+ *  because a selection the reader can no longer see is one they cannot revoke. */
+const selected = ref<Set<string>>(new Set());
+const isDeletingMany = ref(false);
+
+const allOnPageSelected = computed(
+  () => watches.value.length > 0 && watches.value.every((w) => selected.value.has(w._id)),
+);
+
+function toggleOne(id: string) {
+  const next = new Set(selected.value);
+  if (next.has(id)) next.delete(id);
+  else next.add(id);
+  selected.value = next;
+}
+
+function toggleAllOnPage() {
+  const next = new Set(selected.value);
+  if (allOnPageSelected.value) watches.value.forEach((w) => next.delete(w._id));
+  else watches.value.forEach((w) => next.add(w._id));
+  selected.value = next;
+}
+
+async function removeSelected() {
+  const ids = [...selected.value];
+  if (!ids.length) return;
+
+  const ok = await confirm.ask({
+    title: locale.t('admin.deleteSelectedTitle'),
+    body: `${ids.length} — ${locale.t('admin.deleteConfirmBody')}`,
+    confirmLabel: locale.t('admin.confirmDelete'),
+    danger: true,
+  });
+  if (!ok) return;
+
+  isDeletingMany.value = true;
+  try {
+    const deleted = await adminBulkDeleteWatches(ids);
+    selected.value = new Set();
+    toasts.success(`${deleted} ${locale.t('admin.watchesDeleted')}`);
+    // The page may no longer exist once the last rows on it are gone.
+    if (page.value > 1 && watches.value.length === deleted) page.value -= 1;
+    await load();
+  } catch {
+    toasts.error(locale.t('admin.saveFailed'));
+  } finally {
+    isDeletingMany.value = false;
+  }
+}
+
 async function load() {
   isLoading.value = true;
   activeQuery.value = search.value.trim();
   try {
-    const data = await adminFetchWatches({ 
+    const data = await adminFetchWatches({
       q: activeQuery.value || undefined,
       brand: filterBrand.value || undefined,
       category: filterCategory.value || undefined,
-      limit: 50 
+      page: page.value,
+      limit: PAGE_SIZE,
     });
     watches.value = data.items;
     total.value = data.total;
+    pages.value = data.pages;
+    // A filter that shrinks the result set can leave the reader on a page past
+    // the end; step back to the last real one rather than showing nothing.
+    if (page.value > data.pages && data.pages > 0) {
+      page.value = data.pages;
+      return load();
+    }
   } catch {
     toasts.error(locale.t('admin.loadFailed'));
   } finally {
     isLoading.value = false;
   }
 }
+
+/** Any change to what is being listed starts again from the first page. */
+function reload() {
+  page.value = 1;
+  void load();
+}
+
+// Turning a page invalidates a selection the reader can no longer see.
+watchRef(page, () => {
+  selected.value = new Set();
+  void load();
+});
 
 function thumbOf(watch: Watch): string | null {
   const image = watch.variants?.[0]?.images?.[0];
@@ -99,29 +174,46 @@ onMounted(async () => {
       </div>
     </div>
 
-    <form class="sw-admin-toolbar" @submit.prevent="load" style="flex-wrap: wrap; gap: 14px;">
+    <form class="sw-admin-toolbar" @submit.prevent="reload" style="flex-wrap: wrap; gap: 14px;">
       <div class="sw-admin-search">
         <span class="sw-admin-search__icon"><AdminIcon name="search" :size="15" /></span>
         <input v-model="search" type="search" :placeholder="locale.t('admin.searchWatches')" />
       </div>
       
       <div style="display: flex; gap: 10px; align-items: center;">
-        <select v-model="filterBrand" @change="load" style="min-width: 140px; padding: 8px 12px; height: 38px;">
-          <option value="">{{ locale.t('admin.allBrands') || 'All Brands' }}</option>
-          <option v-for="b in brands" :key="b._id" :value="b._id">{{ b.name }}</option>
+        <select v-model="filterBrand" class="sw-watches__filter" @change="reload">
+          <option value="">{{ locale.t('admin.allBrands') }}</option>
+          <option v-for="b in brands" :key="b._id" :value="b._id">{{ localizedName(b, locale.lang) }}</option>
         </select>
-        <select v-model="filterCategory" @change="load" style="min-width: 140px; padding: 8px 12px; height: 38px;">
-          <option value="">{{ locale.t('admin.allCategories') || 'All Categories' }}</option>
-          <option v-for="c in categories" :key="c._id" :value="c._id">{{ c.name }}</option>
+        <select v-model="filterCategory" class="sw-watches__filter" @change="reload">
+          <option value="">{{ locale.t('admin.allCategories') }}</option>
+          <option v-for="c in categories" :key="c._id" :value="c._id">{{ localizedName(c, locale.lang) }}</option>
         </select>
       </div>
 
       <button class="sw-admin-btn sw-admin-btn--ghost" type="submit" style="height: 38px;">{{ locale.t('admin.search') }}</button>
       
       <span v-if="!isLoading && watches.length" class="sw-watches__count" style="margin-left: auto;">
-        {{ watches.length }} / {{ total }} {{ locale.t('admin.countShown') }}
+        {{ (page - 1) * PAGE_SIZE + 1 }}–{{ (page - 1) * PAGE_SIZE + watches.length }}
+        / {{ total }} {{ locale.t('admin.countShown') }}
       </span>
     </form>
+
+    <div v-if="selected.size" class="sw-watches__bulk">
+      <span>{{ selected.size }} {{ locale.t('admin.selectedCount') }}</span>
+      <button type="button" class="sw-admin-btn sw-admin-btn--sm sw-admin-btn--quiet" @click="selected = new Set()">
+        {{ locale.t('admin.clearSelection') }}
+      </button>
+      <button
+        type="button"
+        class="sw-admin-btn sw-admin-btn--sm sw-admin-btn--danger"
+        :disabled="isDeletingMany"
+        @click="removeSelected"
+      >
+        <AdminIcon name="trash" :size="14" />
+        {{ isDeletingMany ? locale.t('admin.saving') : locale.t('admin.deleteSelected') }}
+      </button>
+    </div>
 
     <div class="sw-admin-card sw-admin-card--flush">
       <div v-if="isLoading" class="sw-watches__loading">
@@ -144,6 +236,14 @@ onMounted(async () => {
         <table class="sw-admin-table">
           <thead>
             <tr>
+              <th class="sw-watches__pick">
+                <input
+                  type="checkbox"
+                  :checked="allOnPageSelected"
+                  :aria-label="locale.t('admin.selectAll')"
+                  @change="toggleAllOnPage"
+                />
+              </th>
               <th>{{ locale.t('admin.name') }}</th>
               <th>{{ locale.t('admin.colBrand') }}</th>
               <th>{{ locale.t('admin.colPrice') }}</th>
@@ -152,7 +252,15 @@ onMounted(async () => {
             </tr>
           </thead>
           <tbody>
-            <tr v-for="watch in watches" :key="watch._id">
+            <tr v-for="watch in watches" :key="watch._id" :class="{ 'is-picked': selected.has(watch._id) }">
+              <td class="sw-watches__pick">
+                <input
+                  type="checkbox"
+                  :checked="selected.has(watch._id)"
+                  :aria-label="watch.name"
+                  @change="toggleOne(watch._id)"
+                />
+              </td>
               <td>
                 <div class="sw-admin-cell-media">
                   <img v-if="thumbOf(watch)" class="sw-admin-thumb" :src="thumbOf(watch)!" alt="" />
@@ -163,7 +271,7 @@ onMounted(async () => {
                   </div>
                 </div>
               </td>
-              <td>{{ toBrandName(watch.brand) }}</td>
+              <td>{{ localizedName(watch.brand, locale.lang) }}</td>
               <td class="sw-watches__price">{{ watch.price.toLocaleString() }} {{ watch.currency }}</td>
               <td>
                 <div class="sw-watches__badges">
@@ -211,10 +319,97 @@ onMounted(async () => {
         </table>
       </div>
     </div>
+
+    <div v-if="pages > 1" class="sw-watches__pager">
+      <button
+        type="button"
+        class="sw-admin-btn sw-admin-btn--sm sw-admin-btn--ghost"
+        :disabled="page <= 1 || isLoading"
+        @click="page -= 1"
+      >
+        {{ locale.t('admin.prevPage') }}
+      </button>
+      <span class="sw-watches__pager-label">{{ page }} / {{ pages }}</span>
+      <button
+        type="button"
+        class="sw-admin-btn sw-admin-btn--sm sw-admin-btn--ghost"
+        :disabled="page >= pages || isLoading"
+        @click="page += 1"
+      >
+        {{ locale.t('admin.nextPage') }}
+      </button>
+    </div>
   </div>
 </template>
 
 <style scoped>
+.sw-watches__filter {
+  min-width: 150px;
+  height: 38px;
+  padding: 8px 12px;
+  font: inherit;
+  font-size: 0.85rem;
+  color: var(--admin-text);
+  background: var(--admin-surface);
+  border: 1px solid var(--admin-border);
+  border-radius: var(--radius-md);
+}
+
+.sw-watches__filter:focus-visible {
+  outline: none;
+  border-color: var(--admin-accent);
+  box-shadow: var(--shadow-ring);
+}
+
+/* Sits between the toolbar and the table, so the count and the destructive
+   action it applies to are read in that order. */
+.sw-watches__bulk {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--admin-border);
+  background: var(--admin-surface-2);
+  font-size: 0.85rem;
+  font-weight: 550;
+}
+
+.sw-watches__bulk button:last-child {
+  margin-left: auto;
+}
+
+.sw-watches__pick {
+  width: 42px;
+  text-align: center;
+}
+
+.sw-watches__pick input {
+  width: 15px;
+  height: 15px;
+  accent-color: var(--admin-accent);
+  cursor: pointer;
+}
+
+.sw-admin-table tbody tr.is-picked {
+  background: var(--admin-accent-soft);
+}
+
+.sw-watches__pager {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.sw-watches__pager-label {
+  font-size: 0.82rem;
+  color: var(--admin-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
 .sw-watches__count {
   font-size: 0.8rem;
   color: var(--admin-text-muted);

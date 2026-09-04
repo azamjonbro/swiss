@@ -481,6 +481,16 @@ const uz: Dictionary = {
     customersPrev: 'Oldingi',
     customersNext: 'Keyingi',
     customersClose: 'Yopish',
+    prevPage: 'Oldingi 50',
+    nextPage: 'Keyingi 50',
+    selectAll: 'Sahifadagi hammasini tanlash',
+    selectedCount: 'tanlandi',
+    clearSelection: 'Bekor qilish',
+    deleteSelected: 'Tanlanganlarni o‘chirish',
+    deleteSelectedTitle: 'Tanlangan mahsulotlar o‘chirilsinmi?',
+    watchesDeleted: 'mahsulot o‘chirildi',
+    allBrands: 'Barcha brendlar',
+    allCategories: 'Barcha kategoriyalar',
   },
 };
 

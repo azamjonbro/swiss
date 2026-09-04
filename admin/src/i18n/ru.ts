@@ -481,6 +481,16 @@ const ru: Dictionary = {
     customersPrev: 'Назад',
     customersNext: 'Вперёд',
     customersClose: 'Закрыть',
+    prevPage: 'Назад 50',
+    nextPage: 'Вперёд 50',
+    selectAll: 'Выбрать все на странице',
+    selectedCount: 'выбрано',
+    clearSelection: 'Снять',
+    deleteSelected: 'Удалить выбранные',
+    deleteSelectedTitle: 'Удалить выбранные товары?',
+    watchesDeleted: 'товаров удалено',
+    allBrands: 'Все бренды',
+    allCategories: 'Все категории',
   },
 };
 

@@ -32,6 +32,18 @@ export async function adminFetchWatches(
   return data;
 }
 
+/**
+ * Deletes several products in one request.
+ *
+ * One call rather than a loop of single deletes: the storefront prerenders its
+ * catalogue, and the API turns a batch into a single redeploy instead of one
+ * per product.
+ */
+export async function adminBulkDeleteWatches(ids: string[]): Promise<number> {
+  const { data } = await api.post<{ deletedCount: number }>('/admin/watches/bulk-delete', { ids });
+  return data.deletedCount;
+}
+
 export async function adminFetchWatch(id: string): Promise<Watch> {
   const { data } = await api.get<Watch>(`/admin/watches/${id}`);
   return data;

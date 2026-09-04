@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { Types } from 'mongoose';
 import { Watch } from '../models/Watch';
 import { ApiError } from '../utils/ApiError';
 import { toSlug } from '../utils/slug';
@@ -138,8 +139,13 @@ export async function adminListWatches(req: Request, res: Response) {
 
   const [items, total] = await Promise.all([
     Watch.find(filter)
-      .populate('brand', 'name')
-      .populate('category', 'name')
+      // `translations` comes along so the admin table and its filters can show
+      // brand and category names in the chosen language. Localising this
+      // server-side would be wrong: the same records feed the brand and
+      // category *edit* forms, where the base name is the field being edited —
+      // handing those a translated value would overwrite the original on save.
+      .populate('brand', 'name translations')
+      .populate('category', 'name translations')
       .sort({ createdAt: -1 })
       .skip((pageNum - 1) * pageSize)
       .limit(pageSize),
@@ -176,6 +182,29 @@ export async function adminUpdateWatch(req: Request, res: Response) {
   if (!watch) throw new ApiError(404, 'Timepiece not found');
   requestRedeploy(`watch:update ${watch.slug}`);
   res.json(watch);
+}
+
+/**
+ * Deletes several products in one request.
+ *
+ * A loop of single deletes from the browser would fire one redeploy per
+ * product — the storefront prerenders its catalogue, so clearing fifty items
+ * would queue fifty rebuilds. This deletes them together and asks for one.
+ */
+export async function adminBulkDeleteWatches(req: Request, res: Response) {
+  const { ids } = req.body as { ids?: unknown };
+  if (!Array.isArray(ids) || !ids.length) throw new ApiError(400, 'ids must be a non-empty array');
+  // Bounded so a malformed client cannot ask to delete the whole catalogue in
+  // one call; the admin UI pages at 50.
+  if (ids.length > 100) throw new ApiError(400, 'No more than 100 products can be deleted at once');
+
+  const valid = ids.filter((id): id is string => typeof id === 'string' && Types.ObjectId.isValid(id));
+  if (!valid.length) throw new ApiError(400, 'No valid product ids were provided');
+
+  const result = await Watch.deleteMany({ _id: { $in: valid } });
+  if (result.deletedCount) requestRedeploy(`watch:bulk-delete ${result.deletedCount}`);
+
+  res.json({ message: 'Products deleted', deletedCount: result.deletedCount });
 }
 
 export async function adminDeleteWatch(req: Request, res: Response) {

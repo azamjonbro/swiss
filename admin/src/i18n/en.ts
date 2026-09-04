@@ -479,6 +479,16 @@ const en = {
     customersPrev: 'Previous',
     customersNext: 'Next',
     customersClose: 'Close',
+    prevPage: 'Previous 50',
+    nextPage: 'Next 50',
+    selectAll: 'Select all on this page',
+    selectedCount: 'selected',
+    clearSelection: 'Clear',
+    deleteSelected: 'Delete selected',
+    deleteSelectedTitle: 'Delete the selected products?',
+    watchesDeleted: 'products deleted',
+    allBrands: 'All brands',
+    allCategories: 'All categories',
   },
 };
 
