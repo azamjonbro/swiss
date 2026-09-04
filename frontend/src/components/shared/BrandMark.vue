@@ -32,13 +32,10 @@ withDefaults(defineProps<Props>(), { size: 30, wordmark: true });
       <!-- Four crimson panels, the brush slivers that split the channels, and
            the small stone at the crossing. Not drawn by hand: traced from the
            boutique's own logo artwork, so the geometry here is the artwork's,
-           to within a fifth of a unit. public/logo.png and apple-touch-icon.png
-           are rasterised from these paths — change one, change both.
-
-           public/favicon.svg no longer is: at 16px, and circle-masked the way
-           search results show it, these four panels read as the Swiss flag
-           rather than as this boutique, so the favicon carries an SW monogram
-           instead. The mark stands wherever it has room to be read. -->
+           to within a fifth of a unit. public/favicon.svg carries these same
+           five paths, and public/favicon.ico, favicon-96x96.png, logo.png and
+           apple-touch-icon.png are all rasterised from it — change one, change
+           them all, or the tab icon and the header mark drift apart. -->
       <path d="M0 0L16.06 0 16.74 16.74 15.2 16.97 1.26 17.6 16.57 18.29 16.86 18.46 16.86 21.14 0 20.46Z" fill="var(--sw-crimson)" />
       <path d="M40 0L40 15.89 23.14 16.57 22.29 1.54 21.66 16.46 21.2 16.69 18.74 16.69 19.43 0Z" fill="var(--sw-crimson)" />
       <path d="M21.43 21.31L18.86 21.31 18.57 21.14 18.69 18.46 21.43 18.51Z" fill="var(--sw-crimson)" />

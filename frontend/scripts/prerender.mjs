@@ -586,11 +586,25 @@ async function main() {
   );
 }
 
-/** `/sitemap-pages.xml` — the fixed routes, absolute, on the canonical origin. */
+/**
+ * `/sitemap-pages.xml` — the fixed routes, absolute, on the canonical origin.
+ *
+ * Each carries a `lastmod` of the build. These pages have no record behind
+ * them to date from — they change when the site is deployed and at no other
+ * time — so the build is the honest answer, and it is the only crawl hint the
+ * fixed routes have. Without it the home page advertised no date at all, which
+ * gives a crawler no reason to come back and look; that matters whenever
+ * something in the head changes without the content moving, a favicon being
+ * the obvious case.
+ */
 async function writeStaticPagesSitemap() {
   const paths = ['/', '/watches', '/brands', '/collections', ...(LOCATIONS.length ? [STORES_PATH] : []), '/about', '/contact'];
+  const lastmod = new Date().toISOString();
   const body = paths
-    .map((path) => `  <url>\n    <loc>${escapeHtml(absoluteUrl(site, path))}</loc>\n  </url>`)
+    .map(
+      (path) =>
+        `  <url>\n    <loc>${escapeHtml(absoluteUrl(site, path))}</loc>\n    <lastmod>${lastmod}</lastmod>\n  </url>`,
+    )
     .join('\n');
   const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${body}\n</urlset>\n`;
   await writeFile(join(DIST, 'sitemap-pages.xml'), xml, 'utf8');
