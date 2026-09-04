@@ -2,7 +2,15 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <!-- .ico first: it is the file Google's favicon fetcher asks for by name,
+         and it was 404ing here — the crawler fell back to the SVG, which at
+         16px in a circle reduced the house mark to a red disc with a white
+         cross and put a Swiss flag beside the site in search results. Browsers
+         that understand the SVG still prefer it; both now carry the monogram.
+         The house mark itself is unchanged wherever it has room to be read. -->
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- The settled page, not the intro panel that briefly covers it: light is
