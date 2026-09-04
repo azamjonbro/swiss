@@ -72,20 +72,33 @@ withDefaults(defineProps<Props>(), { size: 30, wordmark: true });
 }
 
 /* The header centres this lockup between two flanking columns, and the centre
-   column is free to grow past what they leave it. Tightening the tracking was
-   not enough — at 375px the Uzbek actions ("Qidiruv", "Savat") still ran into
-   the wordmark. Below the breakpoint that already strips the menu label and
-   the secondary actions, the tile stands alone: it is the logo, the name is
-   in the title, the hero and the footer, and this is the one arrangement that
-   cannot be broken by a longer locale string. */
+   column is free to grow past what they leave it. Set side by side at this
+   width the wordmark ran into the actions — at 375px the Uzbek labels
+   ("Qidiruv", "Savat") reached it even with the tracking tightened.
+
+   Stacking is what fixes that rather than hiding the name: the lockup's width
+   stops being glyph + gap + 18 tracked characters and becomes just the text,
+   which at this size is around 90px — comfortably inside what the flanking
+   columns leave even at 320px. The name is worth keeping; it is the half of a
+   logo that says who this is. */
 @media (max-width: 640px) {
+  .sw-mark {
+    flex-direction: column;
+    gap: 4px;
+  }
+
   .sw-mark__glyph {
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
   }
 
   .sw-mark__word {
-    display: none;
+    font-size: 0.44rem;
+    letter-spacing: 0.16em;
+    /* Matches the reduced tracking above, so the trailing letter-space is
+       trimmed by exactly what it grew — otherwise the stack sits off-centre
+       under the tile. */
+    margin-right: -0.16em;
   }
 }
 </style>
