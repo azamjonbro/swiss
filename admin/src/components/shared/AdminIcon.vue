@@ -19,6 +19,8 @@ const PATHS: Record<string, string> = {
   analytics: 'M4 4v15.5A.5.5 0 0 0 4.5 20H20M7.5 15.5l3.5-4 3 2.5 4.5-6',
   // Two figures, one behind the other — a list of people, not one person.
   customers: 'M15.5 20v-1.7a3.3 3.3 0 0 0-3.3-3.3H6.8a3.3 3.3 0 0 0-3.3 3.3V20M9.5 11.5a3.7 3.7 0 1 0 0-7.5 3.7 3.7 0 0 0 0 7.5ZM20.5 20v-1.7a3.3 3.3 0 0 0-2.5-3.2M15.5 4.3a3.3 3.3 0 0 1 0 6.4',
+  // A strap curving away from a lug — accessories here are straps and buckles.
+  accessory: 'M9 4h6l.5 5.5H8.5L9 4Zm-.5 10.5h7L15 20H9l-.5-5.5ZM8.5 9.5h7v5h-7v-5Z',
   plus: 'M12 5v14M5 12h14',
   search: 'M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14Zm5.2-1.8L21 21',
   edit: 'M4 20h4L20 8a2.1 2.1 0 0 0-3-3L5 17v3Zm11.5-13 3 3',

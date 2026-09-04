@@ -27,11 +27,19 @@ const routes = [
         component: () => import('@/pages/admin/AdminAnalytics.vue'),
         meta: { titleKey: 'admin.analytics' },
       },
+      // Watches and accessories are the same records with a different `type`,
+      // so they share one list component; the route says which slice it shows.
       {
         path: 'watches',
         name: 'watches',
         component: () => import('@/pages/admin/AdminWatches.vue'),
-        meta: { titleKey: 'admin.watches' },
+        meta: { titleKey: 'admin.watches', productType: 'watch' },
+      },
+      {
+        path: 'accessories',
+        name: 'accessories',
+        component: () => import('@/pages/admin/AdminWatches.vue'),
+        meta: { titleKey: 'admin.accessories', productType: 'accessory' },
       },
       {
         path: 'watches/new',

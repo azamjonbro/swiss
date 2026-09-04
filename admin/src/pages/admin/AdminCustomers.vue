@@ -128,7 +128,6 @@ function formatLastLogin(value: string | null): string {
       </div>
     </div>
 
-
     <div class="sw-admin-card sw-admin-card--flush">
       <div v-if="isLoading" class="sw-cust__skeletons">
         <div v-for="n in 6" :key="n" class="sw-admin-skeleton sw-cust__skeleton" />
@@ -263,16 +262,13 @@ function formatLastLogin(value: string | null): string {
   flex-wrap: wrap;
 }
 
+/* Size only; the surface, border, radius and focus ring come from the shared
+   input rule, and re-declaring `background` here would fight it. */
 .sw-cust__search {
+  min-width: 200px;
   font-size: 0.85rem;
   padding: 8px 11px;
 }
-
-.sw-cust__search {
-  min-width: 200px;
-}
-
-
 
 .sw-cust__note {
   display: flex;

@@ -125,7 +125,7 @@ export async function getWatchBySlug(req: Request, res: Response) {
 // ---------- Admin ----------
 
 export async function adminListWatches(req: Request, res: Response) {
-  const { q, page, limit, brand, category } = req.query;
+  const { q, page, limit, brand, category, type } = req.query;
   const filter: Record<string, unknown> = {};
   if (q) {
     const search = await buildSearchFilter(String(q));
@@ -133,6 +133,10 @@ export async function adminListWatches(req: Request, res: Response) {
   }
   if (brand) filter.brand = brand;
   if (category) filter.category = category;
+  // Watches and accessories share this collection but are managed as separate
+  // sections in the admin. Absent means "both", which is what the storefront
+  // and any older caller expect.
+  if (type === 'watch' || type === 'accessory') filter.type = type;
 
   const pageSize = Math.min(Number(limit) || 20, 100);
   const pageNum = Math.max(Number(page) || 1, 1);

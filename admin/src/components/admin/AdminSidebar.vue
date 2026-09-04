@@ -21,6 +21,7 @@ const groups = computed(() => [
     label: locale.t('admin.navCatalog'),
     links: [
       { label: locale.t('admin.watches'), to: '/watches', icon: 'watch' },
+      { label: locale.t('admin.accessories'), to: '/accessories', icon: 'accessory' },
       { label: locale.t('admin.categories'), to: '/categories', icon: 'category' },
       { label: locale.t('admin.brands'), to: '/brands', icon: 'brand' },
       { label: locale.t('admin.collections'), to: '/collections', icon: 'collection' },

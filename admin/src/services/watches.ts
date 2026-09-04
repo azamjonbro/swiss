@@ -26,7 +26,7 @@ export async function fetchWatchBySlug(slug: string): Promise<Watch> {
 // ---- Admin ----
 
 export async function adminFetchWatches(
-  query: { q?: string; brand?: string; category?: string; page?: number; limit?: number } = {}
+  query: { q?: string; brand?: string; category?: string; type?: 'watch' | 'accessory'; page?: number; limit?: number } = {}
 ) {
   const { data } = await api.get<Paginated<Watch>>('/admin/watches', { params: query });
   return data;
