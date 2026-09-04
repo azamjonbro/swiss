@@ -101,4 +101,17 @@ withDefaults(defineProps<Props>(), { size: 30, wordmark: true });
     margin-right: -0.16em;
   }
 }
+
+/* The narrowest phones still in use. Measured with the Uzbek labels, which are
+   the widest the actions column ever gets ("Qidiruv · Hisob · Savat", 87px):
+   at 0.44rem the wordmark left only 9px between itself and them. Trimming the
+   size and the tracking buys back about 20px, which is the difference between
+   "tight" and "touching". */
+@media (max-width: 360px) {
+  .sw-mark__word {
+    font-size: 0.38rem;
+    letter-spacing: 0.08em;
+    margin-right: -0.08em;
+  }
+}
 </style>
