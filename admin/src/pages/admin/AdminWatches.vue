@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, watch as watchRef, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 import type { Watch } from '@/types/models';
 import { adminFetchWatches, adminDeleteWatch, adminUpdateWatch, adminBulkDeleteWatches } from '@/services/watches';
 import { adminFetchBrands } from '@/services/brands';
@@ -12,7 +13,26 @@ import AdminEmpty from '@/components/admin/AdminEmpty.vue';
 import AdminIcon from '@/components/shared/AdminIcon.vue';
 import { resolveMediaUrl } from '@/utils/media';
 
+const route = useRoute();
 const locale = useLocaleStore();
+
+/**
+ * Which slice of the catalogue this page is showing.
+ *
+ * Watches and accessories are the same records distinguished by `type`, and
+ * they are managed as separate sections — so this one component serves both
+ * routes and the route says which. Everything below that reads differently
+ * between the two (the title, the empty state, the "new" link) keys off it.
+ */
+const productType = computed<'watch' | 'accessory'>(
+  () => (route.meta.productType as 'watch' | 'accessory') ?? 'watch',
+);
+const isAccessory = computed(() => productType.value === 'accessory');
+
+/** The form is shared too; the type rides in as a query parameter. */
+const newProductLink = computed(() =>
+  isAccessory.value ? '/watches/new?type=accessory' : '/watches/new',
+);
 const toasts = useToastStore();
 const confirm = useConfirmStore();
 
@@ -90,6 +110,7 @@ async function load() {
       q: activeQuery.value || undefined,
       brand: filterBrand.value || undefined,
       category: filterCategory.value || undefined,
+      type: productType.value,
       page: page.value,
       limit: PAGE_SIZE,
     });
@@ -118,6 +139,17 @@ function reload() {
 // Turning a page invalidates a selection the reader can no longer see.
 watchRef(page, () => {
   selected.value = new Set();
+  void load();
+});
+
+// Moving between Watches and Accessories reuses this component, so nothing of
+// the previous section may carry over into the next one.
+watchRef(productType, () => {
+  search.value = '';
+  filterBrand.value = '';
+  filterCategory.value = '';
+  selected.value = new Set();
+  page.value = 1;
   void load();
 });
 
@@ -163,13 +195,17 @@ onMounted(async () => {
   <div>
     <div class="sw-admin-page-head">
       <div>
-        <h1 class="sw-admin-page-title">{{ locale.t('admin.watches') }}</h1>
-        <p class="sw-admin-page-sub">{{ locale.t('admin.watchesSub') }}</p>
+        <h1 class="sw-admin-page-title">
+          {{ isAccessory ? locale.t('admin.accessories') : locale.t('admin.watches') }}
+        </h1>
+        <p class="sw-admin-page-sub">
+          {{ isAccessory ? locale.t('admin.accessoriesSub') : locale.t('admin.watchesSub') }}
+        </p>
       </div>
       <div class="sw-admin-page-head__actions">
-        <RouterLink class="sw-admin-btn" to="/watches/new">
+        <RouterLink class="sw-admin-btn" :to="newProductLink">
           <AdminIcon name="plus" :size="15" />
-          {{ locale.t('admin.newWatch') }}
+          {{ isAccessory ? locale.t('admin.newAccessory') : locale.t('admin.newWatch') }}
         </RouterLink>
       </div>
     </div>
@@ -177,7 +213,7 @@ onMounted(async () => {
     <form class="sw-admin-toolbar" @submit.prevent="reload" style="flex-wrap: wrap; gap: 14px;">
       <div class="sw-admin-search">
         <span class="sw-admin-search__icon"><AdminIcon name="search" :size="15" /></span>
-        <input v-model="search" type="search" :placeholder="locale.t('admin.searchWatches')" />
+        <input v-model="search" type="search" :placeholder="isAccessory ? locale.t('admin.searchAccessories') : locale.t('admin.searchWatches')" />
       </div>
       
       <div style="display: flex; gap: 10px; align-items: center;">
@@ -222,13 +258,19 @@ onMounted(async () => {
 
       <AdminEmpty
         v-else-if="!watches.length"
-        icon="watch"
-        :title="activeQuery ? locale.t('admin.noSearchResults') : locale.t('admin.emptyWatches')"
+        :icon="isAccessory ? 'accessory' : 'watch'"
+        :title="
+          activeQuery
+            ? locale.t('admin.noSearchResults')
+            : isAccessory
+              ? locale.t('admin.emptyAccessories')
+              : locale.t('admin.emptyWatches')
+        "
         :body="activeQuery ? locale.t('admin.noSearchResultsBody') : locale.t('admin.emptyWatchesBody')"
       >
-        <RouterLink v-if="!activeQuery" class="sw-admin-btn sw-admin-btn--sm" to="/watches/new">
+        <RouterLink v-if="!activeQuery" class="sw-admin-btn sw-admin-btn--sm" :to="newProductLink">
           <AdminIcon name="plus" :size="14" />
-          {{ locale.t('admin.newWatch') }}
+          {{ isAccessory ? locale.t('admin.newAccessory') : locale.t('admin.newWatch') }}
         </RouterLink>
       </AdminEmpty>
 
@@ -264,7 +306,9 @@ onMounted(async () => {
               <td>
                 <div class="sw-admin-cell-media">
                   <img v-if="thumbOf(watch)" class="sw-admin-thumb" :src="thumbOf(watch)!" alt="" />
-                  <span v-else class="sw-admin-thumb sw-admin-thumb--empty"><AdminIcon name="watch" :size="16" /></span>
+                  <span v-else class="sw-admin-thumb sw-admin-thumb--empty">
+                    <AdminIcon :name="isAccessory ? 'accessory' : 'watch'" :size="16" />
+                  </span>
                   <div>
                     <div class="sw-admin-cell-title">{{ watch.name }}</div>
                     <div v-if="watch.reference" class="sw-admin-cell-sub">{{ watch.reference }}</div>

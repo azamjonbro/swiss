@@ -491,6 +491,11 @@ const uz: Dictionary = {
     watchesDeleted: 'mahsulot o‘chirildi',
     allBrands: 'Barcha brendlar',
     allCategories: 'Barcha kategoriyalar',
+    accessories: 'Aksessuarlar',
+    accessoriesSub: 'Tasmalar, to‘qalar va soatga hamroh bo‘ladigan barcha narsa.',
+    newAccessory: 'Yangi aksessuar',
+    searchAccessories: 'Aksessuarlarni qidirish…',
+    emptyAccessories: 'Hozircha aksessuar yo‘q',
   },
 };
 

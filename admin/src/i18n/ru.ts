@@ -491,6 +491,11 @@ const ru: Dictionary = {
     watchesDeleted: 'товаров удалено',
     allBrands: 'Все бренды',
     allCategories: 'Все категории',
+    accessories: 'Аксессуары',
+    accessoriesSub: 'Ремешки, застёжки и всё, что дополняет часы.',
+    newAccessory: 'Новый аксессуар',
+    searchAccessories: 'Поиск аксессуаров…',
+    emptyAccessories: 'Аксессуаров пока нет',
   },
 };
 

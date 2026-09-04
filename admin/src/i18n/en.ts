@@ -489,6 +489,11 @@ const en = {
     watchesDeleted: 'products deleted',
     allBrands: 'All brands',
     allCategories: 'All categories',
+    accessories: 'Accessories',
+    accessoriesSub: 'Straps, buckles and everything that pairs with a timepiece.',
+    newAccessory: 'New Accessory',
+    searchAccessories: 'Search accessories…',
+    emptyAccessories: 'No accessories yet',
   },
 };
 

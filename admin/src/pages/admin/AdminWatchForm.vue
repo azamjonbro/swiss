@@ -45,7 +45,10 @@ const form = ref({
   brand: '',
   category: '',
   collectionRef: '',
-  type: 'watch' as 'watch' | 'accessory',
+  // Preselected from the route: "New accessory" in the Accessories section
+  // links here with ?type=accessory, so the type is already right rather than
+  // being a dropdown someone has to remember to change.
+  type: (route.query.type === 'accessory' ? 'accessory' : 'watch') as 'watch' | 'accessory',
   price: 0,
   currency: 'USD',
   shortDescription: '',
