@@ -63,7 +63,9 @@ async function load() {
   try {
     const [collectionsData, watchesData] = await Promise.all([
       adminFetchCollections(),
-      adminFetchWatches({ limit: 100 }),
+      // Collections group timepieces, so the picker offers watches only —
+      // accessories belong to a product through `compatibleWith`, not here.
+      adminFetchWatches({ type: 'watch', limit: 100 }),
     ]);
     collections.value = collectionsData;
     allWatches.value = watchesData.items;

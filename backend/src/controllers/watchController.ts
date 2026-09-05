@@ -134,9 +134,13 @@ export async function adminListWatches(req: Request, res: Response) {
   if (brand) filter.brand = brand;
   if (category) filter.category = category;
   // Watches and accessories share this collection but are managed as separate
-  // sections in the admin. Absent means "both", which is what the storefront
-  // and any older caller expect.
-  if (type === 'watch' || type === 'accessory') filter.type = type;
+  // sections in the admin. Absent means "both", which is what any older caller
+  // expects. `watch` is expressed as "not an accessory" so that records
+  // predating the `type` field — which carry no `type` at all, the schema
+  // default having only ever applied on create — still appear in the watch
+  // list rather than falling out of the admin entirely.
+  if (type === 'accessory') filter.type = 'accessory';
+  else if (type === 'watch') filter.type = { $ne: 'accessory' };
 
   const pageSize = Math.min(Number(limit) || 20, 100);
   const pageNum = Math.max(Number(page) || 1, 1);

@@ -269,7 +269,7 @@ const ru: Dictionary = {
     reviewInquiries: 'Посмотреть запросы',
 
     // Watches
-    watchesSub: 'Все товары на сайте: часы и аксессуары.',
+    watchesSub: 'Все часы на сайте.',
     newWatch: 'Новые часы',
     editWatch: 'Изменить часы',
     searchWatches: 'Поиск по названию или референсу…',
@@ -494,6 +494,9 @@ const ru: Dictionary = {
     accessories: 'Аксессуары',
     accessoriesSub: 'Ремешки, застёжки и всё, что дополняет часы.',
     newAccessory: 'Новый аксессуар',
+    editAccessory: 'Изменить аксессуар',
+    backToAccessories: 'К списку аксессуаров',
+    totalAccessories: 'Всего аксессуаров',
     searchAccessories: 'Поиск аксессуаров…',
     emptyAccessories: 'Аксессуаров пока нет',
   },

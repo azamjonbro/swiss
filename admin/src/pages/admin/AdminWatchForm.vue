@@ -66,6 +66,13 @@ const form = ref({
   translations: {} as Translations,
 });
 
+// Watches and accessories are edited by this one form but listed on two
+// separate pages. Every way out of here — back link, cancel, the redirect after
+// a save — has to lead to the list the product is actually on, or an edited
+// accessory appears to vanish into a Watches page that never shows it.
+const isAccessory = computed(() => form.value.type === 'accessory');
+const listPath = computed(() => (isAccessory.value ? '/accessories' : '/watches'));
+
 const variants = ref<WatchVariant[]>([
   {
     colorSlug: 'default',
@@ -206,7 +213,7 @@ async function submit() {
       await adminCreateWatch(payload);
     }
     toasts.success(locale.t('admin.watchSaved'));
-    router.push('/watches');
+    router.push(listPath.value);
   } catch {
     errorMessage.value = locale.t('admin.saveFailed');
     toasts.error(locale.t('admin.saveFailed'));
@@ -218,15 +225,19 @@ async function submit() {
 
 <template>
   <div>
-    <RouterLink class="sw-wf__back" to="/watches">
+    <RouterLink class="sw-wf__back" :to="listPath">
       <AdminIcon name="chevronLeft" :size="14" />
-      {{ locale.t('admin.backToWatches') }}
+      {{ isAccessory ? locale.t('admin.backToAccessories') : locale.t('admin.backToWatches') }}
     </RouterLink>
 
     <div class="sw-admin-page-head">
       <div>
         <h1 class="sw-admin-page-title">
-          {{ isEdit ? locale.t('admin.editWatch') : locale.t('admin.newWatch') }}
+          {{
+            isAccessory
+              ? isEdit ? locale.t('admin.editAccessory') : locale.t('admin.newAccessory')
+              : isEdit ? locale.t('admin.editWatch') : locale.t('admin.newWatch')
+          }}
         </h1>
         <p class="sw-admin-page-sub">{{ form.name || locale.t('admin.formBasicsSub') }}</p>
       </div>
@@ -476,7 +487,7 @@ async function submit() {
           <button class="sw-admin-btn sw-admin-btn--block" type="submit" :disabled="isSaving || isLoading">
             {{ isSaving ? locale.t('admin.saving') : locale.t('admin.save') }}
           </button>
-          <RouterLink class="sw-admin-btn sw-admin-btn--ghost sw-admin-btn--block" to="/watches">
+          <RouterLink class="sw-admin-btn sw-admin-btn--ghost sw-admin-btn--block" :to="listPath">
             {{ locale.t('admin.cancel') }}
           </RouterLink>
         </div>

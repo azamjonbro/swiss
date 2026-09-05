@@ -11,6 +11,7 @@ const auth = useAuthStore();
 
 interface DashboardStats {
   totalWatches: number;
+  totalAccessories: number;
   featuredWatches: number;
   totalCategories: number;
   totalBrands: number;
@@ -40,11 +41,17 @@ onMounted(async () => {
     </div>
 
     <div v-if="isLoading" class="sw-dash__grid">
-      <div v-for="n in 5" :key="n" class="sw-admin-skeleton sw-dash__skeleton" />
+      <div v-for="n in 6" :key="n" class="sw-admin-skeleton sw-dash__skeleton" />
     </div>
 
     <div v-else-if="stats" class="sw-dash__grid">
       <StatCard :label="locale.t('admin.totalWatches')" :value="stats.totalWatches" icon="watch" to="/watches" />
+      <StatCard
+        :label="locale.t('admin.totalAccessories')"
+        :value="stats.totalAccessories"
+        icon="accessory"
+        to="/accessories"
+      />
       <StatCard :label="locale.t('admin.featuredWatches')" :value="stats.featuredWatches" icon="star" to="/watches" />
       <StatCard :label="locale.t('admin.categories')" :value="stats.totalCategories" icon="category" to="/categories" />
       <StatCard :label="locale.t('admin.brands')" :value="stats.totalBrands" icon="brand" to="/brands" />

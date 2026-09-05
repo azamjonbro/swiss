@@ -269,7 +269,7 @@ const uz: Dictionary = {
     reviewInquiries: 'So‘rovlarni ko‘rish',
 
     // Watches
-    watchesSub: 'Saytdagi barcha mahsulotlar: soatlar va aksessuarlar.',
+    watchesSub: 'Saytdagi barcha soatlar.',
     newWatch: 'Yangi soat',
     editWatch: 'Soatni tahrirlash',
     searchWatches: 'Nomi yoki referens bo‘yicha qidirish…',
@@ -494,6 +494,9 @@ const uz: Dictionary = {
     accessories: 'Aksessuarlar',
     accessoriesSub: 'Tasmalar, to‘qalar va soatga hamroh bo‘ladigan barcha narsa.',
     newAccessory: 'Yangi aksessuar',
+    editAccessory: 'Aksessuarni tahrirlash',
+    backToAccessories: 'Aksessuarlar ro‘yxatiga',
+    totalAccessories: 'Jami aksessuarlar',
     searchAccessories: 'Aksessuarlarni qidirish…',
     emptyAccessories: 'Hozircha aksessuar yo‘q',
   },

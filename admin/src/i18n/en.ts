@@ -267,7 +267,7 @@ const en = {
     reviewInquiries: 'Review inquiries',
 
     // Watches
-    watchesSub: 'Every product on the storefront, watches and accessories.',
+    watchesSub: 'Every timepiece on the storefront.',
     newWatch: 'New Watch',
     editWatch: 'Edit Watch',
     searchWatches: 'Search by name or reference…',
@@ -492,6 +492,9 @@ const en = {
     accessories: 'Accessories',
     accessoriesSub: 'Straps, buckles and everything that pairs with a timepiece.',
     newAccessory: 'New Accessory',
+    editAccessory: 'Edit Accessory',
+    backToAccessories: 'Back to accessories',
+    totalAccessories: 'Total Accessories',
     searchAccessories: 'Search accessories…',
     emptyAccessories: 'No accessories yet',
   },
