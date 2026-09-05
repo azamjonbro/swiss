@@ -187,7 +187,7 @@ function onError() {
   height: 100%;
   opacity: 0;
   transform: scale(1.03);
-  transition: opacity var(--dur-slow) var(--ease-luxury), transform 1.4s var(--ease-luxury);
+  transition: opacity var(--dur-mid) var(--ease-luxury), transform 0.9s var(--ease-luxury);
 }
 
 .sw-smart-image__img.is-loaded {

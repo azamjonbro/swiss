@@ -31,9 +31,13 @@ export function initLenis(): Lenis | null {
     return null;
   }
 
+  // Short enough that the page keeps up with the wheel. At 1.15s with a
+  // quartic ease the tail crawled for the better part of a second after the
+  // gesture had stopped, which reads as lag rather than smoothing; 0.75s on a
+  // cubic ease still glides but lands where the reader expects it to.
   lenis = new Lenis({
-    duration: 1.15,
-    easing: (t: number) => 1 - Math.pow(1 - t, 4),
+    duration: 0.75,
+    easing: (t: number) => 1 - Math.pow(1 - t, 3),
     smoothWheel: true,
     touchMultiplier: 1.5,
   });
@@ -94,7 +98,7 @@ export function scrollTo(target: string | number | HTMLElement, options?: Record
   // An anchor jump asked for by the page outranks a post-navigation hold.
   releaseScrollHold();
   if (lenis) {
-    lenis.scrollTo(target, { duration: 1.4, easing: (t: number) => 1 - Math.pow(1 - t, 4), ...options });
+    lenis.scrollTo(target, { duration: 0.95, easing: (t: number) => 1 - Math.pow(1 - t, 3), ...options });
   } else if (typeof target === 'number') {
     // Reduced motion: Lenis is never created, so the native scroller is all
     // there is. Without this branch a numeric target was silently dropped.

@@ -91,8 +91,8 @@ html.sw-scroll-locked {
   opacity: 0;
   transform: translate3d(0, var(--reveal-y, 22px), 0);
   transition:
-    opacity 1.05s var(--ease-editorial) var(--reveal-delay, 0s),
-    transform 1.05s var(--ease-editorial) var(--reveal-delay, 0s);
+    opacity 0.62s var(--ease-editorial) var(--reveal-delay, 0s),
+    transform 0.62s var(--ease-editorial) var(--reveal-delay, 0s);
 }
 
 .sw-reveal.is-revealed {
@@ -106,7 +106,7 @@ html.sw-scroll-locked {
 // observer that is meant to reveal it from ever firing.
 .sw-reveal--clip > * {
   clip-path: inset(0 0 100% 0);
-  transition: clip-path 1.4s var(--ease-editorial) var(--reveal-delay, 0s);
+  transition: clip-path 0.72s var(--ease-editorial) var(--reveal-delay, 0s);
 }
 
 .sw-reveal--clip.is-revealed > * {

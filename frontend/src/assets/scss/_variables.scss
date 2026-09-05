@@ -83,6 +83,16 @@
   --radius-lg: 4px;
 }
 
+// The header collapses to 62px at this width (AppHeader.vue). The token has to
+// follow it, or every page that offsets itself by `--header-height` leaves a
+// 22px gap under the bar on a phone — and the account layout, which sizes its
+// panel with `100vh - var(--header-height)`, overshoots by the same amount.
+@media (max-width: 640px) {
+  :root {
+    --header-height: 62px;
+  }
+}
+
 // Dark theme: overrides only the semantic tokens (bg/text/border/accent).
 // Raw palette vars (--sw-black, --sw-white, etc.) stay fixed on purpose —
 // several sections (footer, hero overlay, CTA band) are deliberately

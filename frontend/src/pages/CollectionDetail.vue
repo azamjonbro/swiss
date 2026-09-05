@@ -70,7 +70,9 @@ watch(
 
   <article v-else-if="collection" class="sw-collection-detail">
     <section class="sw-collection-detail__hero">
-      <SmartImage :src="collection.image" :alt="`${collection.name} watch collection`" eager aspect-ratio="21 / 9" />
+      <div class="sw-collection-detail__hero-media">
+        <SmartImage :src="collection.image" :alt="`${collection.name} watch collection`" eager sizes="100vw" />
+      </div>
       <div class="sw-collection-detail__overlay" />
       <div class="sw-collection-detail__content">
         <span class="sw-eyebrow">{{ locale.t('collectionDetail.curated') }}</span>
@@ -92,9 +94,21 @@ watch(
   padding: 32px var(--container-pad) 0;
 }
 
+/* Same fixed header, same offset as the maison pages. */
+.sw-collection-detail {
+  padding-top: var(--header-height);
+}
+
 .sw-collection-detail__hero {
   position: relative;
   color: var(--sw-white);
+  height: clamp(320px, 56svh, 620px);
+  overflow: hidden;
+}
+
+.sw-collection-detail__hero-media {
+  position: absolute;
+  inset: 0;
 }
 
 .sw-collection-detail__overlay {
