@@ -26,8 +26,15 @@ export const STORES_PATH = '/stores';
  */
 export const SITE_NAME = 'SwissWatch Premium';
 
-/** Canonical production origin. */
-export const DEFAULT_SITE_URL = 'https://swisswatchpremium.uz';
+/**
+ * Canonical production origin.
+ *
+ * `www` is the host Vercel actually serves: the bare domain answers every
+ * request with a 308 to it. Naming the bare domain here pointed every
+ * canonical, Open Graph URL and sitemap <loc> at a host that redirects, which
+ * is the one thing a canonical must never do.
+ */
+export const DEFAULT_SITE_URL = 'https://www.swisswatchpremium.uz';
 
 /**
  * The one hostname allowed to appear in a canonical, an Open Graph URL, a
@@ -40,7 +47,18 @@ export const DEFAULT_SITE_URL = 'https://swisswatchpremium.uz';
  * it and deindexes the host that shipped it — so the production build pins the
  * host rather than trusting whatever the environment happens to hold.
  */
-export const PRODUCTION_HOST = 'swisswatchpremium.uz';
+export const PRODUCTION_HOST = 'www.swisswatchpremium.uz';
+
+/**
+ * The same site with the `www.` prefix removed.
+ *
+ * Both spellings are this site, so both are accepted — but only
+ * DEFAULT_SITE_URL is ever emitted. Rejecting the bare domain outright would
+ * turn a stale VITE_SITE_URL into a failed production build, and silently
+ * passing it through would put the redirecting host back into the canonicals
+ * this constant exists to keep out.
+ */
+const PRODUCTION_APEX = PRODUCTION_HOST.replace(/^www\./, '');
 
 /** Google truncates a result title past roughly this width. */
 export const TITLE_MAX = 60;
@@ -88,9 +106,14 @@ export function resolveSiteUrl(raw, { strict = false, label = 'VITE_SITE_URL' } 
     if (!problem && /\.vercel\.app$/i.test(host)) {
       problem = `must not point at a *.vercel.app preview host (got "${value}")`;
     }
+    // Either spelling of this site normalises to the canonical origin, so a
+    // configured bare domain neither fails the build nor reaches a canonical.
+    if (!problem && host.toLowerCase().replace(/^www\./, '') === PRODUCTION_APEX) {
+      return DEFAULT_SITE_URL;
+    }
     // Only enforced for builds that write permanent URLs (strict). The lenient
     // runtime path keeps its correct default instead of throwing on a page.
-    if (!problem && strict && host.toLowerCase() !== PRODUCTION_HOST) {
+    if (!problem && strict) {
       problem = `must be ${DEFAULT_SITE_URL} — the storefront's only canonical host (got "${value}")`;
     }
   }

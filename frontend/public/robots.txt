@@ -1,4 +1,4 @@
-# https://swisswatchpremium.uz
+# https://www.swisswatchpremium.uz
 
 User-agent: *
 Allow: /
@@ -22,4 +22,4 @@ Disallow: /_shell
 # Googlebot read them while rendering and still refuses to index them.
 # /uploads stays fully open: it is the product photography.
 
-Sitemap: https://swisswatchpremium.uz/sitemap.xml
+Sitemap: https://www.swisswatchpremium.uz/sitemap.xml
