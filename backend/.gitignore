@@ -10,5 +10,6 @@ src/uploads/videos/*
 !src/uploads/images/.gitkeep
 !src/uploads/videos/.gitkeep
 
-# Scratch cache for scripts/fetch-tsarbomba.py — re-fetched on demand.
+# Scratch caches for the catalogue fetchers — re-fetched on demand.
 .tsarbomba-cache/
+.brand-cache/

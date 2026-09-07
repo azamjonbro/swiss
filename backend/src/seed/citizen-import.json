@@ -1,0 +1,68 @@
+{
+  "brand": "Citizen",
+  "source": "https://www.citizenwatch.com/us/en",
+  "fetchedAt": "2026-09-07T19:05:20+00:00",
+  "currency": "USD",
+  "products": [
+    {
+      "reference": "AQ4103-16W",
+      "name": "The CITIZEN",
+      "series": "Citizen Premier Eco",
+      "gender": "men",
+      "price": 3325.0,
+      "movement": "Eco-Drive A060",
+      "caseMaterial": "Super Titanium",
+      "caseSize": "38.3 mm",
+      "dial": "Brown",
+      "bracelet": "Crocodile, Fold Over Clasp with Push Buttons",
+      "waterResistance": "10 bar (100 m)",
+      "description": "Superior precision meets the highest standards of quality in The CITIZEN. Representing the never-ending pursuit of the essence of the watch, this exceptional Super Titanium™ timepiece serves as the ideal all-purpose timepiece, perfectly balancing mechanical refinement with aesthetic intrigue. The CITIZEN watches are crafted in a dedicated workshop deep in the Nagano countryside, where extraordinary skill is essential for their highly advanced movements. This meticulous work is entrusted to our watchmaking Meisters, our most experienced and technically proficient artisans. With precision and care, they bring each timepiece to life, making every watch a true reflection of fine craftsmanship. The ultraprecise Citizen Calibre A060 movement was developed using only the most rigorously selected crystal oscillators and is assembled from individual components of extraordinary precision. With an annual accuracy of ±5 seconds, the crystal oscillators were set aside for a six-month observation period before selecting only those that meet our high standards of accuracy. The unique dial of this limited-edition timepiece features a special design inspired by \"\"Makura no Soshi” from The Pillow Book by Sei Shōnagon, a classic work of Japanese literature. On the wrist, the watch measures comfortably at 38.3mm, with its gold-tone Super Titanium™ case that’s lightweight, scratch- and rust-resistant, and faceted with sharp surfaces of brushed and polished finishing and secured via a brown crocodile leather strap. A dual-sphere sapphire crystal protects a rich brown eagle feather pattern dial, creating a captivating interplay between light, texture, and colour. Toward the bottom of the display is an eagle mark, symbolizing the twin ideals of The CITIZEN – foresight and dedication to the pursuit of ideals, as well as the enduring connection between watch and wearer. Equipped with our proprietary Eco-Drive technology that's sustainably powered by any light and never needs a battery, advanced features include a perpetual calendar, power reserve, time difference correction, and a midnight sharp calendar update function. Water resistant up to 100 metres. Limited to 400 unnumbered pieces worldwide.",
+      "images": [
+        "/uploads/images/citizen-aq4103-16w-1.853eaa4a.jpg",
+        "/uploads/images/citizen-aq4103-16w-2.d46d9063.jpg",
+        "/uploads/images/citizen-aq4103-16w-3.5b8abd37.jpg",
+        "/uploads/images/citizen-aq4103-16w-4.d98b3d6c.jpg"
+      ],
+      "sourceUrl": "https://www.citizenwatch.com/us/en/product/AQ4103-16W.html"
+    },
+    {
+      "reference": "AQ5022-02W",
+      "name": "Eco-Drive One",
+      "series": "Dress/Classic Eco",
+      "gender": "men",
+      "price": 3025.0,
+      "movement": "Eco-Drive 8845",
+      "caseMaterial": "Stainless Steel",
+      "caseSize": "36.6 mm",
+      "dial": "Green",
+      "bracelet": "Crocodile, Fold Over Clasp with Push Buttons",
+      "waterResistance": "WR [Splash Resistant]",
+      "description": "Superior precision meets the highest standards of quality in Eco-Drive One. Representing the never-ending pursuit of the essence of the watch, the newest addition serves as an ideal formal companion, perfectly balancing technical refinement with classic intrigue. The understated timepiece wears comfortably at 36.6mm, with its gold-tone stainless steel case at 4.52mm, polished to a mirror finish and secured to the wrist via a black crocodile leather strap. An anti-reflective sapphire crystal protects a distinct green metal dial, with its contrasting textures adding to the watch's distinction while sharp details and a 6 o'clock seconds sub-dial recall timeless design. Equipped with our proprietary Eco-Drive technology that's sustainably powered by any light and never needs a battery. Water resistant up to 30 meters. Caliber 8845.",
+      "images": [
+        "/uploads/images/citizen-aq5022-02w-1.71ed3c31.jpg",
+        "/uploads/images/citizen-aq5022-02w-2.31bdf7b9.jpg"
+      ],
+      "sourceUrl": "https://www.citizenwatch.com/us/en/product/AQ5022-02W.html"
+    },
+    {
+      "reference": "AT8020-03L",
+      "name": "World Chronograph A-T",
+      "series": "Sport Luxury LP",
+      "gender": "men",
+      "price": 725.0,
+      "movement": "Eco-Drive H800",
+      "caseMaterial": "Stainless Steel",
+      "caseSize": "43 mm",
+      "dial": "Blue",
+      "bracelet": "Polyurethane Coated Leather, Buckle",
+      "waterResistance": "20 bar (200 m)",
+      "description": "Citizen Eco-Drive Radio-Controlled Chronograph World Timer; Blue Angels edition with caseback insignia. Atomic time in 26 world cities; radio-controlled accuracy in 5 zones. 1/20 second chrono up to 60 minutes, perpetual calendar, 12/24 hour time, power reserve, non-reflective sapphire crystal. Stainless steel, blue ion plating, leather strap. Featuring our Eco-Drive technology – powered by light, any light. Never needs a battery. Caliber number H800.",
+      "images": [
+        "/uploads/images/citizen-at8020-03l-1.ed9b0261.jpg",
+        "/uploads/images/citizen-at8020-03l-2.2fa06e58.jpg",
+        "/uploads/images/citizen-at8020-03l-3.63cd6581.jpg"
+      ],
+      "sourceUrl": "https://www.citizenwatch.com/us/en/product/AT8020-03L.html"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "brand": "Saint Honoré",
+  "source": "https://www.sainthonore.com",
+  "fetchedAt": "2026-09-07T19:07:31+00:00",
+  "currency": "USD",
+  "products": [
+    {
+      "reference": "CM809001 77DSQU",
+      "name": "Champ de Mars",
+      "series": "Champ de Mars",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Ronda 1042",
+      "caseMaterial": "IP Blue and Gun Plated",
+      "caseSize": "43 mm",
+      "dial": "See Through",
+      "bracelet": "Blue Leather Strap",
+      "waterResistance": "5 ATM",
+      "description": "Inspired by the Eiffel Tower, the limited-edition Champ de Mars Eiffel timepiece blends Parisian heritage with precision engineering. Its cannage-patterned bezel echoes the tower’s lattice, while a bespoke double-barrel tourbillon, encased in sapphire crystals, powers the skeletonized dial. Housed in a 43mm gun-plated case with polished chamfers and a refined top ring, it boasts a 20-jewel movement with a 65-hour power reserve. A genuine black leather strap adds the final touch of sophistication.",
+      "images": [
+        "/uploads/images/saint-honore-cm809001-77dsqu-1.0efc5699.jpg",
+        "/uploads/images/saint-honore-cm809001-77dsqu-2.b052a21f.jpg",
+        "/uploads/images/saint-honore-cm809001-77dsqu-3.624385a0.jpg",
+        "/uploads/images/saint-honore-cm809001-77dsqu-4.4669f0a2.jpg"
+      ],
+      "sourceUrl": "https://sainthonore.com/product/champ-de-mars-48/"
+    },
+    {
+      "reference": "CM809001 87NSQU",
+      "name": "Champ de Mars",
+      "series": "Champ de Mars",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Ronda 1042",
+      "caseMaterial": "IP Rose Gold and Black",
+      "caseSize": "43 mm",
+      "dial": "See Through",
+      "bracelet": "Black Leather Strap",
+      "waterResistance": "5 ATM",
+      "description": "Champ De Mars watch captures the essence of Parisian elegance. Its unique topring and case, mimicking the intricate patterns of the Eiffel Tower, oozes a timeless allure. With a 43 mm rose gold and black case, the see-through dial prominently features the signature Saint Honoré Paris at the center. Complemented by a luxurious croco printed black leather strap, the Champ De Mars watch is a perfect blend of style and heritage.",
+      "images": [
+        "/uploads/images/saint-honore-cm809001-87nsqu-1.922c1f94.jpg",
+        "/uploads/images/saint-honore-cm809001-87nsqu-2.fb679bed.jpg",
+        "/uploads/images/saint-honore-cm809001-87nsqu-3.981a351a.jpg",
+        "/uploads/images/saint-honore-cm809001-87nsqu-4.f621c680.jpg"
+      ],
+      "sourceUrl": "https://sainthonore.com/product/champ-de-mars-47/"
+    }
+  ]
+}

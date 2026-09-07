@@ -1,0 +1,48 @@
+{
+  "brand": "Tissot",
+  "source": "https://www.tissotwatches.com/en-en",
+  "fetchedAt": "2026-09-07T18:56:52+00:00",
+  "currency": "USD",
+  "products": [
+    {
+      "reference": "T006.407.11.033.00",
+      "name": "Le Locle 39.3mm",
+      "series": "Le Locle",
+      "gender": "men",
+      "price": 810,
+      "movement": "Swiss automatic",
+      "caseMaterial": "316L stainless steel",
+      "caseSize": "39.3 mm",
+      "dial": "Silver",
+      "bracelet": "Stainless steel, Butterfly clasp with push-buttons",
+      "waterResistance": "3 bar (30 m)",
+      "images": [
+        "/uploads/images/tissot-le-locle-39-3mm-t0064071103300-1.58ce7c8a.jpg",
+        "/uploads/images/tissot-le-locle-39-3mm-t0064071103300-2.90ea42ba.jpg",
+        "/uploads/images/tissot-le-locle-39-3mm-t0064071103300-3.29b00fc9.jpg",
+        "/uploads/images/tissot-le-locle-39-3mm-t0064071103300-4.038b78f9.jpg"
+      ],
+      "sourceUrl": "https://www.tissotwatches.com/en-en/T0064071103300.html"
+    },
+    {
+      "reference": "T006.407.11.033.02",
+      "name": "Le Locle Open Heart 39.3mm",
+      "series": "Le Locle",
+      "gender": "men",
+      "price": 973,
+      "movement": "Swiss automatic",
+      "caseMaterial": "316L stainless steel",
+      "caseSize": "39.3 mm",
+      "dial": "Silver",
+      "bracelet": "Stainless steel, Butterfly clasp with push-buttons",
+      "waterResistance": "3 bar (30 m)",
+      "images": [
+        "/uploads/images/tissot-le-locle-open-heart-39-3mm-t0064071103302-1.655d43af.jpg",
+        "/uploads/images/tissot-le-locle-open-heart-39-3mm-t0064071103302-2.ccd73f17.jpg",
+        "/uploads/images/tissot-le-locle-open-heart-39-3mm-t0064071103302-3.0ac434d5.jpg",
+        "/uploads/images/tissot-le-locle-open-heart-39-3mm-t0064071103302-4.8f06d187.jpg"
+      ],
+      "sourceUrl": "https://www.tissotwatches.com/en-en/T0064071103302.html"
+    }
+  ]
+}

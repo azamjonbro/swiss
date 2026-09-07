@@ -1,0 +1,1682 @@
+{
+  "brand": "West End Watch Co.",
+  "source": "https://www.westendwatchco.ch",
+  "fetchedAt": "2026-09-07T19:21:18+00:00",
+  "currency": "USD",
+  "products": [
+    {
+      "reference": "8050.10.3272",
+      "name": "Silk Road III",
+      "series": "Silk Road III",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39 mm",
+      "dial": "Velvety white dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8050-10-3272-1.6c200608.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/skil-road-ii"
+    },
+    {
+      "reference": "8050.10.3273",
+      "name": "Silk Road III",
+      "series": "Silk Road III",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39 mm",
+      "dial": "Sunray matt black dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8050-10-3273-1.400c45c1.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/skil-road-ii"
+    },
+    {
+      "reference": "8050.10.3277",
+      "name": "Silk Road III",
+      "series": "Silk Road III",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39 mm",
+      "dial": "Sunray metallic blue dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8050-10-3277-1.69cdcfe9.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/skil-road-ii"
+    },
+    {
+      "reference": "8050.20.3274",
+      "name": "Silk Road III",
+      "series": "Silk Road III",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39 mm",
+      "dial": "Velvety white dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8050-20-3274-1.3f4607a3.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/skil-road-ii"
+    },
+    {
+      "reference": "8050.20.3275",
+      "name": "Silk Road III",
+      "series": "Silk Road III",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39 mm",
+      "dial": "Sunray matt black dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8050-20-3275-1.fd3ae7a9.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/skil-road-ii"
+    },
+    {
+      "reference": "8050.20.3276",
+      "name": "Silk Road III",
+      "series": "Silk Road III",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39 mm",
+      "dial": "Sunray champagne dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8050-20-3276-1.13a8083f.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/skil-road-ii"
+    },
+    {
+      "reference": "8050.30.3274",
+      "name": "Silk Road III",
+      "series": "Silk Road III",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39 mm",
+      "dial": "Velvety white dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8050-30-3274-1.6ce05201.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/skil-road-ii"
+    },
+    {
+      "reference": "8050.30.3275",
+      "name": "Silk Road III",
+      "series": "Silk Road III",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39 mm",
+      "dial": "Sunray matt black dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8050-30-3275-1.6f99eb6b.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/skil-road-ii"
+    },
+    {
+      "reference": "8050.30.3276",
+      "name": "Silk Road III",
+      "series": "Silk Road III",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39 mm",
+      "dial": "Sunray champagne dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8050-30-3276-1.f50f38ab.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/skil-road-ii"
+    },
+    {
+      "reference": "8050.10.3272",
+      "name": "Silk Road III",
+      "series": "Silk Road III",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39 mm",
+      "dial": "Velvety white dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8050-10-3272-1.6c200608.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/silk-road-iii"
+    },
+    {
+      "reference": "8050.10.3273",
+      "name": "Silk Road III",
+      "series": "Silk Road III",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39 mm",
+      "dial": "Sunray matt black dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8050-10-3273-1.400c45c1.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/silk-road-iii"
+    },
+    {
+      "reference": "8050.10.3277",
+      "name": "Silk Road III",
+      "series": "Silk Road III",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39 mm",
+      "dial": "Sunray metallic blue dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8050-10-3277-1.69cdcfe9.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/silk-road-iii"
+    },
+    {
+      "reference": "8050.20.3274",
+      "name": "Silk Road III",
+      "series": "Silk Road III",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39 mm",
+      "dial": "Velvety white dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8050-20-3274-1.3f4607a3.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/silk-road-iii"
+    },
+    {
+      "reference": "8050.20.3275",
+      "name": "Silk Road III",
+      "series": "Silk Road III",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39 mm",
+      "dial": "Sunray matt black dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8050-20-3275-1.fd3ae7a9.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/silk-road-iii"
+    },
+    {
+      "reference": "8050.20.3276",
+      "name": "Silk Road III",
+      "series": "Silk Road III",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39 mm",
+      "dial": "Sunray champagne dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8050-20-3276-1.13a8083f.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/silk-road-iii"
+    },
+    {
+      "reference": "8050.30.3274",
+      "name": "Silk Road III",
+      "series": "Silk Road III",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39 mm",
+      "dial": "Velvety white dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8050-30-3274-1.6ce05201.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/silk-road-iii"
+    },
+    {
+      "reference": "8050.30.3275",
+      "name": "Silk Road III",
+      "series": "Silk Road III",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39 mm",
+      "dial": "Sunray matt black dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8050-30-3275-1.6f99eb6b.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/silk-road-iii"
+    },
+    {
+      "reference": "8050.30.3276",
+      "name": "Silk Road III",
+      "series": "Silk Road III",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39 mm",
+      "dial": "Sunray champagne dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8050-30-3276-1.f50f38ab.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/silk-road-iii"
+    },
+    {
+      "reference": "8149.10.0203",
+      "name": "Sowar Prima",
+      "series": "Sowar Prima",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Swiss automatic movement with date calendar",
+      "caseMaterial": "Stainless Steel case & bracelet",
+      "caseSize": "39 mm",
+      "dial": "",
+      "bracelet": "Stainless Steel case & bracelet",
+      "waterResistance": "",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8149-10-0203-1.2b23077d.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/sowar-prima"
+    },
+    {
+      "reference": "8149.10.0207",
+      "name": "Sowar Prima",
+      "series": "Sowar Prima",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Swiss automatic movement with date calendar",
+      "caseMaterial": "Stainless Steel case & bracelet",
+      "caseSize": "39 mm",
+      "dial": "",
+      "bracelet": "Stainless Steel case & bracelet",
+      "waterResistance": "",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8149-10-0207-1.663b5013.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/sowar-prima"
+    },
+    {
+      "reference": "8149.10.0211",
+      "name": "Sowar Prima",
+      "series": "Sowar Prima",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Swiss automatic movement with date calendar",
+      "caseMaterial": "Stainless Steel case & bracelet",
+      "caseSize": "39 mm",
+      "dial": "",
+      "bracelet": "Stainless Steel case & bracelet",
+      "waterResistance": "",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8149-10-0211-1.771669f5.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/sowar-prima"
+    },
+    {
+      "reference": "8149.10.0304",
+      "name": "Sowar Prima",
+      "series": "Sowar Prima",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Swiss automatic movement with date calendar",
+      "caseMaterial": "Stainless Steel case & bracelet",
+      "caseSize": "39 mm",
+      "dial": "",
+      "bracelet": "Stainless Steel case & bracelet",
+      "waterResistance": "",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8149-10-0304-1.e0a96a92.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/sowar-prima"
+    },
+    {
+      "reference": "8149.10.0534",
+      "name": "Sowar Prima",
+      "series": "Sowar Prima",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Swiss automatic movement with date calendar",
+      "caseMaterial": "Stainless Steel case & bracelet",
+      "caseSize": "39 mm",
+      "dial": "",
+      "bracelet": "Stainless Steel case & bracelet",
+      "waterResistance": "",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8149-10-0534-1.aebfdc08.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/sowar-prima"
+    },
+    {
+      "reference": "8149.10.0788",
+      "name": "Sowar Prima",
+      "series": "Sowar Prima",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Swiss automatic movement with date calendar",
+      "caseMaterial": "Stainless Steel case & bracelet",
+      "caseSize": "39 mm",
+      "dial": "",
+      "bracelet": "Stainless Steel case & bracelet",
+      "waterResistance": "",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8149-10-0788-1.abcead6f.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/sowar-prima"
+    },
+    {
+      "reference": "6832.10.3244",
+      "name": "Sowar 1916",
+      "series": "Sowar 1916",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with small second and date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39 mm",
+      "dial": "Pure white dial",
+      "bracelet": "leather strap",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6832-10-3244-1.1e50774c.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/sowar-1916"
+    },
+    {
+      "reference": "6832.10.3245",
+      "name": "Sowar 1916",
+      "series": "Sowar 1916",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with small second and date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39 mm",
+      "dial": "Shiny black dial",
+      "bracelet": "leather strap",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6832-10-3245-1.15aaebd9.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/sowar-1916"
+    },
+    {
+      "reference": "6832.30.3244",
+      "name": "Sowar 1916",
+      "series": "Sowar 1916",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with small second and date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39 mm",
+      "dial": "Pure white dial",
+      "bracelet": "leather strap",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6832-30-3244-1.f0c9f8f9.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/sowar-1916"
+    },
+    {
+      "reference": "6832.30.3245",
+      "name": "Sowar 1916",
+      "series": "Sowar 1916",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with small second and date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39 mm",
+      "dial": "Shiny black dial",
+      "bracelet": "leather strap",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6832-30-3245-1.1faad594.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/sowar-1916"
+    },
+    {
+      "reference": "6863.10.3328",
+      "name": "Secundus",
+      "series": "Secundus",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with day and date calendar",
+      "caseMaterial": "Stainless Steel",
+      "caseSize": "40 mm",
+      "dial": "Velvety white dial",
+      "bracelet": "Stainless Steel bracelet",
+      "waterResistance": "30 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6863-10-3328-1.aa8858f5.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/secundus"
+    },
+    {
+      "reference": "6863.28.3329",
+      "name": "Secundus",
+      "series": "Secundus",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with day and date calendar",
+      "caseMaterial": "Stainless Steel",
+      "caseSize": "40 mm",
+      "dial": "Silver guilloch&eacute; dial",
+      "bracelet": "Stainless Steel bracelet",
+      "waterResistance": "30 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6863-28-3329-1.2c3c2c80.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/secundus"
+    },
+    {
+      "reference": "6863.10.3331",
+      "name": "Secundus",
+      "series": "Secundus",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Swiss automatic movement with Day-Date calendar",
+      "caseMaterial": "Stainless Steel",
+      "caseSize": "40 mm",
+      "dial": "",
+      "bracelet": "Stainless Steel bracelet",
+      "waterResistance": "30 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6863-10-3331-1.a020a69e.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/secundus"
+    },
+    {
+      "reference": "6863.10.3332",
+      "name": "Secundus",
+      "series": "Secundus",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Swiss automatic movement with Day-Date calendar",
+      "caseMaterial": "Stainless Steel",
+      "caseSize": "40 mm",
+      "dial": "",
+      "bracelet": "Stainless Steel bracelet",
+      "waterResistance": "30 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6863-10-3332-1.d673e2ee.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/secundus"
+    },
+    {
+      "reference": "6828.10.0207",
+      "name": "The Classics",
+      "series": "The Classics",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with day and date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "37 mm",
+      "dial": "Shiny black dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6828-10-0207-1.36538a0a.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/the-classics"
+    },
+    {
+      "reference": "6828.10.2587",
+      "name": "The Classics",
+      "series": "The Classics",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with day and date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "37 mm",
+      "dial": "Sunray silver dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6828-10-2587-1.c779bf3a.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/the-classics"
+    },
+    {
+      "reference": "6828.10.2899",
+      "name": "The Classics",
+      "series": "The Classics",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with day and date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "37 mm",
+      "dial": "Sunray silver dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6828-10-2899-1.fbfe05d9.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/the-classics"
+    },
+    {
+      "reference": "6828.10.3226",
+      "name": "The Classics",
+      "series": "The Classics",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with day and date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "37 mm",
+      "dial": "Sunray blue dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6828-10-3226-1.4495af3b.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/the-classics"
+    },
+    {
+      "reference": "6828.20.2315",
+      "name": "The Classics",
+      "series": "The Classics",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with day and date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "37 mm",
+      "dial": "Velvety champagne dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6828-20-2315-1.60e102d9.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/the-classics"
+    },
+    {
+      "reference": "6828.20.2332",
+      "name": "The Classics",
+      "series": "The Classics",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with day and date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "37 mm",
+      "dial": "Shiny black dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6828-20-2332-1.62dc2316.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/the-classics"
+    },
+    {
+      "reference": "6828.20.2708",
+      "name": "The Classics",
+      "series": "The Classics",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with day and date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "37 mm",
+      "dial": "Sunray champagne dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6828-20-2708-1.87775934.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/the-classics"
+    },
+    {
+      "reference": "6828.20.2795",
+      "name": "The Classics",
+      "series": "The Classics",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with day and date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "37 mm",
+      "dial": "Vertical brushed champagne dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6828-20-2795-1.233d4acc.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/the-classics"
+    },
+    {
+      "reference": "6828.20.3330",
+      "name": "The Classics",
+      "series": "The Classics",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with day and date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "37 mm",
+      "dial": "Sunray green dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6828-20-3330-1.a1efa6ce.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/the-classics"
+    },
+    {
+      "reference": "6828.35.2332",
+      "name": "The Classics",
+      "series": "The Classics",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with day and date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "37 mm",
+      "dial": "Shiny black dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6828-35-2332-1.1607ed15.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/the-classics"
+    },
+    {
+      "reference": "6828.35.2707",
+      "name": "The Classics",
+      "series": "The Classics",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with day and date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "37 mm",
+      "dial": "Shiny black dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6828-35-2707-1.de733442.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/the-classics"
+    },
+    {
+      "reference": "6828.35.2708",
+      "name": "The Classics",
+      "series": "The Classics",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with day and date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "37 mm",
+      "dial": "Sunray champagne dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6828-35-2708-1.6bba2533.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/the-classics"
+    },
+    {
+      "reference": "6828.35.2795",
+      "name": "The Classics",
+      "series": "The Classics",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with day and date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "37 mm",
+      "dial": "Vertical brushed champagne dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6828-35-2795-1.1a23ebc4.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/the-classics"
+    },
+    {
+      "reference": "6828.35.2900",
+      "name": "The Classics",
+      "series": "The Classics",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with day and date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "37 mm",
+      "dial": "Shiny black dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6828-35-2900-1.6d6fe6ad.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/the-classics"
+    },
+    {
+      "reference": "6829.10.2899-DB",
+      "name": "The Classics",
+      "series": "The Classics",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with day and date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "37 mm",
+      "dial": "Vertical brushed silver dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6829-10-2899-db-1.7ab49a41.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/the-classics"
+    },
+    {
+      "reference": "6829.35.2708-DB",
+      "name": "The Classics",
+      "series": "The Classics",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with day and date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "37 mm",
+      "dial": "Sunray champagne dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6829-35-2708-db-1.e41fd519.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/the-classics"
+    },
+    {
+      "reference": "6829.20.2708-DB",
+      "name": "The Classics",
+      "series": "The Classics",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with day and date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "37 mm",
+      "dial": "Sunray champagne dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6829-20-2708-db-1.46c722c0.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/the-classics"
+    },
+    {
+      "reference": "6829.20.2795-DB",
+      "name": "The Classics",
+      "series": "The Classics",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with day and date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "37 mm",
+      "dial": "Vertical brushed champagne dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6829-20-2795-db-1.f543bc07.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/the-classics"
+    },
+    {
+      "reference": "6828.20.3034",
+      "name": "The Classics",
+      "series": "The Classics",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with day and date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "37 mm",
+      "dial": "Sunray dark grey dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6828-20-3034-1.081a6cdb.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/the-classics"
+    },
+    {
+      "reference": "6829.35.2795-DB",
+      "name": "The Classics",
+      "series": "The Classics",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with day and date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "37 mm",
+      "dial": "Vertical brushed champagne dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6829-35-2795-db-1.a35e7855.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/the-classics"
+    },
+    {
+      "reference": "6829.35.2900-DB",
+      "name": "The Classics",
+      "series": "The Classics",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with day and date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "37 mm",
+      "dial": "Shiny black dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6829-35-2900-db-1.fa6e0d7f.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/the-classics"
+    },
+    {
+      "reference": "6868.10.2587",
+      "name": "The Classics XL",
+      "series": "The Classics XL",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with day and date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "41 mm",
+      "dial": "Sunray silver dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6868-10-2587-1.baa6c396.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/the-classics"
+    },
+    {
+      "reference": "6868.10.3034",
+      "name": "The Classics XL",
+      "series": "The Classics XL",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with day and date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "41 mm",
+      "dial": "Sunray dark grey dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6868-10-3034-1.76068029.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/the-classics"
+    },
+    {
+      "reference": "6868.10.3226",
+      "name": "The Classics XL",
+      "series": "The Classics XL",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with day and date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "41 mm",
+      "dial": "Sunray blue dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6868-10-3226-1.69db3d98.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/the-classics"
+    },
+    {
+      "reference": "6868.10.3330",
+      "name": "The Classics XL",
+      "series": "The Classics XL",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with day and date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "41 mm",
+      "dial": "Sunray green dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6868-10-3330-1.7c65cd5e.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/the-classics"
+    },
+    {
+      "reference": "6868.10.3337",
+      "name": "The Classics XL",
+      "series": "The Classics XL",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with day and date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "41 mm",
+      "dial": "Turquoise dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6868-10-3337-1.d67d9c3c.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/the-classics"
+    },
+    {
+      "reference": "6868.10.3338",
+      "name": "The Classics XL",
+      "series": "The Classics XL",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with day and date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "41 mm",
+      "dial": "Yellow dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6868-10-3338-1.788735fe.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/the-classics"
+    },
+    {
+      "reference": "6850.10.3333-ALB",
+      "name": "Impermeable",
+      "series": "Impermeable",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Swiss automatic movement with date calendar",
+      "caseMaterial": "Stainless Steel",
+      "caseSize": "42 mm",
+      "dial": "",
+      "bracelet": "bracelet with double-security clasp",
+      "waterResistance": "",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6850-10-3333-alb-1.caaf37e1.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/impermeable"
+    },
+    {
+      "reference": "6850.10.3333-ALO",
+      "name": "Impermeable",
+      "series": "Impermeable",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Swiss automatic movement with date calendar",
+      "caseMaterial": "Stainless Steel",
+      "caseSize": "42 mm",
+      "dial": "",
+      "bracelet": "bracelet with double-security clasp",
+      "waterResistance": "",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6850-10-3333-alo-1.e841a7e5.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/impermeable"
+    },
+    {
+      "reference": "6850.10.3334-ALGR",
+      "name": "Impermeable",
+      "series": "Impermeable",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Swiss automatic movement with date calendar",
+      "caseMaterial": "Stainless Steel",
+      "caseSize": "42 mm",
+      "dial": "",
+      "bracelet": "bracelet with double-security clasp",
+      "waterResistance": "",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6850-10-3334-algr-1.4ff2d991.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/impermeable"
+    },
+    {
+      "reference": "6850.10.3335-ALBL",
+      "name": "Impermeable",
+      "series": "Impermeable",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Swiss automatic movement with date calendar",
+      "caseMaterial": "Stainless Steel",
+      "caseSize": "42 mm",
+      "dial": "",
+      "bracelet": "bracelet with double-security clasp",
+      "waterResistance": "",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6850-10-3335-albl-1.3123d294.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/impermeable"
+    },
+    {
+      "reference": "6850.10.3333-ALVE",
+      "name": "Impermeable",
+      "series": "Impermeable",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Swiss automatic movement with date calendar",
+      "caseMaterial": "Stainless Steel",
+      "caseSize": "42 mm",
+      "dial": "",
+      "bracelet": "bracelet with double-security clasp",
+      "waterResistance": "",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6850-10-3333-alve-1.73aec261.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/impermeable"
+    },
+    {
+      "reference": "6850.10.3333-ALBL",
+      "name": "Impermeable",
+      "series": "Impermeable",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Swiss automatic movement with date calendar",
+      "caseMaterial": "Stainless Steel",
+      "caseSize": "42 mm",
+      "dial": "",
+      "bracelet": "bracelet with double-security clasp",
+      "waterResistance": "",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6850-10-3333-albl-1.262d3c9b.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/impermeable"
+    },
+    {
+      "reference": "6850.10.3333-ALGR",
+      "name": "Impermeable",
+      "series": "Impermeable",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Swiss automatic movement with date calendar",
+      "caseMaterial": "Stainless Steel",
+      "caseSize": "42 mm",
+      "dial": "",
+      "bracelet": "bracelet with double-security clasp",
+      "waterResistance": "",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6850-10-3333-algr-1.f6f2bde8.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/impermeable"
+    },
+    {
+      "reference": "6850.10.3334-ALO",
+      "name": "Impermeable",
+      "series": "Impermeable",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Swiss automatic movement with date calendar",
+      "caseMaterial": "Stainless Steel",
+      "caseSize": "42 mm",
+      "dial": "",
+      "bracelet": "bracelet with double-security clasp",
+      "waterResistance": "",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6850-10-3334-alo-1.922b2a34.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/impermeable"
+    },
+    {
+      "reference": "6850.10.3334-ALVE",
+      "name": "Impermeable",
+      "series": "Impermeable",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Swiss automatic movement with date calendar",
+      "caseMaterial": "Stainless Steel",
+      "caseSize": "42 mm",
+      "dial": "",
+      "bracelet": "bracelet with double-security clasp",
+      "waterResistance": "",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6850-10-3334-alve-1.1fe41a66.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/impermeable"
+    },
+    {
+      "reference": "6850.10.3334-ALBL",
+      "name": "Impermeable",
+      "series": "Impermeable",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Swiss automatic movement with date calendar",
+      "caseMaterial": "Stainless Steel",
+      "caseSize": "42 mm",
+      "dial": "",
+      "bracelet": "bracelet with double-security clasp",
+      "waterResistance": "",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6850-10-3334-albl-1.c66e3d1c.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/impermeable"
+    },
+    {
+      "reference": "6850.10.3333N-ALB1/2VE",
+      "name": "Impermeable",
+      "series": "Impermeable",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Swiss automatic movement with date calendar",
+      "caseMaterial": "Stainless Steel",
+      "caseSize": "42 mm",
+      "dial": "",
+      "bracelet": "bracelet with double-security clasp",
+      "waterResistance": "",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6850-10-3333n-alb1-2ve-1.a9f8e447.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/impermeable"
+    },
+    {
+      "reference": "6850.10.3333N-ALB1/4O",
+      "name": "Impermeable",
+      "series": "Impermeable",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Swiss automatic movement",
+      "caseMaterial": "Stainless Steel",
+      "caseSize": "42 mm",
+      "dial": "",
+      "bracelet": "bracelet with double-security clasp",
+      "waterResistance": "",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6850-10-3333n-alb1-4o-1.4b0a3a2b.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/impermeable"
+    },
+    {
+      "reference": "6850.10.3335N-ALGRBL",
+      "name": "Impermeable",
+      "series": "Impermeable",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Swiss automatic movement with date calendar",
+      "caseMaterial": "Stainless Steel",
+      "caseSize": "42 mm",
+      "dial": "",
+      "bracelet": "bracelet with",
+      "waterResistance": "",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6850-10-3335n-algrbl-1.dea914dd.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/impermeable"
+    },
+    {
+      "reference": "6850.10.3333N-ALBL1/2R",
+      "name": "Impermeable",
+      "series": "Impermeable",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Swiss automatic movement with date calendar",
+      "caseMaterial": "Stainless Steel",
+      "caseSize": "42 mm",
+      "dial": "",
+      "bracelet": "bracelet with double-security clasp",
+      "waterResistance": "",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6850-10-3333n-albl1-2r-1.5db02855.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/impermeable"
+    },
+    {
+      "reference": "6850.10.3333N-ALVELIGHT",
+      "name": "Impermeable",
+      "series": "Impermeable",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Swiss automatic movement with date calendar",
+      "caseMaterial": "Stainless Steel",
+      "caseSize": "42 mm",
+      "dial": "",
+      "bracelet": "bracelet with double-security clasp",
+      "waterResistance": "",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6850-10-3333n-alvelight-1.def9e4e5.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/impermeable"
+    },
+    {
+      "reference": "8090.10.3307",
+      "name": "Everbright",
+      "series": "Everbright",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Quartz movement with date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "38 mm",
+      "dial": "Charcoal dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8090-10-3307-1.8e5a9bd1.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/everbright"
+    },
+    {
+      "reference": "8090.10.3308",
+      "name": "Everbright",
+      "series": "Everbright",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Quartz movement with date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "38 mm",
+      "dial": "Sunray silver dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8090-10-3308-1.24c13988.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/everbright"
+    },
+    {
+      "reference": "8090.20.3310",
+      "name": "Everbright",
+      "series": "Everbright",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Quartz movement with date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "38 mm",
+      "dial": "Velvety white dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8090-20-3310-1.5ae47fcd.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/everbright"
+    },
+    {
+      "reference": "8090.20.3311",
+      "name": "Everbright",
+      "series": "Everbright",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Quartz movement with date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "38 mm",
+      "dial": "Sunray black dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8090-20-3311-1.e6411b4d.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/everbright"
+    },
+    {
+      "reference": "8090.20.3312",
+      "name": "Everbright",
+      "series": "Everbright",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Quartz movement with date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "38 mm",
+      "dial": "Sunray champagne dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8090-20-3312-1.0bd45365.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/everbright"
+    },
+    {
+      "reference": "8090.30.3310",
+      "name": "Everbright",
+      "series": "Everbright",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Quartz movement with date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "38 mm",
+      "dial": "Velvety white dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8090-30-3310-1.7a420efb.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/everbright"
+    },
+    {
+      "reference": "8090.30.3311",
+      "name": "Everbright",
+      "series": "Everbright",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Quartz movement with date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "38 mm",
+      "dial": "Sunray black dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8090-30-3311-1.af6236c6.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/everbright"
+    },
+    {
+      "reference": "8090.30.3312",
+      "name": "Everbright",
+      "series": "Everbright",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Quartz movement with date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "38 mm",
+      "dial": "Sunray champagne dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8090-30-3312-1.54449a44.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/everbright"
+    },
+    {
+      "reference": "8091.10.3307",
+      "name": "Everbright Chronograph",
+      "series": "Everbright Chronograph",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Quartz movement with chronograph functions and date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "40 mm",
+      "dial": "Charcoal dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8091-10-3307-1.df8a8b03.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/everbright-chronograph"
+    },
+    {
+      "reference": "8091.10.3308",
+      "name": "Everbright Chronograph",
+      "series": "Everbright Chronograph",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Quartz movement with chronograph functions and date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "40 mm",
+      "dial": "Sunray silver dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8091-10-3308-1.cf606173.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/everbright-chronograph"
+    },
+    {
+      "reference": "8091.20.3310",
+      "name": "Everbright Chronograph",
+      "series": "Everbright Chronograph",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Quartz movement with chronograph functions and date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "40 mm",
+      "dial": "Velvety white dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8091-20-3310-1.f1e4e624.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/everbright-chronograph"
+    },
+    {
+      "reference": "8091.20.3311",
+      "name": "Everbright Chronograph",
+      "series": "Everbright Chronograph",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Quartz movement with chronograph functions and date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "40 mm",
+      "dial": "Sunray black dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8091-20-3311-1.cb17c173.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/everbright-chronograph"
+    },
+    {
+      "reference": "8091.20.3312",
+      "name": "Everbright Chronograph",
+      "series": "Everbright Chronograph",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Quartz movement with chronograph functions and date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "40 mm",
+      "dial": "Sunray champagne dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8091-20-3312-1.b6374104.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/everbright-chronograph"
+    },
+    {
+      "reference": "6852.10.3304",
+      "name": "Queen Anne Chronograph",
+      "series": "Queen Anne Chronograph",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with chronograph functions and date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "42 mm",
+      "dial": "Pure white dial",
+      "bracelet": "Stainless steel bracelet",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6852-10-3304-1.988ac359.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/queen-anne-chronograph"
+    },
+    {
+      "reference": "6852.10.3305 NO",
+      "name": "Queen Anne Chronograph",
+      "series": "Queen Anne Chronograph",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with chronograph functions and date calendar",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "42 mm",
+      "dial": "Shiny black dial",
+      "bracelet": "",
+      "waterResistance": "50 m",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-6852-10-3305-no-1.cf95c2d1.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/queen-anne-chronograph"
+    },
+    {
+      "reference": "8457.10.0207",
+      "name": "8457",
+      "series": "8457",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with day and date calendar",
+      "caseMaterial": "Stainless Steel",
+      "caseSize": "40 mm",
+      "dial": "Matt black dial",
+      "bracelet": "Stainless Steel bracelet",
+      "waterResistance": "",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8457-10-0207-1.28a78ee6.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/8457"
+    },
+    {
+      "reference": "8457.10.0209",
+      "name": "8457",
+      "series": "8457",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with day and date calendar",
+      "caseMaterial": "Stainless Steel",
+      "caseSize": "40 mm",
+      "dial": "Matt black dial",
+      "bracelet": "Stainless Steel bracelet",
+      "waterResistance": "",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8457-10-0209-1.dd753e09.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/8457"
+    },
+    {
+      "reference": "8457.38.0207 BLACK",
+      "name": "8457",
+      "series": "8457",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with day and date calendar",
+      "caseMaterial": "Stainless Steel case 4N",
+      "caseSize": "40 mm",
+      "dial": "Matt black dial",
+      "bracelet": "black PVD bracelet",
+      "waterResistance": "",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8457-38-0207-black-1.56a15aa6.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/8457"
+    },
+    {
+      "reference": "8457.38.0209 BLACK",
+      "name": "8457",
+      "series": "8457",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic movement with day and date calendar",
+      "caseMaterial": "Stainless Steel case 4N",
+      "caseSize": "40 mm",
+      "dial": "Matt black dial",
+      "bracelet": "black PVD bracelet",
+      "waterResistance": "",
+      "description": "",
+      "images": [
+        "/uploads/images/west-end-8457-38-0209-black-1.435c8d8a.jpg"
+      ],
+      "sourceUrl": "https://www.westendwatchco.ch/the-collection/8457"
+    }
+  ]
+}

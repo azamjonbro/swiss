@@ -1,0 +1,127 @@
+{
+  "brand": "Seiko",
+  "source": "https://www.seikowatches.com/us-en",
+  "fetchedAt": "2026-09-07T19:00:04+00:00",
+  "currency": "USD",
+  "products": [
+    {
+      "reference": "SJE109",
+      "name": "King Seiko KS1969",
+      "series": "King Seiko",
+      "gender": "men",
+      "price": 3100.0,
+      "movement": "Automatic with manual winding, 6L35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39.4mm",
+      "dial": "",
+      "bracelet": "Deployment clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-sje109-1.4a0dc52c.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/kingseiko/sje109j1"
+    },
+    {
+      "reference": "SJE111",
+      "name": "King Seiko KS1969",
+      "series": "King Seiko",
+      "gender": "men",
+      "price": 3100.0,
+      "movement": "Automatic with manual winding, 6L35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39.4mm",
+      "dial": "",
+      "bracelet": "Deployment clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-sje111-1.1a11e9b2.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/kingseiko/sje111j1"
+    },
+    {
+      "reference": "SJE113",
+      "name": "King Seiko KS1969",
+      "series": "King Seiko",
+      "gender": "men",
+      "price": 3100.0,
+      "movement": "Automatic with manual winding, 6L35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39.4mm",
+      "dial": "",
+      "bracelet": "Deployment clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-sje113-1.d18528f3.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/kingseiko/sje113j1"
+    },
+    {
+      "reference": "SJE107",
+      "name": "King Seiko KSK",
+      "series": "King Seiko",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic with manual winding, 6L35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "38.6mm",
+      "dial": "",
+      "bracelet": "Deployment clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-sje107-1.7138ca4d.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/kingseiko/sje107j1"
+    },
+    {
+      "reference": "SJE103",
+      "name": "King Seiko KSK",
+      "series": "King Seiko",
+      "gender": "men",
+      "price": 3300.0,
+      "movement": "Automatic with manual winding, 6L35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "38.6mm",
+      "dial": "",
+      "bracelet": "Deployment clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-sje103-1.98cea2e9.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/kingseiko/sje103j1"
+    },
+    {
+      "reference": "SJE105",
+      "name": "King Seiko KSK",
+      "series": "King Seiko",
+      "gender": "men",
+      "price": 3300.0,
+      "movement": "Automatic with manual winding, 6L35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "38.6mm",
+      "dial": "",
+      "bracelet": "Deployment clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-sje105-1.59fa3436.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/kingseiko/sje105j1"
+    },
+    {
+      "reference": "SJE107",
+      "name": "King Seiko KSK",
+      "series": "King Seiko",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic with manual winding, 6L35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "38.6mm",
+      "dial": "",
+      "bracelet": "Deployment clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-sje107-1.7138ca4d.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/kingseiko/sje107j1"
+    }
+  ]
+}

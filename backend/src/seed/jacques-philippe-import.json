@@ -1,0 +1,68 @@
+{
+  "brand": "Jacques Philippe",
+  "source": "https://www.jacquesphilippe.com",
+  "fetchedAt": "2026-09-07T19:18:59+00:00",
+  "currency": "USD",
+  "products": [
+    {
+      "reference": "JPAGC021111",
+      "name": "JPAGC021111",
+      "series": "",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "ETA7750, Swiss Made, Automatic movement",
+      "caseMaterial": "Stainless steel, Steel color",
+      "caseSize": "",
+      "dial": "",
+      "bracelet": "Calf leather strap",
+      "waterResistance": "5 ATM (50 m)",
+      "description": "",
+      "images": [
+        "/uploads/images/jacques-philippe-jpagc021111-1.e8f1e942.jpg",
+        "/uploads/images/jacques-philippe-jpagc021111-2.0732c8f0.jpg",
+        "/uploads/images/jacques-philippe-jpagc021111-3.e55a6065.jpg"
+      ],
+      "sourceUrl": "https://www.jacquesphilippe.com/Product/Detail?StockCode=JPAGC021111"
+    },
+    {
+      "reference": "JPAGC021236",
+      "name": "JPAGC021236",
+      "series": "",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "ETA7750, Swiss Made, Automatic movement",
+      "caseMaterial": "Stainless steel, Steel color",
+      "caseSize": "",
+      "dial": "",
+      "bracelet": "Stainless steel mesh strap",
+      "waterResistance": "5 ATM (50 m)",
+      "description": "",
+      "images": [
+        "/uploads/images/jacques-philippe-jpagc021236-1.45f2da50.jpg",
+        "/uploads/images/jacques-philippe-jpagc021236-2.9072671e.jpg",
+        "/uploads/images/jacques-philippe-jpagc021236-3.12312764.jpg"
+      ],
+      "sourceUrl": "https://www.jacquesphilippe.com/Product/Detail?StockCode=JPAGC021236"
+    },
+    {
+      "reference": "JPAGC028247",
+      "name": "JPAGC028247",
+      "series": "",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "ETA7750, Swiss Made, Automatic movement",
+      "caseMaterial": "Stainless steel, Gun",
+      "caseSize": "",
+      "dial": "",
+      "bracelet": "Stainless steel mesh strap",
+      "waterResistance": "5 ATM (50 m)",
+      "description": "",
+      "images": [
+        "/uploads/images/jacques-philippe-jpagc028247-1.d1f1ff13.jpg",
+        "/uploads/images/jacques-philippe-jpagc028247-2.45d49110.jpg",
+        "/uploads/images/jacques-philippe-jpagc028247-3.607f3676.jpg"
+      ],
+      "sourceUrl": "https://www.jacquesphilippe.com/Product/Detail?StockCode=JPAGC028247"
+    }
+  ]
+}
