@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import type { Watch } from '@/types/models';
 import { toBrandName, primaryImage, secondaryImage, colorSwatchHex, movementType } from '@/utils/format';
 import { useCurrencyStore } from '@/stores/currency';
@@ -10,9 +10,28 @@ import { productPath, watchImageAlt } from '@/seo/schema.mjs';
 interface Props {
   watch: Watch;
   size?: 'md' | 'lg';
+  /**
+   * Set on the handful of cards that are above the fold. Their photograph is
+   * the first thing the page has to show, so it is fetched eagerly and at high
+   * priority instead of queueing behind every other card's lazy load.
+   */
+  priority?: boolean;
 }
 
-const props = withDefaults(defineProps<Props>(), { size: 'md' });
+const props = withDefaults(defineProps<Props>(), { size: 'md', priority: false });
+
+/**
+ * The second angle is not loaded until the pointer arrives.
+ *
+ * It doubled every listing page's image count — two shots per card, both
+ * fetched on first paint, competing over the same six connections as the
+ * covers the visitor is actually looking at, and on a touch device the hover
+ * state it exists for can never happen at all. Mounting it on the first
+ * pointer or focus makes the cover the only thing the grid pays for, and the
+ * blur placeholder covers the moment between the pointer arriving and the
+ * second shot landing.
+ */
+const hoverArmed = ref(false);
 
 const currency = useCurrencyStore();
 const locale = useLocaleStore();
@@ -36,7 +55,14 @@ const colorCount = computed(() => props.watch.variants?.length ?? 0);
 </script>
 
 <template>
-  <RouterLink :to="productPath(watch.slug)" class="sw-watch-card" :class="`is-${size}`" data-cursor="View">
+  <RouterLink
+    :to="productPath(watch.slug)"
+    class="sw-watch-card"
+    :class="`is-${size}`"
+    data-cursor="View"
+    @pointerenter="hoverArmed = true"
+    @focusin="hoverArmed = true"
+  >
     <div class="sw-watch-card__media">
       <SmartImage
         :src="mainImage"
@@ -44,16 +70,18 @@ const colorCount = computed(() => props.watch.variants?.length ?? 0);
         aspect-ratio="1 / 1"
         object-fit="contain"
         prefer-trimmed
+        :eager="priority"
         sizes="(max-width: 460px) 92vw, (max-width: 980px) 47vw, 24vw"
         class="sw-watch-card__shot sw-watch-card__shot--main"
       />
       <SmartImage
-        v-if="hoverImage"
+        v-if="hoverImage && hoverArmed"
         :src="hoverImage"
         :alt="watchImageAlt(watch)"
         aspect-ratio="1 / 1"
         object-fit="contain"
         prefer-trimmed
+        eager
         sizes="(max-width: 460px) 92vw, (max-width: 980px) 47vw, 24vw"
         class="sw-watch-card__shot sw-watch-card__shot--hover"
       />

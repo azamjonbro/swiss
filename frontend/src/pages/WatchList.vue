@@ -550,7 +550,16 @@ function selectSort(key: string) {
 
     <template v-else>
       <div class="sw-watchlist__grid">
-        <WatchCard v-for="watch in pagedWatches" :key="watch._id" :watch="watch" />
+        <!-- The first row is above the fold at every breakpoint (four columns
+             on a desktop, one on a phone), so those covers are fetched eagerly
+             rather than queueing behind the lazy loader — they are what the
+             page is, and everything below them can wait for the scroll. -->
+        <WatchCard
+          v-for="(watch, index) in pagedWatches"
+          :key="watch._id"
+          :watch="watch"
+          :priority="index < 4"
+        />
       </div>
 
       <nav v-if="pageCount > 1" class="sw-pager" :aria-label="locale.t('watchList.pagination')">

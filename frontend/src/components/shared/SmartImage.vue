@@ -40,6 +40,29 @@ const candidateIndex = ref(0);
 const JPG_PNG = /^\/(images|uploads\/images)\/.+\.(jpe?g|png)$/i;
 
 /**
+ * Whether the background-removed derivatives are actually on disk.
+ *
+ * They are produced by a maintenance script that runs against the upload
+ * library on the server (backend/scripts/remove-product-bg.py), not by the
+ * frontend build, so the bundle cannot know from its own filesystem whether
+ * they exist — and the candidate chain below has no way to find out except by
+ * asking for one and waiting for the answer.
+ *
+ * That answer is expensive. Measured against production: a `_trim` URL that
+ * does not exist takes ~530ms to come back 404, the chain tries two of them
+ * (.webp then .png) *before* requesting the real photograph, and a listing
+ * card renders two shots — so every card was spending roughly two seconds of
+ * serial round trips discovering nothing, twenty-four cards at a time, through
+ * a six-connection budget. On a catalogue where the real thumbnail is 3 KB and
+ * arrives in half a second, that was the entire reason the grid felt slow.
+ *
+ * So the guess is a decision, not a probe: off until someone has run the
+ * script and set the flag. Wrong-but-off costs a slightly loose crop; the
+ * other way round costs the page.
+ */
+const HAS_TRIMMED_UPLOADS = import.meta.env.VITE_TRIMMED_UPLOADS === '1';
+
+/**
  * Ordered fallback chain, tried in turn via onError so a missing derivative
  * costs one failed request rather than a broken image.
  *
@@ -62,7 +85,7 @@ const candidates = computed(() => {
   const isJpgPng = JPG_PNG.test(src);
   const list: string[] = [];
 
-  if (props.preferTrimmed && isJpgPng) {
+  if (props.preferTrimmed && isJpgPng && HAS_TRIMMED_UPLOADS) {
     const trimBase = src.replace(/\.(jpe?g|png)$/i, '_trim');
     list.push(resolveMediaUrl(`${trimBase}.webp`));
     list.push(resolveMediaUrl(`${trimBase}.png`));
@@ -131,7 +154,9 @@ const srcset = computed(() => {
  * differently and neither should pay for the other's mechanism:
  *
  *   - Product photography lives on the API, which already resizes on request,
- *     so the placeholder is a real (cached, ~400 byte) `?w=24` fetch.
+ *     so the placeholder is a real `?w=240` fetch — 2-3 KB, and the narrowest
+ *     width the deployed API already serves, so it works without waiting on a
+ *     backend release.
  *   - Editorial photography ships with the bundle and its placeholder is
  *     inlined at build time (scripts/responsive-images.mjs), so the hero has
  *     something on screen on the first frame instead of after a round trip.
@@ -139,7 +164,7 @@ const srcset = computed(() => {
  * Anything else — a remote URL, an SVG, a data URI — gets no placeholder and
  * falls back to the shimmer, which is what it did before.
  */
-const LQIP_WIDTH = 24;
+const LQIP_WIDTH = 240;
 
 const lqipSrc = computed(() => {
   const src = props.src ?? '';
