@@ -185,17 +185,25 @@ function onError() {
          blur placeholder paints over it, and is what a source with no
          placeholder still gets. -->
     <div class="sw-smart-image__placeholder" :class="{ 'is-hidden': loaded || lqipReady }" />
+    <!-- Stays mounted after the real image lands: unmounting it on `loaded`
+         pulled it out from under a photograph that is still 0.6s into its own
+         fade-in, so the card flashed back to bare surface mid-transition. It
+         fades out instead, under the image fading in. Lazy for the same reason
+         the real image is — a placeholder for a card eight screens down is not
+         worth a request until the card is nearly in view; being ~400 bytes
+         against the photograph's tens of kilobytes is what makes it win the
+         race once both are in flight. -->
     <img
-      v-if="lqipSrc && !loaded"
+      v-if="lqipSrc"
       :key="lqipSrc"
       :src="lqipSrc"
       alt=""
       aria-hidden="true"
       class="sw-smart-image__lqip"
-      :class="{ 'is-ready': lqipReady }"
+      :class="{ 'is-ready': lqipReady && !loaded }"
       :style="{ objectFit }"
+      :loading="eager ? 'eager' : 'lazy'"
       decoding="async"
-      fetchpriority="high"
       @load="lqipReady = true"
     />
     <img
@@ -254,11 +262,17 @@ function onError() {
   opacity: 0;
   filter: blur(18px);
   transform: scale(1.12);
-  transition: opacity var(--dur-fast) var(--ease-luxury);
+  /* Slow out, fast in. Removing `is-ready` falls back to this duration, which
+     matches the real image's fade-in exactly, so the two cross-dissolve
+     instead of the blur disappearing halfway through. */
+  transition: opacity var(--dur-mid) var(--ease-luxury);
 }
 
 .sw-smart-image__lqip.is-ready {
   opacity: 1;
+  /* Adding it should not take 0.6s: the blur is what the viewer is waiting to
+     see, and it is already decoded by the time this class lands. */
+  transition-duration: var(--dur-fast);
 }
 
 .sw-smart-image__img {
@@ -293,6 +307,15 @@ function onError() {
   .sw-smart-image__img {
     transition: opacity var(--dur-fast) linear;
     transform: none;
+  }
+
+  /* The blur stays — it is information about loading state, not decoration —
+     and so does its scale, which is static framing rather than motion (it is
+     what keeps the blur's soft edge outside the frame). Only the eased
+     cross-dissolve goes. */
+  .sw-smart-image__lqip,
+  .sw-smart-image__lqip.is-ready {
+    transition: opacity var(--dur-fast) linear;
   }
 }
 </style>
