@@ -59,6 +59,11 @@ EUR_TO_USD = 1 / 0.92
 RETRIES = 3
 PAUSE = 0.4
 
+# --offline: build a catalogue from whatever the cache already holds, without
+# touching the network. Lets a long fetch be published in instalments — the
+# importer adds the rest when the full run finishes.
+OFFLINE = False
+
 
 # --------------------------------------------------------------------------
 # fetching
@@ -90,6 +95,8 @@ class Session:
         path = self.dir / f"{key}.bin"
         if cache and path.exists():
             return path.read_bytes()
+        if OFFLINE:
+            return None
         last: Exception | None = None
         for attempt in range(RETRIES):
             try:
@@ -100,6 +107,14 @@ class Session:
                     path.write_bytes(body)
                 time.sleep(PAUSE)
                 return body
+            except urllib.error.HTTPError as exc:
+                # A missing or forbidden asset will still be missing on a retry;
+                # Jacques Philippe lists ten image slots per product and serves
+                # however many it has, so 404s here are routine, not failures.
+                if exc.code in (400, 401, 403, 404, 410):
+                    return None
+                last = exc
+                time.sleep(1.5 * (attempt + 1))
             except Exception as exc:  # noqa: BLE001 - any transport error is a retry
                 last = exc
                 time.sleep(1.5 * (attempt + 1))
@@ -222,7 +237,13 @@ def product(**kwargs) -> dict:
 
 
 def write_catalog(brand: str, source: str, items: list[dict], slug: str = "") -> Path:
-    items = [i for i in items if i["images"]]
+    # A model can be listed on two pages (West End publishes "silk-road-ii" and
+    # a misspelled twin), so the reference decides what is one product.
+    unique: dict[str, dict] = {}
+    for item in items:
+        if item["images"]:
+            unique.setdefault(item["reference"], item)
+    items = list(unique.values())
     out = SEED / f"{slug or slugify(brand)}-import.json"
     out.write_text(
         json.dumps(
@@ -274,7 +295,7 @@ TISSOT_LABELS = {
 
 def fetch_tissot(limit: int | None) -> None:
     session = Session("tissot")
-    session.text(TISSOT_BASE + "/en-en")  # sets the locale cookie the grid needs
+    session.text(TISSOT_BASE + "/en-en", cache=False)  # sets the locale cookie the grid needs
 
     urls: dict[str, str] = {}
     for gender in ("men", "women"):
@@ -711,7 +732,9 @@ JP_BASE = "https://www.jacquesphilippe.com"
 
 def fetch_jacquesphilippe(limit: int | None) -> None:
     session = Session("jacquesphilippe")
-    session.text(JP_BASE + "/")  # the catalogue 500s without a session cookie
+    # The catalogue 500s without a session cookie, and a cached response sets
+    # none — so this one request always goes to the network.
+    session.text(JP_BASE + "/", cache=False)
 
     codes: dict[str, str] = {}
     for collection, gender in (("10", "men"), ("11", "women")):
@@ -839,7 +862,9 @@ def fetch_westend(limit: int | None) -> None:
             if strap.lower() in ("strap", "bracelet"):
                 strap = f"{case_material} {strap}".strip()
             movement = next((l for l in lines if "movement" in l.lower()), "")
-            dial = next((l for l in lines if l.lower().endswith("dial")), "")
+            dial = re.sub(
+                r"\s*dial$", "", next((l for l in lines if l.lower().endswith("dial")), ""), flags=re.I
+            )
 
             photo = next(iter(re.findall(r"data/Ressources/([^&\"']+\.jpg)", entry)), "")
             if not photo:
@@ -889,7 +914,13 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("brand", choices=[*FETCHERS, "all"])
     parser.add_argument("--limit", type=int, default=None, help="stop after N products")
+    parser.add_argument(
+        "--offline", action="store_true", help="use only cached pages and photos"
+    )
     args = parser.parse_args()
+
+    global OFFLINE
+    OFFLINE = args.offline
 
     IMAGES.mkdir(parents=True, exist_ok=True)
     names = list(FETCHERS) if args.brand == "all" else [args.brand]

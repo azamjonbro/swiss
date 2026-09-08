@@ -69,6 +69,11 @@ function movementKind(movement: string): { en: string; ru: string; uz: string } 
  * are the manufacturer's own English wording, and bending them into a Russian
  * sentence would only produce broken grammar.
  */
+/** Ends a sentence without doubling the period of "West End Watch Co.". */
+function sentence(text: string): string {
+  return text.endsWith('.') ? text : `${text}.`;
+}
+
 function composeDescription(entry: ImportProduct, brand: string, lang: 'en' | 'ru' | 'uz'): string {
   const clauses: string[] = [];
   const { series, movement, caseMaterial, caseSize, dial, bracelet, waterResistance } = entry;
@@ -76,15 +81,21 @@ function composeDescription(entry: ImportProduct, brand: string, lang: 'en' | 'r
   if (lang === 'en') {
     clauses.push(
       series && series !== entry.name
-        ? `The ${entry.name} belongs to ${brand}'s ${series} line.`
-        : `The ${entry.name} is part of the ${brand} collection.`,
+        ? sentence(`The ${entry.name} belongs to ${brand}'s ${series} line`)
+        : sentence(`The ${entry.name} is part of the ${brand} collection`),
     );
-    if (movement) clauses.push(`It runs a ${movement} movement.`);
+    // A spec that already says "movement" ("Automatic movement with date
+    // calendar") would otherwise end up saying it twice.
+    if (movement) {
+      clauses.push(
+        /movement/i.test(movement) ? `Movement: ${movement}.` : `It runs a ${movement} movement.`,
+      );
+    }
     if (caseMaterial && caseSize) clauses.push(`The ${caseMaterial} case measures ${caseSize}.`);
     else if (caseMaterial) clauses.push(`The case is ${caseMaterial}.`);
     else if (caseSize) clauses.push(`The case measures ${caseSize}.`);
-    if (dial) clauses.push(`${dial} dial.`);
-    if (bracelet) clauses.push(`Fitted with ${bracelet.toLowerCase()}.`);
+    if (dial) clauses.push(/dial/i.test(dial) ? `${dial}.` : `${dial} dial.`);
+    if (bracelet) clauses.push(`Fitted with a ${bracelet.toLowerCase()}.`);
     if (waterResistance) clauses.push(`Water resistant to ${waterResistance}.`);
     return clauses.join(' ');
   }
@@ -92,8 +103,8 @@ function composeDescription(entry: ImportProduct, brand: string, lang: 'en' | 'r
   if (lang === 'ru') {
     clauses.push(
       series && series !== entry.name
-        ? `${entry.name} — модель из линейки ${series} марки ${brand}.`
-        : `${entry.name} — модель марки ${brand}.`,
+        ? sentence(`${entry.name} — модель из линейки ${series} марки ${brand}`)
+        : sentence(`${entry.name} — модель марки ${brand}`),
     );
     if (movement) clauses.push(`Механизм: ${movement}.`);
     if (caseMaterial) clauses.push(`Корпус: ${caseMaterial}${caseSize ? `, ${caseSize}` : ''}.`);
@@ -106,8 +117,8 @@ function composeDescription(entry: ImportProduct, brand: string, lang: 'en' | 'r
 
   clauses.push(
     series && series !== entry.name
-      ? `${entry.name} — ${brand} brendining ${series} liniyasidagi model.`
-      : `${entry.name} — ${brand} brendining modeli.`,
+      ? sentence(`${entry.name} — ${brand} brendining ${series} liniyasidagi model`)
+      : sentence(`${entry.name} — ${brand} brendining modeli`),
   );
   if (movement) clauses.push(`Mexanizm: ${movement}.`);
   if (caseMaterial) clauses.push(`Korpus: ${caseMaterial}${caseSize ? `, ${caseSize}` : ''}.`);
@@ -247,6 +258,8 @@ async function run(): Promise<void> {
     await importFile(file, replace);
   }
   await mongoose.disconnect();
+  // ts-node-dev keeps watching the file otherwise, so say when we are finished.
+  process.exit(0);
 }
 
 run().catch((error) => {

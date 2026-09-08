@@ -1,7 +1,7 @@
 {
   "brand": "Seiko",
   "source": "https://www.seikowatches.com/us-en",
-  "fetchedAt": "2026-09-07T19:00:04+00:00",
+  "fetchedAt": "2026-09-07T20:15:28+00:00",
   "currency": "USD",
   "products": [
     {
@@ -122,6 +122,5077 @@
         "/uploads/images/seiko-sje107-1.7138ca4d.jpg"
       ],
       "sourceUrl": "https://www.seikowatches.com/us-en/products/kingseiko/sje107j1"
+    },
+    {
+      "reference": "SLA083",
+      "name": "King Seiko VANAC",
+      "series": "King Seiko",
+      "gender": "men",
+      "price": 3300.0,
+      "movement": "Automatic with manual winding, 8L45",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "41.0mm",
+      "dial": "",
+      "bracelet": "Deployment clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-sla083-1.1b4cd88a.jpg",
+        "/uploads/images/seiko-sla083-2.3c6591e1.jpg",
+        "/uploads/images/seiko-sla083-3.a3adfca5.jpg",
+        "/uploads/images/seiko-sla083-4.a856a6ce.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/kingseiko/sla083j1"
+    },
+    {
+      "reference": "SLA085",
+      "name": "King Seiko VANAC",
+      "series": "King Seiko",
+      "gender": "men",
+      "price": 3300.0,
+      "movement": "Automatic with manual winding, 8L45",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "41.0mm",
+      "dial": "",
+      "bracelet": "Deployment clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-sla085-1.1c650242.jpg",
+        "/uploads/images/seiko-sla085-2.1fc28b25.jpg",
+        "/uploads/images/seiko-sla085-3.b699a01f.jpg",
+        "/uploads/images/seiko-sla085-4.fd54efc1.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/kingseiko/sla085j1"
+    },
+    {
+      "reference": "SLA087",
+      "name": "King Seiko VANAC",
+      "series": "King Seiko",
+      "gender": "men",
+      "price": 3300.0,
+      "movement": "Automatic with manual winding, 8L45",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "41.0mm",
+      "dial": "",
+      "bracelet": "Deployment clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-sla087-1.0e3aaeda.jpg",
+        "/uploads/images/seiko-sla087-2.9fbe9988.jpg",
+        "/uploads/images/seiko-sla087-3.4d068c02.jpg",
+        "/uploads/images/seiko-sla087-4.eb57ebbf.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/kingseiko/sla087j1"
+    },
+    {
+      "reference": "SLA091",
+      "name": "King Seiko VANAC",
+      "series": "King Seiko",
+      "gender": "men",
+      "price": 3300.0,
+      "movement": "Automatic with manual winding, 8L45",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "41.0mm",
+      "dial": "",
+      "bracelet": "Deployment clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-sla091-1.b2f9eb75.jpg",
+        "/uploads/images/seiko-sla091-2.20bb118d.jpg",
+        "/uploads/images/seiko-sla091-3.88105f73.jpg",
+        "/uploads/images/seiko-sla091-4.f49923e4.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/kingseiko/sla091j1"
+    },
+    {
+      "reference": "SNR025",
+      "name": "Prospex LX line",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 5500.0,
+      "movement": "Spring Drive, 5R66",
+      "caseMaterial": "Titanium (super-hard coating)",
+      "caseSize": "44.8mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with secure lock & push button release, solid & slide adjuster",
+      "waterResistance": "20 bar",
+      "images": [
+        "/uploads/images/seiko-snr025-1.d4d5680f.jpg",
+        "/uploads/images/seiko-snr025-2.3bae213a.jpg",
+        "/uploads/images/seiko-snr025-3.923b691b.jpg",
+        "/uploads/images/seiko-snr025-4.bd6ea012.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/snr025j1"
+    },
+    {
+      "reference": "SNR029",
+      "name": "Prospex LX line",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 6500.0,
+      "movement": "Spring Drive, 5R65",
+      "caseMaterial": "Titanium (super-hard coating)",
+      "caseSize": "44.8mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with secure lock & push button release, solid & slide adjuster",
+      "waterResistance": "300m / 1000ft for saturation diving",
+      "images": [
+        "/uploads/images/seiko-snr029-1.3edc6299.jpg",
+        "/uploads/images/seiko-snr029-2.09a7fb1e.jpg",
+        "/uploads/images/seiko-snr029-3.99813fb6.jpg",
+        "/uploads/images/seiko-snr029-4.c20373a9.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/snr029j1"
+    },
+    {
+      "reference": "SNR033",
+      "name": "Prospex LX line",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 6000.0,
+      "movement": "Spring Drive, 5R66",
+      "caseMaterial": "Titanium (super-hard coating)",
+      "caseSize": "44.8mm",
+      "dial": "",
+      "bracelet": "",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-snr033-1.67c456bf.jpg",
+        "/uploads/images/seiko-snr033-2.bb5cf8cc.jpg",
+        "/uploads/images/seiko-snr033-3.aaffb5bc.jpg",
+        "/uploads/images/seiko-snr033-4.d74f91c4.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/snr033j1"
+    },
+    {
+      "reference": "SPB301",
+      "name": "Prospex Sea",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 1350.0,
+      "movement": "Automatic with manual winding, 6R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "42.7mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with secure lock , push button release with extender",
+      "waterResistance": "200m / 660ft diver&#39;s",
+      "images": [
+        "/uploads/images/seiko-spb301-1.f003750d.jpg",
+        "/uploads/images/seiko-spb301-2.7026bc7f.jpg",
+        "/uploads/images/seiko-spb301-3.c7273bf2.jpg",
+        "/uploads/images/seiko-spb301-4.46bc0aff.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/spb301j1"
+    },
+    {
+      "reference": "SRPE03",
+      "name": "Prospex Sea",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 650.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel (Bezel: Stainless steel with ceramic display)",
+      "caseSize": "45.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with secure lock , push button release with extender",
+      "waterResistance": "200m / 660ft diver&#39;s",
+      "images": [
+        "/uploads/images/seiko-srpe03-1.f9684f87.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/srpe03"
+    },
+    {
+      "reference": "SRPE27",
+      "name": "Prospex Sea",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 550.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "42.4mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with secure lock , push button release with extender",
+      "waterResistance": "200m / 660ft diver&#39;s",
+      "images": [
+        "/uploads/images/seiko-srpe27-1.faadfdba.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/srpe27"
+    },
+    {
+      "reference": "SRPE33",
+      "name": "Prospex Sea",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 650.0,
+      "movement": "Automatic with manual winding, 4R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "43.8mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with secure lock , push button release with extender",
+      "waterResistance": "200m / 660ft diver&#39;s",
+      "images": [
+        "/uploads/images/seiko-srpe33-1.f6d4785c.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/srpe33"
+    },
+    {
+      "reference": "SRPE37",
+      "name": "Prospex Sea",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 625.0,
+      "movement": "Automatic with manual winding, 4R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "43.8mm",
+      "dial": "",
+      "bracelet": "Silicone",
+      "waterResistance": "200m / 660ft diver&#39;s",
+      "images": [
+        "/uploads/images/seiko-srpe37-1.16ee451e.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/srpe37"
+    },
+    {
+      "reference": "SRPE93",
+      "name": "Prospex Sea",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 525.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "45.0mm",
+      "dial": "",
+      "bracelet": "Silicone",
+      "waterResistance": "200m / 660ft diver&#39;s",
+      "images": [
+        "/uploads/images/seiko-srpe93-1.bbc7b935.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/srpe93"
+    },
+    {
+      "reference": "SRPE99",
+      "name": "Prospex Sea",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 575.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "",
+      "caseSize": "45.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with secure lock , push button release with extender",
+      "waterResistance": "200m / 660ft diver&#39;s",
+      "images": [
+        "/uploads/images/seiko-srpe99-1.aa9e7074.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/srpe99"
+    },
+    {
+      "reference": "SRPF03",
+      "name": "Prospex Sea",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 550.0,
+      "movement": "Automatic with manual winding, 4R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "43.8mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with secure lock , push button release with extender",
+      "waterResistance": "200m / 660ft diver&#39;s",
+      "images": [
+        "/uploads/images/seiko-srpf03-1.caa57638.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/srpf03"
+    },
+    {
+      "reference": "SPB155",
+      "name": "Prospex Land",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 725.0,
+      "movement": "Automatic with manual winding, 6R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "38.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "20 bar",
+      "images": [
+        "/uploads/images/seiko-spb155-1.f675aa0a.jpg",
+        "/uploads/images/seiko-spb155-2.b88f227a.jpg",
+        "/uploads/images/seiko-spb155-3.b916e443.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/spb155j1"
+    },
+    {
+      "reference": "SPB175",
+      "name": "Prospex Sea",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 900.0,
+      "movement": "Automatic with manual winding, 6R35",
+      "caseMaterial": "",
+      "caseSize": "45.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with secure lock",
+      "waterResistance": "200m / 660ft diver&#39;s",
+      "images": [
+        "/uploads/images/seiko-spb175-1.19b2d22f.jpg",
+        "/uploads/images/seiko-spb175-2.51420b39.jpg",
+        "/uploads/images/seiko-spb175-3.ef9b4183.jpg",
+        "/uploads/images/seiko-spb175-4.674eedf0.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/spb175j1"
+    },
+    {
+      "reference": "SPB210",
+      "name": "Prospex Land",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 775.0,
+      "movement": "Automatic with manual winding, 6R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39.5mm",
+      "dial": "",
+      "bracelet": "Cow leather, Three-fold clasp with push button release",
+      "waterResistance": "20 bar",
+      "images": [
+        "/uploads/images/seiko-spb210-1.848df032.jpg",
+        "/uploads/images/seiko-spb210-2.98f8c30a.jpg",
+        "/uploads/images/seiko-spb210-3.fb642876.jpg",
+        "/uploads/images/seiko-spb210-4.ff64e76d.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/spb210j1"
+    },
+    {
+      "reference": "SRPF77",
+      "name": "Prospex Sea",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 625.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel (Bezel: Stainless steel with ceramic display)",
+      "caseSize": "45.0mm",
+      "dial": "",
+      "bracelet": "Silicone",
+      "waterResistance": "200m / 660ft diver&#39;s",
+      "images": [
+        "/uploads/images/seiko-srpf77-1.ca87e78e.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/srpf77"
+    },
+    {
+      "reference": "SRPG57",
+      "name": "Prospex Sea",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 550.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "42.4mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with secure lock , push button release with extender",
+      "waterResistance": "200m / 660ft diver&#39;s",
+      "images": [
+        "/uploads/images/seiko-srpg57-1.0999f766.jpg",
+        "/uploads/images/seiko-srpg57-2.aadf4b84.jpg",
+        "/uploads/images/seiko-srpg57-3.ad44dfa3.jpg",
+        "/uploads/images/seiko-srpg57-4.ae77a18e.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/srpg57"
+    },
+    {
+      "reference": "SPB177",
+      "name": "Prospex Sea",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 900.0,
+      "movement": "Automatic with manual winding, 6R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "45.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with secure lock",
+      "waterResistance": "200m / 660ft diver&#39;s",
+      "images": [
+        "/uploads/images/seiko-spb177-1.baddc2e4.jpg",
+        "/uploads/images/seiko-spb177-2.f1af4a40.jpg",
+        "/uploads/images/seiko-spb177-3.e625f006.jpg",
+        "/uploads/images/seiko-spb177-4.fc235f22.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/spb177j1"
+    },
+    {
+      "reference": "SPB179",
+      "name": "Prospex Sea",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 900.0,
+      "movement": "Automatic with manual winding, 6R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "45.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with secure lock",
+      "waterResistance": "200m / 660ft diver&#39;s",
+      "images": [
+        "/uploads/images/seiko-spb179-1.cf162916.jpg",
+        "/uploads/images/seiko-spb179-2.0d934cee.jpg",
+        "/uploads/images/seiko-spb179-3.0311f24f.jpg",
+        "/uploads/images/seiko-spb179-4.9a4944a6.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/spb179j1"
+    },
+    {
+      "reference": "SNR051",
+      "name": "Prospex LX line",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 6000.0,
+      "movement": "Spring Drive, 5R66",
+      "caseMaterial": "Titanium (super-hard coating)",
+      "caseSize": "44.8mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-snr051-1.d9cec13d.jpg",
+        "/uploads/images/seiko-snr051-2.54228cf3.jpg",
+        "/uploads/images/seiko-snr051-3.91ed2659.jpg",
+        "/uploads/images/seiko-snr051-4.1a7e9fb6.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/snr051j1"
+    },
+    {
+      "reference": "SSC911",
+      "name": "Prospex SPEEDTIMER",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 750.0,
+      "movement": "Solar, V192",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "41.4mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssc911-1.e0dd07ae.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/ssc911"
+    },
+    {
+      "reference": "SSC913",
+      "name": "Prospex SPEEDTIMER",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 750.0,
+      "movement": "Solar, V192",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "41.4mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssc913-1.5592371a.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/ssc913"
+    },
+    {
+      "reference": "SRPJ93",
+      "name": "Prospex Sea",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 625.0,
+      "movement": "Automatic with manual winding, 4R35",
+      "caseMaterial": "Stainless steel (Bezel: Stainless steel with ceramic display)",
+      "caseSize": "43.8mm",
+      "dial": "",
+      "bracelet": "Silicone",
+      "waterResistance": "200m / 660ft diver&#39;s",
+      "images": [
+        "/uploads/images/seiko-srpj93-1.03d23949.jpg",
+        "/uploads/images/seiko-srpj93-2.d80b89df.jpg",
+        "/uploads/images/seiko-srpj93-3.17762b6c.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/srpj93"
+    },
+    {
+      "reference": "SRPK01",
+      "name": "Prospex Sea",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 650.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel (Bezel: Stainless steel with ceramic display)",
+      "caseSize": "45.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with secure lock , push button release with extender",
+      "waterResistance": "200m / 660ft diver&#39;s",
+      "images": [
+        "/uploads/images/seiko-srpk01-1.8d14cf72.jpg",
+        "/uploads/images/seiko-srpk01-2.b1e555cf.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/srpk01"
+    },
+    {
+      "reference": "SPB317",
+      "name": "Prospex Sea",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 900.0,
+      "movement": "Automatic with manual winding, 6R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "41.0mm",
+      "dial": "",
+      "bracelet": "Silicone",
+      "waterResistance": "200m / 660ft diver&#39;s",
+      "images": [
+        "/uploads/images/seiko-spb317-1.5301ae3b.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/spb317j1"
+    },
+    {
+      "reference": "SPB289",
+      "name": "Prospex Land",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 875.0,
+      "movement": "Automatic with manual winding, 6R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "38.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "20 bar",
+      "images": [
+        "/uploads/images/seiko-spb289-1.b218abe1.jpg",
+        "/uploads/images/seiko-spb289-2.a2fe26cf.jpg",
+        "/uploads/images/seiko-spb289-3.bba6ab20.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/spb289j1"
+    },
+    {
+      "reference": "SPB377",
+      "name": "Prospex Land",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 1150.0,
+      "movement": "Automatic with manual winding, 6R54",
+      "caseMaterial": "Stainless steel (super hard coating)",
+      "caseSize": "39.5mm",
+      "dial": "",
+      "bracelet": "Cow leather, Three-fold clasp with push button release",
+      "waterResistance": "20 bar",
+      "images": [
+        "/uploads/images/seiko-spb377-1.6c415a9b.jpg",
+        "/uploads/images/seiko-spb377-2.644f23f2.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/spb377j1"
+    },
+    {
+      "reference": "SPB379",
+      "name": "Prospex Land",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 1150.0,
+      "movement": "Automatic with manual winding, 6R54",
+      "caseMaterial": "Stainless steel (super hard coating)",
+      "caseSize": "39.5mm",
+      "dial": "",
+      "bracelet": "Cow leather, Three-fold clasp with push button release",
+      "waterResistance": "20 bar",
+      "images": [
+        "/uploads/images/seiko-spb379-1.2ea3df09.jpg",
+        "/uploads/images/seiko-spb379-2.432c3be9.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/spb379j1"
+    },
+    {
+      "reference": "SJE099",
+      "name": "Prospex Marinemaster",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 2800.0,
+      "movement": "Automatic with manual winding, 6L37",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39.5mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with secure lock , push button release with extender",
+      "waterResistance": "200m / 660ft diver&#39;s",
+      "images": [
+        "/uploads/images/seiko-sje099-1.02278136.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/sje099j1"
+    },
+    {
+      "reference": "SJE101",
+      "name": "Prospex Marinemaster",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 2800.0,
+      "movement": "Automatic with manual winding, 6L37",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39.5mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with secure lock , push button release with extender",
+      "waterResistance": "200m / 660ft diver&#39;s",
+      "images": [
+        "/uploads/images/seiko-sje101-1.b754bee2.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/sje101j1"
+    },
+    {
+      "reference": "SRQ047",
+      "name": "Prospex SPEEDTIMER",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 2500.0,
+      "movement": "Automatic with manual winding, 8R48",
+      "caseMaterial": "Stainless steel (super hard coating)",
+      "caseSize": "42.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srq047-1.19f3b028.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/srq047j1"
+    },
+    {
+      "reference": "SPB451",
+      "name": "Prospex Sea",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 1300.0,
+      "movement": "Automatic with manual winding, 6R55",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "40.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with secure lock , push button release with extender",
+      "waterResistance": "300m / 1000ft diver&#39;s",
+      "images": [
+        "/uploads/images/seiko-spb451-1.81a88fe3.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/spb451j1"
+    },
+    {
+      "reference": "SPB453",
+      "name": "Prospex Sea",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 1300.0,
+      "movement": "Automatic with manual winding, 6R55",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "40.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with secure lock , push button release with extender",
+      "waterResistance": "300m / 1000ft diver&#39;s",
+      "images": [
+        "/uploads/images/seiko-spb453-1.f5d4ab17.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/spb453j1"
+    },
+    {
+      "reference": "SSC939",
+      "name": "Prospex SPEEDTIMER",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 750.0,
+      "movement": "Solar, V192",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "41.4mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssc939-1.08f20c9f.jpg",
+        "/uploads/images/seiko-ssc939-2.00c0ccbb.jpg",
+        "/uploads/images/seiko-ssc939-3.04bc4b47.jpg",
+        "/uploads/images/seiko-ssc939-4.9027f66b.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/ssc939"
+    },
+    {
+      "reference": "SSC941",
+      "name": "Prospex SPEEDTIMER",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 785.0,
+      "movement": "Solar, V192",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "41.4mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssc941-1.1f8b61c5.jpg",
+        "/uploads/images/seiko-ssc941-2.00dd47b7.jpg",
+        "/uploads/images/seiko-ssc941-3.bfc3796f.jpg",
+        "/uploads/images/seiko-ssc941-4.1c01167e.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/ssc941"
+    },
+    {
+      "reference": "SRPL11",
+      "name": "Prospex Sea",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 595.0,
+      "movement": "Automatic with manual winding, 4R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "41.7mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with secure lock , push button release with extender",
+      "waterResistance": "200m / 660ft diver&#39;s",
+      "images": [
+        "/uploads/images/seiko-srpl11-1.fa583140.jpg",
+        "/uploads/images/seiko-srpl11-2.4e1b48b0.jpg",
+        "/uploads/images/seiko-srpl11-3.10dd531f.jpg",
+        "/uploads/images/seiko-srpl11-4.2615c429.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/srpl11"
+    },
+    {
+      "reference": "SRPL13",
+      "name": "Prospex Sea",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 595.0,
+      "movement": "Automatic with manual winding, 4R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "41.7mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with secure lock , push button release with extender",
+      "waterResistance": "200m / 660ft diver&#39;s",
+      "images": [
+        "/uploads/images/seiko-srpl13-1.c36bfd3f.jpg",
+        "/uploads/images/seiko-srpl13-2.69ad14d6.jpg",
+        "/uploads/images/seiko-srpl13-3.fc9a4a53.jpg",
+        "/uploads/images/seiko-srpl13-4.92791889.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/srpl13"
+    },
+    {
+      "reference": "SRPL15",
+      "name": "Prospex Sea",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 575.0,
+      "movement": "Automatic with manual winding, 4R35",
+      "caseMaterial": "Stainless steel (hard coating)",
+      "caseSize": "41.7mm",
+      "dial": "",
+      "bracelet": "Silicone",
+      "waterResistance": "200m / 660ft diver&#39;s",
+      "images": [
+        "/uploads/images/seiko-srpl15-1.dd73372c.jpg",
+        "/uploads/images/seiko-srpl15-2.8e7e11d7.jpg",
+        "/uploads/images/seiko-srpl15-3.5fef1154.jpg",
+        "/uploads/images/seiko-srpl15-4.ddd3e20f.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/srpl15"
+    },
+    {
+      "reference": "SJE117",
+      "name": "Prospex Marinemaster",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 2800.0,
+      "movement": "Automatic with manual winding, 6L37",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39.5mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with secure lock , push button release with extender",
+      "waterResistance": "200m / 660ft diver&#39;s",
+      "images": [
+        "/uploads/images/seiko-sje117-1.527aa809.jpg",
+        "/uploads/images/seiko-sje117-2.5d349c03.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/sje117j1"
+    },
+    {
+      "reference": "SJE119",
+      "name": "Prospex Marinemaster",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 2800.0,
+      "movement": "Automatic with manual winding, 6L37",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39.5mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with secure lock , push button release with extender",
+      "waterResistance": "200m / 660ft diver&#39;s",
+      "images": [
+        "/uploads/images/seiko-sje119-1.8c0f7388.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/sje119j1"
+    },
+    {
+      "reference": "SSC947",
+      "name": "Prospex SPEEDTIMER",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 750.0,
+      "movement": "Solar, V192",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "41.4mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssc947-1.8a1886a5.jpg",
+        "/uploads/images/seiko-ssc947-2.f0b11f4a.jpg",
+        "/uploads/images/seiko-ssc947-3.2fc4bd45.jpg",
+        "/uploads/images/seiko-ssc947-4.550a2bd2.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/ssc947"
+    },
+    {
+      "reference": "SLA077",
+      "name": "Prospex Marinemaster",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 2900.0,
+      "movement": "Automatic with manual winding, 8L35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "42.6mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with secure lock , push button release with extender",
+      "waterResistance": "300m / 1000ft diver&#39;s",
+      "images": [
+        "/uploads/images/seiko-sla077-1.596be416.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/sla077j1"
+    },
+    {
+      "reference": "SRQ051",
+      "name": "Prospex SPEEDTIMER",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 2500.0,
+      "movement": "Automatic with manual winding, 8R48",
+      "caseMaterial": "Stainless steel (super hard coating)",
+      "caseSize": "42.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srq051-1.8b03c083.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/srq051j1"
+    },
+    {
+      "reference": "SRQ053",
+      "name": "Prospex SPEEDTIMER",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 2500.0,
+      "movement": "Automatic with manual winding, 8R48",
+      "caseMaterial": "Stainless steel (super hard coating)",
+      "caseSize": "42.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srq053-1.82f34edf.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/srq053j1"
+    },
+    {
+      "reference": "SPB481",
+      "name": "Prospex Sea",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 1100.0,
+      "movement": "Automatic with manual winding, 6R55",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "41.3mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with secure lock , push button release with extender",
+      "waterResistance": "300m / 1000ft diver&#39;s",
+      "images": [
+        "/uploads/images/seiko-spb481-1.a4d52f6f.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/spb481j1"
+    },
+    {
+      "reference": "SPB483",
+      "name": "Prospex Sea",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 1100.0,
+      "movement": "Automatic with manual winding, 6R55",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "41.3mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with secure lock , push button release with extender",
+      "waterResistance": "300m / 1000ft diver&#39;s",
+      "images": [
+        "/uploads/images/seiko-spb483-1.597db476.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/spb483j1"
+    },
+    {
+      "reference": "SPB485",
+      "name": "Prospex Sea",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 1100.0,
+      "movement": "Automatic with manual winding, 6R55",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "41.3mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with secure lock , push button release with extender",
+      "waterResistance": "300m / 1000ft diver&#39;s",
+      "images": [
+        "/uploads/images/seiko-spb485-1.c56021c1.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/spb485j1"
+    },
+    {
+      "reference": "SLA079",
+      "name": "Prospex Marinemaster",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 2900.0,
+      "movement": "Automatic with manual winding, 8L35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "42.6mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with secure lock , push button release with extender",
+      "waterResistance": "300m / 1000ft diver&#39;s",
+      "images": [
+        "/uploads/images/seiko-sla079-1.ed12c16a.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/sla079j1"
+    },
+    {
+      "reference": "SSH165",
+      "name": "Prospex SPEEDTIMER",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 2200.0,
+      "movement": "GPS solar, 5X83",
+      "caseMaterial": "Stainless steel (super hard coating)",
+      "caseSize": "42.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssh165-1.1aa0554c.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/ssh165j1"
+    },
+    {
+      "reference": "SSH167",
+      "name": "Prospex SPEEDTIMER",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 2200.0,
+      "movement": "GPS solar, 5X83",
+      "caseMaterial": "Stainless steel (super hard coating)",
+      "caseSize": "42.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssh167-1.22fa697b.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/ssh167j1"
+    },
+    {
+      "reference": "SPB519",
+      "name": "Prospex Sea",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 1700.0,
+      "movement": "Automatic with manual winding, 6R54",
+      "caseMaterial": "Stainless steel (Bezel: Stainless steel with ceramic display)",
+      "caseSize": "42.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with secure lock & push button release, solid & slide adjuster",
+      "waterResistance": "300m / 1000ft diver&#39;s",
+      "images": [
+        "/uploads/images/seiko-spb519-1.b1107713.jpg",
+        "/uploads/images/seiko-spb519-2.e194f39b.jpg",
+        "/uploads/images/seiko-spb519-3.ac7968c7.jpg",
+        "/uploads/images/seiko-spb519-4.13e5bc44.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/spb519j1"
+    },
+    {
+      "reference": "SPB501",
+      "name": "Prospex Sea",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 1550.0,
+      "movement": "Automatic with manual winding, 6R55",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "40.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with secure lock & push button release, solid & slide adjuster",
+      "waterResistance": "300m / 1000ft diver&#39;s",
+      "images": [
+        "/uploads/images/seiko-spb501-1.a0d82d0f.jpg",
+        "/uploads/images/seiko-spb501-2.a2564300.jpg",
+        "/uploads/images/seiko-spb501-3.b4f533f1.jpg",
+        "/uploads/images/seiko-spb501-4.5ca24ab6.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/spb501j1"
+    },
+    {
+      "reference": "SRPL53",
+      "name": "Prospex Sea",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 650.0,
+      "movement": "Automatic with manual winding, 4R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "41.7mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with secure lock , push button release with extender",
+      "waterResistance": "200m / 660ft diver&#39;s",
+      "images": [
+        "/uploads/images/seiko-srpl53-1.aa08d60d.jpg",
+        "/uploads/images/seiko-srpl53-2.6b76c1c3.jpg",
+        "/uploads/images/seiko-srpl53-3.f5d51e4e.jpg",
+        "/uploads/images/seiko-srpl53-4.d638572f.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/srpl53"
+    },
+    {
+      "reference": "SRPL51",
+      "name": "Prospex Sea",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 595.0,
+      "movement": "Automatic with manual winding, 4R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "41.7mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with secure lock , push button release with extender",
+      "waterResistance": "200m / 660ft diver&#39;s",
+      "images": [
+        "/uploads/images/seiko-srpl51-1.3625b981.jpg",
+        "/uploads/images/seiko-srpl51-2.3179f3d5.jpg",
+        "/uploads/images/seiko-srpl51-3.82473609.jpg",
+        "/uploads/images/seiko-srpl51-4.85e2e826.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/srpl51"
+    },
+    {
+      "reference": "SPB513",
+      "name": "Prospex SPEEDTIMER",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 995.0,
+      "movement": "Automatic with manual winding, 6R55",
+      "caseMaterial": "Stainless steel (super hard coating)",
+      "caseSize": "39.5mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "20 bar",
+      "images": [
+        "/uploads/images/seiko-spb513-1.61ad316e.jpg",
+        "/uploads/images/seiko-spb513-2.d812112d.jpg",
+        "/uploads/images/seiko-spb513-3.6658dc9d.jpg",
+        "/uploads/images/seiko-spb513-4.fb6a942f.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/spb513j1"
+    },
+    {
+      "reference": "SPB515",
+      "name": "Prospex SPEEDTIMER",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 995.0,
+      "movement": "Automatic with manual winding, 6R55",
+      "caseMaterial": "Stainless steel (super hard coating)",
+      "caseSize": "39.5mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "20 bar",
+      "images": [
+        "/uploads/images/seiko-spb515-1.22d09a66.jpg",
+        "/uploads/images/seiko-spb515-2.70585c72.jpg",
+        "/uploads/images/seiko-spb515-3.d797840b.jpg",
+        "/uploads/images/seiko-spb515-4.98811b06.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/spb515j1"
+    },
+    {
+      "reference": "SRQ055",
+      "name": "Prospex SPEEDTIMER",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 2500.0,
+      "movement": "Automatic with manual winding, 8R48",
+      "caseMaterial": "Stainless steel (super hard coating)",
+      "caseSize": "42.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srq055-1.f104a645.jpg",
+        "/uploads/images/seiko-srq055-2.7c027f14.jpg",
+        "/uploads/images/seiko-srq055-3.28393d20.jpg",
+        "/uploads/images/seiko-srq055-4.e10a9894.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/srq055j1"
+    },
+    {
+      "reference": "SUR595",
+      "name": "Prospex Sea",
+      "series": "Prospex",
+      "gender": "women",
+      "price": 795.0,
+      "movement": "Quartz, 6N01",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "34.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "20 bar",
+      "images": [
+        "/uploads/images/seiko-sur595-1.70693f6d.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/sur595j1"
+    },
+    {
+      "reference": "SUR597",
+      "name": "Prospex Sea",
+      "series": "Prospex",
+      "gender": "women",
+      "price": 795.0,
+      "movement": "Quartz, 6N01",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "34.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "20 bar",
+      "images": [
+        "/uploads/images/seiko-sur597-1.b255b209.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/sur597j1"
+    },
+    {
+      "reference": "SUR618",
+      "name": "Prospex Sea",
+      "series": "Prospex",
+      "gender": "women",
+      "price": 1150.0,
+      "movement": "Quartz, 6N01",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "34.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "20 bar",
+      "images": [
+        "/uploads/images/seiko-sur618-1.842b864d.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/sur618j1"
+    },
+    {
+      "reference": "SUR620",
+      "name": "Prospex Sea",
+      "series": "Prospex",
+      "gender": "women",
+      "price": 1150.0,
+      "movement": "Quartz, 6N01",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "34.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "20 bar",
+      "images": [
+        "/uploads/images/seiko-sur620-1.b7136173.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/sur620j1"
+    },
+    {
+      "reference": "SUR622",
+      "name": "Prospex Sea",
+      "series": "Prospex",
+      "gender": "women",
+      "price": 2950.0,
+      "movement": "Quartz, 6N01",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "34.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "20 bar",
+      "images": [
+        "/uploads/images/seiko-sur622-1.7c77fec1.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/sur622j1"
+    },
+    {
+      "reference": "SUR605",
+      "name": "Prospex Sea",
+      "series": "Prospex",
+      "gender": "women",
+      "price": 795.0,
+      "movement": "Quartz, 6N01",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "34.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "20 bar",
+      "images": [
+        "/uploads/images/seiko-sur605-1.6906530e.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/sur605j1"
+    },
+    {
+      "reference": "SUR607",
+      "name": "Prospex Sea",
+      "series": "Prospex",
+      "gender": "women",
+      "price": 795.0,
+      "movement": "Quartz, 6N01",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "34.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "20 bar",
+      "images": [
+        "/uploads/images/seiko-sur607-1.4542adc3.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/sur607j1"
+    },
+    {
+      "reference": "SUR608",
+      "name": "Prospex Sea",
+      "series": "Prospex",
+      "gender": "women",
+      "price": 875.0,
+      "movement": "Quartz, 6N01",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "34.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "20 bar",
+      "images": [
+        "/uploads/images/seiko-sur608-1.b7ca525a.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/sur608j1"
+    },
+    {
+      "reference": "SPB507",
+      "name": "Prospex Land",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 900.0,
+      "movement": "Automatic with manual winding, 6R55",
+      "caseMaterial": "Stainless steel (super hard coating)",
+      "caseSize": "39.5mm",
+      "dial": "",
+      "bracelet": "Cow leather, Three-fold clasp with push button release",
+      "waterResistance": "20 bar",
+      "images": [
+        "/uploads/images/seiko-spb507-1.8d32b620.jpg",
+        "/uploads/images/seiko-spb507-2.f7708c38.jpg",
+        "/uploads/images/seiko-spb507-3.21384c30.jpg",
+        "/uploads/images/seiko-spb507-4.b960b421.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/spb507j1"
+    },
+    {
+      "reference": "SPB249",
+      "name": "Prospex Land",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 750.0,
+      "movement": "Automatic with manual winding, 6R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "38.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "20 bar",
+      "images": [
+        "/uploads/images/seiko-spb249-1.a4c41574.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/spb249j1"
+    },
+    {
+      "reference": "SPB503",
+      "name": "Prospex Land",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 995.0,
+      "movement": "Automatic with manual winding, 6R55",
+      "caseMaterial": "Stainless steel (super hard coating)",
+      "caseSize": "39.5mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "20 bar",
+      "images": [
+        "/uploads/images/seiko-spb503-1.89c21a45.jpg",
+        "/uploads/images/seiko-spb503-2.ccec216b.jpg",
+        "/uploads/images/seiko-spb503-3.0aaa7d59.jpg",
+        "/uploads/images/seiko-spb503-4.56982b7e.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/spb503j1"
+    },
+    {
+      "reference": "SPB505",
+      "name": "Prospex Land",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 995.0,
+      "movement": "Automatic with manual winding, 6R55",
+      "caseMaterial": "Stainless steel (super hard coating)",
+      "caseSize": "39.5mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "20 bar",
+      "images": [
+        "/uploads/images/seiko-spb505-1.81de9595.jpg",
+        "/uploads/images/seiko-spb505-2.485921b9.jpg",
+        "/uploads/images/seiko-spb505-3.cdd3c802.jpg",
+        "/uploads/images/seiko-spb505-4.d691d9de.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/spb505j1"
+    },
+    {
+      "reference": "SSC961",
+      "name": "Prospex SPEEDTIMER",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Solar, V192",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssc961-1.fbac8914.jpg",
+        "/uploads/images/seiko-ssc961-2.6935b399.jpg",
+        "/uploads/images/seiko-ssc961-3.e0b6a2e0.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/ssc961"
+    },
+    {
+      "reference": "SSC963",
+      "name": "Prospex SPEEDTIMER",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Solar, V192",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssc963-1.26e18a08.jpg",
+        "/uploads/images/seiko-ssc963-2.12ace0ec.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/ssc963"
+    },
+    {
+      "reference": "SSC965",
+      "name": "Prospex SPEEDTIMER",
+      "series": "Prospex",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Solar, V192",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssc965-1.812bbdf9.jpg",
+        "/uploads/images/seiko-ssc965-2.46fcddca.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/prospex/ssc965"
+    },
+    {
+      "reference": "SRPE15",
+      "name": "Presage Cocktail Time",
+      "series": "Presage",
+      "gender": "men",
+      "price": 475.0,
+      "movement": "Automatic with manual winding, 4R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "40.5mm",
+      "dial": "",
+      "bracelet": "Deployment clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-srpe15-1.be28256d.jpg",
+        "/uploads/images/seiko-srpe15-2.fa3eff4a.jpg",
+        "/uploads/images/seiko-srpe15-3.abda0332.jpg",
+        "/uploads/images/seiko-srpe15-4.59012c4c.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/srpe15j1"
+    },
+    {
+      "reference": "SRPE19",
+      "name": "Presage Cocktail Time",
+      "series": "Presage",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic with manual winding, 4R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "40.5mm",
+      "dial": "",
+      "bracelet": "Deployment clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-srpe19-1.c3597e17.jpg",
+        "/uploads/images/seiko-srpe19-2.92b3a55d.jpg",
+        "/uploads/images/seiko-srpe19-3.abda0332.jpg",
+        "/uploads/images/seiko-srpe19-4.ac0ea819.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/srpe19j1"
+    },
+    {
+      "reference": "SRPE43",
+      "name": "Presage Cocktail Time",
+      "series": "Presage",
+      "gender": "men",
+      "price": 450.0,
+      "movement": "Automatic with manual winding, 4R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "38.5mm",
+      "dial": "",
+      "bracelet": "Cow leather, Three-fold clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-srpe43-1.206a7b9a.jpg",
+        "/uploads/images/seiko-srpe43-2.a620ce5e.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/srpe43j1"
+    },
+    {
+      "reference": "SRPE45",
+      "name": "Presage Cocktail Time",
+      "series": "Presage",
+      "gender": "men",
+      "price": 450.0,
+      "movement": "Automatic with manual winding, 4R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "38.5mm",
+      "dial": "",
+      "bracelet": "Cow leather, Three-fold clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-srpe45-1.5625537d.jpg",
+        "/uploads/images/seiko-srpe45-2.8b7ff9f0.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/srpe45j1"
+    },
+    {
+      "reference": "SRPG03",
+      "name": "Presage Style60's",
+      "series": "Presage",
+      "gender": "men",
+      "price": 550.0,
+      "movement": "Automatic with manual winding, 4R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "40.8mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-srpg03-1.4c4d0670.jpg",
+        "/uploads/images/seiko-srpg03-2.0ab9f65c.jpg",
+        "/uploads/images/seiko-srpg03-3.e35615ca.jpg",
+        "/uploads/images/seiko-srpg03-4.8e6d8f78.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/srpg03j1"
+    },
+    {
+      "reference": "SRPE41",
+      "name": "Presage Cocktail Time",
+      "series": "Presage",
+      "gender": "men",
+      "price": 450.0,
+      "movement": "Automatic with manual winding, 4R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "38.5mm",
+      "dial": "",
+      "bracelet": "Cow leather, Three-fold clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-srpe41-1.9cef24c3.jpg",
+        "/uploads/images/seiko-srpe41-2.f1b5cb67.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/srpe41j1"
+    },
+    {
+      "reference": "SRPD37",
+      "name": "Presage Cocktail Time",
+      "series": "Presage",
+      "gender": "men",
+      "price": 450.0,
+      "movement": "Automatic with manual winding, 4R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "40.5mm",
+      "dial": "",
+      "bracelet": "Cow leather, Three-fold clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-srpd37-1.2086d515.jpg",
+        "/uploads/images/seiko-srpd37-2.b11cbdf6.jpg",
+        "/uploads/images/seiko-srpd37-3.3c05ccec.jpg",
+        "/uploads/images/seiko-srpd37-4.55108293.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/srpd37j1"
+    },
+    {
+      "reference": "SSA425",
+      "name": "Presage Style60's",
+      "series": "Presage",
+      "gender": "men",
+      "price": 595.0,
+      "movement": "Automatic with manual winding, 4R39",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "40.8mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-ssa425-1.7223e098.jpg",
+        "/uploads/images/seiko-ssa425-2.cd141e51.jpg",
+        "/uploads/images/seiko-ssa425-3.e35615ca.jpg",
+        "/uploads/images/seiko-ssa425-4.32204517.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/ssa425j1"
+    },
+    {
+      "reference": "SPB225",
+      "name": "Presage Sharp Edged Series",
+      "series": "Presage",
+      "gender": "men",
+      "price": 1400.0,
+      "movement": "Automatic with manual winding, 6R64",
+      "caseMaterial": "Stainless steel (super hard coating)",
+      "caseSize": "42.2mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-spb225-1.11783306.jpg",
+        "/uploads/images/seiko-spb225-2.927cd0a2.jpg",
+        "/uploads/images/seiko-spb225-3.bfd5e6cb.jpg",
+        "/uploads/images/seiko-spb225-4.1633a75e.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/spb225j1"
+    },
+    {
+      "reference": "SRPB77",
+      "name": "Presage Cocktail Time",
+      "series": "Presage",
+      "gender": "men",
+      "price": 475.0,
+      "movement": "Automatic with manual winding, 4R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "40.5mm",
+      "dial": "",
+      "bracelet": "Deployment clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-srpb77-1.9fa0b289.jpg",
+        "/uploads/images/seiko-srpb77-2.f62427b3.jpg",
+        "/uploads/images/seiko-srpb77-3.5c03de24.jpg",
+        "/uploads/images/seiko-srpb77-4.18e2133b.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/srpb77j9"
+    },
+    {
+      "reference": "SRP839",
+      "name": "Presage Cocktail Time",
+      "series": "Presage",
+      "gender": "women",
+      "price": 475.0,
+      "movement": "Automatic with manual winding, 4R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "33.8mm",
+      "dial": "",
+      "bracelet": "Deployment clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-srp839-1.9eb744e6.jpg",
+        "/uploads/images/seiko-srp839-2.60d7a193.jpg",
+        "/uploads/images/seiko-srp839-3.eef8c57e.jpg",
+        "/uploads/images/seiko-srp839-4.4f52706b.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/srp839j1"
+    },
+    {
+      "reference": "SRP841",
+      "name": "Presage Cocktail Time",
+      "series": "Presage",
+      "gender": "women",
+      "price": 475.0,
+      "movement": "Automatic with manual winding, 4R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "33.8mm",
+      "dial": "",
+      "bracelet": "Deployment clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-srp841-1.e68f7633.jpg",
+        "/uploads/images/seiko-srp841-2.38b97d09.jpg",
+        "/uploads/images/seiko-srp841-3.4ea418bd.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/srp841j1"
+    },
+    {
+      "reference": "SRPB41",
+      "name": "Presage Cocktail Time",
+      "series": "Presage",
+      "gender": "men",
+      "price": 475.0,
+      "movement": "Automatic with manual winding, 4R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "40.5mm",
+      "dial": "",
+      "bracelet": "Deployment clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-srpb41-1.b67a5887.jpg",
+        "/uploads/images/seiko-srpb41-2.6462414e.jpg",
+        "/uploads/images/seiko-srpb41-3.e77e7a41.jpg",
+        "/uploads/images/seiko-srpb41-4.f850ab26.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/srpb41j1"
+    },
+    {
+      "reference": "SRPB43",
+      "name": "Presage Cocktail Time",
+      "series": "Presage",
+      "gender": "men",
+      "price": 450.0,
+      "movement": "Automatic with manual winding, 4R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "40.5mm",
+      "dial": "",
+      "bracelet": "Cow leather, Three-fold clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-srpb43-1.0482a664.jpg",
+        "/uploads/images/seiko-srpb43-2.e48a9816.jpg",
+        "/uploads/images/seiko-srpb43-3.84b32af1.jpg",
+        "/uploads/images/seiko-srpb43-4.d8b8fbc5.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/srpb43j1"
+    },
+    {
+      "reference": "SRPB46",
+      "name": "Presage Cocktail Time",
+      "series": "Presage",
+      "gender": "men",
+      "price": 525.0,
+      "movement": "Automatic with manual winding, 4R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "40.5mm",
+      "dial": "",
+      "bracelet": "Leather, Three-fold clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-srpb46-1.2811e9f9.jpg",
+        "/uploads/images/seiko-srpb46-2.61ab4870.jpg",
+        "/uploads/images/seiko-srpb46-3.f0b8b8a2.jpg",
+        "/uploads/images/seiko-srpb46-4.8513ead9.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/srpb46j1"
+    },
+    {
+      "reference": "SRE007",
+      "name": "Presage Cocktail Time",
+      "series": "Presage",
+      "gender": "women",
+      "price": 575.0,
+      "movement": "Automatic with manual winding, 2R05",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "30.3mm",
+      "dial": "",
+      "bracelet": "",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-sre007-1.06800f78.jpg",
+        "/uploads/images/seiko-sre007-2.e0f28f09.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/sre007j1"
+    },
+    {
+      "reference": "SRE009",
+      "name": "Presage Cocktail Time",
+      "series": "Presage",
+      "gender": "women",
+      "price": 595.0,
+      "movement": "Automatic with manual winding, 2R05",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "30.3mm",
+      "dial": "",
+      "bracelet": "",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-sre009-1.3586659d.jpg",
+        "/uploads/images/seiko-sre009-2.12bc78f5.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/sre009j1"
+    },
+    {
+      "reference": "SRE010",
+      "name": "Presage Cocktail Time",
+      "series": "Presage",
+      "gender": "women",
+      "price": 625.0,
+      "movement": "Automatic with manual winding, 2R05",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "30.3mm",
+      "dial": "",
+      "bracelet": "",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-sre010-1.ef9d7344.jpg",
+        "/uploads/images/seiko-sre010-2.be1bf58d.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/sre010j1"
+    },
+    {
+      "reference": "SSK009",
+      "name": "Presage Style60's",
+      "series": "Presage",
+      "gender": "men",
+      "price": 650.0,
+      "movement": "Automatic with manual winding, 4R34",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "40.8mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-ssk009-1.898f5f01.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/ssk009j1"
+    },
+    {
+      "reference": "SSK013",
+      "name": "Presage Style60's",
+      "series": "Presage",
+      "gender": "men",
+      "price": 650.0,
+      "movement": "Automatic with manual winding, 4R34",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "40.8mm",
+      "dial": "",
+      "bracelet": "Cow leather",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-ssk013-1.0c6fe525.jpg",
+        "/uploads/images/seiko-ssk013-2.fa446acb.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/ssk013j1"
+    },
+    {
+      "reference": "SRPJ13",
+      "name": "Presage Cocktail Time",
+      "series": "Presage",
+      "gender": "men",
+      "price": 475.0,
+      "movement": "Automatic with manual winding, 4R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39.5mm",
+      "dial": "",
+      "bracelet": "Deployment clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-srpj13-1.00580593.jpg",
+        "/uploads/images/seiko-srpj13-2.e7a793d6.jpg",
+        "/uploads/images/seiko-srpj13-3.cef889fd.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/srpj13j1"
+    },
+    {
+      "reference": "SRPJ17",
+      "name": "Presage Cocktail Time",
+      "series": "Presage",
+      "gender": "men",
+      "price": 475.0,
+      "movement": "Automatic with manual winding, 4R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39.5mm",
+      "dial": "",
+      "bracelet": "Cow leather",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-srpj17-1.75abf5f6.jpg",
+        "/uploads/images/seiko-srpj17-2.99cd2455.jpg",
+        "/uploads/images/seiko-srpj17-3.1d1956a8.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/srpj17j1"
+    },
+    {
+      "reference": "SSA459",
+      "name": "Presage Cocktail Time",
+      "series": "Presage",
+      "gender": "men",
+      "price": 595.0,
+      "movement": "Automatic with manual winding, 4R57",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "40.5mm",
+      "dial": "",
+      "bracelet": "Cow leather, Three-fold clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-ssa459-1.7b0f2fa6.jpg",
+        "/uploads/images/seiko-ssa459-2.22ea3c14.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/ssa459j1"
+    },
+    {
+      "reference": "SRPK15",
+      "name": "Presage Cocktail Time",
+      "series": "Presage",
+      "gender": "men",
+      "price": 475.0,
+      "movement": "Automatic with manual winding, 4R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "40.5mm",
+      "dial": "",
+      "bracelet": "Cow leather",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-srpk15-1.8f647871.jpg",
+        "/uploads/images/seiko-srpk15-2.c61d5059.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/srpk15j1"
+    },
+    {
+      "reference": "SPB403",
+      "name": "Presage Classic Series",
+      "series": "Presage",
+      "gender": "men",
+      "price": 1350.0,
+      "movement": "Automatic with manual winding, 6R55",
+      "caseMaterial": "Stainless steel (super hard coating)",
+      "caseSize": "40.2mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-spb403-1.1f0fa790.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/spb403j1"
+    },
+    {
+      "reference": "SPB405",
+      "name": "Presage Classic Series",
+      "series": "Presage",
+      "gender": "men",
+      "price": 1600.0,
+      "movement": "Automatic with manual winding, 6R55",
+      "caseMaterial": "Stainless steel (super hard coating)",
+      "caseSize": "40.2mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-spb405-1.c25590ba.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/spb405j1"
+    },
+    {
+      "reference": "SPB463",
+      "name": "Presage Classic Series",
+      "series": "Presage",
+      "gender": "men",
+      "price": 950.0,
+      "movement": "Automatic with manual winding, 6R55",
+      "caseMaterial": "Stainless steel (super hard coating)",
+      "caseSize": "40.2mm",
+      "dial": "",
+      "bracelet": "Deployment clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-spb463-1.9f79088a.jpg",
+        "/uploads/images/seiko-spb463-2.9323af8d.jpg",
+        "/uploads/images/seiko-spb463-3.df852cb5.jpg",
+        "/uploads/images/seiko-spb463-4.b714d1eb.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/spb463j1"
+    },
+    {
+      "reference": "SPB465",
+      "name": "Presage Classic Series",
+      "series": "Presage",
+      "gender": "men",
+      "price": 950.0,
+      "movement": "Automatic with manual winding, 6R55",
+      "caseMaterial": "Stainless steel (super hard coating)",
+      "caseSize": "40.2mm",
+      "dial": "",
+      "bracelet": "Deployment clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-spb465-1.4ad3a617.jpg",
+        "/uploads/images/seiko-spb465-2.4be8ee33.jpg",
+        "/uploads/images/seiko-spb465-3.0dbffa4b.jpg",
+        "/uploads/images/seiko-spb465-4.2b904d1d.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/spb465j1"
+    },
+    {
+      "reference": "SPB467",
+      "name": "Presage Classic Series",
+      "series": "Presage",
+      "gender": "men",
+      "price": 950.0,
+      "movement": "Automatic with manual winding, 6R55",
+      "caseMaterial": "Stainless steel (super hard coating)",
+      "caseSize": "40.2mm",
+      "dial": "",
+      "bracelet": "Deployment clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-spb467-1.7c59ef3a.jpg",
+        "/uploads/images/seiko-spb467-2.6dc3085a.jpg",
+        "/uploads/images/seiko-spb467-3.d4c392a6.jpg",
+        "/uploads/images/seiko-spb467-4.358968ad.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/spb467j1"
+    },
+    {
+      "reference": "SPB469",
+      "name": "Presage Classic Series",
+      "series": "Presage",
+      "gender": "men",
+      "price": 1125.0,
+      "movement": "Automatic with manual winding, 6R5J",
+      "caseMaterial": "Stainless steel (super hard coating)",
+      "caseSize": "40.2mm",
+      "dial": "",
+      "bracelet": "Deployment clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-spb469-1.275a0bce.jpg",
+        "/uploads/images/seiko-spb469-2.aea136a8.jpg",
+        "/uploads/images/seiko-spb469-3.81ad4ef8.jpg",
+        "/uploads/images/seiko-spb469-4.fb58e1e2.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/spb469j1"
+    },
+    {
+      "reference": "SPB471",
+      "name": "Presage Classic Series",
+      "series": "Presage",
+      "gender": "men",
+      "price": 1125.0,
+      "movement": "Automatic with manual winding, 6R5J",
+      "caseMaterial": "Stainless steel (super hard coating)",
+      "caseSize": "40.2mm",
+      "dial": "",
+      "bracelet": "Deployment clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-spb471-1.2866d0ef.jpg",
+        "/uploads/images/seiko-spb471-2.e08d5457.jpg",
+        "/uploads/images/seiko-spb471-3.98556e54.jpg",
+        "/uploads/images/seiko-spb471-4.38488c78.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/spb471j1"
+    },
+    {
+      "reference": "SRPK46",
+      "name": "Presage Cocktail Time",
+      "series": "Presage",
+      "gender": "men",
+      "price": 575.0,
+      "movement": "Automatic with manual winding, 4R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "40.5mm",
+      "dial": "",
+      "bracelet": "",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-srpk46-1.23cfbffd.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/srpk46j1"
+    },
+    {
+      "reference": "SRPK48",
+      "name": "Presage Cocktail Time",
+      "series": "Presage",
+      "gender": "men",
+      "price": 575.0,
+      "movement": "Automatic with manual winding, 4R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "40.5mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-srpk48-1.bb79b04d.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/srpk48j1"
+    },
+    {
+      "reference": "SPB445",
+      "name": "Presage Classic Series",
+      "series": "Presage",
+      "gender": "men",
+      "price": 1900.0,
+      "movement": "Automatic with manual winding, 6R5H",
+      "caseMaterial": "Stainless steel (super hard coating)",
+      "caseSize": "40.6mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-spb445-1.495734b9.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/spb445j1"
+    },
+    {
+      "reference": "SPB447",
+      "name": "Presage Classic Series",
+      "series": "Presage",
+      "gender": "men",
+      "price": 1750.0,
+      "movement": "Automatic with manual winding, 6R54",
+      "caseMaterial": "Stainless steel (super hard coating)",
+      "caseSize": "40.2mm",
+      "dial": "",
+      "bracelet": "Cow leather, Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-spb447-1.7e995ece.jpg",
+        "/uploads/images/seiko-spb447-2.9dd086a6.jpg",
+        "/uploads/images/seiko-spb447-3.409b59a9.jpg",
+        "/uploads/images/seiko-spb447-4.f8edd144.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/spb447j1"
+    },
+    {
+      "reference": "SRPL07",
+      "name": "Presage Style60's",
+      "series": "Presage",
+      "gender": "men",
+      "price": 595.0,
+      "movement": "Automatic with manual winding, 4R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39.5mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-srpl07-1.f0d2fb97.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/srpl07j1"
+    },
+    {
+      "reference": "SRPL09",
+      "name": "Presage Style60's",
+      "series": "Presage",
+      "gender": "men",
+      "price": 595.0,
+      "movement": "Automatic with manual winding, 4R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39.5mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-srpl09-1.a4053b8e.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/srpl09j1"
+    },
+    {
+      "reference": "SSK037",
+      "name": "Presage Cocktail Time",
+      "series": "Presage",
+      "gender": "men",
+      "price": 625.0,
+      "movement": "Automatic with manual winding, 4R34",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "40.5mm",
+      "dial": "",
+      "bracelet": "Deployment clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-ssk037-1.cded17c6.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/ssk037j1"
+    },
+    {
+      "reference": "SSK039",
+      "name": "Presage Cocktail Time",
+      "series": "Presage",
+      "gender": "men",
+      "price": 625.0,
+      "movement": "Automatic with manual winding, 4R34",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "40.5mm",
+      "dial": "",
+      "bracelet": "Cow leather, Three-fold clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-ssk039-1.857f67d1.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/ssk039j1"
+    },
+    {
+      "reference": "SSK041",
+      "name": "Presage Cocktail Time",
+      "series": "Presage",
+      "gender": "men",
+      "price": 625.0,
+      "movement": "Automatic with manual winding, 4R34",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "40.5mm",
+      "dial": "",
+      "bracelet": "Cow leather",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-ssk041-1.8b7c15e7.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/ssk041j1"
+    },
+    {
+      "reference": "SSA463",
+      "name": "Presage Inspired by Japanese Gardens",
+      "series": "Presage",
+      "gender": "men",
+      "price": 595.0,
+      "movement": "Automatic with manual winding, 4R39",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "41.8mm",
+      "dial": "",
+      "bracelet": "Deployment clasp with push button release",
+      "waterResistance": "Splash Resistant",
+      "images": [
+        "/uploads/images/seiko-ssa463-1.92070d0c.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/ssa463j1"
+    },
+    {
+      "reference": "SPB478",
+      "name": "Presage Classic Series",
+      "series": "Presage",
+      "gender": "men",
+      "price": 1000.0,
+      "movement": "Automatic with manual winding, 6R55",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "40.2mm",
+      "dial": "",
+      "bracelet": "Deployment clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-spb478-1.7d5a84f8.jpg",
+        "/uploads/images/seiko-spb478-2.cbbecbb9.jpg",
+        "/uploads/images/seiko-spb478-3.1824b5fe.jpg",
+        "/uploads/images/seiko-spb478-4.1ee6b377.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/spb478j1"
+    },
+    {
+      "reference": "SPB480",
+      "name": "Presage Classic Series",
+      "series": "Presage",
+      "gender": "men",
+      "price": 1175.0,
+      "movement": "Automatic with manual winding, 6R5J",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "40.2mm",
+      "dial": "",
+      "bracelet": "Deployment clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-spb480-1.dfd98a78.jpg",
+        "/uploads/images/seiko-spb480-2.ea0e11a3.jpg",
+        "/uploads/images/seiko-spb480-3.89ebcddd.jpg",
+        "/uploads/images/seiko-spb480-4.548d7861.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/spb480j1"
+    },
+    {
+      "reference": "SSA461",
+      "name": "Presage Style60's",
+      "series": "Presage",
+      "gender": "men",
+      "price": 715.0,
+      "movement": "Automatic with manual winding, 4R72",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39.5mm",
+      "dial": "",
+      "bracelet": "Leather",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-ssa461-1.a4a2c9de.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/ssa461j1"
+    },
+    {
+      "reference": "SPB495",
+      "name": "Presage Classic Series",
+      "series": "Presage",
+      "gender": "men",
+      "price": 1400.0,
+      "movement": "Automatic with manual winding, 6R5H",
+      "caseMaterial": "Stainless steel (super hard coating)",
+      "caseSize": "40.2mm",
+      "dial": "",
+      "bracelet": "Cow leather, Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-spb495-1.6cec70f4.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/spb495j1"
+    },
+    {
+      "reference": "SPB499",
+      "name": "Presage Classic Series",
+      "series": "Presage",
+      "gender": "men",
+      "price": 1650.0,
+      "movement": "Automatic with manual winding, 6R5H",
+      "caseMaterial": "Stainless steel (super hard coating)",
+      "caseSize": "40.2mm",
+      "dial": "",
+      "bracelet": "Cow leather, Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-spb499-1.115d80b7.jpg",
+        "/uploads/images/seiko-spb499-2.cd1cf63b.jpg",
+        "/uploads/images/seiko-spb499-3.4053a1ca.jpg",
+        "/uploads/images/seiko-spb499-4.503ce5be.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/spb499j1"
+    },
+    {
+      "reference": "SPB525",
+      "name": "Presage Classic Series",
+      "series": "Presage",
+      "gender": "men",
+      "price": 950.0,
+      "movement": "Automatic with manual winding, 6R55",
+      "caseMaterial": "Stainless steel (super hard coating)",
+      "caseSize": "40.2mm",
+      "dial": "",
+      "bracelet": "Deployment clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-spb525-1.9e93ba07.jpg",
+        "/uploads/images/seiko-spb525-2.3cdc1948.jpg",
+        "/uploads/images/seiko-spb525-3.fb00795c.jpg",
+        "/uploads/images/seiko-spb525-4.7f906fb2.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/spb525j1"
+    },
+    {
+      "reference": "SPB527",
+      "name": "Presage Classic Series",
+      "series": "Presage",
+      "gender": "men",
+      "price": 1125.0,
+      "movement": "Automatic with manual winding, 6R5J",
+      "caseMaterial": "Stainless steel (super hard coating)",
+      "caseSize": "40.2mm",
+      "dial": "",
+      "bracelet": "Deployment clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-spb527-1.69e2000c.jpg",
+        "/uploads/images/seiko-spb527-2.6c47b76e.jpg",
+        "/uploads/images/seiko-spb527-3.d30ccdf5.jpg",
+        "/uploads/images/seiko-spb527-4.e69fc1ec.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/spb527j1"
+    },
+    {
+      "reference": "SRE017",
+      "name": "Presage Cocktail Time",
+      "series": "Presage",
+      "gender": "women",
+      "price": 575.0,
+      "movement": "Automatic with manual winding, 2R05",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "30.3mm",
+      "dial": "",
+      "bracelet": "Deployment clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-sre017-1.a7eecb1e.jpg",
+        "/uploads/images/seiko-sre017-2.f62aaf14.jpg",
+        "/uploads/images/seiko-sre017-3.cadbb16b.jpg",
+        "/uploads/images/seiko-sre017-4.61b25323.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/sre017j1"
+    },
+    {
+      "reference": "SRE018",
+      "name": "Presage Cocktail Time",
+      "series": "Presage",
+      "gender": "women",
+      "price": 625.0,
+      "movement": "Automatic with manual winding, 2R05",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "30.3mm",
+      "dial": "",
+      "bracelet": "Deployment clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-sre018-1.ccf4bf12.jpg",
+        "/uploads/images/seiko-sre018-2.547616fa.jpg",
+        "/uploads/images/seiko-sre018-3.0e903079.jpg",
+        "/uploads/images/seiko-sre018-4.99293738.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/sre018j1"
+    },
+    {
+      "reference": "SRE020",
+      "name": "Presage Cocktail Time",
+      "series": "Presage",
+      "gender": "women",
+      "price": 625.0,
+      "movement": "Automatic with manual winding, 2R05",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "30.3mm",
+      "dial": "",
+      "bracelet": "Cow leather, Three-fold clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-sre020-1.570d263b.jpg",
+        "/uploads/images/seiko-sre020-2.293d50ff.jpg",
+        "/uploads/images/seiko-sre020-3.2ffcb861.jpg",
+        "/uploads/images/seiko-sre020-4.ceb3aad2.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/sre020j1"
+    },
+    {
+      "reference": "SRPL61",
+      "name": "Presage Cocktail Time",
+      "series": "Presage",
+      "gender": "women",
+      "price": 550.0,
+      "movement": "Automatic with manual winding, 4R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "34.0mm",
+      "dial": "",
+      "bracelet": "Deployment clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-srpl61-1.e61bf3dc.jpg",
+        "/uploads/images/seiko-srpl61-2.8b5e25f2.jpg",
+        "/uploads/images/seiko-srpl61-3.d52b0584.jpg",
+        "/uploads/images/seiko-srpl61-4.74941ac0.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/srpl61j1"
+    },
+    {
+      "reference": "SRPL63",
+      "name": "Presage Cocktail Time",
+      "series": "Presage",
+      "gender": "women",
+      "price": 550.0,
+      "movement": "Automatic with manual winding, 4R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "34.0mm",
+      "dial": "",
+      "bracelet": "Deployment clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-srpl63-1.1e731b74.jpg",
+        "/uploads/images/seiko-srpl63-2.2405e064.jpg",
+        "/uploads/images/seiko-srpl63-3.060551bd.jpg",
+        "/uploads/images/seiko-srpl63-4.7bec00b7.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/srpl63j1"
+    },
+    {
+      "reference": "SRPL64",
+      "name": "Presage Cocktail Time",
+      "series": "Presage",
+      "gender": "women",
+      "price": 595.0,
+      "movement": "Automatic with manual winding, 4R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "34.0mm",
+      "dial": "",
+      "bracelet": "Deployment clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-srpl64-1.8f70e775.jpg",
+        "/uploads/images/seiko-srpl64-2.ed64d83f.jpg",
+        "/uploads/images/seiko-srpl64-3.34310e75.jpg",
+        "/uploads/images/seiko-srpl64-4.91906e2b.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/srpl64j1"
+    },
+    {
+      "reference": "SRPL71",
+      "name": "Presage Style60's",
+      "series": "Presage",
+      "gender": "men",
+      "price": 595.0,
+      "movement": "Automatic with manual winding, 4R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39.5mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-srpl71-1.88d1372b.jpg",
+        "/uploads/images/seiko-srpl71-2.cc1fafd1.jpg",
+        "/uploads/images/seiko-srpl71-3.448204d4.jpg",
+        "/uploads/images/seiko-srpl71-4.d540ff4b.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/srpl71j1"
+    },
+    {
+      "reference": "SRPL73",
+      "name": "Presage Style60's",
+      "series": "Presage",
+      "gender": "men",
+      "price": 595.0,
+      "movement": "Automatic with manual winding, 4R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39.5mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-srpl73-1.f9e8601b.jpg",
+        "/uploads/images/seiko-srpl73-2.6b0304a2.jpg",
+        "/uploads/images/seiko-srpl73-3.7eecf270.jpg",
+        "/uploads/images/seiko-srpl73-4.8219bbf5.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/srpl73j1"
+    },
+    {
+      "reference": "SRPL75",
+      "name": "Presage Style60's",
+      "series": "Presage",
+      "gender": "men",
+      "price": 595.0,
+      "movement": "Automatic with manual winding, 4R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39.5mm",
+      "dial": "",
+      "bracelet": "Cow leather",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-srpl75-1.d8def028.jpg",
+        "/uploads/images/seiko-srpl75-2.bccc3ada.jpg",
+        "/uploads/images/seiko-srpl75-3.b9547c2d.jpg",
+        "/uploads/images/seiko-srpl75-4.1f4bcef8.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/srpl75j1"
+    },
+    {
+      "reference": "SSA464",
+      "name": "Presage Inspired by Japanese Gardens",
+      "series": "Presage",
+      "gender": "men",
+      "price": 650.0,
+      "movement": "Automatic with manual winding, 4R39",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "41.8mm",
+      "dial": "",
+      "bracelet": "Deployment clasp with push button release",
+      "waterResistance": "Splash Resistant",
+      "images": [
+        "/uploads/images/seiko-ssa464-1.f3b38f77.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/ssa464j1"
+    },
+    {
+      "reference": "SPB537",
+      "name": "Presage Classic Series",
+      "series": "Presage",
+      "gender": "men",
+      "price": 1600.0,
+      "movement": "Automatic with manual winding, 6R5H",
+      "caseMaterial": "Stainless steel (super hard coating)",
+      "caseSize": "35.9mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-spb537-1.30dd27d7.jpg",
+        "/uploads/images/seiko-spb537-2.4beea196.jpg",
+        "/uploads/images/seiko-spb537-3.1c4ac47d.jpg",
+        "/uploads/images/seiko-spb537-4.97d814b8.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/spb537j1"
+    },
+    {
+      "reference": "SSA441",
+      "name": "Presage Cocktail Time",
+      "series": "Presage",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic with manual winding, 4R38",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "40.5mm",
+      "dial": "",
+      "bracelet": "Deployment clasp",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-ssa441-1.96b03be4.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/ssa441j1"
+    },
+    {
+      "reference": "SRP852",
+      "name": "Presage Cocktail Time",
+      "series": "Presage",
+      "gender": "women",
+      "price": 0.0,
+      "movement": "Automatic with manual winding, 4R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "33.8mm",
+      "dial": "",
+      "bracelet": "Cow leather, Three-fold clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-srp852-1.a900c686.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/srp852j1"
+    },
+    {
+      "reference": "SRPG23",
+      "name": "Presage Cocktail Time",
+      "series": "Presage",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic with manual winding, 4R35",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "40.5mm",
+      "dial": "",
+      "bracelet": "Deployment clasp",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-srpg23-1.dec0c129.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/srpg23j1"
+    },
+    {
+      "reference": "SSA343",
+      "name": "Presage Cocktail Time",
+      "series": "Presage",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic with manual winding, 4R57",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "40.5mm",
+      "dial": "",
+      "bracelet": "Cow leather, Three-fold clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-ssa343-1.c3632b3c.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/ssa343j1"
+    },
+    {
+      "reference": "SSA347",
+      "name": "Presage Cocktail Time",
+      "series": "Presage",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic with manual winding, 4R57",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "40.5mm",
+      "dial": "",
+      "bracelet": "Deployment clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-ssa347-1.2a9a3d3f.jpg",
+        "/uploads/images/seiko-ssa347-2.e50d6546.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/ssa347j1"
+    },
+    {
+      "reference": "SSA405",
+      "name": "Presage Cocktail Time",
+      "series": "Presage",
+      "gender": "men",
+      "price": 0.0,
+      "movement": "Automatic with manual winding, 4R38",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "40.5mm",
+      "dial": "",
+      "bracelet": "Cow leather, Three-fold clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-ssa405-1.cefd6720.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/presage/ssa405j1"
+    },
+    {
+      "reference": "SSJ013",
+      "name": "Astron",
+      "series": "Astron",
+      "gender": "men",
+      "price": 2200.0,
+      "movement": "GPS solar, 3X62",
+      "caseMaterial": "Titanium (super-hard coating)",
+      "caseSize": "41.2mm",
+      "dial": "",
+      "bracelet": "Easy-adjust three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssj013-1.cc6459c2.jpg",
+        "/uploads/images/seiko-ssj013-2.68c5b598.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/astron/ssj013j1"
+    },
+    {
+      "reference": "SSJ014",
+      "name": "Astron",
+      "series": "Astron",
+      "gender": "men",
+      "price": 2300.0,
+      "movement": "GPS solar, 3X62",
+      "caseMaterial": "Titanium (super-hard coating)",
+      "caseSize": "41.2mm",
+      "dial": "",
+      "bracelet": "Easy-adjust three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssj014-1.0b061786.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/astron/ssj014j1"
+    },
+    {
+      "reference": "SSJ015",
+      "name": "Astron",
+      "series": "Astron",
+      "gender": "men",
+      "price": 2400.0,
+      "movement": "GPS solar, 3X62",
+      "caseMaterial": "Titanium (super-hard coating)",
+      "caseSize": "41.2mm",
+      "dial": "",
+      "bracelet": "Easy-adjust three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssj015-1.2eb5f50b.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/astron/ssj015j1"
+    },
+    {
+      "reference": "SSH151",
+      "name": "Astron",
+      "series": "Astron",
+      "gender": "men",
+      "price": 2700.0,
+      "movement": "GPS solar, 5X83",
+      "caseMaterial": "Titanium with ceramic/titanium bezel",
+      "caseSize": "43.3mm",
+      "dial": "",
+      "bracelet": "Easy-adjust three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssh151-1.319b837d.jpg",
+        "/uploads/images/seiko-ssh151-2.2be1daa4.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/astron/ssh151j1"
+    },
+    {
+      "reference": "SSH153",
+      "name": "Astron",
+      "series": "Astron",
+      "gender": "men",
+      "price": 2700.0,
+      "movement": "GPS solar, 5X83",
+      "caseMaterial": "Titanium with ceramic/titanium bezel",
+      "caseSize": "43.3mm",
+      "dial": "",
+      "bracelet": "Easy-adjust three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssh153-1.865fb7da.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/astron/ssh153j1"
+    },
+    {
+      "reference": "SSH155",
+      "name": "Astron",
+      "series": "Astron",
+      "gender": "men",
+      "price": 2900.0,
+      "movement": "GPS solar, 5X83",
+      "caseMaterial": "",
+      "caseSize": "43.3mm",
+      "dial": "",
+      "bracelet": "Easy-adjust three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssh155-1.bcd91891.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/astron/ssh155j1"
+    },
+    {
+      "reference": "SSJ023",
+      "name": "Astron",
+      "series": "Astron",
+      "gender": "men",
+      "price": 2400.0,
+      "movement": "GPS solar, 3X62",
+      "caseMaterial": "Titanium (super-hard coating) with titanium (super-hard coating) and aluminum bezel",
+      "caseSize": "42.0mm",
+      "dial": "",
+      "bracelet": "Easy-adjust three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssj023-1.093f87df.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/astron/ssj023j1"
+    },
+    {
+      "reference": "SSJ025",
+      "name": "Astron",
+      "series": "Astron",
+      "gender": "men",
+      "price": 2400.0,
+      "movement": "GPS solar, 3X62",
+      "caseMaterial": "Titanium (super-hard coating) with titanium (super-hard coating) and aluminum bezel",
+      "caseSize": "42.0mm",
+      "dial": "",
+      "bracelet": "Easy-adjust three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssj025-1.3d238690.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/astron/ssj025j1"
+    },
+    {
+      "reference": "SSJ026",
+      "name": "Astron",
+      "series": "Astron",
+      "gender": "men",
+      "price": 2400.0,
+      "movement": "GPS solar, 3X62",
+      "caseMaterial": "Titanium (super-hard coating) with titanium (super-hard coating) and aluminum bezel",
+      "caseSize": "42.0mm",
+      "dial": "",
+      "bracelet": "Easy-adjust three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssj026-1.84302a3d.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/astron/ssj026j1"
+    },
+    {
+      "reference": "SSH161",
+      "name": "Astron",
+      "series": "Astron",
+      "gender": "men",
+      "price": 2500.0,
+      "movement": "GPS solar, 5X83",
+      "caseMaterial": "Titanium (super-hard coating)",
+      "caseSize": "42.0mm",
+      "dial": "",
+      "bracelet": "Easy-adjust three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssh161-1.fbca2f87.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/astron/ssh161j1"
+    },
+    {
+      "reference": "SSH163",
+      "name": "Astron",
+      "series": "Astron",
+      "gender": "men",
+      "price": 2500.0,
+      "movement": "GPS solar, 5X83",
+      "caseMaterial": "Titanium (super-hard coating)",
+      "caseSize": "42.0mm",
+      "dial": "",
+      "bracelet": "Easy-adjust three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssh163-1.5c85931a.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/astron/ssh163j1"
+    },
+    {
+      "reference": "SSH159",
+      "name": "Astron",
+      "series": "Astron",
+      "gender": "men",
+      "price": 2500.0,
+      "movement": "GPS solar, 5X83",
+      "caseMaterial": "Titanium (super-hard coating)",
+      "caseSize": "42.0mm",
+      "dial": "",
+      "bracelet": "Easy-adjust three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssh159-1.9e070826.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/astron/ssh159j1"
+    },
+    {
+      "reference": "SSH175",
+      "name": "Astron",
+      "series": "Astron",
+      "gender": "men",
+      "price": 3100.0,
+      "movement": "GPS solar, 5X83",
+      "caseMaterial": "Titanium (super-hard coating)",
+      "caseSize": "44.1mm",
+      "dial": "",
+      "bracelet": "Easy-adjust three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssh175-1.f8850f45.jpg",
+        "/uploads/images/seiko-ssh175-2.6e2ccf8f.jpg",
+        "/uploads/images/seiko-ssh175-3.bf3b14ea.jpg",
+        "/uploads/images/seiko-ssh175-4.374f9341.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/astron/ssh175j1"
+    },
+    {
+      "reference": "SSH177",
+      "name": "Astron",
+      "series": "Astron",
+      "gender": "men",
+      "price": 3100.0,
+      "movement": "GPS solar, 5X83",
+      "caseMaterial": "Titanium (super-hard coating)",
+      "caseSize": "44.1mm",
+      "dial": "",
+      "bracelet": "Easy-adjust three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssh177-1.e45307eb.jpg",
+        "/uploads/images/seiko-ssh177-2.7fcccc45.jpg",
+        "/uploads/images/seiko-ssh177-3.750c8f0e.jpg",
+        "/uploads/images/seiko-ssh177-4.c315e702.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/astron/ssh177j1"
+    },
+    {
+      "reference": "SSH179",
+      "name": "Astron",
+      "series": "Astron",
+      "gender": "men",
+      "price": 3300.0,
+      "movement": "GPS solar, 5X83",
+      "caseMaterial": "Titanium (super-hard coating)",
+      "caseSize": "44.1mm",
+      "dial": "",
+      "bracelet": "Easy-adjust three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssh179-1.6569dd99.jpg",
+        "/uploads/images/seiko-ssh179-2.acc45905.jpg",
+        "/uploads/images/seiko-ssh179-3.64d3078f.jpg",
+        "/uploads/images/seiko-ssh179-4.6e3e6b58.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/astron/ssh179j1"
+    },
+    {
+      "reference": "SRPD95",
+      "name": "5 Sports SKX series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 350.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "42.5mm",
+      "dial": "",
+      "bracelet": "Silicone",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpd95-1.5fc7c880.jpg",
+        "/uploads/images/seiko-srpd95-2.b2bde6c1.jpg",
+        "/uploads/images/seiko-srpd95-3.6eae16f9.jpg",
+        "/uploads/images/seiko-srpd95-4.dc0b13f2.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpd95p9"
+    },
+    {
+      "reference": "SRPE51",
+      "name": "5 Sports SKX series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 315.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "40.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpe51-1.8ef604fc.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpe51"
+    },
+    {
+      "reference": "SRPE53",
+      "name": "5 Sports SKX series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 315.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "40.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpe53-1.e3f4b51a.jpg",
+        "/uploads/images/seiko-srpe53-2.fc1e3a0c.jpg",
+        "/uploads/images/seiko-srpe53-3.0fba1319.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpe53"
+    },
+    {
+      "reference": "SRPE57",
+      "name": "5 Sports SKX series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 315.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "40.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpe57-1.052912c3.jpg",
+        "/uploads/images/seiko-srpe57-2.c926e35c.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpe57"
+    },
+    {
+      "reference": "SRPE74",
+      "name": "5 Sports SKX series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 450.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "42.5mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpe74-1.ac7dde36.jpg",
+        "/uploads/images/seiko-srpe74-2.62f14afe.jpg",
+        "/uploads/images/seiko-srpe74-3.c2c7570b.jpg",
+        "/uploads/images/seiko-srpe74-4.29ed0413.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpe74"
+    },
+    {
+      "reference": "SRPG27",
+      "name": "5 Sports Field series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 315.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39.4mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpg27-1.eb80bd8d.jpg",
+        "/uploads/images/seiko-srpg27-2.2904cb1c.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpg27"
+    },
+    {
+      "reference": "SRPG29",
+      "name": "5 Sports Field series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 315.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39.4mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpg29-1.c712d91d.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpg29"
+    },
+    {
+      "reference": "SRPG31",
+      "name": "5 Sports Field series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 315.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39.4mm",
+      "dial": "",
+      "bracelet": "Nylon",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpg31-1.225ddc13.jpg",
+        "/uploads/images/seiko-srpg31-2.6a7813d2.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpg31"
+    },
+    {
+      "reference": "SRPG35",
+      "name": "5 Sports Field series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 315.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39.4mm",
+      "dial": "",
+      "bracelet": "Nylon",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpg35-1.050caadc.jpg",
+        "/uploads/images/seiko-srpg35-2.6fec75bf.jpg",
+        "/uploads/images/seiko-srpg35-3.fcef6163.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpg35"
+    },
+    {
+      "reference": "SRPG37",
+      "name": "5 Sports Field series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 315.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39.4mm",
+      "dial": "",
+      "bracelet": "Nylon",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpg37-1.3e887161.jpg",
+        "/uploads/images/seiko-srpg37-2.08541019.jpg",
+        "/uploads/images/seiko-srpg37-3.babc6e2a.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpg37"
+    },
+    {
+      "reference": "SRPG39",
+      "name": "5 Sports Field series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 315.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39.4mm",
+      "dial": "",
+      "bracelet": "Cow leather",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpg39-1.d0621d1e.jpg",
+        "/uploads/images/seiko-srpg39-2.c92c358b.jpg",
+        "/uploads/images/seiko-srpg39-3.e9b71c82.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpg39"
+    },
+    {
+      "reference": "SRPG41",
+      "name": "5 Sports Field series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 350.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel (hard coating)",
+      "caseSize": "39.4mm",
+      "dial": "",
+      "bracelet": "Cow leather",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpg41-1.5d983c0b.jpg",
+        "/uploads/images/seiko-srpg41-2.1ffb4f3b.jpg",
+        "/uploads/images/seiko-srpg41-3.02c67e73.jpg",
+        "/uploads/images/seiko-srpg41-4.6c447189.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpg41"
+    },
+    {
+      "reference": "SRPD79",
+      "name": "5 Sports SKX series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 375.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel (hard coating)",
+      "caseSize": "42.5mm",
+      "dial": "",
+      "bracelet": "Nylon",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpd79-1.c9d04b91.jpg",
+        "/uploads/images/seiko-srpd79-2.1521d62d.jpg",
+        "/uploads/images/seiko-srpd79-3.d5f3e1a4.jpg",
+        "/uploads/images/seiko-srpd79-4.eac25658.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpd79"
+    },
+    {
+      "reference": "SRPD91",
+      "name": "5 Sports SKX series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 375.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel (hard coating)",
+      "caseSize": "42.5mm",
+      "dial": "",
+      "bracelet": "Nylon",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpd91-1.73f24136.jpg",
+        "/uploads/images/seiko-srpd91-2.9414472d.jpg",
+        "/uploads/images/seiko-srpd91-3.d15c8f70.jpg",
+        "/uploads/images/seiko-srpd91-4.ec1726eb.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpd91p9"
+    },
+    {
+      "reference": "SRPD93",
+      "name": "5 Sports SKX series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 350.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "42.5mm",
+      "dial": "",
+      "bracelet": "Silicone",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpd93-1.6f144720.jpg",
+        "/uploads/images/seiko-srpd93-2.43358015.jpg",
+        "/uploads/images/seiko-srpd93-3.301e578a.jpg",
+        "/uploads/images/seiko-srpd93-4.c806e393.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpd93p9"
+    },
+    {
+      "reference": "SRPE55",
+      "name": "5 Sports SKX series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 315.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "40.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpe55-1.e8ce2f6b.jpg",
+        "/uploads/images/seiko-srpe55-2.b529806e.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpe55"
+    },
+    {
+      "reference": "SRPH29",
+      "name": "5 Sports Field series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 315.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39.4mm",
+      "dial": "",
+      "bracelet": "Nylon",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srph29-1.d03477b2.jpg",
+        "/uploads/images/seiko-srph29-2.ad24c09e.jpg",
+        "/uploads/images/seiko-srph29-3.c693139c.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srph29"
+    },
+    {
+      "reference": "SRPH31",
+      "name": "5 Sports Field series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 315.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39.4mm",
+      "dial": "",
+      "bracelet": "Nylon",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srph31-1.144a1db5.jpg",
+        "/uploads/images/seiko-srph31-2.2ee373a8.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srph31"
+    },
+    {
+      "reference": "SRPH33",
+      "name": "5 Sports Field series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 350.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel (hard coating)",
+      "caseSize": "39.4mm",
+      "dial": "",
+      "bracelet": "Nylon",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srph33-1.282262e3.jpg",
+        "/uploads/images/seiko-srph33-2.945ee072.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srph33"
+    },
+    {
+      "reference": "SRPD51",
+      "name": "5 Sports SKX series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 350.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "42.5mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with secure lock ,push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpd51-1.a635527f.jpg",
+        "/uploads/images/seiko-srpd51-2.ee44dbde.jpg",
+        "/uploads/images/seiko-srpd51-3.c9e4f33f.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpd51"
+    },
+    {
+      "reference": "SRPD53",
+      "name": "5 Sports SKX series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 350.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "42.5mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with secure lock ,push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpd53-1.dfeafea2.jpg",
+        "/uploads/images/seiko-srpd53-2.27e9f82b.jpg",
+        "/uploads/images/seiko-srpd53-3.78a4f274.jpg",
+        "/uploads/images/seiko-srpd53-4.06d6d12a.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpd53"
+    },
+    {
+      "reference": "SRPD55",
+      "name": "5 Sports SKX series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 350.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "42.5mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with secure lock ,push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpd55-1.5f13bbc3.jpg",
+        "/uploads/images/seiko-srpd55-2.751958c9.jpg",
+        "/uploads/images/seiko-srpd55-3.95ca4193.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpd55"
+    },
+    {
+      "reference": "SRPD59",
+      "name": "5 Sports SKX series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 350.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "42.5mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with secure lock ,push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpd59-1.f138b1ca.jpg",
+        "/uploads/images/seiko-srpd59-2.aebbcd3f.jpg",
+        "/uploads/images/seiko-srpd59-3.2ae5a4f7.jpg",
+        "/uploads/images/seiko-srpd59-4.15eb6ec5.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpd59"
+    },
+    {
+      "reference": "SRPD63",
+      "name": "5 Sports SKX series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 350.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "42.5mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with secure lock ,push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpd63-1.410e249b.jpg",
+        "/uploads/images/seiko-srpd63-2.eede79dd.jpg",
+        "/uploads/images/seiko-srpd63-3.ecf1e840.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpd63"
+    },
+    {
+      "reference": "SRPD65",
+      "name": "5 Sports SKX series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 395.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel (hard coating)",
+      "caseSize": "42.5mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with secure lock ,push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpd65-1.f71fb15c.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpd65"
+    },
+    {
+      "reference": "SSK001",
+      "name": "5 Sports SKX series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 495.0,
+      "movement": "Automatic with manual winding, 4R34",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "42.5mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssk001-1.a5e5df19.jpg",
+        "/uploads/images/seiko-ssk001-2.13e45a79.jpg",
+        "/uploads/images/seiko-ssk001-3.520d7950.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/ssk001"
+    },
+    {
+      "reference": "SSK005",
+      "name": "5 Sports SKX series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 495.0,
+      "movement": "Automatic with manual winding, 4R34",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "42.5mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssk005-1.b5cddffe.jpg",
+        "/uploads/images/seiko-ssk005-2.f066f767.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/ssk005"
+    },
+    {
+      "reference": "SRPJ45",
+      "name": "5 Sports SKX series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 350.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "42.5mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpj45-1.3d035eca.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpj45"
+    },
+    {
+      "reference": "SRPK29",
+      "name": "5 Sports SKX series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 350.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "38.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpk29-1.13607f8c.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpk29"
+    },
+    {
+      "reference": "SRPK31",
+      "name": "5 Sports SKX series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 350.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "38.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpk31-1.95689cd8.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpk31"
+    },
+    {
+      "reference": "SRPJ81",
+      "name": "5 Sports Field series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 315.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "36.4mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpj81-1.6544643e.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpj81"
+    },
+    {
+      "reference": "SRPJ83",
+      "name": "5 Sports Field series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 315.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "36.4mm",
+      "dial": "",
+      "bracelet": "Nylon",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpj83-1.1c2041dc.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpj83"
+    },
+    {
+      "reference": "SRPJ85",
+      "name": "5 Sports Field series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 315.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "36.4mm",
+      "dial": "",
+      "bracelet": "Nylon",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpj85-1.4ed44789.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpj85"
+    },
+    {
+      "reference": "SRE003",
+      "name": "5 Sports SKX series",
+      "series": "5 Sports",
+      "gender": "women",
+      "price": 315.0,
+      "movement": "Automatic with manual winding, 2R06",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "28.0mm",
+      "dial": "",
+      "bracelet": "",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-sre003-1.6f9a6812.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/sre003"
+    },
+    {
+      "reference": "SRE004",
+      "name": "5 Sports SKX series",
+      "series": "5 Sports",
+      "gender": "women",
+      "price": 365.0,
+      "movement": "Automatic with manual winding, 2R06",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "28.0mm",
+      "dial": "",
+      "bracelet": "",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-sre004-1.7e0c6d8a.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/sre004"
+    },
+    {
+      "reference": "SRPK33",
+      "name": "5 Sports SKX series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 350.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "38.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpk33-1.f24447fb.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpk33"
+    },
+    {
+      "reference": "SSK003",
+      "name": "5 Sports SKX series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 495.0,
+      "movement": "Automatic with manual winding, 4R34",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "42.5mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssk003-1.f475a1bd.jpg",
+        "/uploads/images/seiko-ssk003-2.503c1e40.jpg",
+        "/uploads/images/seiko-ssk003-3.928754a1.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/ssk003"
+    },
+    {
+      "reference": "SSK023",
+      "name": "5 Sports Field series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 450.0,
+      "movement": "Automatic with manual winding, 4R34",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39.4mm",
+      "dial": "",
+      "bracelet": "",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssk023-1.54b7a353.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/ssk023"
+    },
+    {
+      "reference": "SSK025",
+      "name": "5 Sports Field series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 435.0,
+      "movement": "Automatic with manual winding, 4R34",
+      "caseMaterial": "Stainless steel (hard coating)",
+      "caseSize": "39.4mm",
+      "dial": "",
+      "bracelet": "Cow leather",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssk025-1.a791368f.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/ssk025"
+    },
+    {
+      "reference": "SRPK87",
+      "name": "5 Sports SNXS series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 415.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "37.4mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpk87-1.0f937f1d.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpk87"
+    },
+    {
+      "reference": "SRPK89",
+      "name": "5 Sports SNXS series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 415.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "37.4mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpk89-1.ac35351a.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpk89"
+    },
+    {
+      "reference": "SRPK91",
+      "name": "5 Sports SNXS series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 415.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "37.4mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpk91-1.f13503bf.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpk91"
+    },
+    {
+      "reference": "SSK033",
+      "name": "5 Sports SKX series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 495.0,
+      "movement": "Automatic with manual winding, 4R34",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "42.5mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssk033-1.d8877dfc.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/ssk033"
+    },
+    {
+      "reference": "SSK035",
+      "name": "5 Sports SKX series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 495.0,
+      "movement": "Automatic with manual winding, 4R34",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "42.5mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssk035-1.b227f5e2.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/ssk035"
+    },
+    {
+      "reference": "SSK036",
+      "name": "5 Sports SKX series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 475.0,
+      "movement": "Automatic with manual winding, 4R34",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "42.5mm",
+      "dial": "",
+      "bracelet": "Cow leather",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssk036-1.4fc7663d.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/ssk036"
+    },
+    {
+      "reference": "SRPK97",
+      "name": "5 Sports SKX series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 400.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "42.5mm",
+      "dial": "",
+      "bracelet": "",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpk97-1.2dad4782.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpk97"
+    },
+    {
+      "reference": "SRPL83",
+      "name": "5 Sports SKX series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 450.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "42.5mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpl83-1.ea0ce75b.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpl83"
+    },
+    {
+      "reference": "SRPL85",
+      "name": "5 Sports SKX series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 450.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "42.5mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpl85-1.b61a559c.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpl85"
+    },
+    {
+      "reference": "SRPL87",
+      "name": "5 Sports SKX series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 400.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "42.5mm",
+      "dial": "",
+      "bracelet": "Silicone",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpl87-1.0fb5ac1b.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpl87"
+    },
+    {
+      "reference": "SRPL89",
+      "name": "5 Sports SKX series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 400.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "42.5mm",
+      "dial": "",
+      "bracelet": "Silicone",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpl89-1.0bcd7061.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpl89"
+    },
+    {
+      "reference": "SRPL77",
+      "name": "5 Sports SKX series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 350.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "38.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpl77-1.9acfe05c.jpg",
+        "/uploads/images/seiko-srpl77-2.645eeb10.jpg",
+        "/uploads/images/seiko-srpl77-3.48f91f04.jpg",
+        "/uploads/images/seiko-srpl77-4.c5716aaa.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpl77"
+    },
+    {
+      "reference": "SRPL79",
+      "name": "5 Sports SKX series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 350.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "38.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpl79-1.c78cee83.jpg",
+        "/uploads/images/seiko-srpl79-2.7345c0ca.jpg",
+        "/uploads/images/seiko-srpl79-3.f865ff5e.jpg",
+        "/uploads/images/seiko-srpl79-4.d0ecbcfb.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpl79"
+    },
+    {
+      "reference": "SRPL55",
+      "name": "5 Sports SNXS series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 415.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "37.4mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpl55-1.ec746daf.jpg",
+        "/uploads/images/seiko-srpl55-2.ef44544e.jpg",
+        "/uploads/images/seiko-srpl55-3.a1c1c9c4.jpg",
+        "/uploads/images/seiko-srpl55-4.319d1fb1.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpl55"
+    },
+    {
+      "reference": "SRPL57",
+      "name": "5 Sports SNXS series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 415.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "37.4mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpl57-1.c721a26a.jpg",
+        "/uploads/images/seiko-srpl57-2.8c9b6766.jpg",
+        "/uploads/images/seiko-srpl57-3.16dfa2ce.jpg",
+        "/uploads/images/seiko-srpl57-4.3f06c1e1.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpl57"
+    },
+    {
+      "reference": "SRPL59",
+      "name": "5 Sports SNXS series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 415.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "37.4mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpl59-1.98014b3c.jpg",
+        "/uploads/images/seiko-srpl59-2.805b8c6e.jpg",
+        "/uploads/images/seiko-srpl59-3.5a6f553f.jpg",
+        "/uploads/images/seiko-srpl59-4.b501c1c5.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpl59"
+    },
+    {
+      "reference": "SRPK99",
+      "name": "5 Sports SKX series",
+      "series": "5 Sports",
+      "gender": "men",
+      "price": 400.0,
+      "movement": "Automatic with manual winding, 4R36",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "42.5mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srpk99-1.d425e0cf.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/5sports/srpk99"
+    },
+    {
+      "reference": "SSG009",
+      "name": "Coutura",
+      "series": "Coutura",
+      "gender": "men",
+      "price": 625.0,
+      "movement": "Radio Sync Solar, 8B92",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "45.3mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssg009-1.bf5d9737.jpg",
+        "/uploads/images/seiko-ssg009-2.0e960ddb.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/coutura/ssg009p9"
+    },
+    {
+      "reference": "SSC700",
+      "name": "Coutura",
+      "series": "Coutura",
+      "gender": "men",
+      "price": 550.0,
+      "movement": "Solar, V198",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "44.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssc700-1.5c667e21.jpg",
+        "/uploads/images/seiko-ssc700-2.348aeea5.jpg",
+        "/uploads/images/seiko-ssc700-3.4eb824a2.jpg",
+        "/uploads/images/seiko-ssc700-4.891bb7ba.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/coutura/ssc700p9"
+    },
+    {
+      "reference": "SSC376",
+      "name": "Coutura",
+      "series": "Coutura",
+      "gender": "men",
+      "price": 525.0,
+      "movement": "Solar, V198",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "44.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssc376-1.44ba63d2.jpg",
+        "/uploads/images/seiko-ssc376-2.b4fbdbc5.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/coutura/ssc376p9"
+    },
+    {
+      "reference": "SNE506",
+      "name": "Coutura",
+      "series": "Coutura",
+      "gender": "men",
+      "price": 595.0,
+      "movement": "Solar, V157",
+      "caseMaterial": "Stainless steel (hard coating)",
+      "caseSize": "42.5mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-sne506-1.ca99ff7f.jpg",
+        "/uploads/images/seiko-sne506-2.503c1aba.jpg",
+        "/uploads/images/seiko-sne506-3.903026bc.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/coutura/sne506p9"
+    },
+    {
+      "reference": "SSG010",
+      "name": "Coutura",
+      "series": "Coutura",
+      "gender": "men",
+      "price": 685.0,
+      "movement": "Radio Sync Solar, 8B92",
+      "caseMaterial": "Stainless steel (hard coating)",
+      "caseSize": "45.3mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssg010-1.b878e9e8.jpg",
+        "/uploads/images/seiko-ssg010-2.ac751efe.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/coutura/ssg010p9"
+    },
+    {
+      "reference": "SSG021",
+      "name": "Coutura",
+      "series": "Coutura",
+      "gender": "men",
+      "price": 725.0,
+      "movement": "Radio Sync Solar, 8B92",
+      "caseMaterial": "Stainless steel (hard coating)",
+      "caseSize": "44.6mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssg021-1.92eff0aa.jpg",
+        "/uploads/images/seiko-ssg021-2.4aae8487.jpg",
+        "/uploads/images/seiko-ssg021-3.4db4b7d6.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/coutura/ssg021p9"
+    },
+    {
+      "reference": "SSG022",
+      "name": "Coutura",
+      "series": "Coutura",
+      "gender": "men",
+      "price": 685.0,
+      "movement": "Radio Sync Solar, 8B92",
+      "caseMaterial": "",
+      "caseSize": "45.5mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssg022-1.3e47349f.jpg",
+        "/uploads/images/seiko-ssg022-2.148f29a5.jpg",
+        "/uploads/images/seiko-ssg022-3.e76a0138.jpg",
+        "/uploads/images/seiko-ssg022-4.168a9b75.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/coutura/ssg022p9"
+    },
+    {
+      "reference": "SRWZ24",
+      "name": "Coutura",
+      "series": "Coutura",
+      "gender": "men",
+      "price": 550.0,
+      "movement": "Quartz, 7T12",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "45.6mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srwz24-1.72060829.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/coutura/srwz24p9"
+    },
+    {
+      "reference": "SSB437",
+      "name": "Coutura",
+      "series": "Coutura",
+      "gender": "men",
+      "price": 550.0,
+      "movement": "Quartz, 8T63",
+      "caseMaterial": "Stainless steel (hard coating)",
+      "caseSize": "42.0mm",
+      "dial": "",
+      "bracelet": "Cow leather, Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssb437-1.5f726a33.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/coutura/ssb437p9"
+    },
+    {
+      "reference": "SUR565",
+      "name": "Coutura",
+      "series": "Coutura",
+      "gender": "men",
+      "price": 450.0,
+      "movement": "Quartz, 6N52",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "42.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-sur565-1.afc97c5e.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/coutura/sur565p9"
+    },
+    {
+      "reference": "SUR566",
+      "name": "Coutura",
+      "series": "Coutura",
+      "gender": "men",
+      "price": 475.0,
+      "movement": "Quartz, 6N52",
+      "caseMaterial": "",
+      "caseSize": "42.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-sur566-1.ee9beca7.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/coutura/sur566p9"
+    },
+    {
+      "reference": "SUR583",
+      "name": "Coutura",
+      "series": "Coutura",
+      "gender": "women",
+      "price": 450.0,
+      "movement": "6N42",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "33.7mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-sur583-1.3d5430b6.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/coutura/sur583p9"
+    },
+    {
+      "reference": "SUR585",
+      "name": "Coutura",
+      "series": "Coutura",
+      "gender": "women",
+      "price": 450.0,
+      "movement": "6N42",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "33.7mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-sur585-1.9f39a9b8.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/coutura/sur585p9"
+    },
+    {
+      "reference": "SUR588",
+      "name": "Coutura",
+      "series": "Coutura",
+      "gender": "women",
+      "price": 525.0,
+      "movement": "6N42",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "33.7mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-sur588-1.d20d3153.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/coutura/sur588p9"
+    },
+    {
+      "reference": "SUR589",
+      "name": "Coutura",
+      "series": "Coutura",
+      "gender": "women",
+      "price": 995.0,
+      "movement": "6N42",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "33.7mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-sur589-1.bb13f25d.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/coutura/sur589p9"
+    },
+    {
+      "reference": "SUR591",
+      "name": "Coutura",
+      "series": "Coutura",
+      "gender": "women",
+      "price": 995.0,
+      "movement": "6N42",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "33.7mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-sur591-1.dc7abb01.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/coutura/sur591p9"
+    },
+    {
+      "reference": "SUR592",
+      "name": "Coutura",
+      "series": "Coutura",
+      "gender": "women",
+      "price": 1050.0,
+      "movement": "6N42",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "33.7mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-sur592-1.d5720277.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/coutura/sur592p9"
+    },
+    {
+      "reference": "SUT068",
+      "name": "Diamond Collection",
+      "series": "Diamond Collection",
+      "gender": "women",
+      "price": 475.0,
+      "movement": "Solar, V137",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "27.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-sut068-1.01207277.jpg",
+        "/uploads/images/seiko-sut068-2.81ff8452.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/diamondcollection/sut068p9"
+    },
+    {
+      "reference": "SRZ535",
+      "name": "Diamond Collection",
+      "series": "Diamond Collection",
+      "gender": "women",
+      "price": 525.0,
+      "movement": "Quartz, 7N01",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "30.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-srz535-1.db95281c.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/diamondcollection/srz535"
+    },
+    {
+      "reference": "SUR579",
+      "name": "Diamond Collection",
+      "series": "Diamond Collection",
+      "gender": "women",
+      "price": 525.0,
+      "movement": "6N32",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "32.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-sur579-1.fc80ba2a.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/diamondcollection/sur579"
+    },
+    {
+      "reference": "SUR581",
+      "name": "Diamond Collection",
+      "series": "Diamond Collection",
+      "gender": "women",
+      "price": 515.0,
+      "movement": "6N32",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "32.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-sur581-1.6f8993a5.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/diamondcollection/sur581"
+    },
+    {
+      "reference": "SUR582",
+      "name": "Diamond Collection",
+      "series": "Diamond Collection",
+      "gender": "women",
+      "price": 565.0,
+      "movement": "6N32",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "32.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-sur582-1.c468bfc1.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/diamondcollection/sur582"
+    },
+    {
+      "reference": "SNKP23",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "men",
+      "price": 285.0,
+      "movement": "Automatic, 7S26",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39.6mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-snkp23-1.b6a2a854.jpg",
+        "/uploads/images/seiko-snkp23-2.b6a2a854.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/snkp23p9"
+    },
+    {
+      "reference": "SNKP27",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "men",
+      "price": 285.0,
+      "movement": "Automatic, 7S26",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39.6mm",
+      "dial": "",
+      "bracelet": "Cow leather",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-snkp27-1.afe224fb.jpg",
+        "/uploads/images/seiko-snkp27-2.afe224fb.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/snkp27p9"
+    },
+    {
+      "reference": "SNKM97",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "men",
+      "price": 265.0,
+      "movement": "Automatic, 7S26",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "43.5mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-snkm97-1.f0691158.jpg",
+        "/uploads/images/seiko-snkm97-2.f0691158.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/snkm97p9"
+    },
+    {
+      "reference": "SNKN37",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "men",
+      "price": 235.0,
+      "movement": "Automatic, 7S26",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "43.5mm",
+      "dial": "",
+      "bracelet": "Cow leather",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-snkn37-1.e82d73e8.jpg",
+        "/uploads/images/seiko-snkn37-2.e82d73e8.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/snkn37p9"
+    },
+    {
+      "reference": "SRPH87",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "men",
+      "price": 315.0,
+      "movement": "Automatic with manual winding, 4R35",
+      "caseMaterial": "",
+      "caseSize": "41.2mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srph87-1.03d21a7f.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/srph87"
+    },
+    {
+      "reference": "SRPH89",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "men",
+      "price": 315.0,
+      "movement": "Automatic with manual winding, 4R35",
+      "caseMaterial": "",
+      "caseSize": "41.2mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-srph89-1.30ee5a69.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/srph89"
+    },
+    {
+      "reference": "SSB425",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "men",
+      "price": 265.0,
+      "movement": "Quartz, 8T63",
+      "caseMaterial": "",
+      "caseSize": "41.5mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssb425-1.ccaeabff.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/ssb425"
+    },
+    {
+      "reference": "SSB427",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "men",
+      "price": 265.0,
+      "movement": "Quartz, 8T63",
+      "caseMaterial": "",
+      "caseSize": "41.5mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssb427-1.6923cac3.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/ssb427"
+    },
+    {
+      "reference": "SSB429",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "men",
+      "price": 265.0,
+      "movement": "Quartz, 8T63",
+      "caseMaterial": "",
+      "caseSize": "41.5mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssb429-1.3d60885d.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/ssb429"
+    },
+    {
+      "reference": "SSB430",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "men",
+      "price": 315.0,
+      "movement": "Quartz, 8T63",
+      "caseMaterial": "",
+      "caseSize": "41.5mm",
+      "dial": "",
+      "bracelet": "",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssb430-1.a43f8804.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/ssb430"
+    },
+    {
+      "reference": "SUR550",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "women",
+      "price": 375.0,
+      "movement": "Quartz, 6N01",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "30.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-sur550-1.9e0cec22.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/sur550"
+    },
+    {
+      "reference": "SUR555",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "men",
+      "price": 335.0,
+      "movement": "Quartz, 6N52",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "38.9mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-sur555-1.1e96e0d4.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/sur555"
+    },
+    {
+      "reference": "SUR557",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "men",
+      "price": 335.0,
+      "movement": "Quartz, 6N52",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "38.9mm",
+      "dial": "",
+      "bracelet": "",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-sur557-1.618bcb2c.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/sur557"
+    },
+    {
+      "reference": "SUR558",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "men",
+      "price": 375.0,
+      "movement": "Quartz, 6N52",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "38.9mm",
+      "dial": "",
+      "bracelet": "",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-sur558-1.173055dd.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/sur558"
+    },
+    {
+      "reference": "SUP467",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "women",
+      "price": 375.0,
+      "movement": "Solar, V115",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "30.5mm",
+      "dial": "",
+      "bracelet": "",
+      "waterResistance": "Splash Resistant",
+      "images": [
+        "/uploads/images/seiko-sup467-1.b8734461.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/sup467"
+    },
+    {
+      "reference": "SUR540",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "women",
+      "price": 360.0,
+      "movement": "Quartz, 6N01",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "26.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "Splash Resistant",
+      "images": [
+        "/uploads/images/seiko-sur540-1.8b1e0b66.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/sur540"
+    },
+    {
+      "reference": "SUR525",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "men",
+      "price": 265.0,
+      "movement": "Quartz, 6N52",
+      "caseMaterial": "",
+      "caseSize": "40.2mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-sur525-1.2097211b.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/sur525"
+    },
+    {
+      "reference": "SUR527",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "men",
+      "price": 265.0,
+      "movement": "Quartz, 6N52",
+      "caseMaterial": "",
+      "caseSize": "40.2mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-sur527-1.79277fa3.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/sur527"
+    },
+    {
+      "reference": "SUR531",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "women",
+      "price": 240.0,
+      "movement": "Quartz, 6N22",
+      "caseMaterial": "",
+      "caseSize": "29.8mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-sur531-1.6f2afe5a.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/sur531"
+    },
+    {
+      "reference": "SUR549",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "women",
+      "price": 350.0,
+      "movement": "Quartz, 6N01",
+      "caseMaterial": "",
+      "caseSize": "30.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-sur549-1.f648c62b.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/sur549"
+    },
+    {
+      "reference": "SWR078",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "women",
+      "price": 365.0,
+      "movement": "Quartz, 4N30",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "26.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-swr078-1.1c9ffd12.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/swr078"
+    },
+    {
+      "reference": "SWR083",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "women",
+      "price": 315.0,
+      "movement": "Quartz, 4N30",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "22.2mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-swr083-1.0fe613b0.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/swr083"
+    },
+    {
+      "reference": "SWR085",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "women",
+      "price": 315.0,
+      "movement": "Quartz, 4N30",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "22.2mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-swr085-1.b22f48af.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/swr085"
+    },
+    {
+      "reference": "SWR087",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "women",
+      "price": 365.0,
+      "movement": "Quartz, 4N30",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "22.2mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-swr087-1.43205aa3.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/swr087"
+    },
+    {
+      "reference": "SSB445",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "men",
+      "price": 365.0,
+      "movement": "Quartz, 8T63",
+      "caseMaterial": "",
+      "caseSize": "43.0mm",
+      "dial": "",
+      "bracelet": "",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssb445-1.c9ec6617.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/ssb445"
+    },
+    {
+      "reference": "SSB446",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "men",
+      "price": 350.0,
+      "movement": "Quartz, 8T63",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "43.0mm",
+      "dial": "",
+      "bracelet": "Silicone",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssb446-1.b53b07f0.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/ssb446"
+    },
+    {
+      "reference": "SUR559",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "men",
+      "price": 325.0,
+      "movement": "Quartz, 6N76",
+      "caseMaterial": "",
+      "caseSize": "39.5mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-sur559-1.931a4222.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/sur559"
+    },
+    {
+      "reference": "SUR560",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "men",
+      "price": 295.0,
+      "movement": "Quartz, 6N76",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "39.5mm",
+      "dial": "",
+      "bracelet": "Silicone",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-sur560-1.d96390c2.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/sur560"
+    },
+    {
+      "reference": "SUR562",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "women",
+      "price": 350.0,
+      "movement": "Quartz, 6N01",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "28.7mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-sur562-1.0eef0f38.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/sur562"
+    },
+    {
+      "reference": "SWR091",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "women",
+      "price": 365.0,
+      "movement": "Quartz, 4N30",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "22.7mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "Splash Resistant",
+      "images": [
+        "/uploads/images/seiko-swr091-1.ba80a522.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/swr091"
+    },
+    {
+      "reference": "SWR093",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "women",
+      "price": 400.0,
+      "movement": "Quartz, 4N30",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "22.7mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "Splash Resistant",
+      "images": [
+        "/uploads/images/seiko-swr093-1.d805881f.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/swr093"
+    },
+    {
+      "reference": "SSB451",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "men",
+      "price": 415.0,
+      "movement": "Quartz, 8T63",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "40.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssb451-1.a1cdcd10.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/ssb451"
+    },
+    {
+      "reference": "SSB453",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "men",
+      "price": 415.0,
+      "movement": "Quartz, 8T63",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "40.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssb453-1.a6a3b710.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/ssb453"
+    },
+    {
+      "reference": "SSB455",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "men",
+      "price": 415.0,
+      "movement": "Quartz, 8T63",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "40.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-ssb455-1.88300499.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/ssb455"
+    },
+    {
+      "reference": "SUR573",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "women",
+      "price": 315.0,
+      "movement": "6N42",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "34.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-sur573-1.1da4fd40.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/sur573"
+    },
+    {
+      "reference": "SUR575",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "women",
+      "price": 315.0,
+      "movement": "6N42",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "34.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-sur575-1.cdd63c55.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/sur575"
+    },
+    {
+      "reference": "SUR578",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "women",
+      "price": 350.0,
+      "movement": "6N42",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "34.0mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-sur578-1.9b96a494.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/sur578"
+    },
+    {
+      "reference": "SSB477",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "men",
+      "price": 450.0,
+      "movement": "Quartz, 8T63",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "38.7mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-ssb477-1.bc3d0de5.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/ssb477"
+    },
+    {
+      "reference": "SSB479",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "men",
+      "price": 450.0,
+      "movement": "Quartz, 8T63",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "38.7mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-ssb479-1.1f5ab7b0.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/ssb479"
+    },
+    {
+      "reference": "SSB481",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "men",
+      "price": 450.0,
+      "movement": "Quartz, 8T63",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "38.7mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-ssb481-1.69dca7c3.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/ssb481"
+    },
+    {
+      "reference": "SUR599",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "men",
+      "price": 335.0,
+      "movement": "Quartz, 6N52",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "38.9mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-sur599-1.99bc51d2.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/sur599"
+    },
+    {
+      "reference": "SUR601",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "men",
+      "price": 335.0,
+      "movement": "Quartz, 6N52",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "38.9mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "10 bar",
+      "images": [
+        "/uploads/images/seiko-sur601-1.edc86466.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/sur601"
+    },
+    {
+      "reference": "SUR609",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "women",
+      "price": 350.0,
+      "movement": "Quartz, 6N01",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "29.6mm",
+      "dial": "",
+      "bracelet": "",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-sur609-1.ae6121b8.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/sur609"
+    },
+    {
+      "reference": "SUR611",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "women",
+      "price": 350.0,
+      "movement": "Quartz, 6N01",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "29.6mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-sur611-1.98c5a541.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/sur611"
+    },
+    {
+      "reference": "SUR612",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "women",
+      "price": 395.0,
+      "movement": "Quartz, 6N01",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "29.6mm",
+      "dial": "",
+      "bracelet": "Three-fold clasp with push button release",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-sur612-1.03b99a85.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/sur612"
+    },
+    {
+      "reference": "SWR099",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "women",
+      "price": 285.0,
+      "movement": "Quartz, 4N30",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "22.2mm",
+      "dial": "",
+      "bracelet": "Cow leather",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-swr099-1.0a9391c2.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/swr099"
+    },
+    {
+      "reference": "SWR100",
+      "name": "Discover More",
+      "series": "Discover More",
+      "gender": "women",
+      "price": 315.0,
+      "movement": "Quartz, 4N30",
+      "caseMaterial": "Stainless steel",
+      "caseSize": "22.2mm",
+      "dial": "",
+      "bracelet": "Cow leather",
+      "waterResistance": "5 bar",
+      "images": [
+        "/uploads/images/seiko-swr100-1.647beeff.jpg"
+      ],
+      "sourceUrl": "https://www.seikowatches.com/us-en/products/discovermore/swr100"
     }
   ]
 }
