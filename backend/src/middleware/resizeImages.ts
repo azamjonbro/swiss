@@ -47,8 +47,14 @@ sharp.cache({ memory: 64, files: 20, items: 100 });
 sharp.concurrency(1);
 
 /** The only widths that get served. An open parameter is an invitation to
- *  fill the disk with 10,000 one-pixel-apart renders. */
-const ALLOWED_WIDTHS = new Set([240, 480, 720, 960, 1440]);
+ *  fill the disk with 10,000 one-pixel-apart renders.
+ *
+ *  24 is not a display size — it is the blur placeholder the storefront paints
+ *  while the real photograph is still in flight (SmartImage's `lqip`). At that
+ *  width a WebP of a watch is 300-600 bytes, which is cheap enough to be worth
+ *  a second request per card and small enough that it can never be mistaken
+ *  for the real image if the swap somehow fails. */
+const ALLOWED_WIDTHS = new Set([24, 240, 480, 720, 960, 1440]);
 
 const RESIZABLE = /\.(jpe?g|png|webp)$/i;
 

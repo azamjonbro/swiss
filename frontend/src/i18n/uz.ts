@@ -3,6 +3,7 @@ import type { Dictionary } from './en';
 const uz: Dictionary = {
   common: {
     under: 'Gacha',
+    of: '/',
   },
   a11y: {
     skipToContent: 'Asosiy qismga o‘tish',
@@ -165,6 +166,10 @@ const uz: Dictionary = {
     sortNewest: 'Yangi',
     sortPriceAsc: 'Narx: pastdan yuqoriga',
     sortPriceDesc: 'Narx: yuqoridan pastga',
+    pagination: 'Sahifalash',
+    page: 'Sahifa',
+    prevPage: 'Oldingi',
+    nextPage: 'Keyingi',
   },
   watchDetail: {
     notFoundEyebrow: 'Topilmadi',

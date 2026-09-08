@@ -2,6 +2,7 @@
 import { ref, computed, watch } from 'vue';
 import { resolveMediaUrl } from '@/utils/media';
 import imageWidths from '@/data/image-widths.json';
+import imageLqip from '@/data/image-lqip.json';
 
 interface Props {
   src?: string | null;
@@ -31,6 +32,8 @@ const props = withDefaults(defineProps<Props>(), {
 
 const loaded = ref(false);
 const errored = ref(false);
+/** The blur placeholder has arrived and is worth painting. */
+const lqipReady = ref(false);
 /** Index into `candidates` of the URL currently being attempted. */
 const candidateIndex = ref(0);
 
@@ -114,11 +117,51 @@ const srcset = computed(() => {
   return widths.map((w) => (w === max ? `${src} ${w}w` : `${stem}-${w}.webp ${w}w`)).join(', ');
 });
 
+/**
+ * The blurred stand-in painted underneath the real photograph until it lands.
+ *
+ * A shimmer says "something is coming"; a blur says "*this* is coming" — the
+ * composition, the colour of the dial, whether the piece is steel or gold are
+ * all legible at 20-24px through a heavy blur, and the swap to the full image
+ * then reads as the picture sharpening rather than as a card changing content.
+ * On a catalogue whose product shots run to hundreds of kilobytes over a
+ * mobile connection, that is most of the perceived load time.
+ *
+ * Two sources, because the two halves of this site's imagery are stored
+ * differently and neither should pay for the other's mechanism:
+ *
+ *   - Product photography lives on the API, which already resizes on request,
+ *     so the placeholder is a real (cached, ~400 byte) `?w=24` fetch.
+ *   - Editorial photography ships with the bundle and its placeholder is
+ *     inlined at build time (scripts/responsive-images.mjs), so the hero has
+ *     something on screen on the first frame instead of after a round trip.
+ *
+ * Anything else — a remote URL, an SVG, a data URI — gets no placeholder and
+ * falls back to the shimmer, which is what it did before.
+ */
+const LQIP_WIDTH = 24;
+
+const lqipSrc = computed(() => {
+  const src = props.src ?? '';
+  if (!src.startsWith('/')) return '';
+
+  if (src.startsWith('/uploads/images/')) {
+    // Keyed on the *original*, never on a `_trim` derivative that may not
+    // exist: a 404 here would leave the card with no placeholder at all, and
+    // the untrimmed shot blurs to the same few colours anyway.
+    return `${resolveMediaUrl(src)}?w=${LQIP_WIDTH}`;
+  }
+
+  const key = src.replace(/\.(jpe?g|png)$/i, '.webp');
+  return (imageLqip as Record<string, string>)[key] ?? '';
+});
+
 watch(
   () => [props.src, props.preferTrimmed],
   () => {
     loaded.value = false;
     errored.value = false;
+    lqipReady.value = false;
     candidateIndex.value = 0;
   },
 );
@@ -138,7 +181,23 @@ function onError() {
 
 <template>
   <div class="sw-smart-image" :style="aspectRatio ? { aspectRatio } : undefined">
-    <div class="sw-smart-image__placeholder" :class="{ 'is-hidden': loaded }" />
+    <!-- The animated shimmer is the floor, not the plan: it runs only until the
+         blur placeholder paints over it, and is what a source with no
+         placeholder still gets. -->
+    <div class="sw-smart-image__placeholder" :class="{ 'is-hidden': loaded || lqipReady }" />
+    <img
+      v-if="lqipSrc && !loaded"
+      :key="lqipSrc"
+      :src="lqipSrc"
+      alt=""
+      aria-hidden="true"
+      class="sw-smart-image__lqip"
+      :class="{ 'is-ready': lqipReady }"
+      :style="{ objectFit }"
+      decoding="async"
+      fetchpriority="high"
+      @load="lqipReady = true"
+    />
     <img
       v-if="displaySrc && !errored"
       :key="displaySrc"
@@ -180,6 +239,26 @@ function onError() {
 .sw-smart-image__placeholder.is-hidden {
   opacity: 0;
   pointer-events: none;
+}
+
+/* The blur placeholder. A 20-24px image scaled to the full box would show its
+   own pixel grid, so the blur is doing two jobs at once: hiding the grid and
+   reading as "still loading". `scale` past 1 pushes the blur's soft, partly
+   transparent edge outside the frame — otherwise the box is ringed by a pale
+   halo where the filter has faded the image into nothing. */
+.sw-smart-image__lqip {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  filter: blur(18px);
+  transform: scale(1.12);
+  transition: opacity var(--dur-fast) var(--ease-luxury);
+}
+
+.sw-smart-image__lqip.is-ready {
+  opacity: 1;
 }
 
 .sw-smart-image__img {

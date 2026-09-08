@@ -4,6 +4,7 @@ const en = {
   },
   common: {
     under: 'Under',
+    of: 'of',
   },
   header: {
     menu: 'Menu',
@@ -163,6 +164,10 @@ const en = {
     sortNewest: 'Newest',
     sortPriceAsc: 'Price: Low to High',
     sortPriceDesc: 'Price: High to Low',
+    pagination: 'Pagination',
+    page: 'Page',
+    prevPage: 'Previous',
+    nextPage: 'Next',
   },
   watchDetail: {
     notFoundEyebrow: 'Not Found',

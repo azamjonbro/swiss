@@ -3,6 +3,7 @@ import type { Dictionary } from './en';
 const ru: Dictionary = {
   common: {
     under: 'До',
+    of: 'из',
   },
   a11y: {
     skipToContent: 'К основному содержанию',
@@ -166,6 +167,10 @@ const ru: Dictionary = {
     sortNewest: 'Новинки',
     sortPriceAsc: 'Цена: по возрастанию',
     sortPriceDesc: 'Цена: по убыванию',
+    pagination: 'Постраничная навигация',
+    page: 'Страница',
+    prevPage: 'Назад',
+    nextPage: 'Далее',
   },
   watchDetail: {
     notFoundEyebrow: 'Не найдено',

@@ -51,6 +51,23 @@ const selectedAvailability = ref((route.query.availability as string) ?? '');
 const isNewOnly = ref(route.query.isNew === 'true');
 const sortKey = ref((route.query.sort as string) || 'newest');
 
+/**
+ * Rows of the grid, not a network page: the whole catalogue already arrives in
+ * one request (see CATALOG_LIMIT) because every facet below is derived from it,
+ * so paging here slices the sorted result rather than re-querying. What it buys
+ * is the render — 600 cards mounted at once meant 600 `<img>` elements and 600
+ * IntersectionObservers on first paint, and a filter change re-diffed all of
+ * them.
+ */
+const PAGE_SIZE = 15;
+
+const page = ref(pageFromQuery(route.query.page));
+
+function pageFromQuery(value: unknown): number {
+  const n = Number(Array.isArray(value) ? value[0] : value);
+  return Number.isInteger(n) && n > 1 ? n : 1;
+}
+
 const isFilterOpen = ref(false);
 const isSortOpen = ref(false);
 const sortWrapRef = ref<HTMLElement | null>(null);
@@ -248,6 +265,66 @@ const sortedWatches = computed(() => {
   return list;
 });
 
+const pageCount = computed(() => Math.max(1, Math.ceil(sortedWatches.value.length / PAGE_SIZE)));
+
+const pagedWatches = computed(() => {
+  const start = (page.value - 1) * PAGE_SIZE;
+  return sortedWatches.value.slice(start, start + PAGE_SIZE);
+});
+
+/**
+ * The numbers actually rendered: first, last, the current page and one either
+ * side, with a gap marker wherever the sequence jumps. A flat run of numbers
+ * is fine at five pages and unusable at forty, and the catalogue is already
+ * past thirty.
+ */
+const pageItems = computed<(number | 'gap')[]>(() => {
+  const last = pageCount.value;
+  if (last <= 7) return Array.from({ length: last }, (_, i) => i + 1);
+
+  const current = page.value;
+  const wanted = new Set([1, last, current, current - 1, current + 1]);
+  // Keep the row a constant width, so the numbers do not shuffle sideways as
+  // the reader walks through the pages.
+  if (current <= 3) [2, 3, 4].forEach((n) => wanted.add(n));
+  if (current >= last - 2) [last - 3, last - 2, last - 1].forEach((n) => wanted.add(n));
+
+  const numbers = [...wanted].filter((n) => n >= 1 && n <= last).sort((a, b) => a - b);
+  const out: (number | 'gap')[] = [];
+  numbers.forEach((n, i) => {
+    if (i > 0 && n - numbers[i - 1] > 1) out.push('gap');
+    out.push(n);
+  });
+  return out;
+});
+
+/**
+ * Real links, not buttons wired to a click handler: a paginated catalogue that
+ * a crawler cannot walk is a catalogue where everything past the first fifteen
+ * products is unreachable, and middle-click / open-in-new-tab are what a
+ * shopper comparing pieces actually does. Pushing (rather than the `replace`
+ * the filters use) is deliberate too — Back should return to the page the
+ * reader came from. The router's scrollBehavior takes care of the scroll.
+ */
+/** "16–30" — which slice of the result set the grid is currently showing. */
+const shownRange = computed(() => {
+  const first = (page.value - 1) * PAGE_SIZE + 1;
+  const last = Math.min(page.value * PAGE_SIZE, sortedWatches.value.length);
+  return `${first}\u2013${last}`;
+});
+
+function pageLink(n: number) {
+  return { query: { ...route.query, page: n > 1 ? String(n) : undefined } };
+}
+
+// Narrowing the result set can leave the reader stranded past the last page —
+// page 12 of a filter that now yields two pages renders an empty grid. Clamp
+// rather than reset: staying as deep as the new result set allows is closer to
+// where they were than jumping back to the first page.
+watch(pageCount, (count) => {
+  if (page.value > count) page.value = count;
+});
+
 interface FilterChip {
   key: string;
   label: string;
@@ -315,13 +392,43 @@ function syncQuery() {
       availability: selectedAvailability.value || undefined,
       isNew: isNewOnly.value ? 'true' : undefined,
       sort: sortKey.value !== 'newest' ? sortKey.value : undefined,
+      page: page.value > 1 ? String(page.value) : undefined,
     },
   });
 }
 
+/** Everything that changes *which* products are listed, as one comparable key. */
+const filterState = computed(() =>
+  [
+    selectedGender.value,
+    selectedCollection.value,
+    selectedType.value,
+    selectedColor.value,
+    selectedMovement.value,
+    selectedPriceBand.value,
+    selectedAvailability.value,
+    String(isNewOnly.value),
+    sortKey.value,
+  ].join('|'),
+);
+
+// A new filter is a new result set, so the old offset means nothing — page 4 of
+// the unfiltered catalogue is not page 4 of "green, under $500".
+watch(filterState, () => {
+  page.value = 1;
+});
+
+watch([filterState, page], syncQuery);
+
+// Back/forward moves between pages without remounting this component, and
+// syncQuery uses `replace`, so the only query changes that arrive from outside
+// are real history navigations — follow them.
 watch(
-  [selectedGender, selectedCollection, selectedType, selectedColor, selectedMovement, selectedPriceBand, selectedAvailability, isNewOnly, sortKey],
-  syncQuery,
+  () => route.query.page,
+  (value) => {
+    const next = pageFromQuery(value);
+    if (next !== page.value) page.value = next;
+  },
 );
 
 /**
@@ -336,17 +443,33 @@ function applyListSeo() {
   const seo = staticSeo('watches', site);
   if (!seo) return;
   const isFiltered = hasActiveFilters.value || sortKey.value !== 'newest';
-  applySeo({ ...seo, canonical: '/watches', robots: isFiltered ? 'noindex, follow' : 'index, follow' });
+  // Pagination is the exception to the rule above: page 2 is not a slice of
+  // page 1's content, it is the next fifteen products, and each such page is
+  // worth its own entry. So a paginated view canonicalises to *itself* and
+  // stays indexable — the numbers are real <a> links (see the template), so
+  // this is also how a crawler reaches everything past the first page. A
+  // filtered view is still one thin combination of eight facets and stays out.
+  const paged = page.value > 1 ? `/watches?page=${page.value}` : '/watches';
+  applySeo({
+    ...seo,
+    // Page 1 keeps the plain title; deeper pages say where they are, so the
+    // result rows in search are not thirty copies of one string.
+    title: page.value > 1 ? `${seo.title} — ${locale.t('watchList.page')} ${page.value}` : seo.title,
+    canonical: isFiltered ? '/watches' : paged,
+    robots: isFiltered ? 'noindex, follow' : 'index, follow',
+  });
   applyJsonLd([
+    // What this page actually lists, in the order it lists it — not a 60-item
+    // digest of a list the visitor cannot see.
     itemListSchema(
-      sortedWatches.value.slice(0, 60).map((w) => ({ name: watchFullName(w) || w.name, path: productPath(w.slug) })),
+      pagedWatches.value.map((w) => ({ name: watchFullName(w) || w.name, path: productPath(w.slug) })),
       site,
       'Timepieces',
     ),
   ]);
 }
 
-watch([hasActiveFilters, sortKey, sortedWatches], applyListSeo, { immediate: true });
+watch([hasActiveFilters, sortKey, pagedWatches, page], applyListSeo, { immediate: true });
 
 function clearFilters() {
   selectedGender.value = '';
@@ -372,7 +495,10 @@ function selectSort(key: string) {
         <span class="sw-eyebrow">{{ locale.t('watchList.eyebrow') }}</span>
         <h1 class="sw-h1">{{ locale.t('watchList.title') }}</h1>
       </div>
-      <p class="sw-watchlist__result-count sw-meta">{{ sortedWatches.length }} {{ locale.t('watchList.count') }}</p>
+      <p class="sw-watchlist__result-count sw-meta">
+        <template v-if="pageCount > 1">{{ shownRange }} {{ locale.t('common.of') }} </template
+        >{{ sortedWatches.length }} {{ locale.t('watchList.count') }}
+      </p>
     </header>
 
     <div class="sw-watchlist__toolbar">
@@ -422,9 +548,53 @@ function selectSort(key: string) {
       {{ locale.t('watchList.empty') }}
     </p>
 
-    <div v-else class="sw-watchlist__grid">
-      <WatchCard v-for="watch in sortedWatches" :key="watch._id" :watch="watch" />
-    </div>
+    <template v-else>
+      <div class="sw-watchlist__grid">
+        <WatchCard v-for="watch in pagedWatches" :key="watch._id" :watch="watch" />
+      </div>
+
+      <nav v-if="pageCount > 1" class="sw-pager" :aria-label="locale.t('watchList.pagination')">
+        <RouterLink
+          v-if="page > 1"
+          :to="pageLink(page - 1)"
+          class="sw-pager__step"
+          :aria-label="locale.t('watchList.prevPage')"
+          rel="prev"
+        >
+          <span aria-hidden="true">&larr;</span> {{ locale.t('watchList.prevPage') }}
+        </RouterLink>
+        <span v-else class="sw-pager__step is-disabled" aria-hidden="true">
+          <span>&larr;</span> {{ locale.t('watchList.prevPage') }}
+        </span>
+
+        <ol class="sw-pager__numbers">
+          <li v-for="(item, i) in pageItems" :key="`${item}-${i}`">
+            <span v-if="item === 'gap'" class="sw-pager__gap" aria-hidden="true">&hellip;</span>
+            <span v-else-if="item === page" class="sw-pager__num is-current" aria-current="page">{{ item }}</span>
+            <RouterLink
+              v-else
+              :to="pageLink(item)"
+              class="sw-pager__num"
+              :aria-label="`${locale.t('watchList.page')} ${item}`"
+              >{{ item }}</RouterLink
+            >
+          </li>
+        </ol>
+
+        <RouterLink
+          v-if="page < pageCount"
+          :to="pageLink(page + 1)"
+          class="sw-pager__step"
+          :aria-label="locale.t('watchList.nextPage')"
+          rel="next"
+        >
+          {{ locale.t('watchList.nextPage') }} <span aria-hidden="true">&rarr;</span>
+        </RouterLink>
+        <span v-else class="sw-pager__step is-disabled" aria-hidden="true">
+          {{ locale.t('watchList.nextPage') }} <span>&rarr;</span>
+        </span>
+      </nav>
+    </template>
 
     <teleport to="body">
       <transition name="sw-fade">
@@ -756,6 +926,104 @@ function selectSort(key: string) {
 
 .sw-watchlist__empty {
   padding: 60px 0;
+}
+
+/* ---- Pager ---- */
+.sw-pager {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Wide gaps between the three groups, so prev / numbers / next read as three
+     targets rather than one run of text. */
+  gap: clamp(20px, 4vw, 56px);
+  margin-top: clamp(64px, 7vw, 104px);
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+
+.sw-pager__step,
+.sw-pager__num,
+.sw-pager__gap {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: color var(--dur-fast) var(--ease-luxury);
+}
+
+.sw-pager__step {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.sw-pager__step:hover,
+.sw-pager__num:hover {
+  color: var(--text);
+}
+
+/* Kept in the flow rather than removed: the numbers stay put when the reader
+   reaches the first or last page, instead of sliding sideways under the
+   cursor. */
+.sw-pager__step.is-disabled {
+  opacity: 0.28;
+  pointer-events: none;
+}
+
+.sw-pager__numbers {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sw-pager__num,
+.sw-pager__gap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* Square and equal-width at every digit count, so a 9 → 10 → 11 walk does
+     not reflow the row. */
+  min-width: 40px;
+  height: 40px;
+  letter-spacing: 0.08em;
+  border: 1px solid transparent;
+}
+
+.sw-pager__num.is-current {
+  color: var(--text);
+  border-color: currentColor;
+}
+
+.sw-pager__gap {
+  min-width: 20px;
+  letter-spacing: 0;
+}
+
+@media (max-width: 560px) {
+  .sw-pager {
+    /* Prev / Next sit under the numbers on a phone, where the row of digits
+       already claims the full width. */
+    flex-wrap: wrap;
+    gap: 16px 24px;
+  }
+
+  .sw-pager__numbers {
+    order: -1;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .sw-pager__num,
+  .sw-pager__gap {
+    min-width: 34px;
+    height: 34px;
+  }
 }
 
 /* Tablet: two columns, more breathing room per card than the crowded 3-up

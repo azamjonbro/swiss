@@ -42,7 +42,19 @@ withDefaults(defineProps<Props>(), { size: 30, wordmark: true });
       <path d="M40 40L24.06 40 23.31 23.03 24.8 22.8 38.46 22.17 23.43 21.49 23.26 21.26 23.2 18.63 40 19.31Z" fill="var(--sw-crimson)" />
       <path d="M0 40L0 23.89 17.03 23.26 17.77 38.51 18.46 23.37 18.69 23.09 21.31 23.09 20.63 40Z" fill="var(--sw-crimson)" />
     </svg>
-    <span v-if="wordmark" class="sw-mark__word">SwissWatch Premium</span>
+    <!--
+      Two spans, not one string with a space in it. The lockup has to hold as a
+      single line on a desktop header and as two stacked lines on a phone, and
+      the browser will not be told *where* to break a plain string — left to
+      itself it broke "SwissWatch / Premium" one width and "SwissWatch Pre- /
+      mium" the next. Splitting the name is what makes the break point the
+      design's decision rather than the text renderer's; the accessible name is
+      the same two words either way.
+    -->
+    <span v-if="wordmark" class="sw-mark__word">
+      <span class="sw-mark__word-line">SwissWatch</span>
+      <span class="sw-mark__word-line">Premium</span>
+    </span>
   </span>
 </template>
 
@@ -71,20 +83,60 @@ withDefaults(defineProps<Props>(), { size: 30, wordmark: true });
   margin-right: -0.3em;
 }
 
+/* One line on a wide header: the two spans sit inline, and this is the space
+   between them that the markup deliberately does not contain. */
+.sw-mark__word-line + .sw-mark__word-line::before {
+  content: ' ';
+}
+
 /* The header centres this lockup between two flanking columns, and the centre
-   column is free to grow past what they leave it. Set side by side at this
-   width the wordmark ran into the actions — at 375px the Uzbek labels
+   column is free to grow past what they leave it. Set on one line at the
+   desktop size the wordmark ran into the actions — at 375px the Uzbek labels
    ("Qidiruv", "Savat") reached it even with the tracking tightened.
 
-   Stacking is what fixes that rather than hiding the name: the lockup's width
-   stops being glyph + gap + 18 tracked characters and becomes just the text,
-   which at this size is around 90px — comfortably inside what the flanking
-   columns leave even at 320px. The name is worth keeping; it is the half of a
-   logo that says who this is. */
+   What used to give here was the lockup itself: the glyph moved *above* the
+   name and the name shrank to 0.44rem — around 7px — to fit under a 24px tile.
+   At that size it is a grey smear, not a wordmark, and the mark no longer
+   reads as one lockup. Breaking the name over two lines *beside* the glyph
+   costs the same width (the widest line is "SWISSWATCH", not the whole name)
+   and buys back enough of it to keep the type at a size that can actually be
+   read: glyph 26px + gap + ~80px of text, inside what the flanking columns
+   leave even at 320px. */
 @media (max-width: 640px) {
   .sw-mark {
+    gap: 9px;
+  }
+
+  .sw-mark__glyph {
+    width: 26px;
+    height: 26px;
+  }
+
+  .sw-mark__word {
+    /* Stacked, but still the row's second column — the glyph stays alongside. */
+    display: flex;
     flex-direction: column;
-    gap: 4px;
+    font-size: 0.5625rem;
+    letter-spacing: 0.2em;
+    line-height: 1.35;
+    /* Matches the reduced tracking above, so the trailing letter-space is
+       trimmed by exactly what it grew. */
+    margin-right: -0.2em;
+  }
+
+  /* The inline space belongs to the one-line lockup only; between two flex
+     items it would open a phantom gap at the head of the second line. */
+  .sw-mark__word-line + .sw-mark__word-line::before {
+    content: none;
+  }
+}
+
+/* The narrowest phones still in use. Measured with the Uzbek labels, which are
+   the widest the actions column ever gets ("Qidiruv · Savat", 87px at this
+   breakpoint's tightened tracking). */
+@media (max-width: 360px) {
+  .sw-mark {
+    gap: 7px;
   }
 
   .sw-mark__glyph {
@@ -93,25 +145,10 @@ withDefaults(defineProps<Props>(), { size: 30, wordmark: true });
   }
 
   .sw-mark__word {
-    font-size: 0.44rem;
-    letter-spacing: 0.16em;
-    /* Matches the reduced tracking above, so the trailing letter-space is
-       trimmed by exactly what it grew — otherwise the stack sits off-centre
-       under the tile. */
-    margin-right: -0.16em;
+    font-size: 0.5rem;
+    letter-spacing: 0.14em;
+    margin-right: -0.14em;
   }
 }
 
-/* The narrowest phones still in use. Measured with the Uzbek labels, which are
-   the widest the actions column ever gets ("Qidiruv · Hisob · Savat", 87px):
-   at 0.44rem the wordmark left only 9px between itself and them. Trimming the
-   size and the tracking buys back about 20px, which is the difference between
-   "tight" and "touching". */
-@media (max-width: 360px) {
-  .sw-mark__word {
-    font-size: 0.38rem;
-    letter-spacing: 0.08em;
-    margin-right: -0.08em;
-  }
-}
 </style>
