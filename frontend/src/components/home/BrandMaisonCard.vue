@@ -78,10 +78,22 @@ function onLinkClick(event: MouseEvent) {
 
         <span v-if="primaryWatch" class="sw-maison__watch-layer" :class="{ 'has-two': secondaryWatch }">
           <span class="sw-maison__shot">
-            <SmartImage :src="primaryImage(primaryWatch)" :alt="primaryWatch.name" object-fit="contain" sizes="(max-width: 560px) 46vw, 280px" />
+            <SmartImage
+              :src="primaryImage(primaryWatch)"
+              :alt="primaryWatch.name"
+              object-fit="contain"
+              prefer-trimmed
+              sizes="(max-width: 560px) 46vw, 280px"
+            />
           </span>
           <span v-if="secondaryWatch" class="sw-maison__shot sw-maison__shot--alt">
-            <SmartImage :src="primaryImage(secondaryWatch)" :alt="secondaryWatch.name" object-fit="contain" sizes="(max-width: 560px) 46vw, 280px" />
+            <SmartImage
+              :src="primaryImage(secondaryWatch)"
+              :alt="secondaryWatch.name"
+              object-fit="contain"
+              prefer-trimmed
+              sizes="(max-width: 560px) 46vw, 280px"
+            />
           </span>
         </span>
 
@@ -154,14 +166,44 @@ function onLinkClick(event: MouseEvent) {
 }
 
 /* ---- Watch state (revealed) ---- */
+/*
+ * Full-bleed, and it carries its own ground.
+ *
+ * It used to be inset 8% with no background of its own, which left
+ * SmartImage's `--surface-media` plate showing through: on a #141311 plaque
+ * that read as a hard-edged white rectangle floating inside a black frame,
+ * with a black border around it — the photograph looked pasted on rather than
+ * revealed. The studio backdrop these shots are cut from is pure #fff at every
+ * edge, so the layer paints that same white across the whole frame instead.
+ * The card flips from engraved plaque to lit studio plate, and photograph and
+ * ground are one continuous surface with no seam to notice.
+ *
+ * This holds either way round: a background-removed `_trim` derivative (see
+ * `prefer-trimmed` above) is transparent and sits on the white just as
+ * happily, so the card does not change character the day the derivatives land
+ * on the server.
+ */
 .sw-maison__watch-layer {
   position: absolute;
-  inset: 8%;
+  inset: 0;
+  background: #fff;
   opacity: 0;
   transform: scale(1.06);
   transition:
     opacity 0.4s var(--ease-editorial),
     transform 0.4s var(--ease-editorial);
+}
+
+/* The plate above is the ground now; a second one behind each shot would put
+   the seam back the moment the two photographs cross-fade. */
+.sw-maison__shot :deep(.sw-smart-image) {
+  background: transparent;
+}
+
+/* Breathing room comes from padding rather than from insetting the layer, so
+   the white runs to the frame's edge while the watch still keeps its margin. */
+.sw-maison__watch-layer {
+  padding: 8%;
 }
 
 /* Entering is deliberately slower than leaving, and starts a beat after the
