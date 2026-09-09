@@ -499,6 +499,13 @@ const ru: Dictionary = {
     totalAccessories: 'Всего аксессуаров',
     searchAccessories: 'Поиск аксессуаров…',
     emptyAccessories: 'Аксессуаров пока нет',
+
+    // Model grouping
+    colModel: 'Модель',
+    allModels: 'Все модели',
+    modelGroupHint: 'Присоединяется к «{model}» — {n} расцветок в этой модели',
+    modelGroupNew: 'Будет создана новая группа модели',
+    modelGroupNone: 'Нет группы модели',
   },
 };
 

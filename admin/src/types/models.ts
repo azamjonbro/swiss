@@ -82,6 +82,7 @@ export interface Watch {
   brand: BrandRef | string;
   name: string;
   slug: string;
+  modelGroup?: string;
   reference: string;
   price: number;
   currency: string;

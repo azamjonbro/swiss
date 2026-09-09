@@ -497,6 +497,13 @@ const en = {
     totalAccessories: 'Total Accessories',
     searchAccessories: 'Search accessories…',
     emptyAccessories: 'No accessories yet',
+
+    // Model grouping
+    colModel: 'Model',
+    allModels: 'All models',
+    modelGroupHint: 'Joins "{model}" — {n} colourways in this model',
+    modelGroupNew: 'This will start a new model group',
+    modelGroupNone: 'No model group',
   },
 };
 

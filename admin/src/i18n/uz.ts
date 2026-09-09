@@ -499,6 +499,13 @@ const uz: Dictionary = {
     totalAccessories: 'Jami aksessuarlar',
     searchAccessories: 'Aksessuarlarni qidirish…',
     emptyAccessories: 'Hozircha aksessuar yo‘q',
+
+    // Model grouping
+    colModel: 'Model',
+    allModels: 'Barcha modellar',
+    modelGroupHint: '"{model}" ga qo‘shiladi — bu modelda {n} ta rang',
+    modelGroupNew: 'Yangi model guruhi yaratiladi',
+    modelGroupNone: 'Model guruhi yo‘q',
   },
 };
 
