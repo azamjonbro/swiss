@@ -63,6 +63,8 @@ async function run() {
         console.log(`Processing logo for ${doc.name}...`);
         await processImage(inputPath, outputPath);
         brand.set('logo', `/uploads/images/${newFilename}`);
+      } else {
+        console.log(`Missing logo for ${doc.name}: ${inputPath}`);
       }
     }
 
@@ -77,6 +79,8 @@ async function run() {
         console.log(`Processing banner for ${doc.name}...`);
         await processImage(inputPath, outputPath);
         brand.set('image', `/uploads/images/${newFilename}`);
+      } else {
+        console.log(`Missing banner for ${doc.name}: ${inputPath}`);
       }
     }
 
