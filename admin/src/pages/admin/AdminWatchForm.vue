@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, watch as watchRef, onMounted, onUnmounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import type {
   Watch,
@@ -11,7 +11,7 @@ import type {
   Translations,
   WatchVariant,
 } from '@/types/models';
-import { adminFetchWatch, adminCreateWatch, adminUpdateWatch } from '@/services/watches';
+import { adminFetchWatch, adminCreateWatch, adminUpdateWatch, adminFetchWatches } from '@/services/watches';
 import { adminFetchCategories } from '@/services/categories';
 import { adminFetchBrands } from '@/services/brands';
 import { adminFetchCollections } from '@/services/collections';
@@ -21,6 +21,7 @@ import MediaUploader from '@/components/admin/MediaUploader.vue';
 import TranslationFields from '@/components/admin/TranslationFields.vue';
 import AdminIcon from '@/components/shared/AdminIcon.vue';
 import { resolveMediaUrl } from '@/utils/media';
+import { modelGroupKey } from '@/utils/modelGroup';
 
 const route = useRoute();
 const router = useRouter();
@@ -87,6 +88,45 @@ const variants = ref<WatchVariant[]>([
 const isSaving = ref(false);
 const isLoading = ref(false);
 const errorMessage = ref('');
+
+// ---- Model group detection ----
+// When the name changes, check whether the product will join an existing model.
+const modelMatch = ref<{ name: string; count: number } | null>(null);
+const modelCheckPending = ref(false);
+let modelDebounce: ReturnType<typeof setTimeout> | null = null;
+
+async function checkModelGroup(name: string) {
+  const key = modelGroupKey(name);
+  if (!key) { modelMatch.value = null; return; }
+
+  modelCheckPending.value = true;
+  try {
+    // Search products whose name would yield the same group key.
+    // The API does not expose a `modelGroup` filter, so we search by name
+    // and filter client-side — the set is small enough.
+    const data = await adminFetchWatches({ q: name, limit: 50 });
+    const siblings = data.items.filter(
+      (w) => modelGroupKey(w.name) === key && (!isEdit.value || w._id !== route.params.id),
+    );
+    if (siblings.length > 0) {
+      modelMatch.value = { name: siblings[0].name, count: siblings.length };
+    } else {
+      modelMatch.value = null;
+    }
+  } catch {
+    modelMatch.value = null;
+  } finally {
+    modelCheckPending.value = false;
+  }
+}
+
+watchRef(() => form.value.name, (name) => {
+  if (modelDebounce) clearTimeout(modelDebounce);
+  if (!name || name.length < 3) { modelMatch.value = null; return; }
+  modelDebounce = setTimeout(() => checkModelGroup(name), 400);
+});
+
+onUnmounted(() => { if (modelDebounce) clearTimeout(modelDebounce); });
 
 function brandIdOf(brand: Watch['brand']): string {
   return typeof brand === 'string' ? brand : brand._id;
@@ -254,6 +294,18 @@ async function submit() {
             <label class="sw-admin-field--wide">
               <span>{{ locale.t('admin.name') }}</span>
               <input v-model="form.name" type="text" required />
+              <div v-if="modelMatch" class="sw-wf__model-hint sw-wf__model-hint--join">
+                <AdminIcon name="info" :size="14" />
+                <span>
+                  {{ locale.t('admin.modelGroupHint')
+                      .replace('{model}', modelMatch.name)
+                      .replace('{n}', String(modelMatch.count)) }}
+                </span>
+              </div>
+              <div v-else-if="form.name.length >= 3 && !modelCheckPending" class="sw-wf__model-hint sw-wf__model-hint--new">
+                <AdminIcon name="info" :size="14" />
+                <span>{{ locale.t('admin.modelGroupNew') }}</span>
+              </div>
             </label>
             <label>
               <span>{{ locale.t('admin.reference') }}</span>
@@ -662,5 +714,31 @@ async function submit() {
   .sw-wf__side {
     position: static;
   }
+}
+
+.sw-wf__model-hint {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 9px 12px;
+  border-radius: var(--radius-md);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.sw-wf__model-hint svg {
+  flex: none;
+  margin-top: 2px;
+}
+
+.sw-wf__model-hint--join {
+  background: var(--admin-info-soft);
+  color: var(--admin-info);
+}
+
+.sw-wf__model-hint--new {
+  background: var(--admin-surface-2);
+  color: var(--admin-text-muted);
 }
 </style>

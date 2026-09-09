@@ -288,6 +288,7 @@ onMounted(async () => {
               </th>
               <th>{{ locale.t('admin.name') }}</th>
               <th>{{ locale.t('admin.colBrand') }}</th>
+              <th>{{ locale.t('admin.colModel') }}</th>
               <th>{{ locale.t('admin.colPrice') }}</th>
               <th>{{ locale.t('admin.colStatus') }}</th>
               <th class="sw-admin-table__actions"></th>
@@ -316,6 +317,10 @@ onMounted(async () => {
                 </div>
               </td>
               <td>{{ localizedName(watch.brand, locale.lang) }}</td>
+              <td>
+                <span v-if="watch.modelGroup" class="sw-watches__model-tag">{{ watch.modelGroup }}</span>
+                <span v-else class="sw-watches__model-none">—</span>
+              </td>
               <td class="sw-watches__price">{{ watch.price.toLocaleString() }} {{ watch.currency }}</td>
               <td>
                 <div class="sw-watches__badges">
@@ -480,5 +485,24 @@ onMounted(async () => {
 .sw-watches__skeleton {
   height: 66px;
   border-radius: 0;
+}
+
+.sw-watches__model-tag {
+  display: inline-block;
+  max-width: 160px;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  background: var(--admin-surface-2);
+  color: var(--admin-text-muted);
+  font-size: 0.75rem;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sw-watches__model-none {
+  color: var(--admin-text-subtle);
+  font-size: 0.8rem;
 }
 </style>
