@@ -145,7 +145,7 @@ export function createSite({ url, name, contactEmail, contactPhone } = {}) {
     // crawler crops to, and at ~95 KB it is inside the budget WhatsApp gives a
     // preview before it silently falls back to a text-only card. JPEG, not
     // WebP: several of those crawlers still refuse WebP.
-    defaultImage: '/og/sainthonore-monceau.jpg',
+    defaultImage: '/og/west-end-sowar.jpg',
     defaultImageWidth: 1200,
     defaultImageHeight: 630,
     // Raster, not the favicon SVG: Google's Organization logo has to be a
