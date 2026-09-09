@@ -7,10 +7,10 @@ import { useLocaleStore } from '@/stores/locale';
 import SmartImage from '@/components/shared/SmartImage.vue';
 
 const locale = useLocaleStore();
-// The Saint Honoré Monceau tourbillon, a piece the house actually carries,
-// composed on a studio-dark ground: the type sits over the left third, so
-// the case is set right of centre and still survives a phone's centre crop.
-const heroImage = '/images/sainthonore_monceau.jpg';
+// The West End Watch Co. Sowar, standing on a dark stone ground.
+// The type sits over the left third, so the case is set right of centre
+// and still survives a phone's centre crop.
+const heroImage = '/images/west-end-sowar.jpg';
 
 const mediaEl = ref<HTMLElement | null>(null);
 const frameEl = ref<HTMLElement | null>(null);
