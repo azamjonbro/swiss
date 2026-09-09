@@ -68,6 +68,41 @@ const galleryItems = computed<GalleryItem[]>(() => {
 });
 const activeItem = computed<GalleryItem | undefined>(() => galleryItems.value[activeIndex.value]);
 
+/**
+ * The model's other colourways.
+ *
+ * The maisons publish each dial colour as its own product — the PRX 40mm is
+ * twenty-one of them — and the catalogue stores them that way, because they are
+ * genuinely different products: different price, different movement, sometimes
+ * a different case. The grid now shows one card per model, so this page is
+ * where the rest of the run has to be reachable; a swatch here navigates to
+ * that product rather than swapping an image, which is why each one carries its
+ * own price.
+ *
+ * The swatch row above stays what it always was — the colours *this* product
+ * itself comes in, switched in place.
+ */
+interface ColorwayLink {
+  slug: string;
+  label: string;
+  colorSlug: string;
+  price: number;
+  image?: string;
+}
+
+const otherColorways = computed<ColorwayLink[]>(() =>
+  (watchDoc.value?.siblings ?? []).map((sibling) => {
+    const variant = sibling.variants?.[0];
+    return {
+      slug: sibling.slug,
+      label: variant?.colorLabel || '',
+      colorSlug: variant?.colorSlug || '',
+      price: sibling.price,
+      image: variant?.images?.[0],
+    };
+  }),
+);
+
 function selectVariant(colorSlug: string) {
   if (colorSlug === selectedVariant.value?.colorSlug) return;
   activeIndex.value = 0;
@@ -418,6 +453,27 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
               <span :style="{ background: colorSwatchHex(v.colorSlug) }" />
             </button>
           </div>
+        </div>
+
+        <div v-if="otherColorways.length" class="sw-watch-detail__colorways">
+          <span class="sw-label">{{ locale.t('watchDetail.otherColorways') }}</span>
+          <ul class="sw-watch-detail__colorway-list" data-lenis-prevent>
+            <li v-for="c in otherColorways" :key="c.slug">
+              <RouterLink :to="productPath(c.slug)" class="sw-watch-detail__colorway" :title="c.label">
+                <span class="sw-watch-detail__colorway-shot">
+                  <SmartImage
+                    :src="c.image"
+                    :alt="c.label"
+                    aspect-ratio="1 / 1"
+                    object-fit="contain"
+                    sizes="72px"
+                  />
+                </span>
+                <span class="sw-watch-detail__colorway-label">{{ c.label }}</span>
+                <span class="sw-watch-detail__colorway-price">{{ currency.format(c.price) }}</span>
+              </RouterLink>
+            </li>
+          </ul>
         </div>
 
         <div class="sw-watch-detail__availability">
@@ -808,6 +864,71 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
 
 .sw-watch-detail__swatch.is-active {
   transform: scale(1.04);
+}
+
+/* ---- Other colourways ---- */
+.sw-watch-detail__colorways {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 30px;
+}
+
+/* A scroller, not a wrap: a model can run to twenty colourways and a wrapping
+   grid of them would push the price, the availability and the buy button below
+   the fold on the one page where they matter most. */
+.sw-watch-detail__colorway-list {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  list-style: none;
+  margin: 0;
+  padding: 0 0 6px;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+
+.sw-watch-detail__colorway {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 86px;
+  flex: none;
+  padding: 8px 6px 10px;
+  border: 1px solid var(--border);
+  transition:
+    border-color var(--dur-fast) var(--ease-luxury),
+    transform var(--dur-fast) var(--ease-luxury);
+}
+
+.sw-watch-detail__colorway:hover,
+.sw-watch-detail__colorway:focus-visible {
+  border-color: var(--text);
+  transform: translateY(-2px);
+}
+
+.sw-watch-detail__colorway-shot {
+  display: block;
+  width: 100%;
+}
+
+.sw-watch-detail__colorway-label,
+.sw-watch-detail__colorway-price {
+  font-family: var(--font-sans);
+  font-size: 0.625rem;
+  letter-spacing: 0.06em;
+  text-align: center;
+  /* Colour names run long ("White mother-of-pearl") and must not widen the
+     tile — one line, trimmed, with the full name on the link's own title. */
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sw-watch-detail__colorway-label {
+  color: var(--text-muted);
 }
 
 .sw-watch-detail__availability {

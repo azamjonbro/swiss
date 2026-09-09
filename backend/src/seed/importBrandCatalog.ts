@@ -20,8 +20,10 @@ import path from 'path';
 import mongoose from 'mongoose';
 import { connectDatabase } from '../config/db';
 import { toSlug } from '../utils/slug';
+import { modelGroupKey } from '../utils/modelGroup';
 import { Brand } from '../models/Brand';
 import { Category } from '../models/Category';
+import { Collection } from '../models/Collection';
 import { Watch } from '../models/Watch';
 
 interface ImportProduct {
@@ -141,6 +143,50 @@ function composeShort(entry: ImportProduct, brand: string, lang: 'en' | 'ru' | '
   return `${brand} ${entry.name} — ${women ? 'ayollar' : 'erkaklar'} uchun ${kind ? `${kind.uz} ` : ''}soat.`;
 }
 
+/**
+ * The Collection for one of a brand's series, created on first sight.
+ *
+ * `series` is the maison's own grouping — Tissot names 22 lines, Citizen 18,
+ * Saint Honoré 13 — and it was previously only ever read into a sentence of
+ * product copy. Nothing turned it into a Collection, so /collections listed the
+ * nine Tsar Bomba series and nothing else however many maisons were added, and
+ * the catalogue's Collection filter had nothing else to offer either.
+ *
+ * The slug stays short where it can: "le-locle" reads better than
+ * "tissot-le-locle", and the nine that already exist use the bare form. Only a
+ * real clash between two maisons' line names takes the brand prefix.
+ */
+async function resolveCollection(
+  series: string,
+  brandName: string,
+  brandId: mongoose.Types.ObjectId,
+  cache: Map<string, mongoose.Types.ObjectId>,
+): Promise<mongoose.Types.ObjectId | undefined> {
+  const trimmed = (series ?? '').trim();
+  if (!trimmed) return undefined;
+
+  const cached = cache.get(trimmed);
+  if (cached) return cached;
+
+  const bare = toSlug(trimmed);
+  const existing = await Collection.findOne({ slug: bare });
+  const slug = !existing || String(existing.brand ?? '') === String(brandId) ? bare : toSlug(`${brandName} ${trimmed}`);
+
+  let collection = await Collection.findOne({ slug });
+  if (!collection) {
+    collection = await Collection.create({
+      name: trimmed,
+      slug,
+      brand: brandId,
+      description: `${trimmed} — ${brandName}.`,
+      isActive: true,
+    });
+  }
+  const id = collection._id as mongoose.Types.ObjectId;
+  cache.set(trimmed, id);
+  return id;
+}
+
 async function importFile(file: string, replace: boolean): Promise<void> {
   const data = JSON.parse(fs.readFileSync(file, 'utf8')) as ImportFile;
   const brand = await Brand.findOne({ name: data.brand });
@@ -161,6 +207,9 @@ async function importFile(file: string, replace: boolean): Promise<void> {
   let updated = 0;
   let skipped = 0;
   let deactivated = 0;
+  // series name -> collection id, so a 464-product catalogue costs one lookup
+  // per line rather than one per watch.
+  const collections = new Map<string, mongoose.Types.ObjectId>();
 
   for (const entry of data.products) {
     if (!entry.images.length) continue;
@@ -178,10 +227,22 @@ async function importFile(file: string, replace: boolean): Promise<void> {
     const priced = entry.price > 0;
     if (!priced) deactivated += 1;
 
+    // A series named after the watch itself ("Le Locle" on the Le Locle) is not
+    // a grouping, it is the same name twice — the description composer already
+    // makes the same distinction.
+    const collectionRef =
+      entry.series && entry.series !== entry.name
+        ? await resolveCollection(entry.series, data.brand, brand._id as mongoose.Types.ObjectId, collections)
+        : undefined;
+
     const doc = {
       brand: brand._id,
       name: entry.name,
       slug,
+      // What puts every colourway of one model on a single card in the grid.
+      // Derived from the name here exactly as the admin controller derives it,
+      // so an imported colourway and a hand-added one land in the same group.
+      modelGroup: modelGroupKey(entry.name),
       reference: entry.reference,
       price: entry.price,
       currency: 'USD',
@@ -198,6 +259,7 @@ async function importFile(file: string, replace: boolean): Promise<void> {
         },
       ],
       category: category._id,
+      ...(collectionRef ? { collectionRef } : {}),
       movement: entry.movement,
       caseMaterial: entry.caseMaterial,
       caseSize: entry.caseSize,
@@ -220,12 +282,22 @@ async function importFile(file: string, replace: boolean): Promise<void> {
       },
     };
 
+    let watchId: mongoose.Types.ObjectId;
     if (existing) {
       await Watch.updateOne({ _id: existing._id }, { $set: doc });
+      watchId = existing._id as mongoose.Types.ObjectId;
       updated += 1;
     } else {
-      await Watch.create(doc);
+      const made = await Watch.create(doc);
+      watchId = made._id as mongoose.Types.ObjectId;
       created += 1;
+    }
+
+    // The link is stored on both sides — the watch names its collection, the
+    // collection lists its watches, and getCollectionBySlug reads the latter.
+    // `$addToSet` keeps a re-run idempotent.
+    if (collectionRef) {
+      await Collection.updateOne({ _id: collectionRef }, { $addToSet: { watches: watchId } });
     }
   }
 

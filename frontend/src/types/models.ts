@@ -50,11 +50,44 @@ export interface WatchVariant {
   videos: string[];
 }
 
+/**
+ * One colourway of a model, as the listing and the product page see the others.
+ *
+ * A maison publishes each dial colour as its own product — the PRX 40mm comes
+ * in twenty-one — so the catalogue holds one document per colourway and the
+ * grid used to draw one card per colourway too. The API now returns them
+ * grouped: one card per model, carrying the rest of the run in `siblings`, so
+ * the card can show the whole colour range and a "from" price, and the product
+ * page can offer the other colours. Each is a real product with its own price,
+ * spec sheet and URL — selecting one navigates to it.
+ */
+export interface WatchSibling {
+  _id: string;
+  slug: string;
+  price: number;
+  currency?: string;
+  movement?: string;
+  caseMaterial?: string;
+  availability?: Availability;
+  gender?: 'men' | 'women';
+  isNewArrival?: boolean;
+  collectionRef?: string;
+  variants: WatchVariant[];
+}
+
 export interface Watch {
   _id: string;
   brand: BrandRef | string;
   name: string;
   slug: string;
+  /** Shared by every colourway of one model; see `WatchSibling`. */
+  modelGroup?: string;
+  /**
+   * The model's other colourways. Present on the grouped listing
+   * (`group=model`) and on the single-product response; absent elsewhere,
+   * which reads the same as "this model has only this one colourway".
+   */
+  siblings?: WatchSibling[];
   reference: string;
   price: number;
   currency: string;

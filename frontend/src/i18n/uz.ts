@@ -130,6 +130,8 @@ const uz: Dictionary = {
   },
   watchCard: {
     view: 'Soatni ko‘rish',
+    fromPrice: '{price} dan',
+    colorCount: '{count} ta rang',
   },
   watchList: {
     filterGender: 'Kimga',
@@ -190,6 +192,7 @@ const uz: Dictionary = {
     saved: 'Saqlangan',
     close: 'Yopish',
     color: 'Rang',
+    otherColorways: 'Bu modelning boshqa ranglari',
     quantity: 'Miqdor',
     addToCart: 'Savatga qo‘shish',
     addedToCart: 'Qo‘shildi',

@@ -13,6 +13,29 @@ export interface IWatch extends Document {
   brand: Types.ObjectId;
   name: string;
   slug: string;
+  /**
+   * The model this product is a colourway of — `toSlug(brand + name)`.
+   *
+   * The catalogues arrive one document per colourway: Tissot publishes the PRX
+   * 40mm in twenty-one dials, so twenty-one Watch documents came in, and the
+   * grid showed twenty-one cards all reading "PRX 40mm · Quartz · UZS
+   * 5,491,200" side by side. They are one model and belong on one card.
+   *
+   * They are *not* one document, though, and this is deliberately a grouping
+   * key rather than a merge: those twenty-one share a name and nothing else
+   * that matters. Five of them are called Blue. The price runs from $408 to
+   * $973, the movement from quartz to Swiss automatic, the case from steel to
+   * gold-capped — so a single merged document would have to publish one price
+   * and one spec sheet that were wrong for most of its own colourways, and
+   * would delete twenty live product URLs on the way. Grouping gets the same
+   * card on screen while every colourway keeps its own price, spec sheet and
+   * address.
+   *
+   * Set automatically wherever a watch is written (see `applyModelGroup`), so
+   * a colourway added in the admin panel joins its model without anyone having
+   * to know this field exists.
+   */
+  modelGroup: string;
   reference: string;
   price: number;
   currency: string;
@@ -71,6 +94,7 @@ const WatchSchema = new Schema<IWatch>(
     brand: { type: Schema.Types.ObjectId, ref: 'Brand', required: true },
     name: { type: String, required: true, trim: true },
     slug: { type: String, required: true, unique: true, lowercase: true, index: true },
+    modelGroup: { type: String, default: '', lowercase: true, index: true },
     reference: { type: String, default: '' },
     price: { type: Number, required: true, min: 0 },
     currency: { type: String, default: 'USD' },

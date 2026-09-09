@@ -15,6 +15,14 @@ export interface WatchQuery {
   q?: string;
   page?: number;
   limit?: number;
+  /**
+   * 'model' collapses a model's colourways into one row, carrying the rest as
+   * `siblings`. The catalogue publishes one product per dial colour, so without
+   * this the grid draws twenty-one identical "PRX 40mm" cards — and the
+   * ungrouped catalogue is past 900 rows, which no longer fits the single
+   * fetch the listing page makes.
+   */
+  group?: 'model';
 }
 
 export async function fetchWatches(query: WatchQuery = {}): Promise<Paginated<Watch>> {

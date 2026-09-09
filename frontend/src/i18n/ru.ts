@@ -131,6 +131,8 @@ const ru: Dictionary = {
   },
   watchCard: {
     view: 'Смотреть часы',
+    fromPrice: 'от {price}',
+    colorCount: '{count} цветов',
   },
   watchList: {
     filterGender: 'Кому',
@@ -191,6 +193,7 @@ const ru: Dictionary = {
     saved: 'Сохранено',
     close: 'Закрыть',
     color: 'Цвет',
+    otherColorways: 'Другие цвета этой модели',
     quantity: 'Количество',
     addToCart: 'В корзину',
     addedToCart: 'Добавлено',

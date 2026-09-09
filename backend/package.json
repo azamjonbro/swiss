@@ -11,7 +11,10 @@
     "seed": "ts-node-dev --transpile-only src/seed/seed.ts",
     "translate": "ts-node-dev --transpile-only src/seed/applyTranslations.ts",
     "import:catalog": "ts-node-dev --transpile-only src/seed/importCatalog.ts",
-    "import:brands": "ts-node-dev --transpile-only src/seed/importBrandCatalog.ts"
+    "import:brands": "ts-node-dev --transpile-only src/seed/importBrandCatalog.ts",
+    "backfill:models": "ts-node-dev --transpile-only src/seed/backfillModelGroups.ts",
+    "backfill:collections": "ts-node-dev --transpile-only src/seed/backfillCollections.ts",
+    "order:covers": "ts-node-dev --transpile-only src/seed/orderCovers.ts"
   },
   "keywords": [],
   "author": "",

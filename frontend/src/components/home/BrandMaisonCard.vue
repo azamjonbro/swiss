@@ -186,6 +186,9 @@ function onLinkClick(event: MouseEvent) {
 .sw-maison__watch-layer {
   position: absolute;
   inset: 0;
+  /* Breathing room comes from padding rather than from insetting the layer, so
+     the white runs to the frame's edge while the watch still keeps its margin. */
+  padding: 8%;
   background: #fff;
   opacity: 0;
   transform: scale(1.06);
@@ -198,12 +201,6 @@ function onLinkClick(event: MouseEvent) {
    the seam back the moment the two photographs cross-fade. */
 .sw-maison__shot :deep(.sw-smart-image) {
   background: transparent;
-}
-
-/* Breathing room comes from padding rather than from insetting the layer, so
-   the white runs to the frame's edge while the watch still keeps its margin. */
-.sw-maison__watch-layer {
-  padding: 8%;
 }
 
 /* Entering is deliberately slower than leaving, and starts a beat after the

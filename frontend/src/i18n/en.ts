@@ -128,6 +128,11 @@ const en = {
   },
   watchCard: {
     view: 'View Timepiece',
+    // {price} is substituted at the call site — the placeholder's position is
+    // the translation: English and Russian lead with the preposition, Uzbek
+    // marks the ablative with a suffix after the number.
+    fromPrice: 'from {price}',
+    colorCount: '{count} colours',
   },
   watchList: {
     filterGender: 'Audience',
@@ -188,6 +193,7 @@ const en = {
     saved: 'Saved',
     close: 'Close',
     color: 'Color',
+    otherColorways: 'Other colours in this model',
     quantity: 'Quantity',
     addToCart: 'Add to Cart',
     addedToCart: 'Added',

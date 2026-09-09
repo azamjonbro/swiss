@@ -3,6 +3,7 @@ import { Types } from 'mongoose';
 import { Watch } from '../models/Watch';
 import { ApiError } from '../utils/ApiError';
 import { toSlug } from '../utils/slug';
+import { modelGroupKey } from '../utils/modelGroup';
 import { Lang, localize, resolveLang } from '../utils/i18n';
 import { buildSearchFilter } from '../utils/search';
 import { requestRedeploy } from '../services/deployHook';
@@ -72,6 +73,18 @@ export async function listWatches(req: Request, res: Response) {
   // open limit is a cheap way to ask the server for everything at once.
   const pageSize = Math.min(Number(limit) || 24, 600);
   const pageNum = Math.max(Number(page) || 1, 1);
+  const lang = resolveLang(req);
+
+  if (String(req.query.group) === 'model') {
+    const { items, total } = await listModels(filter, pageNum, pageSize);
+    return res.json({
+      items: items.map((item) => localizeModel(item, lang)),
+      total,
+      page: pageNum,
+      pageSize,
+      pages: Math.ceil(total / pageSize),
+    });
+  }
 
   const [items, total] = await Promise.all([
     Watch.find(filter)
@@ -83,7 +96,6 @@ export async function listWatches(req: Request, res: Response) {
     Watch.countDocuments(filter),
   ]);
 
-  const lang = resolveLang(req);
   res.json({
     items: items.map((item) => localizeWatch(item as unknown as Record<string, unknown>, lang)),
     total,
@@ -91,6 +103,93 @@ export async function listWatches(req: Request, res: Response) {
     pageSize,
     pages: Math.ceil(total / pageSize),
   });
+}
+
+/** One lightweight record per colourway of a model, for the card and the filters. */
+interface ModelSibling {
+  _id: Types.ObjectId;
+  slug: string;
+  price: number;
+  movement: string;
+  availability: string;
+  gender: string;
+  isNewArrival: boolean;
+  collectionRef?: Types.ObjectId;
+  variants: { colorSlug: string; colorLabel: string; images: string[] }[];
+}
+
+/**
+ * The catalogue as models rather than as colourways.
+ *
+ * Tissot ships the PRX 40mm in twenty-one dials and publishes each as its own
+ * product, so the grid drew twenty-one identical cards. Every one of those is a
+ * real product with its own price, spec sheet and URL and stays that way — this
+ * only decides what the *listing* shows: the cheapest colourway of each model,
+ * carrying the rest with it as `siblings` so the card can show the full run of
+ * colour swatches, a "from" price, and still be filtered on any colour, price
+ * or movement any of its colourways has.
+ *
+ * It also puts the catalogue back inside the storefront's single-request
+ * budget. The listing page fetches everything once and filters client-side
+ * against a 600-item ceiling; the catalogue passed 900 and was being silently
+ * truncated. Grouped, the same catalogue is around 350 rows.
+ */
+async function listModels(filter: Record<string, unknown>, pageNum: number, pageSize: number) {
+  // A product whose group key has not been backfilled yet must not be swept
+  // into one giant nameless group with every other such product — falling back
+  // to its own id keeps it a group of one, which is what it was before.
+  const groupKey = {
+    brand: '$brand',
+    type: '$type',
+    model: {
+      $cond: [{ $gt: [{ $strLenCP: { $ifNull: ['$modelGroup', ''] } }, 0] }, '$modelGroup', { $toString: '$_id' }],
+    },
+  };
+
+  const sibling = {
+    _id: '$_id',
+    slug: '$slug',
+    price: '$price',
+    movement: '$movement',
+    availability: '$availability',
+    gender: '$gender',
+    isNewArrival: '$isNewArrival',
+    collectionRef: '$collectionRef',
+    variants: '$variants',
+  };
+
+  const [page, counted] = await Promise.all([
+    Watch.aggregate([
+      { $match: filter },
+      // Cheapest first, so `$first` below picks the colourway the card's "from"
+      // price actually refers to — the photograph and the number agree.
+      { $sort: { price: 1, createdAt: -1 } },
+      { $group: { _id: groupKey, doc: { $first: '$$ROOT' }, siblings: { $push: sibling } } },
+      { $sort: { 'doc.createdAt': -1, 'doc._id': 1 } },
+      { $skip: (pageNum - 1) * pageSize },
+      { $limit: pageSize },
+      { $replaceRoot: { newRoot: { $mergeObjects: ['$doc', { siblings: '$siblings' }] } } },
+    ]),
+    Watch.aggregate([{ $match: filter }, { $group: { _id: groupKey } }, { $count: 'total' }]),
+  ]);
+
+  // Aggregation output is plain objects, so the refs have to be filled in
+  // afterwards — same fields the non-grouped path populates.
+  const items = await Watch.populate(page, [
+    { path: 'brand', select: 'name slug logo translations' },
+    { path: 'category', select: 'name slug translations' },
+  ]);
+
+  return { items: items as unknown as Record<string, unknown>[], total: counted[0]?.total ?? 0 };
+}
+
+function localizeModel(item: Record<string, unknown>, lang: Lang): Record<string, unknown> {
+  const out = localizeWatch(item, lang);
+  const siblings = item.siblings as ModelSibling[] | undefined;
+  if (Array.isArray(siblings)) {
+    out.siblings = siblings.map((s) => ({ ...s, variants: localizeVariants(s.variants, lang) }));
+  }
+  return out;
 }
 
 export async function getWatchBySlug(req: Request, res: Response) {
@@ -102,7 +201,7 @@ export async function getWatchBySlug(req: Request, res: Response) {
   if (!watch) throw new ApiError(404, 'Timepiece not found');
 
   const lang = resolveLang(req);
-  const [accessories, related] = await Promise.all([
+  const [accessories, related, siblings] = await Promise.all([
     watch.type === 'accessory'
       ? Promise.resolve([])
       : Watch.find({ type: 'accessory', compatibleWith: watch._id, isActive: true })
@@ -113,10 +212,30 @@ export async function getWatchBySlug(req: Request, res: Response) {
           .populate('brand', 'name slug')
           .populate('category', 'name slug')
       : Promise.resolve([]),
+    // The other colourways of this same model. The listing shows one card per
+    // model; opening it has to offer the rest of the run, or the twenty dials
+    // the grid promised are unreachable. Each is a real product with its own
+    // price and spec sheet, so the page switches to it rather than swapping an
+    // image — which is also why only the few fields a swatch needs come back.
+    watch.modelGroup
+      ? Watch.find({
+          modelGroup: watch.modelGroup,
+          brand: watch.brand,
+          type: watch.type,
+          isActive: true,
+          _id: { $ne: watch._id },
+        })
+          .select('slug price currency movement caseMaterial availability variants')
+          .sort({ price: 1 })
+      : Promise.resolve([]),
   ]);
 
   res.json({
     ...localizeWatch(watch as unknown as Record<string, unknown>, lang),
+    siblings: siblings.map((s) => {
+      const plain = s.toObject() as unknown as Record<string, unknown>;
+      return { ...plain, variants: localizeVariants(plain.variants, lang) };
+    }),
     accessories: accessories.map((a) => localizeWatch(a as unknown as Record<string, unknown>, lang)),
     related: related.map((r) => localizeWatch(r as unknown as Record<string, unknown>, lang)),
   });
@@ -176,7 +295,12 @@ export async function adminCreateWatch(req: Request, res: Response) {
   }
 
   const slug = body.slug ? toSlug(body.slug) : toSlug(`${body.name}-${body.reference ?? ''}`);
-  const watch = await Watch.create({ ...body, slug });
+  // Derived, never taken from the request: a new colourway of an existing model
+  // has to land in that model's group, and the only reliable way to guarantee
+  // that is to compute the key from the name the same way everywhere. Adding
+  // "PRX 40mm" in the admin panel puts it on the existing PRX 40mm card,
+  // without anyone having to know the field exists.
+  const watch = await Watch.create({ ...body, slug, modelGroup: modelGroupKey(body.name) });
   // The product has no prerendered page until the storefront rebuilds.
   requestRedeploy(`watch:create ${watch.slug}`);
   res.status(201).json(watch);
@@ -185,6 +309,9 @@ export async function adminCreateWatch(req: Request, res: Response) {
 export async function adminUpdateWatch(req: Request, res: Response) {
   const body = { ...req.body };
   if (body.slug) body.slug = toSlug(body.slug);
+  // Renaming a product moves it to a different model — recompute rather than
+  // leaving it grouped with the model it used to be called.
+  if (body.name) body.modelGroup = modelGroupKey(body.name);
 
   const watch = await Watch.findByIdAndUpdate(req.params.id, body, { new: true, runValidators: true });
   if (!watch) throw new ApiError(404, 'Timepiece not found');

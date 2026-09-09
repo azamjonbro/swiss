@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue';
 import type { Watch } from '@/types/models';
 import { toBrandName, primaryImage, secondaryImage, colorSwatchHex, movementType } from '@/utils/format';
+import { modelColors, modelPriceRange } from '@/utils/modelGroup';
 import { useCurrencyStore } from '@/stores/currency';
 import { useLocaleStore } from '@/stores/locale';
 import SmartImage from '@/components/shared/SmartImage.vue';
@@ -51,7 +52,32 @@ const mainImage = computed(() => primaryImage(props.watch));
 // Prefer a second angle of the same colourway on hover; when a product has
 // none, fall back to the next color's shot rather than not swapping at all.
 const hoverImage = computed(() => secondaryImage(props.watch) ?? props.watch.variants?.[1]?.images?.[0]);
-const colorCount = computed(() => props.watch.variants?.length ?? 0);
+
+/**
+ * The card speaks for the whole model, not for the one colourway the API sent
+ * as its representative — so the swatches are every colour in the run and the
+ * price is the cheapest of them, marked "from" when they are not all the same.
+ *
+ * Without `siblings` (an ungrouped response) these fall back to exactly what
+ * the card printed before: this product's own colours and its own price.
+ */
+const colors = computed(() => modelColors(props.watch));
+const priceRange = computed(() => modelPriceRange(props.watch));
+
+const priceLabel = computed(() => {
+  const { min, max } = priceRange.value;
+  const price = currency.format(min);
+  return min === max ? price : locale.t('watchCard.fromPrice').replace('{price}', price);
+});
+
+/**
+ * How many swatches fit before the row stops reading as a colour range and
+ * starts reading as a rash. The PRX 40mm has twenty-one; six and a count is
+ * information, twenty-one dots is not.
+ */
+const SWATCH_LIMIT = 6;
+const shownColors = computed(() => colors.value.slice(0, SWATCH_LIMIT));
+const hiddenColorCount = computed(() => Math.max(0, colors.value.length - SWATCH_LIMIT));
 </script>
 
 <template>
@@ -91,16 +117,24 @@ const colorCount = computed(() => props.watch.variants?.length ?? 0);
       <span class="sw-watch-card__brand">{{ brandName }}</span>
       <h3 class="sw-watch-card__name">{{ watch.name }}</h3>
       <span v-if="movementLabel" class="sw-watch-card__type">{{ movementLabel }}</span>
-      <span class="sw-watch-card__price">{{ currency.format(watch.price) }}</span>
+      <span class="sw-watch-card__price">{{ priceLabel }}</span>
       <span v-if="availabilityLabel" class="sw-watch-card__availability">{{ availabilityLabel }}</span>
 
-      <span v-if="colorCount > 1" class="sw-watch-card__colors" :aria-label="`${colorCount} colors`">
+      <span
+        v-if="colors.length > 1"
+        class="sw-watch-card__colors"
+        :aria-label="locale.t('watchCard.colorCount').replace('{count}', String(colors.length))"
+      >
         <span
-          v-for="variant in watch.variants"
+          v-for="variant in shownColors"
           :key="variant.colorSlug"
           class="sw-watch-card__dot"
+          :title="variant.colorLabel"
           :style="{ background: colorSwatchHex(variant.colorSlug) }"
         />
+        <span v-if="hiddenColorCount" class="sw-watch-card__dot-more" aria-hidden="true">
+          +{{ hiddenColorCount }}
+        </span>
       </span>
 
       <span class="sw-watch-card__cta">
@@ -176,6 +210,17 @@ const colorCount = computed(() => props.watch.variants?.length ?? 0);
   height: 8px;
   border-radius: 50%;
   box-shadow: 0 0 0 1px var(--border) inset;
+  /* The row is fixed-width by design (six swatches plus a count), so a dot must
+     never be squeezed thinner than round by a long colour run. */
+  flex: none;
+}
+
+.sw-watch-card__dot-more {
+  font-family: var(--font-sans);
+  font-size: 0.625rem;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  margin-left: 2px;
 }
 
 .sw-watch-card__info {

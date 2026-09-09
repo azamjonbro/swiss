@@ -10,7 +10,11 @@ const WATCH_FIELDS = ['name', 'description', 'shortDescription'];
 const BRAND_FIELDS = ['name', 'description'];
 
 export async function listCollections(req: Request, res: Response) {
-  const items = await Collection.find({ isActive: true }).sort({ createdAt: -1 });
+  // The maison is part of what a collection *is* now that twelve of them have
+  // series in here — a card reading "Le Locle" says nothing without "Tissot".
+  const items = await Collection.find({ isActive: true })
+    .populate('brand', 'name slug translations')
+    .sort({ createdAt: -1 });
   res.json({ items: localizeList(items, resolveLang(req), COLLECTION_FIELDS) });
 }
 

@@ -7,6 +7,7 @@ import { fetchCollections } from '@/services/collections';
 import { useLocaleStore } from '@/stores/locale';
 import { useCurrencyStore } from '@/stores/currency';
 import { colorSwatchHex, movementType } from '@/utils/format';
+import { modelColors, modelMembers, modelPriceRange } from '@/utils/modelGroup';
 import { useLockBodyScroll } from '@/composables/useLockBodyScroll';
 import { applyJsonLd, applySeo, site } from '@/utils/seo';
 import { itemListSchema, productPath, staticSeo, watchFullName } from '@/seo/schema.mjs';
@@ -131,7 +132,12 @@ async function load() {
     // `type: 'all'` pulls the accessories in alongside the watches so the grid can
     // filter between them client-side; the limit clears the whole catalogue in one go.
     const [data, cols] = await Promise.all([
-      fetchWatches({ type: 'all', limit: CATALOG_LIMIT }),
+      // `group: 'model'` is what stops the grid drawing twenty-one identical
+      // "PRX 40mm" cards: the API returns one row per model with the rest of
+      // the colourways attached, and the facets below read the whole model.
+      // It is also what keeps the catalogue inside CATALOG_LIMIT — ungrouped
+      // it is past 900 rows and this fetch was silently losing the tail.
+      fetchWatches({ type: 'all', limit: CATALOG_LIMIT, group: 'model' }),
       fetchCollections(),
     ]);
     allWatches.value = data.items;
@@ -146,15 +152,24 @@ watch(() => locale.lang, load);
 
 // Facets are derived from the loaded catalog — only values actually
 // present in the data become filter options, never invented ones.
+// Every facet below is derived from the *model*, not from the one colourway
+// that represents it in the grid: a model whose cheapest dial is a men's
+// quartz may well also come as a women's automatic, and offering to filter
+// only by the representative's own values would hide it from both searches.
 const genderOptions = computed(() =>
-  (['men', 'women'] as const).filter((g) => allWatches.value.some((w) => w.gender === g)),
+  (['men', 'women'] as const).filter((g) =>
+    allWatches.value.some((w) => modelMembers(w).some((m) => m.gender === g)),
+  ),
 );
 
 // Collection is a real facet now that every product carries a `collectionRef` taken
 // from the brand's own series grouping; only collections holding something in the
 // current result set are offered.
 const collectionOptions = computed(() => {
-  const present = new Set(allWatches.value.map((w) => collectionIdOf(w)).filter(Boolean));
+  const present = new Set<string>();
+  for (const w of allWatches.value) {
+    for (const m of modelMembers(w)) if (m.collectionRef) present.add(m.collectionRef);
+  }
   return collections.value.filter((c) => present.has(c._id));
 });
 
@@ -167,13 +182,6 @@ const typeOptions = computed(() => {
 
 function typeLabel(t: string): string {
   return t === 'all' ? locale.t('watchList.allTypes') : locale.t(`watchList.type_${t}`);
-}
-
-/** `collectionRef` arrives either populated or as a bare id, depending on the endpoint. */
-function collectionIdOf(w: Watch): string {
-  const ref = w.collectionRef as unknown;
-  if (!ref) return '';
-  return typeof ref === 'string' ? ref : ((ref as { _id?: string })._id ?? '');
 }
 
 function collectionLabel(id: string): string {
@@ -194,7 +202,7 @@ const colorScopeWatches = computed(() =>
 const colorOptions = computed(() => {
   const map = new Map<string, string>();
   for (const w of colorScopeWatches.value) {
-    for (const v of w.variants ?? []) {
+    for (const v of modelColors(w)) {
       if (v.colorLabel) map.set(v.colorSlug, v.colorLabel);
     }
   }
@@ -209,11 +217,12 @@ const filteredColorOptions = computed(() => {
   return colorOptions.value.filter((c) => c.colorLabel.toLowerCase().includes(q));
 });
 
+// Counted in models, not in colourways — the number next to "Green" is how
+// many cards the grid will show, which is what the count is there to promise.
 const colorCounts = computed(() => {
   const counts = new Map<string, number>();
   for (const w of colorScopeWatches.value) {
-    const slugs = new Set((w.variants ?? []).map((v) => v.colorSlug));
-    for (const slug of slugs) counts.set(slug, (counts.get(slug) ?? 0) + 1);
+    for (const v of modelColors(w)) counts.set(v.colorSlug, (counts.get(v.colorSlug) ?? 0) + 1);
   }
   return counts;
 });
@@ -221,47 +230,70 @@ const colorCounts = computed(() => {
 const movementOptions = computed(() => {
   const set = new Set<string>();
   for (const w of allWatches.value) {
-    const t = movementType(w.movement);
-    if (t) set.add(t);
+    for (const m of modelMembers(w)) {
+      const t = movementType(m.movement);
+      if (t) set.add(t);
+    }
   }
   return Array.from(set);
 });
 
 const availabilityOptions = computed(() => {
   const set = new Set<string>();
-  for (const w of allWatches.value) set.add(w.availability);
+  for (const w of allWatches.value) {
+    for (const m of modelMembers(w)) if (m.availability) set.add(m.availability);
+  }
   return Array.from(set);
 });
 
 const priceBandOptions = computed(() =>
-  PRICE_BANDS.filter((band) => allWatches.value.some((w) => band.test(w.price))).map((band) => band.key),
+  PRICE_BANDS.filter((band) =>
+    allWatches.value.some((w) => modelMembers(w).some((m) => band.test(m.price))),
+  ).map((band) => band.key),
 );
 
 function availabilityLabel(a: string): string {
   return locale.t(`watchDetail.${a === 'in-stock' ? 'available' : a === 'made-to-order' ? 'madeToOrder' : a}`);
 }
 
+/**
+ * A model is in the results when *one of its colourways* satisfies every filter
+ * at once — not when the filters are satisfied piecemeal across the run.
+ *
+ * The distinction matters as soon as a model spans a range: the PRX 40mm comes
+ * in green quartz at $429 and green automatic at $842. Asking for "green" and
+ * "under $500" has to find the first one and, if only the automatic were green,
+ * must not offer the model on the strength of a cheap silver dial that is not
+ * the colour asked for. So the per-colourway tests are applied together, to
+ * each colourway in turn.
+ */
 const filteredWatches = computed(() => {
+  const band = PRICE_BANDS.find((b) => b.key === selectedPriceBand.value);
+
   return allWatches.value.filter((w) => {
-    if (selectedGender.value && w.gender !== selectedGender.value) return false;
-    if (selectedCollection.value && collectionIdOf(w) !== selectedCollection.value) return false;
+    // Type is a property of the model as a whole — it is part of what the API
+    // grouped on, so every colourway shares it.
     if (selectedType.value !== 'all' && (w.type ?? 'watch') !== selectedType.value) return false;
-    if (isNewOnly.value && !w.isNewArrival) return false;
-    if (selectedColor.value && !w.variants?.some((v) => v.colorSlug === selectedColor.value)) return false;
-    if (selectedMovement.value && movementType(w.movement) !== selectedMovement.value) return false;
-    if (selectedAvailability.value && w.availability !== selectedAvailability.value) return false;
-    if (selectedPriceBand.value) {
-      const band = PRICE_BANDS.find((b) => b.key === selectedPriceBand.value);
-      if (band && !band.test(w.price)) return false;
-    }
-    return true;
+
+    return modelMembers(w).some((m) => {
+      if (selectedGender.value && m.gender !== selectedGender.value) return false;
+      if (selectedCollection.value && m.collectionRef !== selectedCollection.value) return false;
+      if (isNewOnly.value && !m.isNewArrival) return false;
+      if (selectedColor.value && !m.variants.some((v) => v.colorSlug === selectedColor.value)) return false;
+      if (selectedMovement.value && movementType(m.movement) !== selectedMovement.value) return false;
+      if (selectedAvailability.value && m.availability !== selectedAvailability.value) return false;
+      if (band && !band.test(m.price)) return false;
+      return true;
+    });
   });
 });
 
+// Sorted on what the card actually prints — the model's "from" price, not the
+// representative's own, so the column reads in the order the numbers do.
 const sortedWatches = computed(() => {
   const list = filteredWatches.value.slice();
-  if (sortKey.value === 'price-asc') list.sort((a, b) => a.price - b.price);
-  else if (sortKey.value === 'price-desc') list.sort((a, b) => b.price - a.price);
+  if (sortKey.value === 'price-asc') list.sort((a, b) => modelPriceRange(a).min - modelPriceRange(b).min);
+  else if (sortKey.value === 'price-desc') list.sort((a, b) => modelPriceRange(b).min - modelPriceRange(a).min);
   return list;
 });
 

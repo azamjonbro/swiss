@@ -3,6 +3,16 @@ import { Schema, model, Document, Types } from 'mongoose';
 export interface ICollection extends Document {
   name: string;
   slug: string;
+  /**
+   * The maison whose series this is.
+   *
+   * Optional because the original nine collections predate it: Tsar Bomba was
+   * the only brand in the catalogue, so its series names needed no owner. With
+   * twelve maisons they do — "Classic" is a series at more than one of them,
+   * and a shopper reading a collections page needs to know whose line they are
+   * looking at.
+   */
+  brand?: Types.ObjectId;
   description: string;
   image: string;
   // Tsar Bomba splits its line-up by audience: eight men's series plus Nucleus Femme.
@@ -28,6 +38,7 @@ const CollectionSchema = new Schema<ICollection>(
   {
     name: { type: String, required: true, trim: true },
     slug: { type: String, required: true, unique: true, lowercase: true, index: true },
+    brand: { type: Schema.Types.ObjectId, ref: 'Brand', index: true },
     description: { type: String, default: '' },
     image: { type: String, default: '' },
     gender: { type: String, enum: ['men', 'women'], default: 'men', index: true },
