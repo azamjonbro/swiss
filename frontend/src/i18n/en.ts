@@ -80,8 +80,8 @@ const en = {
     craft_finishing_body:
       'Brushing that runs true, polished chamfers that catch light in one clean line. Finishing is where a manufacture stops competing on specification.',
     statement: 'Time, Refined.',
-    statementAlt: 'The West End Watch Co. Sowar in steel, photographed in low light',
-    heroImageAlt: 'The West End Watch Co. Sowar with a green dial on a dark stone ground',
+    statementAlt: 'The Saint Honoré Monceau tourbillon in steel, photographed in low light',
+    heroImageAlt: 'The West End Watch Co. Sowar, its green dial and steel bracelet lit against a deep green ground',
     heroTitle: 'SwissWatch Premium',
     heroEyebrow: 'The Art of Watchmaking',
     heroSub: 'Authentic timepieces from distinguished watchmakers.',
