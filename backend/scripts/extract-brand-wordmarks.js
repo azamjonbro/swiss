@@ -37,7 +37,7 @@ async function processImage(inputPath, outputPath) {
 }
 
 async function run() {
-  await mongoose.connect(process.env.MONGODB_URI);
+  await mongoose.connect(process.env.MONGO_URI);
   console.log('Connected to DB');
 
   // Define Brand schema loosely to just read/update
