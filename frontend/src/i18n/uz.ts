@@ -7,6 +7,7 @@ const uz: Dictionary = {
   },
   a11y: {
     skipToContent: 'Asosiy qismga o‘tish',
+    mobileNav: 'Asosiy amallar',
   },
   header: {
     menu: 'Menyu',

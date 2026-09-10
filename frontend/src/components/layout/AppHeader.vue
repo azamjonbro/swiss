@@ -86,16 +86,21 @@ const themeMode = computed<'transparent' | 'veil' | 'light'>(() => {
         <BrandMark :size="30" />
       </RouterLink>
 
+      <!-- Every one of these is desktop-only. On a phone the same three actions
+           are the bottom bar (MobileTabBar.vue), drawn as icons within reach of
+           a thumb; leaving them here as well would be two sets of the same
+           controls, and the labels are what squeezed the wordmark in the first
+           place. The preferences live in the menu panel at this width. -->
       <div class="sw-header__actions">
         <PreferencesBar class="sw-header__action--hide-mobile" />
         <span class="sw-header__action-divider sw-header__action--hide-mobile" aria-hidden="true" />
-        <button class="sw-header__action" type="button" @click="ui.openSearch">
+        <button class="sw-header__action sw-header__action--hide-mobile" type="button" @click="ui.openSearch">
           {{ locale.t('header.search') }}
         </button>
         <RouterLink class="sw-header__action sw-header__action--hide-mobile" :to="accountTo" @click="ui.closeMenu">
           {{ locale.t('header.account') }}
         </RouterLink>
-        <button class="sw-header__action sw-header__action--cart" type="button" @click="ui.openCart">
+        <button class="sw-header__action sw-header__action--cart sw-header__action--hide-mobile" type="button" @click="ui.openCart">
           {{ locale.t('header.cart') }}
           <span v-if="cart.count" class="sw-header__cart-count">{{ cart.count }}</span>
         </button>
@@ -312,18 +317,11 @@ const themeMode = computed<'transparent' | 'veil' | 'light'>(() => {
     width: 20px;
   }
 
+  /* Nothing is left in this column at this width — the actions are the bottom
+     bar now. It stays in the grid as an empty `1fr` track so the wordmark is
+     still centred against the menu button opposite it. */
   .sw-header__actions {
     gap: 12px;
-  }
-
-  /* "Search" and "Bag" are the only two actions left visible at this width
-     (everything else already hides above) — at 0.26em tracking their
-     combined width can run into the centered logo on longer locale strings
-     (e.g. Uzbek "Qidiruv"), so tracking tightens here rather than truncating
-     either label. */
-  .sw-header__action {
-    letter-spacing: 0.12em;
-    font-size: 0.6rem;
   }
 }
 
@@ -332,12 +330,11 @@ const themeMode = computed<'transparent' | 'veil' | 'light'>(() => {
     gap: 8px;
   }
 
-  /* At 320px the three-column row (menu · wordmark · actions) needs about
-     12px more than `--container-pad` leaves it. Everything else in the row is
-     already at its minimum — the labels are hidden, the tracking is tightened
-     and the gap is down to 8px — so the padding is what gives. It matters more
-     than it looks: the row's min-content width sets the layout viewport, so
-     those 12px put a horizontal scrollbar on every page of the site. */
+  /* Kept from when this row still carried two tracked labels: the row's
+     min-content width sets the layout viewport, so anything that overflows
+     here puts a horizontal scrollbar on every page of the site. There is far
+     more room now that the actions have moved to the bottom bar, but 16px is
+     the right gutter for a 320px screen on its own merits. */
   .sw-header__inner {
     padding-inline: 16px;
   }

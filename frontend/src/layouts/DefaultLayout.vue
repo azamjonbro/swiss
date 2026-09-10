@@ -10,6 +10,7 @@ import LuxuryMenu from '@/components/layout/LuxuryMenu.vue';
 import SearchOverlay from '@/components/search/SearchOverlay.vue';
 import InquiryModal from '@/components/shared/InquiryModal.vue';
 import CartDrawer from '@/components/shared/CartDrawer.vue';
+import MobileTabBar from '@/components/layout/MobileTabBar.vue';
 
 const route = useRoute();
 const locale = useLocaleStore();
@@ -51,6 +52,7 @@ watch(
     <!-- The authentication screens are full-viewport compositions; the footer
          would break their frame, so those routes opt out of it. -->
     <AppFooter v-if="!route.meta.hideFooter" />
+    <MobileTabBar />
   </div>
 </template>
 
@@ -67,6 +69,16 @@ watch(
   min-height: 100svh;
   display: flex;
   flex-direction: column;
+}
+
+/* The bottom bar is fixed, so it takes no space in the flow and would sit on
+   top of the last row of the footer. Reserved here, on the shell, rather than
+   on the footer: the auth routes drop the footer entirely (`hideFooter`) and
+   their own last control would otherwise end up underneath it. */
+@media (max-width: 640px) {
+  .sw-app-shell {
+    padding-bottom: calc(var(--tabbar-height) + env(safe-area-inset-bottom, 0px));
+  }
 }
 
 .sw-app-main {

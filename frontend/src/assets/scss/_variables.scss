@@ -67,6 +67,11 @@
   --container-pad: clamp(24px, 5vw, 72px);
   --container-max: 1680px;
   --header-height: 84px;
+  // The phone-only bottom bar (MobileTabBar.vue). Declared here rather than in
+  // the component because the app shell has to reserve the same number at the
+  // foot of the document — a fixed bar the page does not know about covers the
+  // last row of whatever it is sitting on.
+  --tabbar-height: 58px;
 
   // ---- Editorial rhythm ----
   // Sections breathe on one shared scale so the whole page shares a cadence.

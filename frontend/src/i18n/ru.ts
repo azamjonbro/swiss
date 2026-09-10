@@ -7,6 +7,7 @@ const ru: Dictionary = {
   },
   a11y: {
     skipToContent: 'К основному содержанию',
+    mobileNav: 'Основные действия',
   },
   header: {
     menu: 'Меню',

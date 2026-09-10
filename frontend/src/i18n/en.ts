@@ -1,6 +1,7 @@
 const en = {
   a11y: {
     skipToContent: 'Skip to content',
+    mobileNav: 'Primary actions',
   },
   common: {
     under: 'Under',
