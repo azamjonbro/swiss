@@ -70,12 +70,16 @@ import { trackGoal } from '@/utils/analytics';
   border-bottom: 1px solid rgba(255, 255, 255, 0.14);
 }
 
+/* The same lockup as the header's, at footer scale — so it takes the same
+   wordmark face. See --font-wordmark: it is subset to this exact string. */
 .sw-footer__logo {
   display: inline-flex;
   align-items: center;
   gap: 14px;
-  font-family: var(--font-serif);
+  font-family: var(--font-wordmark);
+  font-weight: 500;
   font-size: 1.75rem;
+  letter-spacing: 0.005em;
   color: var(--sw-white);
 }
 

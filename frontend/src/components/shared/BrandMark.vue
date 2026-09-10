@@ -50,6 +50,10 @@ withDefaults(defineProps<Props>(), { size: 30, wordmark: true });
       mium" the next. Splitting the name is what makes the break point the
       design's decision rather than the text renderer's; the accessible name is
       the same two words either way.
+
+      The casing here is literal and load-bearing: the wordmark face is subset
+      to the letters of this exact string (see index.html), so these two words
+      are the only text on the site that may be set in it.
     -->
     <span v-if="wordmark" class="sw-mark__word">
       <span class="sw-mark__word-line">SwissWatch</span>
@@ -70,17 +74,22 @@ withDefaults(defineProps<Props>(), { size: 30, wordmark: true });
   flex: none;
 }
 
+/* The wordmark is the one place on the site that does not use DM Sans: these
+   are the letterforms of the boutique's own logo — a high-contrast Didone set
+   in mixed case, not tracked capitals. Set as capitals it read as a generic
+   luxury title and threw away the thing that identifies it, so the casing
+   here is part of the mark, not a default.
+
+   It is also *narrower* than what it replaced: "SWISSWATCH" at 0.3em tracking
+   ran about 155px, the same word in mixed case runs about 85px, which is what
+   buys back the room the two-line mobile lockup below was invented to find. */
 .sw-mark__word {
-  font-family: var(--font-serif);
-  font-weight: 400;
-  font-size: 1.0625rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
+  font-family: var(--font-wordmark);
+  font-weight: 500;
+  font-size: 1.375rem;
+  letter-spacing: 0.005em;
   line-height: 1;
   white-space: nowrap;
-  /* The tracking adds trailing space after the final letter; pull it back so
-     the lockup stays optically centred. */
-  margin-right: -0.3em;
 }
 
 /* One line on a wide header: the two spans sit inline, and this is the space
@@ -113,15 +122,13 @@ withDefaults(defineProps<Props>(), { size: 30, wordmark: true });
   }
 
   .sw-mark__word {
-    /* Stacked, but still the row's second column — the glyph stays alongside. */
+    /* Stacked, but still the row's second column — the glyph stays alongside.
+       Mixed case leaves enough room that this no longer has to shrink to the
+       7px smear it once did: 0.9375rem is a wordmark a person can read. */
     display: flex;
     flex-direction: column;
-    font-size: 0.5625rem;
-    letter-spacing: 0.2em;
-    line-height: 1.35;
-    /* Matches the reduced tracking above, so the trailing letter-space is
-       trimmed by exactly what it grew. */
-    margin-right: -0.2em;
+    font-size: 0.9375rem;
+    line-height: 1.16;
   }
 
   /* The inline space belongs to the one-line lockup only; between two flex
@@ -145,9 +152,7 @@ withDefaults(defineProps<Props>(), { size: 30, wordmark: true });
   }
 
   .sw-mark__word {
-    font-size: 0.5rem;
-    letter-spacing: 0.14em;
-    margin-right: -0.14em;
+    font-size: 0.875rem;
   }
 }
 

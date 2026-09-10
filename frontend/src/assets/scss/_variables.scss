@@ -56,6 +56,12 @@
   // need touching if that ever changes again.
   --font-serif: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  // The house wordmark only — the letterforms of the boutique's own logo,
+  // matched to the shopfront artwork (a high-contrast Didone). Declared in
+  // index.html as 'SW Wordmark' and subset to that one string, so it is not a
+  // text face and must not be used as one: anything set in it beyond
+  // "SwissWatch Premium" comes out as tofu. Body copy stays on --font-sans.
+  --font-wordmark: 'SW Wordmark', 'Playfair Display', Georgia, 'Times New Roman', serif;
 
   // ---- Layout ----
   --container-pad: clamp(24px, 5vw, 72px);

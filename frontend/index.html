@@ -55,6 +55,17 @@
       crossorigin
     />
 
+    <!-- The wordmark face. Preloaded next to the text face because it sets the
+         logo in the header, which is above the fold on every route; at 5.6 KB
+         it is cheaper than the reflow that follows swapping it in late. -->
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/assets/fonts/playfair-display-v40-wordmark.woff2"
+      crossorigin
+    />
+
     <!-- The hero photograph is the LCP element on the homepage; start it in
          parallel with the module graph instead of after it. -->
     <!-- The candidate list has to match the one SmartImage builds from
@@ -112,6 +123,33 @@
           U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
           U+FEFF, U+FFFD;
       }
+      /* The wordmark, and nothing else.
+         
+         Playfair Display, cut down to the letters of "SwissWatch Premium" in
+         both cases — 5.6 KB against the 38 KB latin subset, because a logo
+         face has exactly one string to set. That is also its constraint:
+         change the wordmark's text and this file has to be rebuilt or the new
+         letters come out as tofu. It is rebuilt with
+
+           python3 -m fontTools.subset <playfair latin woff2> \
+             --text="SwissWatch Premium SWISSWATCH PREMIUM" \
+             --layout-features=kern --flavor=woff2 \
+             --output-file=public/assets/fonts/playfair-display-v40-wordmark.woff2
+
+         `font-display: block` rather than `swap`: everywhere else a fallback
+         paragraph that reflows is better than invisible text, but the logo is
+         a piece of artwork with a fixed footprint — showing it in DM Sans for
+         a moment and then swapping is the one place the flash actually reads
+         as a defect. The block period is capped at ~3s by the browser and the
+         file is preloaded above, so in practice it paints on the first frame. */
+      @font-face {
+        font-family: 'SW Wordmark';
+        font-style: normal;
+        font-weight: 400 700;
+        font-display: block;
+        src: url('/assets/fonts/playfair-display-v40-wordmark.woff2') format('woff2');
+      }
+
       @font-face {
         font-family: 'DM Sans';
         font-style: italic;
