@@ -27,6 +27,21 @@ export const STORES_PATH = '/stores';
 export const SITE_NAME = 'SwissWatch Premium';
 
 /**
+ * The telephone numbers the boutique publishes, in the order they are listed.
+ *
+ * Static on purpose. These used to be read from VITE_CONTACT_PHONE, which put
+ * the live numbers in the Vercel dashboard rather than in the repository:
+ * editing `.env` here changed nothing on the deployed site, and the site went
+ * on publishing a number the business had already replaced. A number customers
+ * call is not deployment configuration — a change to it belongs in a commit.
+ *
+ * The first entry is the line the business answers first. It becomes the single
+ * `telephone` on the Organization node, because schema.org allows only one;
+ * every entry is listed in the footer, on /contact, and as a contactPoint.
+ */
+export const CONTACT_PHONES = ['+998 88 500 70 00', '+998 88 400 70 00'];
+
+/**
  * Canonical production origin.
  *
  * `www` is the host Vercel actually serves: the bare domain answers every
@@ -132,12 +147,13 @@ export function resolveSiteUrl(raw, { strict = false, label = 'VITE_SITE_URL' } 
  * Builds the `site` record every metadata builder reads, so the running app,
  * the prerenderer and the 404 function cannot disagree about who the site is.
  *
- * `contactEmail` and `contactPhone` are optional on purpose: the business may
- * not have published either yet. Absent means absent — the UI renders nothing
- * in their place and the JSON-LD omits the field, rather than shipping a
- * placeholder that a crawler would read as fact.
+ * `contactEmail` is optional on purpose: the business may not have published one
+ * yet. Absent means absent — the UI renders nothing in its place and the JSON-LD
+ * omits the field, rather than shipping a placeholder that a crawler would read
+ * as fact. The telephone numbers are not passed in at all; they are static, so
+ * every caller gets the same CONTACT_PHONES.
  */
-export function createSite({ url, name, contactEmail, contactPhone, showPrices } = {}) {
+export function createSite({ url, name, contactEmail, showPrices } = {}) {
   const site = {
     url: String(url ?? DEFAULT_SITE_URL).replace(/\/+$/, ''),
     name: String(name || SITE_NAME),
@@ -158,15 +174,11 @@ export function createSite({ url, name, contactEmail, contactPhone, showPrices }
   const email = String(contactEmail ?? '').trim();
   if (email) site.contactEmail = email;
 
-  // The boutique publishes more than one number. `contactPhone` therefore
-  // takes a list — comma- or newline-separated — and both shapes come out of
-  // it: `contactPhones` is every number, for the UI, and `contactPhone` is the
-  // first, because schema.org's `telephone` is a single value and the first
-  // entry is the one the business answers on.
-  const phones = String(contactPhone ?? '')
-    .split(/[,\n]/)
-    .map((entry) => entry.trim())
-    .filter(Boolean);
+  // The boutique publishes more than one number, so both shapes come out of the
+  // one static list: `contactPhones` is every number, for the UI, and
+  // `contactPhone` is the first, because schema.org's `telephone` is a single
+  // value and the first entry is the one the business answers on.
+  const phones = CONTACT_PHONES.map((entry) => entry.trim()).filter(Boolean);
   if (phones.length) {
     site.contactPhones = phones;
     [site.contactPhone] = phones;

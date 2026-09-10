@@ -8,9 +8,10 @@ import BrandMark from '@/components/shared/BrandMark.vue';
 const locale = useLocaleStore();
 const year = new Date().getFullYear();
 
-// Contact details come from VITE_CONTACT_EMAIL / VITE_CONTACT_PHONE and are
-// allowed to be unset. Unset renders nothing at all — a placeholder number in
-// a footer is read as a real one, by visitors and by structured-data parsers.
+// The numbers are static (CONTACT_PHONES in @/seo/schema.mjs); the email comes
+// from VITE_CONTACT_EMAIL and is allowed to be unset. Unset renders nothing at
+// all — a placeholder in a footer is read as a real one, by visitors and by
+// structured-data parsers.
 const email = site.contactEmail ?? '';
 const phones = site.contactPhones ?? [];
 import { trackGoal } from '@/utils/analytics';

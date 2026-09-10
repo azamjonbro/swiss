@@ -30,15 +30,15 @@ import { SHOW_PRICES } from '@/config/pricing';
  * or points at localhost — so by the time this runs the value is known good.
  * The lenient fallback here only ever covers `vite dev`.
  *
- * `VITE_CONTACT_EMAIL` / `VITE_CONTACT_PHONE` may legitimately be empty: the
- * business has not published either yet. `createSite` drops empty values, the
- * UI renders nothing in their place, and the JSON-LD omits the field.
+ * `VITE_CONTACT_EMAIL` may legitimately be empty: the business has not
+ * published one yet. `createSite` drops empty values, the UI renders nothing in
+ * its place, and the JSON-LD omits the field. The telephone numbers are not
+ * environment at all — they are `CONTACT_PHONES` in `@/seo/schema.mjs`.
  */
 export const site: SeoSite = createSite({
   url: resolveSiteUrl(import.meta.env.VITE_SITE_URL),
   name: import.meta.env.VITE_SITE_NAME,
   contactEmail: import.meta.env.VITE_CONTACT_EMAIL,
-  contactPhone: import.meta.env.VITE_CONTACT_PHONE,
   showPrices: SHOW_PRICES,
 });
 

@@ -9,9 +9,10 @@ import TurnstileWidget from '@/components/shared/TurnstileWidget.vue';
 
 const locale = useLocaleStore();
 
-// Empty is a legitimate state: the business has not published these yet. The
-// block disappears rather than showing a placeholder — and the Organization
-// JSON-LD omits the same fields, so the page and the markup agree.
+// The numbers are static (CONTACT_PHONES in @/seo/schema.mjs). An empty email
+// is a legitimate state: the block disappears rather than showing a placeholder
+// — and the Organization JSON-LD omits the same field, so the page and the
+// markup agree.
 const contactEmail = site.contactEmail ?? '';
 const contactPhones = site.contactPhones ?? [];
 

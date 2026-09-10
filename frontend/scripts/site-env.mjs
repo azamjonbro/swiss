@@ -54,7 +54,6 @@ export function readSiteEnv(env, { strict = false } = {}) {
       url,
       name: env.VITE_SITE_NAME || env.SITE_NAME,
       contactEmail: env.VITE_CONTACT_EMAIL,
-      contactPhone: env.VITE_CONTACT_PHONE,
       showPrices: env.VITE_SHOW_PRICES === '1',
     }),
     apiUrl: String(env.SEO_API_URL || 'https://swiss.sds-max.uz').replace(/\/+$/, ''),

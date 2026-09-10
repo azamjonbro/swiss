@@ -7,7 +7,9 @@ export interface BuildSite {
   url: string;
   name: string;
   contactEmail?: string;
+  /** First published number; `contactPhones` holds every one. Both are static. */
   contactPhone?: string;
+  contactPhones?: string[];
   defaultImage?: string;
   logo?: string;
   locale?: string;

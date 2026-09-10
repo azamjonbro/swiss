@@ -37,7 +37,6 @@ const site = createSite({
   url: resolveSiteUrl(process.env.VITE_SITE_URL || process.env.SITE_URL),
   name: process.env.VITE_SITE_NAME || process.env.SITE_NAME,
   contactEmail: process.env.VITE_CONTACT_EMAIL,
-  contactPhone: process.env.VITE_CONTACT_PHONE,
   showPrices: process.env.VITE_SHOW_PRICES === '1',
 });
 const SITE_NAME = site.name;

@@ -67,6 +67,8 @@ export type JsonLdNode = Record<string, unknown>;
 export const PRODUCT_BASE: string;
 export const STORES_PATH: string;
 export const SITE_NAME: string;
+/** The published telephone numbers, in display form — static, not configuration. */
+export const CONTACT_PHONES: readonly string[];
 export const DEFAULT_SITE_URL: string;
 export const PRODUCTION_HOST: string;
 export const TITLE_MAX: number;
@@ -79,8 +81,6 @@ export interface SiteInput {
   url?: string;
   name?: string;
   contactEmail?: string;
-  /** One number, or several separated by commas or newlines. */
-  contactPhone?: string;
   showPrices?: boolean;
 }
 
