@@ -7,6 +7,7 @@ import { toBrandName, toBrandSlug, colorSwatchHex } from '@/utils/format';
 import { useUiStore } from '@/stores/ui';
 import { useLocaleStore } from '@/stores/locale';
 import { useCurrencyStore } from '@/stores/currency';
+import { SHOW_PRICES } from '@/config/pricing';
 import { useAccountStore } from '@/stores/account';
 import { useSavedStore } from '@/stores/saved';
 import { useCartStore } from '@/stores/cart';
@@ -434,7 +435,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
             class="sw-label sw-watch-detail__brand"
           >{{ brandName }}</RouterLink>{{ ' ' }}<span class="sw-watch-detail__model">{{ watchDoc.name }}</span>
         </h1>
-        <p class="sw-watch-detail__price">{{ currency.format(watchDoc.price) }}</p>
+        <p v-if="SHOW_PRICES" class="sw-watch-detail__price">{{ currency.format(watchDoc.price) }}</p>
         <p class="sw-body-lg sw-watch-detail__desc">{{ tidyDescription(watchDoc.shortDescription) }}</p>
 
         <div v-if="variants.length > 1" class="sw-watch-detail__colors">
@@ -470,7 +471,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
                   />
                 </span>
                 <span class="sw-watch-detail__colorway-label">{{ c.label }}</span>
-                <span class="sw-watch-detail__colorway-price">{{ currency.format(c.price) }}</span>
+                <span v-if="SHOW_PRICES" class="sw-watch-detail__colorway-price">{{ currency.format(c.price) }}</span>
               </RouterLink>
             </li>
           </ul>
@@ -526,7 +527,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
               </RouterLink>
               <div class="sw-watch-detail__pair-body">
                 <RouterLink :to="productPath(accessory.slug)" class="sw-watch-detail__pair-name">{{ accessory.name }}</RouterLink>
-                <span class="sw-watch-detail__pair-price">{{ currency.format(accessory.price) }}</span>
+                <span v-if="SHOW_PRICES" class="sw-watch-detail__pair-price">{{ currency.format(accessory.price) }}</span>
               </div>
               <button class="sw-watch-detail__pair-add" type="button" @click="addAccessoryToCart(accessory)">
                 {{ locale.t('watchDetail.add') }}

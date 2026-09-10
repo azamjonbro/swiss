@@ -4,6 +4,7 @@ import { useUiStore } from '@/stores/ui';
 import { useCartStore } from '@/stores/cart';
 import { useLocaleStore } from '@/stores/locale';
 import { useCurrencyStore } from '@/stores/currency';
+import { SHOW_PRICES } from '@/config/pricing';
 import { useLockBodyScroll } from '@/composables/useLockBodyScroll';
 import SmartImage from '@/components/shared/SmartImage.vue';
 import { trackGoal } from '@/utils/analytics';
@@ -58,7 +59,7 @@ function checkout() {
                     <span>{{ item.quantity }}</span>
                     <button type="button" :aria-label="'+'" @click="cart.setQuantity(item.key, item.quantity + 1)">&plus;</button>
                   </div>
-                  <span class="sw-cart__item-price">{{ currency.format(item.price * item.quantity) }}</span>
+                  <span v-if="SHOW_PRICES" class="sw-cart__item-price">{{ currency.format(item.price * item.quantity) }}</span>
                 </div>
                 <button class="sw-cart__remove" type="button" @click="cart.remove(item.key)">
                   {{ locale.t('cart.remove') }}
@@ -68,7 +69,9 @@ function checkout() {
           </ul>
 
           <div class="sw-cart__foot">
-            <div class="sw-cart__subtotal">
+            <!-- The whole row, not just the figure: a "Subtotal" label with
+                 nothing after it is worse than no row at all. -->
+            <div v-if="SHOW_PRICES" class="sw-cart__subtotal">
               <span class="sw-label">{{ locale.t('cart.subtotal') }}</span>
               <span class="sw-cart__subtotal-value">{{ currency.format(cart.subtotal) }}</span>
             </div>

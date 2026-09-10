@@ -3,6 +3,7 @@ import { ref, computed, watch } from 'vue';
 import { useUiStore } from '@/stores/ui';
 import { useLocaleStore } from '@/stores/locale';
 import { useCurrencyStore } from '@/stores/currency';
+import { SHOW_PRICES } from '@/config/pricing';
 import { useLockBodyScroll } from '@/composables/useLockBodyScroll';
 import { fetchWatches } from '@/services/watches';
 import type { Watch } from '@/types/models';
@@ -169,7 +170,7 @@ function close() {
               </div>
               <span class="sw-search__tile-brand">{{ toBrandName(watch.brand) }}</span>
               <span class="sw-search__tile-name">{{ watch.name }}</span>
-              <span class="sw-search__tile-price">{{ currency.format(watch.price) }}</span>
+              <span v-if="SHOW_PRICES" class="sw-search__tile-price">{{ currency.format(watch.price) }}</span>
             </RouterLink>
           </li>
         </ul>
@@ -199,7 +200,7 @@ function close() {
               </div>
               <span class="sw-search__result-brand">{{ toBrandName(watch.brand) }}</span>
               <span class="sw-search__result-name">{{ watch.name }}</span>
-              <span class="sw-search__result-price">{{ currency.format(watch.price) }}</span>
+              <span v-if="SHOW_PRICES" class="sw-search__result-price">{{ currency.format(watch.price) }}</span>
             </RouterLink>
           </li>
         </ul>

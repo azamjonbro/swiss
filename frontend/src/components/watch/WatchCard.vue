@@ -4,6 +4,7 @@ import type { Watch } from '@/types/models';
 import { toBrandName, primaryImage, secondaryImage, colorSwatchHex, movementType } from '@/utils/format';
 import { modelColors, modelPriceRange } from '@/utils/modelGroup';
 import { useCurrencyStore } from '@/stores/currency';
+import { SHOW_PRICES } from '@/config/pricing';
 import { useLocaleStore } from '@/stores/locale';
 import SmartImage from '@/components/shared/SmartImage.vue';
 import { productPath, watchImageAlt } from '@/seo/schema.mjs';
@@ -117,7 +118,7 @@ const hiddenColorCount = computed(() => Math.max(0, colors.value.length - SWATCH
       <span class="sw-watch-card__brand">{{ brandName }}</span>
       <h3 class="sw-watch-card__name">{{ watch.name }}</h3>
       <span v-if="movementLabel" class="sw-watch-card__type">{{ movementLabel }}</span>
-      <span class="sw-watch-card__price">{{ priceLabel }}</span>
+      <span v-if="SHOW_PRICES" class="sw-watch-card__price">{{ priceLabel }}</span>
       <span v-if="availabilityLabel" class="sw-watch-card__availability">{{ availabilityLabel }}</span>
 
       <span
