@@ -81,13 +81,15 @@ withDefaults(defineProps<Props>(), { size: 30, wordmark: true });
 .sw-mark__word {
   font-family: var(--font-wordmark);
   font-weight: 600;
-  /* One line at every width, and as large as the row can carry. The floor is
-     what a phone leaves once the glyph and the gutters are paid for; the
-     ceiling is the desktop lockup. Between them it tracks the viewport, so the
-     tablet widths — where the actions column is at its widest and the centre
-     column at its narrowest — get a size that fits rather than one that
-     collides with "Account" and "Cart". */
-  font-size: clamp(1.35rem, 2.2vw, 1.95rem);
+  /* One line at every width, and as large as the row can carry.
+
+     The ceiling is the desktop lockup. The floor is set by the *tablet*, not
+     the phone: between 641px and about 1024px the header still carries the
+     full actions column (preferences · search · account · cart) and the centre
+     column is the narrowest it ever gets — measured at 900px, 1.35rem left the
+     wordmark touching "Cart" with nothing between them. 1.05rem clears it by
+     ~40px. Phones get the larger size back below, where the actions are gone. */
+  font-size: clamp(1.05rem, 1.9vw, 1.95rem);
   letter-spacing: 0.005em;
   line-height: 1;
   white-space: nowrap;

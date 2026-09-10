@@ -11,6 +11,10 @@ const locale = useLocaleStore();
 // The type sits over the left third, so the case is set right of centre
 // and still survives a phone's centre crop.
 const heroImage = '/images/west-end-sowar.jpg';
+// The phone gets a portrait plate of the same watch rather than a slice of the
+// landscape one — see the `mobileSrc` note in SmartImage, and
+// backend/scripts/compose-hero-mobile.js for how it is composed.
+const heroImageMobile = '/images/west-end-sowar-mobile.jpg';
 
 const mediaEl = ref<HTMLElement | null>(null);
 const frameEl = ref<HTMLElement | null>(null);
@@ -112,7 +116,7 @@ function handleDiscover() {
   <section class="sw-hero">
     <div ref="mediaEl" class="sw-hero__media">
       <div ref="frameEl" class="sw-hero__frame">
-        <SmartImage :src="heroImage" :alt="locale.t('home.heroImageAlt')" eager />
+        <SmartImage :src="heroImage" :mobile-src="heroImageMobile" :alt="locale.t('home.heroImageAlt')" eager />
       </div>
       <!-- Three separate grades rather than one heavy scrim: the left edge is
            weighted for the type, the base carries the CTA, and a soft vignette

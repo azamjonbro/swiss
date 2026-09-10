@@ -19,6 +19,20 @@ interface Props {
    * gives this image. Ignored for sources that have no variants.
    */
   sizes?: string;
+  /**
+   * A second rendition for phones — art direction, not a width variant.
+   *
+   * The hero is the case this exists for: a 16:9 plate cover-fitted into a
+   * portrait phone frame shows a ~390px slice of itself blown up across ~1200
+   * device pixels, which is a 3x upscale however many width variants the file
+   * has, because `srcset` picks by *layout width* and knows nothing about the
+   * crop. A portrait rendition of the same subject is the only thing that
+   * fixes it. Listed in the manifest like any other source, so it gets its own
+   * width variants; ignored when absent, which is every other image.
+   */
+  mobileSrc?: string;
+  /** The width below which `mobileSrc` is used. */
+  mobileMedia?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -28,6 +42,8 @@ const props = withDefaults(defineProps<Props>(), {
   eager: false,
   preferTrimmed: false,
   sizes: undefined,
+  mobileSrc: undefined,
+  mobileMedia: '(max-width: 640px)',
 });
 
 const loaded = ref(false);
@@ -125,8 +141,7 @@ const displaySrc = computed(() => candidates.value[candidateIndex.value] ?? '');
  */
 const UPLOAD_WIDTHS = [240, 480, 720, 960, 1440];
 
-const srcset = computed(() => {
-  const src = displaySrc.value;
+function buildSrcset(src: string): string | undefined {
   if (!src) return undefined;
 
   if (src.includes('/uploads/images/')) {
@@ -138,6 +153,23 @@ const srcset = computed(() => {
   const stem = src.replace(/\.webp$/, '');
   const max = Math.max(...widths);
   return widths.map((w) => (w === max ? `${src} ${w}w` : `${stem}-${w}.webp ${w}w`)).join(', ');
+}
+
+const srcset = computed(() => buildSrcset(displaySrc.value));
+
+/**
+ * The phone rendition, as a `<source>` ahead of the `<img>`.
+ *
+ * `.webp` by name for the same reason the candidate chain asks for it: every
+ * file under public/images ships one. There is no fallback chain here — a
+ * `<source>` that 404s gives a broken image rather than falling through — so
+ * this is emitted only for a source the manifest actually lists, which is the
+ * build's own record of what it generated.
+ */
+const mobileSrcset = computed(() => {
+  const src = props.mobileSrc ?? '';
+  if (!src) return undefined;
+  return buildSrcset(resolveMediaUrl(src.replace(/\.(jpe?g|png)$/i, '.webp')));
 });
 
 /**
@@ -231,22 +263,26 @@ function onError() {
       decoding="async"
       @load="lqipReady = true"
     />
-    <img
-      v-if="displaySrc && !errored"
-      :key="displaySrc"
-      :src="displaySrc"
-      :srcset="srcset"
-      :sizes="srcset ? (sizes ?? '100vw') : undefined"
-      :alt="alt"
-      :loading="eager ? 'eager' : 'lazy'"
-      :decoding="eager ? 'sync' : 'async'"
-      :fetchpriority="eager ? 'high' : 'auto'"
-      class="sw-smart-image__img"
-      :class="{ 'is-loaded': loaded }"
-      :style="{ objectFit }"
-      @load="onLoad"
-      @error="onError"
-    />
+    <!-- `display: contents` on the picture, so adding art direction changes
+         what is fetched and nothing about the layout the img already had. -->
+    <picture v-if="displaySrc && !errored" class="sw-smart-image__picture">
+      <source v-if="mobileSrcset" :media="mobileMedia" :srcset="mobileSrcset" :sizes="sizes ?? '100vw'" type="image/webp" />
+      <img
+        :key="displaySrc"
+        :src="displaySrc"
+        :srcset="srcset"
+        :sizes="srcset ? (sizes ?? '100vw') : undefined"
+        :alt="alt"
+        :loading="eager ? 'eager' : 'lazy'"
+        :decoding="eager ? 'sync' : 'async'"
+        :fetchpriority="eager ? 'high' : 'auto'"
+        class="sw-smart-image__img"
+        :class="{ 'is-loaded': loaded }"
+        :style="{ objectFit }"
+        @load="onLoad"
+        @error="onError"
+      />
+    </picture>
     <div v-else class="sw-smart-image__fallback" aria-hidden="true" />
   </div>
 </template>
@@ -258,6 +294,10 @@ function onError() {
   width: 100%;
   height: 100%;
   background: var(--surface-media);
+}
+
+.sw-smart-image__picture {
+  display: contents;
 }
 
 .sw-smart-image__placeholder {

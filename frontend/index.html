@@ -11,7 +11,10 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- `viewport-fit=cover` is what makes env(safe-area-inset-*) report real
+         numbers on an iPhone; without it they are all 0 and the padding the
+         tab bar sets for the home indicator quietly does nothing. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <!-- The settled page, not the intro panel that briefly covers it: light is
          the default theme (src/stores/theme.ts), so this is --bg. -->
     <meta name="theme-color" content="#fdfcfa" />
@@ -79,11 +82,27 @@
          high priority for an image that never paints, and the one that does
          paint left to be discovered by the parser. Change the hero, change
          this. -->
+    <!-- Two preloads, one per rendition, each behind the same media query the
+         page uses: a phone must not spend its first connection on the
+         landscape plate it will never paint, and a desktop must not fetch the
+         portrait one. `media` on a preload is honoured — the non-matching link
+         costs nothing. -->
     <link
       rel="preload"
       as="image"
+      media="(min-width: 641px)"
       href="/images/west-end-sowar.webp"
       imagesrcset="/images/west-end-sowar-480.webp 480w, /images/west-end-sowar-960.webp 960w, /images/west-end-sowar-1440.webp 1440w, /images/west-end-sowar-1920.webp 1920w, /images/west-end-sowar.webp 2560w"
+      imagesizes="100vw"
+      type="image/webp"
+      fetchpriority="high"
+    />
+    <link
+      rel="preload"
+      as="image"
+      media="(max-width: 640px)"
+      href="/images/west-end-sowar-mobile.webp"
+      imagesrcset="/images/west-end-sowar-mobile-480.webp 480w, /images/west-end-sowar-mobile-960.webp 960w, /images/west-end-sowar-mobile.webp 1440w"
       imagesizes="100vw"
       type="image/webp"
       fetchpriority="high"
