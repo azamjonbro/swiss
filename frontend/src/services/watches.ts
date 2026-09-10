@@ -30,6 +30,17 @@ export async function fetchWatches(query: WatchQuery = {}): Promise<Paginated<Wa
   return data;
 }
 
+/**
+ * The saved list, fetched by id. Rows come back in the order asked for, and a
+ * product that has since been withdrawn is simply missing from the response —
+ * see `listWatchesByIds` on the server.
+ */
+export async function fetchWatchesByIds(ids: string[]): Promise<Watch[]> {
+  if (!ids.length) return [];
+  const { data } = await api.get<Paginated<Watch>>('/watches', { params: { ids: ids.join(',') } });
+  return data.items ?? [];
+}
+
 export async function fetchWatchBySlug(slug: string): Promise<Watch> {
   const { data } = await api.get<Watch>(`/watches/${slug}`);
   return data;

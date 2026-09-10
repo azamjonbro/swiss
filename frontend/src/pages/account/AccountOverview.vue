@@ -66,8 +66,8 @@ const memberSince = computed(() => formatDate(account.user?.createdAt, locale.la
         <span class="sw-detail-row__label">{{ locale.t('account.navOrders') }}</span>
         <span class="sw-detail-row__value">{{ orderCount }}</span>
       </RouterLink>
-      <RouterLink class="sw-detail-row sw-account__link-row" to="/account/saved">
-        <span class="sw-detail-row__label">{{ locale.t('account.navSaved') }}</span>
+      <RouterLink class="sw-detail-row sw-account__link-row" to="/saved">
+        <span class="sw-detail-row__label">{{ locale.t('saved.nav') }}</span>
         <span class="sw-detail-row__value">{{ saved.count }}</span>
       </RouterLink>
     </div>

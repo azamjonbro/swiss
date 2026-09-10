@@ -7,6 +7,7 @@ import { useCurrencyStore, type CurrencyCode } from '@/stores/currency';
 import { SHOW_PRICES } from '@/config/pricing';
 import { useAccountStore } from '@/stores/account';
 import { useCartStore } from '@/stores/cart';
+import { useSavedStore } from '@/stores/saved';
 import { useLockBodyScroll } from '@/composables/useLockBodyScroll';
 import { SUPPORTED_LANGS, LANG_LABELS, type Lang } from '@/i18n';
 import ThemeIcon from '@/components/shared/ThemeIcon.vue';
@@ -22,6 +23,7 @@ const theme = useThemeStore();
 const currency = useCurrencyStore();
 const account = useAccountStore();
 const cart = useCartStore();
+const saved = useSavedStore();
 useLockBodyScroll(computed(() => ui.isMenuOpen));
 
 const links = computed(() => [
@@ -95,6 +97,15 @@ function setCurrency(value: string) {
             <button class="sw-body sw-menu__social" type="button" @click="ui.openCart">
               {{ cart.count ? locale.t('menu.cartCount').replace('{count}', String(cart.count)) : locale.t('menu.cartEmpty') }}
             </button>
+          </div>
+          <!-- The wishlist is a route, so unlike the two above it is reachable
+               from the header as well — but only above 1024px, where the row
+               has the width for it. This is where every other size finds it. -->
+          <div class="sw-menu__contact">
+            <span class="sw-eyebrow">{{ locale.t('saved.nav') }}</span>
+            <RouterLink class="sw-body sw-menu__social" to="/saved" @click="ui.closeMenu">
+              {{ saved.count ? locale.t('menu.savedCount').replace('{count}', String(saved.count)) : locale.t('menu.savedEmpty') }}
+            </RouterLink>
           </div>
           <div class="sw-menu__contact">
             <span class="sw-eyebrow">{{ locale.t('menu.visit') }}</span>

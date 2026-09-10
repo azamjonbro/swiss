@@ -475,6 +475,16 @@ export function staticSeo(key, site) {
       description: `Speak with a ${site.name} specialist in Tashkent about acquisitions, consignments and general enquiries.`,
       canonical: '/contact',
     },
+    // One visitor's own wishlist. It sits outside /account on purpose —
+    // saving a piece has never required an account — but there is still
+    // nothing here for an index to hold on to.
+    saved: {
+      heading: 'Saved',
+      title: pageTitle('Saved', site),
+      description: `Timepieces you have saved at ${site.name}.`,
+      canonical: '/saved',
+      robots: 'noindex, follow',
+    },
     'not-found': {
       title: pageTitle('Page Not Found', site),
       description: 'The page you are looking for no longer exists.',
@@ -486,7 +496,6 @@ export function staticSeo(key, site) {
   const accountPages = {
     account: ['Account', `Your ${site.name} account.`, '/account'],
     'account-orders': ['Orders', `Your ${site.name} acquisition requests.`, '/account/orders'],
-    'account-saved': ['Saved', `Timepieces you have saved at ${site.name}.`, '/account/saved'],
     'account-settings': ['Settings', `Your ${site.name} account settings.`, '/account/settings'],
     'account-login': ['Sign In', `Sign in to your ${site.name} account.`, '/account/login'],
     'account-register': ['Create Account', `Create a ${site.name} account.`, '/account/register'],

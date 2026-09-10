@@ -4,11 +4,13 @@ import { useUiStore } from '@/stores/ui';
 import { useLocaleStore } from '@/stores/locale';
 import { useAccountStore } from '@/stores/account';
 import { useCartStore } from '@/stores/cart';
+import { useSavedStore } from '@/stores/saved';
 
 const ui = useUiStore();
 const locale = useLocaleStore();
 const account = useAccountStore();
 const cart = useCartStore();
+const saved = useSavedStore();
 
 // Same rule as the header's: /account is the customer's own account, and
 // signed out it bounces to the customer sign-in screen via the router guard.
@@ -55,6 +57,14 @@ const hidden = computed(() => ui.isMenuOpen || ui.isSearchOpen || ui.isCartOpen 
         <path d="M15.6 15.6 20 20" />
       </svg>
     </button>
+
+    <!-- Filled once something is in it: on a bar of five outline glyphs, the
+         one solid heart is the only state the row carries. -->
+    <RouterLink class="sw-tabbar__item" to="/saved" :aria-label="locale.t('saved.nav')" @click="ui.closeMenu">
+      <svg viewBox="0 0 24 24" :fill="saved.count ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78Z" />
+      </svg>
+    </RouterLink>
 
     <RouterLink class="sw-tabbar__item" :to="accountTo" :aria-label="locale.t('header.account')" @click="ui.closeMenu">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true">
@@ -147,8 +157,8 @@ const hidden = computed(() => ui.isMenuOpen || ui.isSearchOpen || ui.isCartOpen 
   }
 
   .sw-tabbar__item svg {
-    width: 23px;
-    height: 23px;
+    width: 22px;
+    height: 22px;
   }
 
   /* `router-link-exact-active`, not `router-link-active`: "/" is a prefix of

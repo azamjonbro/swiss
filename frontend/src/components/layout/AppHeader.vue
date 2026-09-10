@@ -5,6 +5,7 @@ import { useUiStore } from '@/stores/ui';
 import { useLocaleStore } from '@/stores/locale';
 import { useAccountStore } from '@/stores/account';
 import { useCartStore } from '@/stores/cart';
+import { useSavedStore } from '@/stores/saved';
 import PreferencesBar from '@/components/shared/PreferencesBar.vue';
 import BrandMark from '@/components/shared/BrandMark.vue';
 
@@ -13,6 +14,7 @@ const ui = useUiStore();
 const locale = useLocaleStore();
 const account = useAccountStore();
 const cart = useCartStore();
+const saved = useSavedStore();
 
 // "Account" is the customer's account, never the admin panel — the admin app is
 // a separate deployment reached at its own URL and is not linked from the store.
@@ -86,9 +88,9 @@ const themeMode = computed<'transparent' | 'veil' | 'light'>(() => {
         <BrandMark :size="30" />
       </RouterLink>
 
-      <!-- Every one of these is desktop-only. On a phone the same three actions
-           are the bottom bar (MobileTabBar.vue), drawn as icons within reach of
-           a thumb; leaving them here as well would be two sets of the same
+      <!-- Every one of these is desktop-only. On a phone the same actions are
+           the bottom bar (MobileTabBar.vue), drawn as icons within reach of a
+           thumb; leaving them here as well would be two sets of the same
            controls, and the labels are what squeezed the wordmark in the first
            place. The preferences live in the menu panel at this width. -->
       <div class="sw-header__actions">
@@ -97,6 +99,22 @@ const themeMode = computed<'transparent' | 'veil' | 'light'>(() => {
         <button class="sw-header__action sw-header__action--hide-mobile" type="button" @click="ui.openSearch">
           {{ locale.t('header.search') }}
         </button>
+        <!-- A mark rather than a word, and dropped below 1024px with the
+             preferences: the row is already exactly full at that width (see
+             the media query in the styles), and the menu panel carries the
+             same link at every size. -->
+        <RouterLink
+          class="sw-header__action sw-header__action--saved sw-header__action--hide-mobile"
+          to="/saved"
+          :aria-label="locale.t('saved.nav')"
+          :title="locale.t('saved.nav')"
+          @click="ui.closeMenu"
+        >
+          <svg viewBox="0 0 24 24" :fill="saved.count ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78Z" />
+          </svg>
+          <span v-if="saved.count" class="sw-header__saved-count">{{ saved.count }}</span>
+        </RouterLink>
         <RouterLink class="sw-header__action sw-header__action--hide-mobile" :to="accountTo" @click="ui.closeMenu">
           {{ locale.t('header.account') }}
         </RouterLink>
@@ -299,6 +317,22 @@ const themeMode = computed<'transparent' | 'veil' | 'light'>(() => {
   letter-spacing: normal;
 }
 
+.sw-header__action--saved {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.sw-header__action--saved svg {
+  width: 17px;
+  height: 17px;
+}
+
+.sw-header__saved-count {
+  font-size: 0.6rem;
+  letter-spacing: normal;
+}
+
 /* Between the phone and the laptop the row is exactly full: measured at 900px
    and 768px the wordmark's right edge met the first action with nothing
    between them. The preferences are what gives — they are a duplicate of the
@@ -306,6 +340,7 @@ const themeMode = computed<'transparent' | 'veil' | 'light'>(() => {
    dropping them here costs a visitor nothing and buys the lockup ~120px. */
 @media (max-width: 1024px) {
   .sw-header__actions :deep(.sw-prefs),
+  .sw-header__action--saved,
   .sw-header__action-divider {
     display: none;
   }

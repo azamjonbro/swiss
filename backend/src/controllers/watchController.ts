@@ -41,8 +41,55 @@ function localizeWatch(watch: unknown, lang: Lang): Record<string, unknown> {
 
 // ---------- Public ----------
 
+/**
+ * How many ids one saved-list request may ask for. The wishlist store caps
+ * itself well below this; the ceiling is here so a hand-written query cannot
+ * turn the endpoint into an unbounded fetch.
+ */
+const MAX_ID_LOOKUP = 200;
+
+/**
+ * `?ids=a,b,c` — the saved list, which is addressed by id rather than by
+ * facet. The visitor picked these exact documents, so neither the filters nor
+ * the accessory exclusion apply, and the rows come back in the order asked
+ * for (`$in` does not preserve it) so the page can render without re-sorting.
+ *
+ * A product that has since been deactivated or deleted is simply absent; the
+ * caller prunes it from its own list rather than showing a hole.
+ */
+async function listWatchesByIds(raw: string, lang: Lang, res: Response) {
+  const requested = raw
+    .split(',')
+    .map((id) => id.trim())
+    .filter((id) => Types.ObjectId.isValid(id))
+    .slice(0, MAX_ID_LOOKUP);
+
+  // An empty or entirely invalid list means "nothing", never "everything".
+  if (!requested.length) {
+    return res.json({ items: [], total: 0, page: 1, pageSize: 0, pages: 0 });
+  }
+
+  const found = await Watch.find({ isActive: true, _id: { $in: requested } })
+    .populate('brand', 'name slug logo translations')
+    .populate('category', 'name slug translations');
+
+  const byId = new Map(found.map((item) => [String(item._id), item]));
+  const items = requested.map((id) => byId.get(id)).filter(Boolean);
+
+  return res.json({
+    items: items.map((item) => localizeWatch(item as unknown as Record<string, unknown>, lang)),
+    total: items.length,
+    page: 1,
+    pageSize: items.length,
+    pages: 1,
+  });
+}
+
 export async function listWatches(req: Request, res: Response) {
-  const { category, brand, collection, featured, isNew, q, availability, color, type, gender, limit, page } = req.query;
+  const { category, brand, collection, featured, isNew, q, availability, color, type, gender, limit, page, ids } =
+    req.query;
+
+  if (ids !== undefined) return listWatchesByIds(String(ids), resolveLang(req), res);
 
   const filter: Record<string, unknown> = { isActive: true };
   // Accessories are surfaced only via "pair it with" on a product page, never

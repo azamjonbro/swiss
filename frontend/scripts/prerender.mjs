@@ -343,8 +343,8 @@ async function main() {
   const appRoutes = [
     ['account', 'account.html'],
     ['account-orders', 'account/orders.html'],
-    ['account-saved', 'account/saved.html'],
     ['account-settings', 'account/settings.html'],
+    ['saved', 'saved.html'],
     ['account-login', 'account/login.html'],
     ['account-register', 'account/register.html'],
     ['account-forgot-password', 'account/forgot-password.html'],

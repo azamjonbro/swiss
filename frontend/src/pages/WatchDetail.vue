@@ -9,8 +9,6 @@ import { useUiStore } from '@/stores/ui';
 import { useLocaleStore } from '@/stores/locale';
 import { useCurrencyStore } from '@/stores/currency';
 import { SHOW_PRICES } from '@/config/pricing';
-import { useAccountStore } from '@/stores/account';
-import { useSavedStore } from '@/stores/saved';
 import { useCartStore } from '@/stores/cart';
 import { applyJsonLd, applySeo, site } from '@/utils/seo';
 import type { CrumbItem } from '@/seo/schema.mjs';
@@ -25,6 +23,7 @@ import {
   watchSeo,
 } from '@/seo/schema.mjs';
 import SmartImage from '@/components/shared/SmartImage.vue';
+import SaveButton from '@/components/shared/SaveButton.vue';
 import SmartVideo from '@/components/shared/SmartVideo.vue';
 import RelatedProductsCarousel from '@/components/watch/RelatedProductsCarousel.vue';
 import ShopFaq from '@/components/shared/ShopFaq.vue';
@@ -35,8 +34,6 @@ const router = useRouter();
 const ui = useUiStore();
 const locale = useLocaleStore();
 const currency = useCurrencyStore();
-const account = useAccountStore();
-const saved = useSavedStore();
 const cart = useCartStore();
 
 const watchDoc = ref<Watch | null>(null);
@@ -284,22 +281,6 @@ watch(
   () => load(route.params.slug as string),
 );
 
-const isSaved = computed(() => Boolean(watchDoc.value && saved.has(watchDoc.value._id)));
-const isSavePending = computed(() => Boolean(watchDoc.value && saved.pendingId === watchDoc.value._id));
-
-async function toggleSaved() {
-  if (!watchDoc.value) return;
-  // A click landing before the startup session restore has settled would
-  // otherwise read as "signed out"; wait for the same in-flight promise.
-  if (!account.isReady) await account.restoreSession();
-  // Saving requires an account; visitors are sent to sign in and returned here.
-  if (!account.isAuthenticated) {
-    router.push({ name: 'account-login', query: { redirect: route.fullPath } });
-    return;
-  }
-  await saved.toggle(watchDoc.value._id);
-}
-
 function openInquiry() {
   if (!watchDoc.value) return;
   ui.openInquiry({ id: watchDoc.value._id, name: `${brandName.value} ${watchDoc.value.name}` });
@@ -535,16 +516,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
             <button class="sw-btn sw-watch-detail__inquire" type="button" @click="openInquiry">
               {{ locale.t('watchDetail.requestInfo') }}
             </button>
-            <button
-              class="sw-btn sw-watch-detail__save"
-              :class="{ 'is-saved': isSaved }"
-              type="button"
-              :disabled="isSavePending"
-              :aria-pressed="isSaved"
-              @click="toggleSaved"
-            >
-              {{ isSaved ? locale.t('watchDetail.saved') : locale.t('watchDetail.save') }}
-            </button>
+            <SaveButton :watch-id="watchDoc._id" variant="label" class="sw-watch-detail__save" />
           </div>
         </div>
 
@@ -1065,18 +1037,9 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
   gap: 20px 36px;
 }
 
-.sw-watch-detail__inquire,
-.sw-watch-detail__save {
+.sw-watch-detail__inquire {
   font-size: 0.75rem;
   letter-spacing: 0.2em;
-}
-
-.sw-watch-detail__save.is-saved {
-  color: var(--accent);
-}
-
-.sw-watch-detail__save[disabled] {
-  opacity: 0.45;
 }
 
 .sw-watch-detail__pair {

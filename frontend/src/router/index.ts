@@ -87,6 +87,15 @@ const routes = [
     component: () => import('@/pages/Contact.vue'),
     meta: { headerTheme: 'light' },
   },
+  // Saved timepieces are deliberately NOT under /account: the list lives on
+  // the device (see stores/saved.ts), so requiring a session to look at it
+  // would put a sign-up form in front of a visitor's own wishlist.
+  {
+    path: '/saved',
+    name: 'saved',
+    component: () => import('@/pages/Saved.vue'),
+    meta: { headerTheme: 'light' },
+  },
   // ---- Customer account ------------------------------------------------
   // Two records share the /account prefix on purpose: the signed-in section
   // sits under AccountLayout, while the authentication screens sit under
@@ -103,11 +112,6 @@ const routes = [
         path: 'orders',
         name: 'account-orders',
         component: () => import('@/pages/account/AccountOrders.vue'),
-      },
-      {
-        path: 'saved',
-        name: 'account-saved',
-        component: () => import('@/pages/account/AccountSaved.vue'),
       },
       {
         path: 'settings',

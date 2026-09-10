@@ -13,7 +13,6 @@ const saved = useSavedStore();
 const links = computed(() => [
   { to: '/account', label: locale.t('account.navOverview'), exact: true },
   { to: '/account/orders', label: locale.t('account.navOrders'), exact: false },
-  { to: '/account/saved', label: locale.t('account.navSaved'), exact: false },
   { to: '/account/settings', label: locale.t('account.navSettings'), exact: false },
 ]);
 

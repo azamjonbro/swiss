@@ -7,6 +7,7 @@ import { useCurrencyStore } from '@/stores/currency';
 import { SHOW_PRICES } from '@/config/pricing';
 import { useLocaleStore } from '@/stores/locale';
 import SmartImage from '@/components/shared/SmartImage.vue';
+import SaveButton from '@/components/shared/SaveButton.vue';
 import { productPath, watchImageAlt } from '@/seo/schema.mjs';
 
 interface Props {
@@ -112,6 +113,10 @@ const hiddenColorCount = computed(() => Math.max(0, colors.value.length - SWATCH
         sizes="(max-width: 460px) 92vw, (max-width: 980px) 47vw, 24vw"
         class="sw-watch-card__shot sw-watch-card__shot--hover"
       />
+
+      <!-- Inside the card's link, so the heart is where the piece is; the
+           button stops the click from reaching the link. -->
+      <SaveButton :watch-id="watch._id" class="sw-watch-card__save" />
     </div>
 
     <div class="sw-watch-card__info">
@@ -161,6 +166,16 @@ const hiddenColorCount = computed(() => Math.max(0, colors.value.length - SWATCH
   overflow: hidden;
   background: var(--bg);
   padding: 5%;
+}
+
+/* Top-right of the photograph, clear of the media's 5% inset so it never sits
+   on the watch itself. `z-index` puts it over the hover shot, which is drawn
+   after it in the DOM. */
+.sw-watch-card__save {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  z-index: 2;
 }
 
 /* SmartImage defaults to --surface-media so it reads as a loading skeleton
