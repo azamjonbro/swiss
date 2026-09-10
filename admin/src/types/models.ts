@@ -51,6 +51,35 @@ export interface Category {
   translations?: Translations;
 }
 
+/**
+ * A physical boutique, as managed here and published by the storefront.
+ *
+ * Everything below `name` is optional because a branch is often listed the week
+ * it opens, before it has been surveyed or given a phone line. Absent stays
+ * absent all the way through: the storefront skips the row it would have
+ * rendered, and the JSON-LD omits the field rather than shipping a placeholder
+ * a crawler would read as fact.
+ */
+export interface Branch {
+  _id: string;
+  name: string;
+  streetAddress: string;
+  addressLocality: string;
+  addressRegion: string;
+  postalCode: string;
+  /** ISO 3166-1 alpha-2. */
+  addressCountry: string;
+  /** Display forms — "+998 88 500 70 00". The `tel:` href is derived from each. */
+  phones: string[];
+  /** schema.org opening-hours strings, e.g. "Mo-Sa 10:00-20:00". */
+  openingHours: string[];
+  geo?: { latitude: number; longitude: number } | null;
+  mapUrl: string;
+  order: number;
+  isActive: boolean;
+  translations?: Translations;
+}
+
 export interface BrandRef {
   _id: string;
   name: string;

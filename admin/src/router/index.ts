@@ -71,6 +71,14 @@ const routes = [
         component: () => import('@/pages/admin/AdminCollections.vue'),
         meta: { titleKey: 'admin.collections' },
       },
+      // Physical boutiques. Filed under operations rather than the catalogue:
+      // these are places the business runs, not things it sells.
+      {
+        path: 'branches',
+        name: 'branches',
+        component: () => import('@/pages/admin/AdminBranches.vue'),
+        meta: { titleKey: 'admin.branches' },
+      },
       {
         path: 'customers',
         name: 'customers',

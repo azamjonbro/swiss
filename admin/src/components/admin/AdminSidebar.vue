@@ -30,6 +30,7 @@ const groups = computed(() => [
   {
     label: locale.t('admin.navOperations'),
     links: [
+      { label: locale.t('admin.branches'), to: '/branches', icon: 'branch' },
       { label: locale.t('admin.customers'), to: '/customers', icon: 'customers' },
       { label: locale.t('admin.inquiries'), to: '/inquiries', icon: 'inquiry' },
       { label: locale.t('admin.media'), to: '/media', icon: 'media' },
