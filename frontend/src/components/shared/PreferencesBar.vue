@@ -3,6 +3,7 @@ import { computed } from 'vue';
 import { useThemeStore } from '@/stores/theme';
 import { useLocaleStore } from '@/stores/locale';
 import { useCurrencyStore, type CurrencyCode } from '@/stores/currency';
+import { SHOW_PRICES } from '@/config/pricing';
 import { SUPPORTED_LANGS, LANG_LABELS, type Lang } from '@/i18n';
 import ThemeIcon from '@/components/shared/ThemeIcon.vue';
 import PrefDropdown from '@/components/shared/PrefDropdown.vue';
@@ -48,9 +49,14 @@ function setCurrency(value: string) {
       @update:model-value="setLang"
     />
 
-    <span class="sw-prefs__divider" aria-hidden="true" />
+    <!-- The currency selector converts figures that are not on screen while
+         prices are hidden — a control whose every setting looks identical.
+         Both it and its divider go. -->
+    <template v-if="SHOW_PRICES">
+      <span class="sw-prefs__divider" aria-hidden="true" />
 
-    <PrefDropdown :options="currencyOptions" :model-value="currency.code" :label="locale.t('prefs.currency')" @update:model-value="setCurrency" />
+      <PrefDropdown :options="currencyOptions" :model-value="currency.code" :label="locale.t('prefs.currency')" @update:model-value="setCurrency" />
+    </template>
   </div>
 </template>
 

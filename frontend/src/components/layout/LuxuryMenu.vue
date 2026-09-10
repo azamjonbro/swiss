@@ -4,6 +4,7 @@ import { useUiStore } from '@/stores/ui';
 import { useLocaleStore } from '@/stores/locale';
 import { useThemeStore } from '@/stores/theme';
 import { useCurrencyStore, type CurrencyCode } from '@/stores/currency';
+import { SHOW_PRICES } from '@/config/pricing';
 import { useAccountStore } from '@/stores/account';
 import { useLockBodyScroll } from '@/composables/useLockBodyScroll';
 import { SUPPORTED_LANGS, LANG_LABELS, type Lang } from '@/i18n';
@@ -105,7 +106,7 @@ function setCurrency(value: string) {
               @update:model-value="setLang"
             />
           </div>
-          <div class="sw-menu__pref">
+          <div v-if="SHOW_PRICES" class="sw-menu__pref">
             <span class="sw-eyebrow">{{ locale.t('prefs.currency') }}</span>
             <PrefDropdown
               :options="currencyOptions"
