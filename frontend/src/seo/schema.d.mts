@@ -120,4 +120,13 @@ export function websiteSchema(site: SeoSite): JsonLdNode;
 export function breadcrumbSchema(items: CrumbItem[], site: SeoSite): JsonLdNode;
 export function itemListSchema(items: CrumbItem[], site: SeoSite, name?: string): JsonLdNode;
 export function productSchema(watch: Watch, site: SeoSite): JsonLdNode;
+export interface FaqEntry {
+  question: string;
+  answer: string;
+}
+export function faqSchema(
+  faqs: readonly FaqEntry[] | null | undefined,
+  site: SeoSite,
+  pagePath: string,
+): JsonLdNode | null;
 export function jsonLdGraph(nodes: (JsonLdNode | null | undefined)[]): string;

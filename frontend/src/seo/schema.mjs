@@ -683,6 +683,42 @@ export function productSchema(watch, site) {
 }
 
 // ---------------------------------------------------------------------------
+// Shop questions
+// ---------------------------------------------------------------------------
+
+/**
+ * A `FAQPage` for the shop's questions, anchored to the page that renders them.
+ *
+ * The same list sits under every product, so this node repeats across the
+ * catalogue — deliberately. Structured data has to describe the page it is on,
+ * and these answers are genuinely visible on each one; emitting the node once,
+ * on a page that does not show the questions, is the thing the guidelines
+ * actually forbid. Google has narrowed FAQ *rich results* to a handful of site
+ * types, so treat this as a description of the page rather than as a play for
+ * a search feature.
+ *
+ * An entry missing either half is dropped, and an empty list returns null so
+ * the caller emits no node at all.
+ */
+export function faqSchema(faqs, site, pagePath) {
+  const items = (Array.isArray(faqs) ? faqs : [])
+    .filter((faq) => faq && String(faq.question ?? '').trim() && String(faq.answer ?? '').trim())
+    .map((faq) => ({
+      '@type': 'Question',
+      name: String(faq.question).trim(),
+      acceptedAnswer: { '@type': 'Answer', text: String(faq.answer).trim() },
+    }));
+
+  if (!items.length) return null;
+
+  return {
+    '@type': 'FAQPage',
+    '@id': `${absoluteUrl(site, pagePath)}#faq`,
+    mainEntity: items,
+  };
+}
+
+// ---------------------------------------------------------------------------
 // Physical boutiques
 // ---------------------------------------------------------------------------
 

@@ -206,6 +206,8 @@ const ru: Dictionary = {
     add: 'Добавить',
     added: 'Добавлено',
     relatedTitle: 'Вам может понравиться',
+    faqEyebrow: 'Вопросы',
+    faqTitle: 'Часто задаваемые вопросы',
     specifications: 'Характеристики',
     theStory: 'История',
   },

@@ -32,6 +32,7 @@ import {
   breadcrumbSchema,
   collectionPath,
   collectionSeo,
+  faqSchema,
   formatStoreAddress,
   headTags,
   itemListSchema,
@@ -196,7 +197,7 @@ const productListHtml = (watches, heading) =>
         .join('')}</ul></section>`
     : '';
 
-function productBody(watch) {
+function productBody(watch, faqs = []) {
   const images = watchImages(watch);
   const brand = typeof watch.brand === 'object' && watch.brand ? watch.brand : null;
   const specs = [
@@ -239,6 +240,14 @@ function productBody(watch) {
     specs.length
       ? `<h2>Specifications</h2><dl>${specs
           .map(([label, value]) => `<dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd>`)
+          .join('')}</dl>`
+      : '',
+    // The same shop questions the mounted page renders under the product. The
+    // running app draws them as <details>, whose answers are in the DOM open or
+    // closed — so the crawlable copy and the live page say the same thing.
+    faqs.length
+      ? `<h2>Frequently asked questions</h2><dl>${faqs
+          .map((faq) => `<dt>${escapeHtml(faq.question)}</dt><dd>${escapeHtml(faq.answer)}</dd>`)
           .join('')}</dl>`
       : '',
     '</article>',
@@ -346,6 +355,16 @@ async function main() {
   for (const [key, filePath] of appRoutes) {
     await page({ filePath, seo: staticSeo(key, site) });
   }
+
+  // Its own request, outside the catalog's try: a FAQ the API cannot serve
+  // costs the product pages their questions, nothing else, and an empty list
+  // means `faqSchema` emits no node and `productBody` prints no heading.
+  const faqs = await api('/api/faqs')
+    .then((d) => d.items ?? [])
+    .catch((error) => {
+      console.warn(`[prerender] FAQ unavailable (${error.message})`);
+      return [];
+    });
 
   let catalog = null;
   try {
@@ -523,8 +542,12 @@ async function main() {
     await page({
       filePath: `products/${watch.slug}.html`,
       seo: { ...watchSeo(watch, site), imageAlt: watchImageAlt(watch) },
-      nodes: [productSchema(watch, site), breadcrumbSchema(trail, site)],
-      body: productBody(watch),
+      nodes: [
+        productSchema(watch, site),
+        breadcrumbSchema(trail, site),
+        faqSchema(faqs, site, productPath(watch.slug)),
+      ],
+      body: productBody(watch, faqs),
     });
   }
 

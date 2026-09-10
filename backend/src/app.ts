@@ -15,6 +15,7 @@ import categoryRoutes from './routes/categoryRoutes';
 import brandRoutes from './routes/brandRoutes';
 import collectionRoutes from './routes/collectionRoutes';
 import branchRoutes from './routes/branchRoutes';
+import faqRoutes from './routes/faqRoutes';
 import inquiryRoutes from './routes/inquiryRoutes';
 import adminRoutes from './routes/adminRoutes';
 import trackRoutes from './routes/trackRoutes';
@@ -111,6 +112,7 @@ app.use('/api/categories', categoryRoutes);
 app.use('/api/brands', brandRoutes);
 app.use('/api/collections', collectionRoutes);
 app.use('/api/branches', branchRoutes);
+app.use('/api/faqs', faqRoutes);
 app.use('/api/inquiries', inquiryRoutes);
 app.use('/api/admin', adminRoutes);
 // The storefront's analytics beacon. Public: every visitor calls it.

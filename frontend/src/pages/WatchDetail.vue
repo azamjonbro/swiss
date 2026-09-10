@@ -3,6 +3,7 @@ import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import type { Watch } from '@/types/models';
 import { fetchWatchBySlug } from '@/services/watches';
+import { fetchFaqs, type Faq } from '@/services/faqs';
 import { toBrandName, toBrandSlug, colorSwatchHex } from '@/utils/format';
 import { useUiStore } from '@/stores/ui';
 import { useLocaleStore } from '@/stores/locale';
@@ -15,6 +16,7 @@ import { applyJsonLd, applySeo, site } from '@/utils/seo';
 import type { CrumbItem } from '@/seo/schema.mjs';
 import {
   breadcrumbSchema,
+  faqSchema,
   productPath,
   productSchema,
   staticSeo,
@@ -25,6 +27,7 @@ import {
 import SmartImage from '@/components/shared/SmartImage.vue';
 import SmartVideo from '@/components/shared/SmartVideo.vue';
 import RelatedProductsCarousel from '@/components/watch/RelatedProductsCarousel.vue';
+import ShopFaq from '@/components/shared/ShopFaq.vue';
 import Breadcrumbs from '@/components/shared/Breadcrumbs.vue';
 
 const route = useRoute();
@@ -239,10 +242,37 @@ const crumbs = computed<CrumbItem[]>(() => {
 function applyProductSeo(watch: Watch) {
   const seo = watchSeo(watch, site);
   applySeo({ ...seo, imageAlt: watchImageAlt(watch) });
-  applyJsonLd([productSchema(watch, site), breadcrumbSchema(crumbs.value, site)]);
+  applyJsonLd([
+    productSchema(watch, site),
+    breadcrumbSchema(crumbs.value, site),
+    // Null while the answers are still in flight — `loadFaqs` rewrites the
+    // graph when they land, so the node is never published half-filled.
+    faqSchema(faqs.value, site, productPath(watch.slug)),
+  ]);
+}
+
+/**
+ * The shop's questions, for the structured data.
+ *
+ * `ShopFaq` fetches the same list for the visible block; the service hands both
+ * callers one request, so this is a second reader of one response rather than a
+ * second round trip. The answers usually arrive after the product does, which
+ * is why this re-applies the graph instead of waiting for them.
+ */
+const faqs = ref<Faq[]>([]);
+async function loadFaqs() {
+  try {
+    faqs.value = await fetchFaqs(locale.lang);
+  } catch {
+    faqs.value = [];
+    return;
+  }
+  if (watchDoc.value) applyProductSeo(watchDoc.value);
 }
 
 onMounted(() => load(route.params.slug as string));
+onMounted(loadFaqs);
+watch(() => locale.lang, loadFaqs);
 watch(
   () => route.params.slug,
   (slug) => {
@@ -562,6 +592,8 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
       <span class="sw-eyebrow">{{ locale.t('watchDetail.relatedTitle') }}</span>
       <RelatedProductsCarousel :watches="watchDoc.related" />
     </section>
+
+    <ShopFaq />
   </template>
 
   <transition name="sw-fade">

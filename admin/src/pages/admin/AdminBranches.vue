@@ -169,6 +169,8 @@ async function remove(branch: Branch) {
   await load();
 }
 
+onMounted(load);
+
 /** The address on one line, skipping the parts nobody has filled in. */
 function addressLine(branch: Branch): string {
   return [branch.streetAddress, branch.addressLocality, branch.addressRegion, branch.postalCode]

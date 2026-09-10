@@ -206,6 +206,8 @@ const en = {
     add: 'Add',
     added: 'Added',
     relatedTitle: 'You May Also Like',
+    faqEyebrow: 'Questions',
+    faqTitle: 'Frequently asked questions',
     specifications: 'Specifications',
     theStory: 'The Story',
   },

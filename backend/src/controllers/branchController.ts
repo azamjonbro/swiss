@@ -72,10 +72,21 @@ export async function adminCreateBranch(req: Request, res: Response) {
 }
 
 export async function adminUpdateBranch(req: Request, res: Response) {
-  const branch = await Branch.findByIdAndUpdate(req.params.id, sanitize(req.body ?? {}), {
-    new: true,
-    runValidators: true,
-  });
+  const body = sanitize(req.body ?? {});
+
+  // A coordinate the operator cleared has to be removed, not skipped. Mongoose
+  // strips undefined values out of an update, so `{ geo: undefined }` would
+  // leave the old pair in place and /stores would keep publishing a pin the
+  // branch no longer claims — the one case where a silent no-op is visible to
+  // the public. `$unset` is what "absent" means for this field; see the model.
+  const clearGeo = 'geo' in body && body.geo === undefined;
+  delete body.geo;
+
+  const branch = await Branch.findByIdAndUpdate(
+    req.params.id,
+    clearGeo ? { $set: body, $unset: { geo: 1 } } : { $set: body },
+    { new: true, runValidators: true },
+  );
   if (!branch) throw new ApiError(404, 'Branch not found');
   requestRedeploy(`branch:update ${branch.name}`);
   res.json(branch);

@@ -205,6 +205,8 @@ const uz: Dictionary = {
     add: 'Qo‘shish',
     added: 'Qo‘shildi',
     relatedTitle: 'Sizga yoqishi mumkin',
+    faqEyebrow: 'Savollar',
+    faqTitle: 'Ko‘p so‘raladigan savollar',
     specifications: 'Texnik xususiyatlar',
     theStory: 'Tarix',
   },

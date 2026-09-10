@@ -37,6 +37,13 @@ import {
   adminDeleteBranch,
 } from '../controllers/branchController';
 import {
+  adminListFaqs,
+  adminGetFaq,
+  adminCreateFaq,
+  adminUpdateFaq,
+  adminDeleteFaq,
+} from '../controllers/faqController';
+import {
   adminListInquiries,
   adminUpdateInquiry,
   adminDeleteInquiry,
@@ -75,6 +82,12 @@ router.get('/branches/:id', adminGetBranch);
 router.post('/branches', adminCreateBranch);
 router.put('/branches/:id', adminUpdateBranch);
 router.delete('/branches/:id', adminDeleteBranch);
+
+router.get('/faqs', adminListFaqs);
+router.get('/faqs/:id', adminGetFaq);
+router.post('/faqs', adminCreateFaq);
+router.put('/faqs/:id', adminUpdateFaq);
+router.delete('/faqs/:id', adminDeleteFaq);
 
 router.get('/brands', adminListBrands);
 router.post('/brands', adminCreateBrand);
