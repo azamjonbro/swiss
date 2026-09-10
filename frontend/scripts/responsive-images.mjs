@@ -25,10 +25,21 @@ const IMAGE_DIR = join(ROOT, 'public', 'images');
 const MANIFEST = join(ROOT, 'src', 'data', 'image-widths.json');
 const LQIP_MANIFEST = join(ROOT, 'src', 'data', 'image-lqip.json');
 
-/** The widths worth keeping. Below 480 the art direction stops reading; above
- *  1440 nothing in the layout is wider, and the originals cover retina. */
-const WIDTHS = [480, 960, 1440];
-const QUALITY = 80;
+/** The widths worth keeping. Below 480 the art direction stops reading. 1920
+ *  is here for the hero, which is the one image drawn full-bleed: a 1440-wide
+ *  file on a 1512pt laptop at DPR 2 is a 2x upscale, and the next step up used
+ *  to be the full-size original. */
+const WIDTHS = [480, 960, 1440, 1920];
+
+/**
+ * 80 was fine for the textured editorial photography and is not fine for the
+ * hero, which is a watch standing on a wide, smooth, dark-green gradient —
+ * exactly the content WebP's chroma subsampling bands. `-sharp_yuv` costs a
+ * little encode time and removes the coloured fringing along the polished
+ * steel; the pair adds roughly a third to the hero's bytes and takes the
+ * banding out of the ground behind it.
+ */
+const QUALITY = 86;
 
 /**
  * The blur placeholder baked into the bundle, as a data URI.
@@ -104,13 +115,28 @@ for (const name of readdirSync(IMAGE_DIR).sort()) {
       skipped += 1;
       continue;
     }
-    execFileSync('cwebp', ['-q', String(QUALITY), '-m', '6', '-resize', String(width), '0', source, '-o', target], {
+    execFileSync(
+      'cwebp',
+      ['-q', String(QUALITY), '-m', '6', '-sharp_yuv', '-resize', String(width), '0', source, '-o', target],
+      { stdio: 'ignore' },
+    );
+    written += 1;
+  }
+
+  // The full-size .webp sibling closes the set at the original width. It is
+  // also the file SmartImage asks for by name before any srcset is consulted,
+  // so it has to be produced here rather than assumed: the manifest naming a
+  // width whose file does not exist is a broken image, not a fallback.
+  const fullTarget = join(IMAGE_DIR, `${stem}.webp`);
+  if (isFresh(fullTarget, source)) {
+    skipped += 1;
+  } else {
+    execFileSync('cwebp', ['-q', String(QUALITY), '-m', '6', '-sharp_yuv', source, '-o', fullTarget], {
       stdio: 'ignore',
     });
     written += 1;
   }
 
-  // The full-size .webp sibling closes the set at the original width.
   manifest[`/images/${stem}.webp`] = [...widths, full];
 }
 

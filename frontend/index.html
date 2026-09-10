@@ -60,12 +60,19 @@
     <!-- The candidate list has to match the one SmartImage builds from
          src/data/image-widths.json. Preloading the bare full-size file while
          the element resolves to a narrower variant downloads both and preloads
-         neither usefully, so the set is mirrored here. -->
+         neither usefully, so the set is mirrored here.
+
+         It also has to name the image HeroSection.vue is actually rendering.
+         This block went on preloading the previous hero after the photograph
+         was replaced, which is the worst of both worlds: ~130 KB fetched at
+         high priority for an image that never paints, and the one that does
+         paint left to be discovered by the parser. Change the hero, change
+         this. -->
     <link
       rel="preload"
       as="image"
-      href="/images/sainthonore_monceau.webp"
-      imagesrcset="/images/sainthonore_monceau-480.webp 480w, /images/sainthonore_monceau-960.webp 960w, /images/sainthonore_monceau-1440.webp 1440w, /images/sainthonore_monceau.webp 2048w"
+      href="/images/west-end-sowar.webp"
+      imagesrcset="/images/west-end-sowar-480.webp 480w, /images/west-end-sowar-960.webp 960w, /images/west-end-sowar-1440.webp 1440w, /images/west-end-sowar-1920.webp 1920w, /images/west-end-sowar.webp 2560w"
       imagesizes="100vw"
       type="image/webp"
       fetchpriority="high"

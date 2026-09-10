@@ -3,12 +3,14 @@
     480,
     960,
     1440,
+    1920,
     2048
   ],
   "/images/sainthonore_monceau_steel.webp": [
     480,
     960,
     1440,
+    1920,
     2048
   ],
   "/images/swisswatch_about.webp": [
@@ -48,6 +50,7 @@
     480,
     960,
     1440,
-    2048
+    1920,
+    2560
   ]
 }
