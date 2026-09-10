@@ -21,24 +21,19 @@
  */
 
 import {
+  API_ORIGIN,
   brandNameOf,
   createSite,
   headTags,
   pageTitle,
-  resolveSiteUrl,
 } from '../src/seo/schema.mjs';
 
-const API = (process.env.SEO_API_URL || 'https://swiss.sds-max.uz').replace(/\/+$/, '');
+const API = API_ORIGIN;
 
-// Non-strict: this runs per request, and a config slip must not take the site
-// down. The build gate (vite.config.ts + prerender.mjs) is what guarantees the
-// value is set — this only decides what a warm lambda falls back to.
-const site = createSite({
-  url: resolveSiteUrl(process.env.VITE_SITE_URL || process.env.SITE_URL),
-  name: process.env.VITE_SITE_NAME || process.env.SITE_NAME,
-  contactEmail: process.env.VITE_CONTACT_EMAIL,
-  showPrices: process.env.VITE_SHOW_PRICES === '1',
-});
+// Identity is constant (schema.mjs), so a warm lambda and the build it fell out
+// of cannot describe the site differently — which they could while both read
+// the same variables out of a dashboard.
+const site = createSite({ showPrices: process.env.VITE_SHOW_PRICES === '1' });
 const SITE_NAME = site.name;
 
 /** Prerendered documents, cached for the lifetime of a warm instance. */

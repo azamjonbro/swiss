@@ -19,8 +19,10 @@
  * hand ad blockers a request to a domain that is not the site they are on.
  */
 
-/** Same fallback the SPA function uses, so both agree on where the API lives. */
-const API = (process.env.SEO_API_URL || 'https://swiss.sds-max.uz').replace(/\/+$/, '');
+import { API_ORIGIN } from '../src/seo/schema.mjs';
+
+/** The same constant the SPA function uses, so both agree on where the API lives. */
+const API = API_ORIGIN;
 
 /** A beacon is a page's worth of activity; anything larger is not one. */
 const MAX_BODY_BYTES = 16 * 1024;

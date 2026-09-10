@@ -42,6 +42,32 @@ export const SITE_NAME = 'SwissWatch Premium';
 export const CONTACT_PHONES = ['+998 88 500 70 00', '+998 88 400 70 00'];
 
 /**
+ * The published contact address, presented as the director's own rather than a
+ * shared inbox — see the `contact.ceoEmail` label.
+ *
+ * Static for the same reason as CONTACT_PHONES: it used to be
+ * VITE_CONTACT_EMAIL, which meant the address customers write to lived in a
+ * dashboard nobody opens until it is already wrong.
+ */
+export const CONTACT_EMAIL = 'bahodir5002020@icloud.com';
+
+/**
+ * Where the build reads the catalog from, and where the 404 function confirms
+ * a slug it has not prerendered yet.
+ *
+ * This was SEO_API_URL. It stayed pointed at `swiss.techinfo.uz` — the VPS the
+ * API moved off — long after the move, and because the prerenderer treats an
+ * unreachable catalog as "skip the product pages" rather than an error, the
+ * build kept succeeding while publishing no product page at all: 926 of them
+ * were served by the SPA fallback, with no JSON-LD and no crawlable copy.
+ *
+ * `vercel.json` already hardcodes this origin in its rewrites, so it was never
+ * configuration in any real sense — it was the same fact written twice, in two
+ * places that could disagree.
+ */
+export const API_ORIGIN = 'https://swiss.sds-max.uz';
+
+/**
  * Canonical production origin.
  *
  * `www` is the host Vercel actually serves: the bare domain answers every
@@ -50,30 +76,6 @@ export const CONTACT_PHONES = ['+998 88 500 70 00', '+998 88 400 70 00'];
  * is the one thing a canonical must never do.
  */
 export const DEFAULT_SITE_URL = 'https://www.swisswatchpremium.uz';
-
-/**
- * The one hostname allowed to appear in a canonical, an Open Graph URL, a
- * JSON-LD @id or a sitemap <loc>.
- *
- * Blocking localhost and *.vercel.app (below) only rules out the accidents that
- * look wrong. It does not rule out the accident that looks right: a real,
- * parsable, non-preview origin that simply is not this site. A cross-domain
- * canonical is the one SEO mistake a later build cannot undo — Google honours
- * it and deindexes the host that shipped it — so the production build pins the
- * host rather than trusting whatever the environment happens to hold.
- */
-export const PRODUCTION_HOST = 'www.swisswatchpremium.uz';
-
-/**
- * The same site with the `www.` prefix removed.
- *
- * Both spellings are this site, so both are accepted — but only
- * DEFAULT_SITE_URL is ever emitted. Rejecting the bare domain outright would
- * turn a stale VITE_SITE_URL into a failed production build, and silently
- * passing it through would put the redirecting host back into the canonicals
- * this constant exists to keep out.
- */
-const PRODUCTION_APEX = PRODUCTION_HOST.replace(/^www\./, '');
 
 /** Google truncates a result title past roughly this width. */
 export const TITLE_MAX = 60;
@@ -95,68 +97,21 @@ export function ogLocale(lang) {
 }
 
 /**
- * Validates a configured origin.
- *
- * A silent fallback to localhost is what produced the first bad sitemap, so
- * `strict` (used by the production build and the prerenderer) throws instead
- * of guessing. The runtime is lenient — it has a correct default and must not
- * take the page down — but the build gate above it guarantees the value is set.
- */
-export function resolveSiteUrl(raw, { strict = false, label = 'VITE_SITE_URL' } = {}) {
-  const value = String(raw ?? '').trim().replace(/\/+$/, '');
-  let problem = '';
-
-  if (!value) problem = 'is not set';
-  else if (!/^https?:\/\//i.test(value)) problem = `must be an absolute http(s) URL (got "${value}")`;
-  else {
-    let host = '';
-    try {
-      host = new URL(value).hostname;
-    } catch {
-      problem = `is not a parsable URL (got "${value}")`;
-    }
-    if (!problem && /^(localhost|127\.0\.0\.1|0\.0\.0\.0|\[::1\])$/i.test(host)) {
-      problem = `must not point at localhost (got "${value}")`;
-    }
-    if (!problem && /\.vercel\.app$/i.test(host)) {
-      problem = `must not point at a *.vercel.app preview host (got "${value}")`;
-    }
-    // Either spelling of this site normalises to the canonical origin, so a
-    // configured bare domain neither fails the build nor reaches a canonical.
-    if (!problem && host.toLowerCase().replace(/^www\./, '') === PRODUCTION_APEX) {
-      return DEFAULT_SITE_URL;
-    }
-    // Only enforced for builds that write permanent URLs (strict). The lenient
-    // runtime path keeps its correct default instead of throwing on a page.
-    if (!problem && strict) {
-      problem = `must be ${DEFAULT_SITE_URL} — the storefront's only canonical host (got "${value}")`;
-    }
-  }
-
-  if (!problem) return value;
-  if (strict) {
-    throw new Error(
-      `[seo] ${label} ${problem}. Set it to ${DEFAULT_SITE_URL} for Production and Preview ` +
-        'before building: canonical, Open Graph and sitemap URLs are all derived from it.',
-    );
-  }
-  return DEFAULT_SITE_URL;
-}
-
-/**
  * Builds the `site` record every metadata builder reads, so the running app,
  * the prerenderer and the 404 function cannot disagree about who the site is.
  *
- * `contactEmail` is optional on purpose: the business may not have published one
- * yet. Absent means absent — the UI renders nothing in its place and the JSON-LD
- * omits the field, rather than shipping a placeholder that a crawler would read
- * as fact. The telephone numbers are not passed in at all; they are static, so
- * every caller gets the same CONTACT_PHONES.
+ * Who the site is, is not configuration: the origin, the name, the address and
+ * the numbers are all constants in this file. They used to come from
+ * VITE_SITE_URL / VITE_SITE_NAME / VITE_CONTACT_*, which put the identity of
+ * the site in a dashboard — a place with no review, no history, and no way to
+ * tell from the repository what production actually holds. Every one of those
+ * variables had gone stale at least once. The only argument left is the price
+ * toggle, which is a decision the business changes, not a fact about the site.
  */
-export function createSite({ url, name, contactEmail, showPrices } = {}) {
+export function createSite({ showPrices } = {}) {
   const site = {
-    url: String(url ?? DEFAULT_SITE_URL).replace(/\/+$/, ''),
-    name: String(name || SITE_NAME),
+    url: DEFAULT_SITE_URL,
+    name: SITE_NAME,
     // The share card, not the hero file: 1200x630 is the size every social
     // crawler crops to, and at ~95 KB it is inside the budget WhatsApp gives a
     // preview before it silently falls back to a text-only card. JPEG, not
@@ -171,7 +126,7 @@ export function createSite({ url, name, contactEmail, showPrices } = {}) {
     locale: 'en_US',
     sameAs: ['https://instagram.com/swisswatch_premium'],
   };
-  const email = String(contactEmail ?? '').trim();
+  const email = CONTACT_EMAIL.trim();
   if (email) site.contactEmail = email;
 
   // The boutique publishes more than one number, so both shapes come out of the

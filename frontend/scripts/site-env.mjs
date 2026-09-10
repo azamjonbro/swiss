@@ -14,7 +14,7 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
-import { createSite, resolveSiteUrl } from '../src/seo/schema.mjs';
+import { API_ORIGIN, DEFAULT_SITE_URL, createSite } from '../src/seo/schema.mjs';
 
 /** Lowest precedence first, matching Vite's own order. */
 const envFiles = (mode) => ['.env', '.env.local', `.env.${mode}`, `.env.${mode}.local`];
@@ -43,19 +43,17 @@ export function loadEnvFiles(root, mode = 'production') {
 }
 
 /**
- * Resolves the site record from an env bag. `strict` throws rather than
- * falling back — every production build and the prerenderer pass it.
+ * The site record the build writes into static HTML.
+ *
+ * Takes an env bag only for the price toggle: the origin, the name and the
+ * contact details are constants in `schema.mjs`, and the catalog origin is
+ * API_ORIGIN — the same host `vercel.json` rewrites to. Nothing here can go
+ * stale in a dashboard, which is what this function used to exist to survive.
  */
-export function readSiteEnv(env, { strict = false } = {}) {
-  const url = resolveSiteUrl(env.VITE_SITE_URL || env.SITE_URL, { strict, label: 'VITE_SITE_URL' });
+export function readSiteEnv(env = {}) {
   return {
-    url,
-    site: createSite({
-      url,
-      name: env.VITE_SITE_NAME || env.SITE_NAME,
-      contactEmail: env.VITE_CONTACT_EMAIL,
-      showPrices: env.VITE_SHOW_PRICES === '1',
-    }),
-    apiUrl: String(env.SEO_API_URL || 'https://swiss.sds-max.uz').replace(/\/+$/, ''),
+    url: DEFAULT_SITE_URL,
+    site: createSite({ showPrices: env.VITE_SHOW_PRICES === '1' }),
+    apiUrl: API_ORIGIN,
   };
 }

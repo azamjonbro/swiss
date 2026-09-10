@@ -11,7 +11,6 @@ import {
   headTags,
   jsonLdGraph,
   organizationSchema,
-  resolveSiteUrl,
   storeSchemas,
   websiteSchema,
   type JsonLdNode,
@@ -25,22 +24,11 @@ import { SHOW_PRICES } from '@/config/pricing';
  * Who this site is, as one record shared with the prerenderer and the 404
  * function (both call the same `createSite`).
  *
- * `VITE_SITE_URL` is validated at build time by the `site-env` plugin in
- * `vite.config.ts`, which fails a production build outright when it is missing
- * or points at localhost — so by the time this runs the value is known good.
- * The lenient fallback here only ever covers `vite dev`.
- *
- * `VITE_CONTACT_EMAIL` may legitimately be empty: the business has not
- * published one yet. `createSite` drops empty values, the UI renders nothing in
- * its place, and the JSON-LD omits the field. The telephone numbers are not
- * environment at all — they are `CONTACT_PHONES` in `@/seo/schema.mjs`.
+ * The origin, the name, the address and the telephone numbers are constants in
+ * `@/seo/schema.mjs` — see the note on `createSite` for why they are not
+ * environment. The price toggle is the one thing this build still decides.
  */
-export const site: SeoSite = createSite({
-  url: resolveSiteUrl(import.meta.env.VITE_SITE_URL),
-  name: import.meta.env.VITE_SITE_NAME,
-  contactEmail: import.meta.env.VITE_CONTACT_EMAIL,
-  showPrices: SHOW_PRICES,
-});
+export const site: SeoSite = createSite({ showPrices: SHOW_PRICES });
 
 /**
  * The language every subsequent `applySeo` describes the page as.

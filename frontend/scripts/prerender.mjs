@@ -60,11 +60,10 @@ const DIST = join(ROOT, 'dist');
 // the project's .env files for us. Real environment variables (Vercel) win.
 const ENV = { ...loadEnvFiles(ROOT, 'production'), ...process.env };
 
-// `strict`: the prerenderer writes canonical, Open Graph and JSON-LD URLs into
-// static HTML that a crawler will read as final. A wrong origin here is not
-// recoverable at runtime, so a missing or localhost VITE_SITE_URL fails the
-// build rather than guessing.
-const { site, apiUrl: API } = readSiteEnv(ENV, { strict: true });
+// The origin and the catalog host are constants (schema.mjs), so there is
+// nothing left here to get wrong: the canonical, Open Graph and JSON-LD URLs
+// this writes into static HTML are the same ones every other caller builds.
+const { site, apiUrl: API } = readSiteEnv(ENV);
 
 /** Language the crawlable copy is written in. The SPA still localises at runtime. */
 const LANG = ENV.SEO_LANG ?? 'en';

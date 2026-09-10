@@ -29,13 +29,12 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { loadEnvFiles } from './site-env.mjs';
+import { API_ORIGIN } from '../src/seo/schema.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const TARGET = join(ROOT, 'src', 'data', 'locations.json');
 
-const ENV = { ...loadEnvFiles(ROOT, process.env.NODE_ENV || 'production'), ...process.env };
-const API = String(ENV.SEO_API_URL || 'https://swiss.sds-max.uz').replace(/\/+$/, '');
+const API = API_ORIGIN;
 const TIMEOUT_MS = 10_000;
 
 const text = (value) => String(value ?? '').trim();

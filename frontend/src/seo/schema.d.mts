@@ -69,8 +69,11 @@ export const STORES_PATH: string;
 export const SITE_NAME: string;
 /** The published telephone numbers, in display form — static, not configuration. */
 export const CONTACT_PHONES: readonly string[];
+/** The published contact address — static, not configuration. */
+export const CONTACT_EMAIL: string;
+/** Origin the build reads the catalog from — static, matches vercel.json. */
+export const API_ORIGIN: string;
 export const DEFAULT_SITE_URL: string;
-export const PRODUCTION_HOST: string;
 export const TITLE_MAX: number;
 export const DEFAULT_LANG: string;
 export const OG_LOCALES: Record<string, string>;
@@ -78,16 +81,9 @@ export function ogLocale(lang?: string | null): string;
 export function tidyDescription(text?: string | null): string;
 
 export interface SiteInput {
-  url?: string;
-  name?: string;
-  contactEmail?: string;
   showPrices?: boolean;
 }
 
-export function resolveSiteUrl(
-  raw: string | null | undefined,
-  options?: { strict?: boolean; label?: string },
-): string;
 export function createSite(input?: SiteInput): SeoSite;
 export function telHref(phone?: string | null): string;
 export function clampTitleSegment(text: string | null | undefined, max: number): string;

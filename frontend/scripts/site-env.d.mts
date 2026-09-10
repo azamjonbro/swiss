@@ -23,7 +23,4 @@ export interface SiteEnv {
 }
 
 export function loadEnvFiles(root: string, mode?: string): Record<string, string>;
-export function readSiteEnv(
-  env: Record<string, string | undefined>,
-  options?: { strict?: boolean },
-): SiteEnv;
+export function readSiteEnv(env?: Record<string, string | undefined>): SiteEnv;
