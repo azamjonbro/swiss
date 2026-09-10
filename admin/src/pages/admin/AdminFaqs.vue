@@ -180,7 +180,9 @@ function translatedCount(faq: Faq): number {
           </thead>
           <tbody>
             <tr v-for="faq in faqs" :key="faq._id">
-              <td class="sw-faq__order-col">{{ faq.order }}</td>
+              <!-- `?? 0` because a FAQ written before this page existed has no
+                   order field at all — see the three legacy rows. -->
+              <td class="sw-faq__order-col">{{ faq.order ?? 0 }}</td>
               <td>
                 <div class="sw-admin-cell-title">{{ faq.question }}</div>
                 <div class="sw-admin-cell-sub sw-faq__answer">{{ faq.answer }}</div>
