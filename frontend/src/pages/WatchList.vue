@@ -6,6 +6,7 @@ import { fetchWatches } from '@/services/watches';
 import { fetchCollections } from '@/services/collections';
 import { useLocaleStore } from '@/stores/locale';
 import { useCurrencyStore } from '@/stores/currency';
+import { SHOW_PRICES } from '@/config/pricing';
 import { colorSwatchHex, movementType } from '@/utils/format';
 import { modelColors, modelMembers, modelPriceRange } from '@/utils/modelGroup';
 import { useLockBodyScroll } from '@/composables/useLockBodyScroll';
@@ -47,10 +48,23 @@ const selectedColor = ref((route.query.color as string) ?? '');
 // search on top of it.
 const colorSearch = ref('');
 const selectedMovement = ref((route.query.movement as string) ?? '');
-const selectedPriceBand = ref((route.query.price as string) ?? '');
+// Ignored outright while prices are hidden: a `?price=under-500` left in a
+// bookmark would otherwise go on quietly removing two thirds of the catalogue
+// with nothing on screen to say why, and no control to undo it.
+const selectedPriceBand = ref(SHOW_PRICES ? ((route.query.price as string) ?? '') : '');
 const selectedAvailability = ref((route.query.availability as string) ?? '');
 const isNewOnly = ref(route.query.isNew === 'true');
-const sortKey = ref((route.query.sort as string) || 'newest');
+// The two price sorts would order the grid on a number the cards no longer
+// print — the results reshuffling for no visible reason. They come back with
+// the prices.
+const ALL_SORT_KEYS = ['newest', 'price-asc', 'price-desc'] as const;
+const SORT_KEYS = SHOW_PRICES ? ALL_SORT_KEYS : (['newest'] as const);
+
+function normalizeSort(key: string): string {
+  return (SORT_KEYS as readonly string[]).includes(key) ? key : 'newest';
+}
+
+const sortKey = ref(normalizeSort((route.query.sort as string) || 'newest'));
 
 /**
  * Rows of the grid, not a network page: the whole catalogue already arrives in
@@ -114,7 +128,7 @@ function priceBandLabel(key: string): string {
   }
 }
 
-const SORT_KEYS = ['newest', 'price-asc', 'price-desc'] as const;
+
 function sortLabel(key: string): string {
   switch (key) {
     case 'price-asc':
@@ -757,7 +771,7 @@ function selectSort(key: string) {
                 </div>
               </details>
 
-              <details class="sw-filterdrawer__section" open>
+              <details v-if="SHOW_PRICES" class="sw-filterdrawer__section" open>
                 <summary class="sw-label">{{ locale.t('watchList.filterPrice') }}</summary>
                 <div class="sw-filterdrawer__list">
                   <button
