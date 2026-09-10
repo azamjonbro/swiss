@@ -31,7 +31,13 @@ const links = computed(() => [
   // but a mark is not a labelled control — on a phone, where the menu is how
   // the site is navigated, "back to the beginning" needs to be something a
   // visitor can read.
-  { label: locale.t('nav.home'), to: '/', image: '/images/west-end-sowar.jpg' },
+  // The portrait rendition of the hero, not the 16:9 plate: this panel is a
+  // full-height column (~9:16), so cover-fitting the wide banner into it crops
+  // away most of the composition and upscales what is left. It is also the
+  // current banner under a filename that has never held anything else, so a
+  // browser holding an earlier /images/west-end-sowar.jpg cannot show a stale
+  // picture here — see the seven-day cache on /images/* in vercel.json.
+  { label: locale.t('nav.home'), to: '/', image: '/images/west-end-sowar-mobile.jpg' },
   { label: locale.t('nav.collections'), to: '/collections', image: '/images/swisswatch_provenance.jpg' },
   { label: locale.t('nav.watches'), to: '/watches', image: '/images/sainthonore_monceau_steel.jpg' },
   { label: locale.t('nav.brands'), to: '/brands', image: '/images/swisswatch_network.jpg' },
