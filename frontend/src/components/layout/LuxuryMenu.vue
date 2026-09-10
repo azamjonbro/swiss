@@ -6,6 +6,7 @@ import { useThemeStore } from '@/stores/theme';
 import { useCurrencyStore, type CurrencyCode } from '@/stores/currency';
 import { SHOW_PRICES } from '@/config/pricing';
 import { useAccountStore } from '@/stores/account';
+import { useCartStore } from '@/stores/cart';
 import { useLockBodyScroll } from '@/composables/useLockBodyScroll';
 import { SUPPORTED_LANGS, LANG_LABELS, type Lang } from '@/i18n';
 import ThemeIcon from '@/components/shared/ThemeIcon.vue';
@@ -20,9 +21,15 @@ const locale = useLocaleStore();
 const theme = useThemeStore();
 const currency = useCurrencyStore();
 const account = useAccountStore();
+const cart = useCartStore();
 useLockBodyScroll(computed(() => ui.isMenuOpen));
 
 const links = computed(() => [
+  // The way home from anywhere. The header wordmark has always linked here,
+  // but a mark is not a labelled control — on a phone, where the menu is how
+  // the site is navigated, "back to the beginning" needs to be something a
+  // visitor can read.
+  { label: locale.t('nav.home'), to: '/', image: '/images/west-end-sowar.jpg' },
   { label: locale.t('nav.collections'), to: '/collections', image: '/images/swisswatch_provenance.jpg' },
   { label: locale.t('nav.watches'), to: '/watches', image: '/images/sainthonore_monceau_steel.jpg' },
   { label: locale.t('nav.brands'), to: '/brands', image: '/images/swisswatch_network.jpg' },
@@ -72,6 +79,22 @@ function setCurrency(value: string) {
             <RouterLink class="sw-body sw-menu__social" :to="accountTo" @click="ui.closeMenu">
               {{ account.isAuthenticated ? account.user?.name : locale.t('account.signInLink') }}
             </RouterLink>
+          </div>
+          <!-- Search and the bag reach the menu as well as the bottom bar. The
+               bar is phone-only and both of these are opened by the ui store
+               rather than by a route, so the panel is the one place they are
+               reachable at every width without going back to the header. -->
+          <div class="sw-menu__contact">
+            <span class="sw-eyebrow">{{ locale.t('header.search') }}</span>
+            <button class="sw-body sw-menu__social" type="button" @click="ui.openSearch">
+              {{ locale.t('menu.searchAction') }}
+            </button>
+          </div>
+          <div class="sw-menu__contact">
+            <span class="sw-eyebrow">{{ locale.t('header.cart') }}</span>
+            <button class="sw-body sw-menu__social" type="button" @click="ui.openCart">
+              {{ cart.count ? locale.t('menu.cartCount').replace('{count}', String(cart.count)) : locale.t('menu.cartEmpty') }}
+            </button>
           </div>
           <div class="sw-menu__contact">
             <span class="sw-eyebrow">{{ locale.t('menu.visit') }}</span>

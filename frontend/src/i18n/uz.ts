@@ -26,6 +26,9 @@ const uz: Dictionary = {
     contact: 'Aloqa',
   },
   menu: {
+    searchAction: 'Katalog bo‘ylab qidirish',
+    cartEmpty: 'Savat bo‘sh',
+    cartCount: 'Savatda {count} ta',
     visit: 'Sayt',
     follow: 'Kuzatish',
   },
@@ -269,18 +272,30 @@ const uz: Dictionary = {
     close: 'Yopish',
   },
   about: {
-    eyebrow: 'SwissWatch Premium haqida',
-    title: 'Ishonch ustiga qurilgan.',
+    eyebrow: 'Biz haqimizda',
+    title: '2000-yildan buyon — oilaviy an’ana.',
     intro:
-      "SwissWatch Premium oddiy bir e'tiqod asosida tashkil topgan: nafis soat o‘z ustaligiga teng darajadagi taqdimotga loyiq. Biz bozor emasmiz. Biz tanlab yig‘ilgan ko‘rgazma zalimiz — har bir nusxa shaxsan izlab topiladi, haqiqiyligi tasdiqlanadi va kolleksiyamizga qo‘shilishidan oldin katalogga kiritiladi.",
-    standardEyebrow: 'Bizning standartimiz',
-    standardTitle: 'Murosasiz haqiqiylik tekshiruvi.',
-    standardBody:
-      'Har bir soat mustaqil mexanizm ko‘rigidan, korpus va sirtqi taxta tekshiruvidan hamda to‘liq xizmat tarixi tahlilidan o‘tadi. Bu tekshiruvlarsiz hech narsa kolleksiyamizga kiritilmaydi.',
-    networkEyebrow: 'Bizning tarmog‘imiz',
-    networkTitle: 'Shveytsariya ustaxonalari bilan bevosita aloqalar.',
-    networkBody:
-      "Yetkazib berish tarmog‘imiz vakolatli dilerlar, xususiy kolleksionerlar va bevosita manufakturalarni qamrab oladi — bu bizga odatiy kanallar orqali kamdan-kam topiladigan nusxalarni taklif qilish imkonini beradi.",
+      'SwissWatch Premium — 2000-yildan buyon soatsozlik va qo‘l soatlari savdosi yo‘nalishida faoliyat yuritib kelayotgan oilaviy kompaniya.',
+    storyEyebrow: 'Bizning tariximiz',
+    storyTitle: 'Ota kasbidan boshlangan yo‘l.',
+    storyBody:
+      'Bizning tariximiz ota kasbidan boshlangan oilaviy an’ana bilan bog‘liq. Yillar davomida to‘plangan soatsozlik tajribasi, hunar va mijozlar ishonchi bugungi kunda yangi avlod tomonidan davom ettirilmoqda.',
+    legacyEyebrow: 'Family legacy',
+    legacyTitle: 'Ikki aka-uka, bitta meros.',
+    legacyBody:
+      'Hozirda SwissWatch Premium faoliyatini ikki aka-uka birgalikda davom ettirib, oilaviy merosni zamonaviy biznes yondashuvi, xalqaro hamkorlik va yuqori xizmat standartlari bilan rivojlantirib kelmoqda. Biz uchun bu shunchaki soat savdosi emas — bu avloddan avlodga o‘tib kelayotgan soatsozlik tajribasi, nom va mijozlar ishonchini davom ettirish mas’uliyati.',
+    portfolioEyebrow: 'Brendlar',
+    portfolioTitle: 'Assortimentimizdagi xalqaro brendlar',
+    exclusiveTitle: 'O‘zbekistonda eksklyuziv distributor',
+    warrantyEyebrow: 'Kafolat',
+    warrantyTitle: 'Har bir soat kafolat bilan.',
+    warrantyBody:
+      'SwissWatch Premium’dan xarid qilingan har bir soat kafolat bilan taqdim etiladi. Biz uchun mahsulot originalligi, sifat, professional xizmat va mijozlar bilan uzoq muddatli ishonchli munosabat birinchi o‘rinda turadi.',
+    closing: 'SwissWatch Premium — 2000-yilda boshlangan soatsozlik an’anasining yangi avloddagi davomi.',
+    branchesEyebrow: 'Filiallar',
+    branchesTitle: 'Bizni qayerdan topasiz',
+    branchesHours: 'Ish vaqti',
+    branchesMap: 'Xaritada ko‘rish',
   },
   contact: {
     eyebrow: 'Aloqa',
@@ -289,6 +304,7 @@ const uz: Dictionary = {
     showroom: 'Ko‘rgazma zali',
     showroomValue: 'Toshkent, O‘zbekiston',
     phone: 'Telefon',
+    ceoEmail: 'Kompaniya rahbari',
     email: 'Email',
     instagram: 'Instagram',
     fullName: 'To‘liq ism',

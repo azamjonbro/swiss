@@ -13,7 +13,7 @@ const locale = useLocaleStore();
 // block disappears rather than showing a placeholder — and the Organization
 // JSON-LD omits the same fields, so the page and the markup agree.
 const contactEmail = site.contactEmail ?? '';
-const contactPhone = site.contactPhone ?? '';
+const contactPhones = site.contactPhones ?? [];
 
 const name = ref('');
 const phone = ref('');
@@ -72,12 +72,20 @@ async function submit() {
           <span class="sw-eyebrow">{{ locale.t('contact.showroom') }}</span>
           <p class="sw-body">{{ locale.t('contact.showroomValue') }}</p>
         </div>
-        <div v-if="contactPhone" class="sw-contact__block">
+        <div v-if="contactPhones.length" class="sw-contact__block">
           <span class="sw-eyebrow">{{ locale.t('contact.phone') }}</span>
-          <a class="sw-body" :href="telHref(contactPhone)" @click="trackGoal('phone_click')">{{ contactPhone }}</a>
+          <a
+            v-for="number in contactPhones"
+            :key="number"
+            class="sw-body"
+            :href="telHref(number)"
+            @click="trackGoal('phone_click')"
+          >{{ number }}</a>
         </div>
         <div v-if="contactEmail" class="sw-contact__block">
-          <span class="sw-eyebrow">{{ locale.t('contact.email') }}</span>
+          <!-- The address is the director's own, not a shared sales inbox, and
+               a visitor writing to it should know that before they do. -->
+          <span class="sw-eyebrow">{{ locale.t('contact.ceoEmail') }}</span>
           <a class="sw-body" :href="`mailto:${contactEmail}`" @click="trackGoal('email_click')">{{ contactEmail }}</a>
         </div>
         <div class="sw-contact__block">

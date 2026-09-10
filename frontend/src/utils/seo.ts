@@ -19,6 +19,7 @@ import {
   type SeoSite,
 } from '@/seo/schema.mjs';
 import { storeLocations } from '@/data/locations';
+import { SHOW_PRICES } from '@/config/pricing';
 
 /**
  * Who this site is, as one record shared with the prerenderer and the 404
@@ -38,6 +39,7 @@ export const site: SeoSite = createSite({
   name: import.meta.env.VITE_SITE_NAME,
   contactEmail: import.meta.env.VITE_CONTACT_EMAIL,
   contactPhone: import.meta.env.VITE_CONTACT_PHONE,
+  showPrices: SHOW_PRICES,
 });
 
 /**

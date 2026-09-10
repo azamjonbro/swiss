@@ -39,6 +39,16 @@ const hidden = computed(() => ui.isMenuOpen || ui.isSearchOpen || ui.isCartOpen 
     :inert="hidden || undefined"
     :aria-label="locale.t('a11y.mobileNav')"
   >
+    <!-- First, and a route rather than an overlay: whatever page a visitor has
+         reached, this is the way back to the beginning. The header wordmark
+         links here too, but a mark is not a labelled control — and at this
+         width it is the smallest thing on the screen. -->
+    <RouterLink class="sw-tabbar__item" to="/" :aria-label="locale.t('nav.home')" @click="ui.closeMenu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M4.25 10.4 12 4.25l7.75 6.15V19a1 1 0 0 1-1 1h-3.5v-5.25h-6.5V20h-3.5a1 1 0 0 1-1-1Z" />
+      </svg>
+    </RouterLink>
+
     <button class="sw-tabbar__item" type="button" :aria-label="locale.t('header.search')" @click="ui.openSearch">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true">
         <circle cx="11" cy="11" r="6.25" />
@@ -130,9 +140,12 @@ const hidden = computed(() => ui.isMenuOpen || ui.isSearchOpen || ui.isCartOpen 
     height: 23px;
   }
 
+  /* `router-link-exact-active`, not `router-link-active`: "/" is a prefix of
+     every path on the site, so the loose class would light the home icon up on
+     every page and tell the visitor they are already there. */
   .sw-tabbar__item:active,
   .sw-tabbar__item:focus-visible,
-  .sw-tabbar__item.router-link-active {
+  .sw-tabbar__item.router-link-exact-active {
     opacity: 1;
   }
 

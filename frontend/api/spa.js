@@ -38,6 +38,7 @@ const site = createSite({
   name: process.env.VITE_SITE_NAME || process.env.SITE_NAME,
   contactEmail: process.env.VITE_CONTACT_EMAIL,
   contactPhone: process.env.VITE_CONTACT_PHONE,
+  showPrices: process.env.VITE_SHOW_PRICES === '1',
 });
 const SITE_NAME = site.name;
 

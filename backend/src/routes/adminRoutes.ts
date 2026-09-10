@@ -30,6 +30,13 @@ import {
   adminDeleteCollection,
 } from '../controllers/collectionController';
 import {
+  adminListBranches,
+  adminGetBranch,
+  adminCreateBranch,
+  adminUpdateBranch,
+  adminDeleteBranch,
+} from '../controllers/branchController';
+import {
   adminListInquiries,
   adminUpdateInquiry,
   adminDeleteInquiry,
@@ -62,6 +69,12 @@ router.post('/categories', adminCreateCategory);
 router.put('/categories/reorder', adminReorderCategories);
 router.put('/categories/:id', adminUpdateCategory);
 router.delete('/categories/:id', adminDeleteCategory);
+
+router.get('/branches', adminListBranches);
+router.get('/branches/:id', adminGetBranch);
+router.post('/branches', adminCreateBranch);
+router.put('/branches/:id', adminUpdateBranch);
+router.delete('/branches/:id', adminDeleteBranch);
 
 router.get('/brands', adminListBrands);
 router.post('/brands', adminCreateBrand);

@@ -12,7 +12,7 @@ const year = new Date().getFullYear();
 // allowed to be unset. Unset renders nothing at all — a placeholder number in
 // a footer is read as a real one, by visitors and by structured-data parsers.
 const email = site.contactEmail ?? '';
-const phone = site.contactPhone ?? '';
+const phones = site.contactPhones ?? [];
 import { trackGoal } from '@/utils/analytics';
 </script>
 
@@ -43,8 +43,14 @@ import { trackGoal } from '@/utils/analytics';
       <div class="sw-footer__col">
         <span class="sw-eyebrow">{{ locale.t('footer.connect') }}</span>
         <a href="https://instagram.com/swisswatch_premium" target="_blank" rel="noopener" @click="trackGoal('instagram_click')">{{ locale.t('footer.instagram') }}</a>
-        <a v-if="phone" :href="telHref(phone)" @click="trackGoal('phone_click')">{{ phone }}</a>
-        <a v-if="email" :href="`mailto:${email}`" @click="trackGoal('email_click')">{{ email }}</a>
+        <a v-for="number in phones" :key="number" :href="telHref(number)" @click="trackGoal('phone_click')">{{ number }}</a>
+        <!-- Labelled, because it is not a general enquiries address: it is the
+             director's. Without the line above it, a visitor has no way to tell
+             it apart from the numbers it sits under. -->
+        <template v-if="email">
+          <span class="sw-footer__label">{{ locale.t('contact.ceoEmail') }}</span>
+          <a :href="`mailto:${email}`" @click="trackGoal('email_click')">{{ email }}</a>
+        </template>
       </div>
     </div>
 
@@ -106,6 +112,19 @@ import { trackGoal } from '@/utils/analytics';
 .sw-footer__col .sw-eyebrow {
   color: var(--sw-gray-600);
   margin-bottom: 4px;
+}
+
+/* A second-level caption inside a column that already has an eyebrow: quieter
+   than the column heading, so it reads as belonging to the line below it
+   rather than starting a new group. The margin above it is what separates the
+   address from the phone numbers. */
+.sw-footer__label {
+  margin-top: 10px;
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--sw-gray-600);
 }
 
 .sw-footer__col a {

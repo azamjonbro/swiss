@@ -24,6 +24,9 @@ const en = {
     contact: 'Contact',
   },
   menu: {
+    searchAction: 'Search the catalogue',
+    cartEmpty: 'Your bag is empty',
+    cartCount: '{count} in your bag',
     visit: 'Visit',
     follow: 'Follow',
   },
@@ -270,18 +273,30 @@ const en = {
     close: 'Close',
   },
   about: {
-    eyebrow: 'About SwissWatch Premium',
-    title: 'Built on trust.',
+    eyebrow: 'About Us',
+    title: 'A family legacy since 2000.',
     intro:
-      'SwissWatch Premium was founded on a simple conviction: that a fine timepiece deserves a presentation equal to its craftsmanship. We are not a marketplace. We are a curated showroom — every reference personally sourced, authenticated, and catalogued before it reaches our collection.',
-    standardEyebrow: 'Our Standard',
-    standardTitle: 'Authentication without compromise.',
-    standardBody:
-      'Every timepiece undergoes independent movement inspection, case and dial verification, and a complete service history review. Nothing enters our collection without it.',
-    networkEyebrow: 'Our Network',
-    networkTitle: 'Direct relationships with Swiss ateliers.',
-    networkBody:
-      'Our sourcing network spans authorized dealers, private collectors, and the manufactures themselves — allowing us to offer pieces rarely available through conventional channels.',
+      'SwissWatch Premium is a family-owned watch company with a heritage in watchmaking and watch retail dating back to 2000.',
+    storyEyebrow: 'Our Story',
+    storyTitle: 'It began with our father’s trade.',
+    storyBody:
+      'Our story began with a family tradition inherited from our father’s profession in watchmaking. Over the years, the craftsmanship, expertise, and trust built with our customers have been passed on to the next generation.',
+    legacyEyebrow: 'Family Legacy',
+    legacyTitle: 'Two brothers, one inheritance.',
+    legacyBody:
+      'Today, SwissWatch Premium is led by two brothers who continue the family legacy together, combining traditional watch expertise with a modern business approach, international partnerships, and high standards of customer service. For us, watches are more than just a business — they are a responsibility to preserve the craftsmanship, reputation, and customer trust built across generations.',
+    portfolioEyebrow: 'Maisons',
+    portfolioTitle: 'The brands we carry',
+    exclusiveTitle: 'Exclusive distributor in Uzbekistan',
+    warrantyEyebrow: 'Warranty',
+    warrantyTitle: 'Every watch, under warranty.',
+    warrantyBody:
+      'Every watch purchased from SwissWatch Premium is provided with a warranty. We place authenticity, quality, professional service, and long-term customer trust at the heart of everything we do.',
+    closing: 'SwissWatch Premium — carrying forward a watchmaking tradition that began in 2000.',
+    branchesEyebrow: 'Boutiques',
+    branchesTitle: 'Where to find us',
+    branchesHours: 'Opening hours',
+    branchesMap: 'View on map',
   },
   contact: {
     eyebrow: 'Contact',
@@ -290,6 +305,7 @@ const en = {
     showroom: 'Showroom',
     showroomValue: 'Tashkent, Uzbekistan',
     phone: 'Phone',
+    ceoEmail: 'CEO of company',
     email: 'Email',
     instagram: 'Instagram',
     fullName: 'Full Name',

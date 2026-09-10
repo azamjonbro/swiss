@@ -137,7 +137,7 @@ export function resolveSiteUrl(raw, { strict = false, label = 'VITE_SITE_URL' } 
  * in their place and the JSON-LD omits the field, rather than shipping a
  * placeholder that a crawler would read as fact.
  */
-export function createSite({ url, name, contactEmail, contactPhone } = {}) {
+export function createSite({ url, name, contactEmail, contactPhone, showPrices } = {}) {
   const site = {
     url: String(url ?? DEFAULT_SITE_URL).replace(/\/+$/, ''),
     name: String(name || SITE_NAME),
@@ -156,9 +156,29 @@ export function createSite({ url, name, contactEmail, contactPhone } = {}) {
     sameAs: ['https://instagram.com/swisswatch_premium'],
   };
   const email = String(contactEmail ?? '').trim();
-  const phone = String(contactPhone ?? '').trim();
   if (email) site.contactEmail = email;
-  if (phone) site.contactPhone = phone;
+
+  // The boutique publishes more than one number. `contactPhone` therefore
+  // takes a list — comma- or newline-separated — and both shapes come out of
+  // it: `contactPhones` is every number, for the UI, and `contactPhone` is the
+  // first, because schema.org's `telephone` is a single value and the first
+  // entry is the one the business answers on.
+  const phones = String(contactPhone ?? '')
+    .split(/[,\n]/)
+    .map((entry) => entry.trim())
+    .filter(Boolean);
+  if (phones.length) {
+    site.contactPhones = phones;
+    [site.contactPhone] = phones;
+  }
+
+  // Whether the storefront publishes prices at all — see src/config/pricing.ts.
+  // The JSON-LD has to agree with the page: a Product node carrying an Offer
+  // whose price appears nowhere on the rendered page is exactly the mismatch
+  // Google's merchant guidelines call out, and it would also put figures back
+  // into search results that the business has taken down.
+  site.showPrices = showPrices === true;
+
   return site;
 }
 
@@ -556,16 +576,21 @@ export function organizationSchema(site) {
   // Only profiles that genuinely exist — an invented handle is worse than none.
   if (site.sameAs?.length) org.sameAs = site.sameAs;
   if (site.contactEmail) org.email = site.contactEmail;
-  if (site.contactPhone) org.telephone = site.contactPhone;
-  // A contactPoint without a number is an empty shell, so it appears only once
-  // a real phone number has been configured.
-  if (site.contactPhone) {
-    org.contactPoint = {
+  const phones = site.contactPhones?.length ? site.contactPhones : site.contactPhone ? [site.contactPhone] : [];
+  // `telephone` is single-valued; the rest of the numbers are reachable through
+  // the contactPoints below rather than crammed into one string.
+  if (phones.length) org.telephone = phones[0];
+  // A contactPoint without a number is an empty shell, so these appear only
+  // once a real phone number has been configured.
+  if (phones.length) {
+    org.contactPoint = phones.map((telephone, index) => ({
       '@type': 'ContactPoint',
       contactType: 'sales',
-      telephone: site.contactPhone,
-      ...(site.contactEmail ? { email: site.contactEmail } : {}),
-    };
+      telephone,
+      // The address belongs to the line the business answers first, not to
+      // every entry — repeating it would claim three inboxes that are one.
+      ...(index === 0 && site.contactEmail ? { email: site.contactEmail } : {}),
+    }));
   }
   return org;
 }
@@ -640,7 +665,10 @@ export function productSchema(watch, site) {
   if (watch.color) product.color = watch.color;
 
   const availability = availabilityUrl(watch.availability);
-  if (typeof watch.price === 'number' && watch.price > 0 && watch.currency) {
+  // `site.showPrices` mirrors the storefront's own switch: while prices are
+  // down, the Offer node goes with them rather than publishing a figure the
+  // page itself declines to show.
+  if (site.showPrices && typeof watch.price === 'number' && watch.price > 0 && watch.currency) {
     product.offers = {
       '@type': 'Offer',
       url,

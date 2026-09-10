@@ -12,8 +12,12 @@ export interface SeoSite {
   name: string;
   /** Published contact address. Absent when the business has not published one. */
   contactEmail?: string;
-  /** Published telephone number, in display form. Absent when unpublished. */
+  /** First published telephone number, in display form. Absent when unpublished. */
   contactPhone?: string;
+  /** Every published telephone number, in display form, in the order given. */
+  contactPhones?: string[];
+  /** Whether price figures may be published — mirrors `src/config/pricing.ts`. */
+  showPrices?: boolean;
   /** Path or absolute URL used when a page has no image of its own. */
   defaultImage?: string;
   /** Pixel size of `defaultImage`, declared to crawlers as `og:image:width/height`. */
@@ -75,7 +79,9 @@ export interface SiteInput {
   url?: string;
   name?: string;
   contactEmail?: string;
+  /** One number, or several separated by commas or newlines. */
   contactPhone?: string;
+  showPrices?: boolean;
 }
 
 export function resolveSiteUrl(
