@@ -84,12 +84,12 @@ withDefaults(defineProps<Props>(), { size: 30, wordmark: true });
   /* One line at every width, and as large as the row can carry.
 
      The ceiling is the desktop lockup. The floor is set by the *tablet*, not
-     the phone: between 641px and about 1024px the header still carries the
-     full actions column (preferences · search · account · cart) and the centre
-     column is the narrowest it ever gets — measured at 900px, 1.35rem left the
-     wordmark touching "Cart" with nothing between them. 1.05rem clears it by
-     ~40px. Phones get the larger size back below, where the actions are gone. */
-  font-size: clamp(1.05rem, 1.9vw, 1.95rem);
+     the phone: between 641px and about 1024px the header still carries search,
+     account and cart beside the mark, and the centre column is the narrowest
+     it ever gets. With the preferences dropped from that band (see
+     AppHeader.vue) 1.2rem leaves ~50px of air at 768px; phones get the larger
+     size back below, where the actions are gone entirely. */
+  font-size: clamp(1.2rem, 1.9vw, 1.95rem);
   letter-spacing: 0.005em;
   line-height: 1;
   white-space: nowrap;

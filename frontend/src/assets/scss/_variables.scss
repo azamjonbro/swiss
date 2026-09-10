@@ -64,7 +64,11 @@
   --font-wordmark: 'SW Wordmark', 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
 
   // ---- Layout ----
-  --container-pad: clamp(24px, 5vw, 72px);
+  // `max(..., env(...))` because the page now declares `viewport-fit=cover`
+  // (index.html): in landscape on a notched iPhone the 24px gutter would put
+  // the first character of every row under the sensor housing. The inset is
+  // 0 everywhere else, so this is the same 24px on every other device.
+  --container-pad: max(clamp(24px, 5vw, 72px), env(safe-area-inset-left, 0px));
   --container-max: 1680px;
   --header-height: 84px;
   // The phone-only bottom bar (MobileTabBar.vue). Declared here rather than in
@@ -101,6 +105,16 @@
 @media (max-width: 640px) {
   :root {
     --header-height: 62px;
+  }
+}
+
+// A short phone — an SE, or any handset with Safari's own bottom bar showing —
+// is paying for two bars at once. The token, not the component, because
+// DefaultLayout reserves the page's bottom padding from it: change one without
+// the other and the content either sits under the bar or floats above it.
+@media (max-height: 700px) {
+  :root {
+    --tabbar-height: 50px;
   }
 }
 

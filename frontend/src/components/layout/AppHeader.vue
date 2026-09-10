@@ -299,6 +299,18 @@ const themeMode = computed<'transparent' | 'veil' | 'light'>(() => {
   letter-spacing: normal;
 }
 
+/* Between the phone and the laptop the row is exactly full: measured at 900px
+   and 768px the wordmark's right edge met the first action with nothing
+   between them. The preferences are what gives — they are a duplicate of the
+   language and currency selects the menu panel carries at every width, so
+   dropping them here costs a visitor nothing and buys the lockup ~120px. */
+@media (max-width: 1024px) {
+  .sw-header__actions :deep(.sw-prefs),
+  .sw-header__action-divider {
+    display: none;
+  }
+}
+
 @media (max-width: 640px) {
   .sw-header__action--hide-mobile {
     display: none;

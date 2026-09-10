@@ -109,6 +109,17 @@ const hidden = computed(() => ui.isMenuOpen || ui.isSearchOpen || ui.isCartOpen 
       opacity 0.3s var(--ease-editorial);
   }
 
+  /* The bar's height on a short screen comes from `--tabbar-height` (see
+     _variables.scss, which the page padding also reads); the icons come down
+     with it so the row keeps its proportions. 50px still clears the 44px
+     minimum touch target. */
+  @media (max-height: 700px) {
+    .sw-tabbar__item svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
   /* Translated rather than unmounted: the cart drawer closes with an animation
      of its own, and a bar that reappears instantly underneath it reads as a
      glitch. `inert` above is what actually takes it out of the tab order. */

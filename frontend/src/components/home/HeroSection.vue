@@ -116,7 +116,19 @@ function handleDiscover() {
   <section class="sw-hero">
     <div ref="mediaEl" class="sw-hero__media">
       <div ref="frameEl" class="sw-hero__frame">
-        <SmartImage :src="heroImage" :mobile-src="heroImageMobile" :alt="locale.t('home.heroImageAlt')" eager />
+        <!-- `sizes` is deliberately wider than the viewport. The frame bleeds
+             12px past every edge and, more to the point, the crop here is
+             driven by *height*: a 16:9 plate covering a tall window is scaled
+             until its height fits, so the browser's width-based guess
+             under-picks by roughly a third. 120vw buys the file that actually
+             covers it. -->
+        <SmartImage
+          :src="heroImage"
+          :mobile-src="heroImageMobile"
+          :alt="locale.t('home.heroImageAlt')"
+          sizes="(max-width: 900px) 170vw, 120vw"
+          eager
+        />
       </div>
       <!-- Three separate grades rather than one heavy scrim: the left edge is
            weighted for the type, the base carries the CTA, and a soft vignette
