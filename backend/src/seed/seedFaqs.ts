@@ -1,13 +1,12 @@
 /**
  * Fills the FAQ list with the ten questions the shop is actually asked.
  *
- * These are *starting text*, not fixed copy: every one of them is editable in
- * the admin panel, and the answers here deliberately state only what the site
- * already claims elsewhere (a warranty on every watch, a consultant who
- * confirms availability and terms) rather than inventing a delivery window, a
- * returns period or a payment method nobody has confirmed. Sharpen them in the
- * admin once the real terms are known — an answer that is wrong is worse than
- * one that is general.
+ * This is the shop's own copy, supplied by the business on 2026-09-10 and
+ * written out in all three languages the storefront speaks. The answers
+ * deliberately commit to nothing the business has not confirmed — no delivery
+ * window, no returns period, no named payment method — because the manager
+ * settles those per order, and an answer that is wrong is worse than one that
+ * is general. Every entry stays editable in the admin panel.
  *
  * Idempotent: a question already in the database, matched on its English text,
  * is left exactly as it is — re-running this never overwrites an edited answer.
@@ -28,153 +27,153 @@ interface SeedFaq {
 
 const FAQS: SeedFaq[] = [
   {
-    question: 'Are the watches you sell authentic?',
+    question: 'Are the watches at SwissWatch Premium authentic?',
     answer:
-      'Yes. Every timepiece in the catalogue is sourced through official channels and checked before it is listed, and it is handed over with the documentation that came with it.',
+      'Yes. Everything offered at SwissWatch Premium is authentic and arrives through trusted, official supply channels. Each piece is handed over with its set and the documents that came with it.',
     ru: {
-      question: 'Все ли часы у вас оригинальные?',
+      question: 'Оригинальные ли часы в SwissWatch Premium?',
       answer:
-        'Да. Каждые часы в каталоге поступают по официальным каналам и проверяются до публикации, а при передаче вы получаете сопроводительные документы.',
+        'Да. Все товары, представленные в SwissWatch Premium, оригинальные и поступают через надёжные официальные каналы поставок. Каждая модель передаётся с соответствующей комплектацией и имеющимися документами.',
     },
     uz: {
-      question: 'Sotilayotgan soatlar originalmi?',
+      question: 'SwissWatch Premium’dagi soatlar originalmi?',
       answer:
-        'Ha. Katalogdagi har bir soat rasmiy kanallar orqali keltiriladi va e’lon qilinishidan oldin tekshiriladi, topshirishda esa unga tegishli hujjatlar bilan birga beriladi.',
+        'Ha. SwissWatch Premium’da taqdim etiladigan mahsulotlar original bo‘lib, ishonchli va rasmiy yetkazib berish manbalari orqali olib kelinadi. Har bir mahsulot tegishli komplektatsiyasi va mavjud hujjatlari bilan taqdim etiladi.',
     },
   },
   {
-    question: 'Is there a warranty?',
+    question: 'Is the watch sold with a warranty?',
     answer:
-      'Every watch bought from SwissWatch Premium comes with a warranty. The exact terms depend on the maison and are confirmed by your consultant before the purchase.',
+      'Yes. Depending on the brand and the model, a watch is sold with a warranty period set by the manufacturer or by the seller. The exact term is shown on the product page or confirmed at the time of purchase.',
     ru: {
-      question: 'Предоставляется ли гарантия?',
+      question: 'Предоставляется ли гарантия на часы?',
       answer:
-        'На каждые часы, купленные в SwissWatch Premium, предоставляется гарантия. Точные условия зависят от мануфактуры, и консультант подтверждает их до покупки.',
+        'Да. В зависимости от бренда и модели часы продаются с гарантийным сроком, установленным производителем или продавцом. Точный срок указывается на странице товара или подтверждается при покупке.',
     },
     uz: {
-      question: 'Kafolat beriladimi?',
+      question: 'Soatga kafolat beriladimi?',
       answer:
-        'SwissWatch Premium’dan olingan har bir soat kafolat bilan beriladi. Aniq shartlar ishlab chiqaruvchiga bog‘liq va xariddan oldin konsultant tomonidan tasdiqlanadi.',
+        'Ha. Soatlar brend va modelga qarab ishlab chiqaruvchi yoki sotuvchi tomonidan belgilangan kafolat muddati bilan sotiladi. Aniq kafolat muddati mahsulot sahifasida yoki xarid vaqtida ko‘rsatiladi.',
     },
   },
   {
-    question: 'How do I place an order?',
+    question: 'How do I place an order through the site?',
     answer:
-      'Send a request from the watch’s page or from your selection. A consultant then contacts you to confirm availability, the final terms and how you would like to receive the watch.',
+      'Choose the piece you want, press the order button and leave your contact details. Our manager will get in touch and confirm availability, payment and the delivery arrangements.',
     ru: {
-      question: 'Как оформить заказ?',
+      question: 'Как оформить заказ через сайт?',
       answer:
-        'Отправьте запрос со страницы часов или из вашей подборки. Консультант свяжется с вами, чтобы подтвердить наличие, окончательные условия и способ получения.',
+        'Выберите нужную модель, нажмите кнопку заказа и оставьте свои контактные данные. Наш менеджер свяжется с вами и подтвердит наличие, оплату и детали доставки.',
     },
     uz: {
-      question: 'Buyurtmani qanday berish mumkin?',
+      question: 'Sayt orqali qanday qilib buyurtma beraman?',
       answer:
-        'Soat sahifasidan yoki tanlovingizdan so‘rov yuboring. Shundan so‘ng konsultant siz bilan bog‘lanib, mavjudligini, yakuniy shartlarni va soatni qanday olishni xohlashingizni aniqlaydi.',
+        'Kerakli mahsulotni tanlab, buyurtma berish tugmasini bosing va aloqa ma’lumotlaringizni kiriting. Menejerimiz siz bilan bog‘lanib, mahsulot mavjudligi, to‘lov va yetkazib berish tafsilotlarini tasdiqlaydi.',
     },
   },
   {
-    question: 'Can I see the watch before I buy it?',
+    question: 'Are the pieces on the site also available in the boutique?',
     answer:
-      'Yes. Tell your consultant which references interest you and they will arrange for them to be ready at the boutique when you come.',
+      'Availability differs from one boutique to another. Before you buy, leave a request on the site or ask our manager which branch currently holds the piece.',
     ru: {
-      question: 'Можно ли посмотреть часы перед покупкой?',
+      question: 'Есть ли товары с сайта в магазине?',
       answer:
-        'Да. Сообщите консультанту, какие модели вас интересуют, и он подготовит их к вашему приходу в бутик.',
+        'Наличие может отличаться в разных филиалах. Перед покупкой оставьте запрос на сайте или уточните у менеджера, в каком именно филиале есть нужная модель.',
     },
     uz: {
-      question: 'Sotib olishdan oldin soatni ko‘rish mumkinmi?',
+      question: 'Saytdagi mahsulotlar do‘konda ham mavjudmi?',
       answer:
-        'Ha. Qaysi modellar qiziqtirayotganini konsultantga ayting — u kelganingizga soatlarni butikda tayyorlab qo‘yadi.',
-    },
-  },
-  {
-    question: 'Where are you located?',
-    answer:
-      'Our boutique addresses, telephone numbers and opening hours are listed on the About page; each address also carries a map link.',
-    ru: {
-      question: 'Где вы находитесь?',
-      answer:
-        'Адреса бутиков, телефоны и часы работы указаны на странице «О нас»; у каждого адреса есть ссылка на карту.',
-    },
-    uz: {
-      question: 'Manzilingiz qayerda?',
-      answer:
-        'Butiklarimiz manzillari, telefon raqamlari va ish vaqti «Biz haqimizda» sahifasida keltirilgan; har bir manzil yonida xarita havolasi ham bor.',
+        'Mahsulot mavjudligi filiallar bo‘yicha farq qilishi mumkin. Xarid qilishdan oldin sayt orqali so‘rov qoldirishingiz yoki menejerimiz orqali aynan qaysi filialda mavjudligini aniqlashingiz mumkin.',
     },
   },
   {
     question: 'Do you deliver across Uzbekistan?',
     answer:
-      'Yes, delivery to other cities is possible. Your consultant agrees the method and the timing with you when the order is confirmed.',
+      'Yes. Delivery is available anywhere in Uzbekistan. The time it takes and what it costs depend on the address and on the kind of order.',
     ru: {
-      question: 'Доставляете ли вы по Узбекистану?',
+      question: 'Есть ли доставка по Узбекистану?',
       answer:
-        'Да, доставка в другие города возможна. Способ и сроки консультант согласует с вами при подтверждении заказа.',
+        'Да. Доставка осуществляется по всему Узбекистану. Срок и стоимость зависят от адреса и типа заказа.',
     },
     uz: {
-      question: 'O‘zbekiston bo‘ylab yetkazib berasizmi?',
+      question: 'O‘zbekiston bo‘ylab yetkazib berish bormi?',
       answer:
-        'Ha, boshqa shaharlarga yetkazib berish mumkin. Usul va muddatni buyurtma tasdiqlanayotganda konsultant siz bilan kelishadi.',
+        'Ha. O‘zbekiston bo‘ylab yetkazib berish xizmati mavjud. Yetkazib berish muddati va narxi manzil hamda buyurtma turiga qarab aniqlanadi.',
     },
   },
   {
-    question: 'How can I pay?',
+    question: 'Can I inspect the watch before accepting delivery?',
     answer:
-      'Payment is arranged with your consultant when the order is confirmed. The site itself takes no payment — nothing is charged online.',
+      'Depending on the delivery method, you can check the outward condition and the contents of the set when you receive it. The manager explains the exact terms when your order is confirmed.',
     ru: {
-      question: 'Как можно оплатить?',
+      question: 'Можно ли проверить товар перед получением?',
       answer:
-        'Оплата согласовывается с консультантом при подтверждении заказа. Сам сайт платежи не принимает — онлайн ничего не списывается.',
+        'В зависимости от способа доставки вы можете проверить внешнее состояние и комплектацию при получении. Точные условия менеджер разъясняет при подтверждении заказа.',
     },
     uz: {
-      question: 'To‘lovni qanday amalga oshiraman?',
+      question: 'Mahsulotni yetkazib berishdan oldin tekshirib olsam bo‘ladimi?',
       answer:
-        'To‘lov buyurtma tasdiqlanayotganda konsultant bilan kelishiladi. Saytning o‘zi to‘lov qabul qilmaydi — onlayn hech narsa yechilmaydi.',
+        'Yetkazib berish usuliga qarab mahsulotni qabul qilish vaqtida tashqi holati va komplektatsiyasini tekshirish imkoniyati mavjud. Batafsil shartlarni buyurtmani tasdiqlash vaqtida menejerimiz tushuntirib beradi.',
     },
   },
   {
-    question: 'Can the bracelet be sized to my wrist?',
+    question: 'What payment methods are available?',
     answer:
-      'Yes. Bracelet links are adjusted at the boutique when the watch is handed over, and a strap can be changed for another size where the model allows it.',
+      'You can pay by any of the methods we accept. Which ones apply depends on the kind of order, and the manager states them exactly when the order is confirmed.',
     ru: {
-      question: 'Подгоняете ли вы браслет по руке?',
+      question: 'Какие способы оплаты доступны?',
       answer:
-        'Да. Звенья браслета подгоняются в бутике при передаче часов, а ремешок при возможности модели меняется на другой размер.',
+        'Оплатить можно одним из доступных способов. Формы оплаты могут различаться в зависимости от типа заказа и точно указываются менеджером при подтверждении заказа.',
     },
     uz: {
-      question: 'Brasletni bilagimga moslab berasizmi?',
+      question: 'Qanday to‘lov usullari mavjud?',
       answer:
-        'Ha. Braslet bo‘g‘inlari soat topshirilayotganda butikda moslanadi, model imkon bergan holda tasma boshqa o‘lchamga almashtiriladi.',
+        'To‘lovni mavjud usullardan biri orqali amalga oshirishingiz mumkin. To‘lov shakllari buyurtma turiga qarab farq qilishi mumkin va menejer tomonidan buyurtma tasdiqlanishida aniq ko‘rsatiladi.',
     },
   },
   {
-    question: 'What if the watch needs servicing later?',
+    question: 'How do I know the watch will be the right size for me?',
     answer:
-      'Contact us with the reference and the date of purchase and we will tell you what the maison’s service requires and where the work is carried out.',
+      'The product page lists the case diameter and the main measurements. If you are hesitating between options, our specialists will help you choose the one that suits your wrist and your style.',
     ru: {
-      question: 'Что делать, если часам потребуется обслуживание?',
+      question: 'Как понять, подойдёт ли мне размер часов?',
       answer:
-        'Свяжитесь с нами, указав референс и дату покупки — мы объясним, что требует сервис мануфактуры и где выполняются работы.',
+        'На странице товара указаны диаметр корпуса и основные размеры. Если вы сомневаетесь в выборе, наши специалисты помогут подобрать вариант под ваше запястье и стиль.',
     },
     uz: {
-      question: 'Keyinchalik soatga xizmat ko‘rsatish kerak bo‘lsa-chi?',
+      question: 'Soat o‘lchami menga mos kelishini qanday bilaman?',
       answer:
-        'Referens va xarid sanasini ko‘rsatgan holda biz bilan bog‘laning — ishlab chiqaruvchi servisi nimani talab qilishini va ish qayerda bajarilishini aytamiz.',
+        'Mahsulot sahifasida korpus diametri va asosiy o‘lchamlari ko‘rsatiladi. Agar tanlashda ikkilanayotgan bo‘lsangiz, mutaxassislarimiz bilagingiz va uslubingizga mos variantni tanlashda yordam beradi.',
     },
   },
   {
-    question: 'Can I exchange or return a watch?',
+    question: 'Can the watch be wrapped as a gift?',
     answer:
-      'Tell your consultant as soon as possible. Exchanges and returns are handled case by case, within the rights Uzbek consumer law gives you.',
+      'Yes. Within what is available, we will prepare the piece as a gift and help with special wrapping. Just mention it to the manager when you order.',
     ru: {
-      question: 'Можно ли обменять или вернуть часы?',
+      question: 'Можно ли оформить подарочную упаковку?',
       answer:
-        'Сообщите консультанту как можно скорее. Обмен и возврат рассматриваются индивидуально, в рамках прав, которые даёт законодательство Узбекистана о защите прав потребителей.',
+        'Да. В рамках имеющихся возможностей мы поможем подготовить модель как подарок и оформить специальную упаковку. Достаточно сказать об этом менеджеру при заказе.',
     },
     uz: {
-      question: 'Soatni almashtirish yoki qaytarish mumkinmi?',
+      question: 'Sovg‘a uchun maxsus qadoqlash mumkinmi?',
       answer:
-        'Iloji boricha tezroq konsultantga xabar bering. Almashtirish va qaytarish O‘zbekiston iste’molchi huquqlari to‘g‘risidagi qonunchiligi bergan huquqlar doirasida, har bir holat alohida ko‘rib chiqiladi.',
+        'Ha. Mavjud imkoniyatlardan kelib chiqib, mahsulotni sovg‘a sifatida tayyorlash va maxsus qadoqlash bo‘yicha yordam beramiz. Buyurtma vaqtida bu haqda menejerga aytishingiz kifoya.',
+    },
+  },
+  {
+    question: 'If the model I want is not on the site, can it be ordered in?',
+    answer:
+      'For some brands and models an individual order is possible. Send us the name or a picture of the model you are looking for and our specialists will check whether it can be sourced and brought in.',
+    ru: {
+      question: 'Если нужной модели нет на сайте, можно ли заказать её под привоз?',
+      answer:
+        'По отдельным брендам и моделям возможен индивидуальный заказ. Пришлите название или фото нужной модели — наши специалисты проверят наличие и возможность привоза.',
+    },
+    uz: {
+      question: 'Kerakli model saytda bo‘lmasa, buyurtma qilib olib kelish mumkinmi?',
+      answer:
+        'Ayrim brend va modellarda individual buyurtma imkoniyati mavjud. Siz izlayotgan model nomi yoki rasmini bizga yuboring — mutaxassislarimiz mavjudligini va olib kelish imkoniyatini tekshirib beradi.',
     },
   },
 ];
