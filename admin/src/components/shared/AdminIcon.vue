@@ -23,6 +23,7 @@ const PATHS: Record<string, string> = {
   accessory: 'M9 4h6l.5 5.5H8.5L9 4Zm-.5 10.5h7L15 20H9l-.5-5.5ZM8.5 9.5h7v5h-7v-5Z',
   // A map pin over its own base — the boutiques are places, not records.
   branch: 'M12 21s7-5.4 7-10.6a7 7 0 1 0-14 0C5 15.6 12 21 12 21Zm0-8.1a2.6 2.6 0 1 0 0-5.2 2.6 2.6 0 0 0 0 5.2Z',
+  faq: 'M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v7a2.5 2.5 0 0 1-2.5 2.5H9l-5 4V6.5Zm6 1.9a2.2 2.2 0 0 1 3.3 1.9c0 1.5-2.2 1.7-2.2 3.2m0 2.2h.01',
   plus: 'M12 5v14M5 12h14',
   search: 'M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14Zm5.2-1.8L21 21',
   edit: 'M4 20h4L20 8a2.1 2.1 0 0 0-3-3L5 17v3Zm11.5-13 3 3',

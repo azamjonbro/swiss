@@ -394,6 +394,21 @@ const uz: Dictionary = {
     branchMapUrl: 'Xarita havolasi',
     branchNoAddress: 'Ko‘cha manzili yo‘q',
     branchDeployNote: 'Sayt filial sahifalarini oldindan tayyorlaydi, shuning uchun bu yerdagi o‘zgarish keyingi deployda jonlanadi — saqlash uni avtomatik rejalashtiradi.',
+    // FAQ
+    faqs: 'FAQ',
+    faqsSub: 'Do‘konga oid savol-javoblar, har bir soat ostida ko‘rsatiladi.',
+    newFaq: 'Yangi savol',
+    editFaq: 'Savolni tahrirlash',
+    emptyFaqs: 'Hozircha savollar yo‘q',
+    emptyFaqsBody: 'Xaridorlar sotib olishdan oldin so‘raydigan savollarni qo‘shing: yetkazib berish, kafolat, xizmat ko‘rsatish.',
+    faqSaved: 'Savol saqlandi.',
+    faqDeleted: 'Savol o‘chirildi.',
+    deleteFaqTitle: 'Bu savol o‘chirilsinmi?',
+    faqQuestion: 'Savol',
+    faqAnswer: 'Javob',
+    faqAnswerHint: 'Oddiy matn, bir necha gap. Yozilganidek, tashrifchining tilida ko‘rsatiladi.',
+    faqRequired: 'Savol ham, javob ham to‘ldirilishi kerak.',
+    faqDeployNote: 'FAQ har bir oldindan tayyorlangan mahsulot sahifasiga yoziladi, shuning uchun bu yerdagi o‘zgarish keyingi deployda jonlanadi — saqlash uni avtomatik rejalashtiradi.',
 
     // Inquiries
     inquiriesSub: 'Saytdan yuborilgan murojaatlar.',

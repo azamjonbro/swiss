@@ -392,6 +392,21 @@ const en = {
     branchMapUrl: 'Map link',
     branchNoAddress: 'No street address',
     branchDeployNote: 'The storefront prerenders its boutique pages, so a change here goes live with the next deploy — which saving schedules automatically.',
+    // FAQ
+    faqs: 'FAQ',
+    faqsSub: 'Shop questions and answers, shown under every watch.',
+    newFaq: 'New Question',
+    editFaq: 'Edit Question',
+    emptyFaqs: 'No questions yet',
+    emptyFaqsBody: 'Add the questions customers ask before buying — delivery, warranty, servicing.',
+    faqSaved: 'Question saved.',
+    faqDeleted: 'Question deleted.',
+    deleteFaqTitle: 'Delete this question?',
+    faqQuestion: 'Question',
+    faqAnswer: 'Answer',
+    faqAnswerHint: 'Plain text, a few sentences. Shown as written, in the visitor’s language.',
+    faqRequired: 'Both the question and the answer are required.',
+    faqDeployNote: 'The FAQ is written into every prerendered product page, so an edit here goes live with the next deploy — which saving schedules automatically.',
 
     // Inquiries
     inquiriesSub: 'Requests sent from the storefront.',

@@ -80,6 +80,16 @@ export interface Branch {
   translations?: Translations;
 }
 
+/** One shop question, as the FAQ under every watch on the storefront. */
+export interface Faq {
+  _id: string;
+  question: string;
+  answer: string;
+  order: number;
+  isActive: boolean;
+  translations?: Translations;
+}
+
 export interface BrandRef {
   _id: string;
   name: string;

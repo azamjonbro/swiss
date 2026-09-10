@@ -80,6 +80,12 @@ const routes = [
         meta: { titleKey: 'admin.branches' },
       },
       {
+        path: 'faqs',
+        name: 'faqs',
+        component: () => import('@/pages/admin/AdminFaqs.vue'),
+        meta: { titleKey: 'admin.faqs' },
+      },
+      {
         path: 'customers',
         name: 'customers',
         component: () => import('@/pages/admin/AdminCustomers.vue'),
