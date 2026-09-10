@@ -43,22 +43,17 @@ withDefaults(defineProps<Props>(), { size: 30, wordmark: true });
       <path d="M0 40L0 23.89 17.03 23.26 17.77 38.51 18.46 23.37 18.69 23.09 21.31 23.09 20.63 40Z" fill="var(--sw-crimson)" />
     </svg>
     <!--
-      Two spans, not one string with a space in it. The lockup has to hold as a
-      single line on a desktop header and as two stacked lines on a phone, and
-      the browser will not be told *where* to break a plain string — left to
-      itself it broke "SwissWatch / Premium" one width and "SwissWatch Pre- /
-      mium" the next. Splitting the name is what makes the break point the
-      design's decision rather than the text renderer's; the accessible name is
-      the same two words either way.
+      One line, at every width. It used to be two spans so the name could be
+      stacked on a phone, back when the header still carried the search,
+      account and cart labels beside it. Those moved to MobileTabBar, which
+      left the centre column with most of the row to itself — so the name is a
+      plain string again and the lockup reads the same everywhere.
 
       The casing here is literal and load-bearing: the wordmark face is subset
-      to the letters of this exact string (see index.html), so these two words
-      are the only text on the site that may be set in it.
+      to the letters of this exact string (see index.html), so this is the only
+      text on the site that may be set in it.
     -->
-    <span v-if="wordmark" class="sw-mark__word">
-      <span class="sw-mark__word-line">SwissWatch</span>
-      <span class="sw-mark__word-line">Premium</span>
-    </span>
+    <span v-if="wordmark" class="sw-mark__word">SwissWatch Premium</span>
   </span>
 </template>
 
@@ -74,43 +69,34 @@ withDefaults(defineProps<Props>(), { size: 30, wordmark: true });
   flex: none;
 }
 
-/* The wordmark is the one place on the site that does not use DM Sans: these
-   are the letterforms of the boutique's own logo — a high-contrast Didone set
-   in mixed case, not tracked capitals. Set as capitals it read as a generic
-   luxury title and threw away the thing that identifies it, so the casing
-   here is part of the mark, not a default.
+/* The wordmark is the one place on the site that does not use DM Sans:
+   Cormorant Garamond, an old-style face with fine hairlines and a small
+   x-height, set in mixed case rather than tracked capitals. Set as capitals it
+   read as a generic luxury title and threw away the thing that identifies it,
+   so the casing here is part of the mark, not a default.
 
-   It is also *narrower* than what it replaced: "SWISSWATCH" at 0.3em tracking
-   ran about 155px, the same word in mixed case runs about 85px, which is what
-   buys back the room the two-line mobile lockup below was invented to find. */
+   The small x-height is why this sits a weight up (600) and a size up from
+   what a Didone needed: at the same nominal size Cormorant simply draws
+   smaller, and 500 left the hairlines thin enough to grey out on a phone. */
 .sw-mark__word {
   font-family: var(--font-wordmark);
-  font-weight: 500;
-  font-size: 1.375rem;
+  font-weight: 600;
+  /* One line at every width, and as large as the row can carry. The floor is
+     what a phone leaves once the glyph and the gutters are paid for; the
+     ceiling is the desktop lockup. Between them it tracks the viewport, so the
+     tablet widths — where the actions column is at its widest and the centre
+     column at its narrowest — get a size that fits rather than one that
+     collides with "Account" and "Cart". */
+  font-size: clamp(1.35rem, 2.2vw, 1.95rem);
   letter-spacing: 0.005em;
   line-height: 1;
   white-space: nowrap;
 }
 
-/* One line on a wide header: the two spans sit inline, and this is the space
-   between them that the markup deliberately does not contain. */
-.sw-mark__word-line + .sw-mark__word-line::before {
-  content: ' ';
-}
-
-/* The header centres this lockup between two flanking columns, and the centre
-   column is free to grow past what they leave it. Set on one line at the
-   desktop size the wordmark ran into the actions — at 375px the Uzbek labels
-   ("Qidiruv", "Savat") reached it even with the tracking tightened.
-
-   What used to give here was the lockup itself: the glyph moved *above* the
-   name and the name shrank to 0.44rem — around 7px — to fit under a 24px tile.
-   At that size it is a grey smear, not a wordmark, and the mark no longer
-   reads as one lockup. Breaking the name over two lines *beside* the glyph
-   costs the same width (the widest line is "SWISSWATCH", not the whole name)
-   and buys back enough of it to keep the type at a size that can actually be
-   read: glyph 26px + gap + ~80px of text, inside what the flanking columns
-   leave even at 320px. */
+/* On a phone the header's own actions are gone — search, account and cart are
+   the bottom bar — so the centre column has the row nearly to itself and the
+   name holds on one line at a size a person can actually read. The glyph comes
+   down to 26px so the lockup still clears the 62px compact header. */
 @media (max-width: 640px) {
   .sw-mark {
     gap: 9px;
@@ -122,25 +108,12 @@ withDefaults(defineProps<Props>(), { size: 30, wordmark: true });
   }
 
   .sw-mark__word {
-    /* Stacked, but still the row's second column — the glyph stays alongside.
-       Mixed case leaves enough room that this no longer has to shrink to the
-       7px smear it once did: 0.9375rem is a wordmark a person can read. */
-    display: flex;
-    flex-direction: column;
-    font-size: 0.9375rem;
-    line-height: 1.16;
-  }
-
-  /* The inline space belongs to the one-line lockup only; between two flex
-     items it would open a phantom gap at the head of the second line. */
-  .sw-mark__word-line + .sw-mark__word-line::before {
-    content: none;
+    font-size: 1.35rem;
   }
 }
 
-/* The narrowest phones still in use. Measured with the Uzbek labels, which are
-   the widest the actions column ever gets ("Qidiruv · Savat", 87px at this
-   breakpoint's tightened tracking). */
+/* The narrowest phones still in use: glyph 24px + gap 7px + ~124px of name,
+   inside the ~270px the empty flanking columns leave at 320px. */
 @media (max-width: 360px) {
   .sw-mark {
     gap: 7px;
@@ -152,7 +125,7 @@ withDefaults(defineProps<Props>(), { size: 30, wordmark: true });
   }
 
   .sw-mark__word {
-    font-size: 0.875rem;
+    font-size: 1.2rem;
   }
 }
 

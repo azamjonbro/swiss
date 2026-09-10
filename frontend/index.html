@@ -56,13 +56,13 @@
     />
 
     <!-- The wordmark face. Preloaded next to the text face because it sets the
-         logo in the header, which is above the fold on every route; at 5.6 KB
+         logo in the header, which is above the fold on every route; at 6.6 KB
          it is cheaper than the reflow that follows swapping it in late. -->
     <link
       rel="preload"
       as="font"
       type="font/woff2"
-      href="/assets/fonts/playfair-display-v40-wordmark.woff2"
+      href="/assets/fonts/cormorant-garamond-v21-wordmark.woff2"
       crossorigin
     />
 
@@ -124,17 +124,20 @@
           U+FEFF, U+FFFD;
       }
       /* The wordmark, and nothing else.
-         
-         Playfair Display, cut down to the letters of "SwissWatch Premium" in
-         both cases — 5.6 KB against the 38 KB latin subset, because a logo
-         face has exactly one string to set. That is also its constraint:
-         change the wordmark's text and this file has to be rebuilt or the new
-         letters come out as tofu. It is rebuilt with
 
-           python3 -m fontTools.subset <playfair latin woff2> \
-             --text="SwissWatch Premium SWISSWATCH PREMIUM" \
-             --layout-features=kern --flavor=woff2 \
-             --output-file=public/assets/fonts/playfair-display-v40-wordmark.woff2
+         Cormorant Garamond, cut down to the letters of "SwissWatch Premium" in
+         both cases — 6.6 KB against the full latin subset, because a logo face
+         has exactly one string to set. That is also its constraint: change the
+         wordmark's text and this file has to be rebuilt or the new letters come
+         out as tofu. Google Fonts subsets it on request, which is how this file
+         was cut:
+
+           curl "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600\
+                 &text=SwissWatchPremiumSWISWATCHPREMIUM%20"
+
+         (with a browser User-Agent, so the reply names a woff2) and then
+         downloading the URL it returns. `python3 -m fontTools.subset` on the
+         full face does the same job offline.
 
          `font-display: block` rather than `swap`: everywhere else a fallback
          paragraph that reflows is better than invisible text, but the logo is
@@ -147,7 +150,7 @@
         font-style: normal;
         font-weight: 400 700;
         font-display: block;
-        src: url('/assets/fonts/playfair-display-v40-wordmark.woff2') format('woff2');
+        src: url('/assets/fonts/cormorant-garamond-v21-wordmark.woff2') format('woff2');
       }
 
       @font-face {
