@@ -2,6 +2,7 @@ import type { Dictionary } from './en';
 
 const uz: Dictionary = {
   common: {
+    back: 'Ortga',
     under: 'Gacha',
     of: '/',
   },

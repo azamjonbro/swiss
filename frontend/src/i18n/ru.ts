@@ -2,6 +2,7 @@ import type { Dictionary } from './en';
 
 const ru: Dictionary = {
   common: {
+    back: 'Назад',
     under: 'До',
     of: 'из',
   },

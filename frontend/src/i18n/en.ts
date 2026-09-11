@@ -4,6 +4,7 @@ const en = {
     mobileNav: 'Primary actions',
   },
   common: {
+    back: 'Back',
     under: 'Under',
     of: 'of',
   },
