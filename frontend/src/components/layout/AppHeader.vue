@@ -356,6 +356,20 @@ const themeMode = computed<'transparent' | 'veil' | 'light'>(() => {
     height: 62px;
   }
 
+  /* The phone's hero is cropped tighter, so bright patches of the imagery sit
+     right behind the wordmark: a heavier veil and blur keep it legible. */
+  .sw-header.is-veil {
+    background-color: rgba(10, 10, 10, 0.68);
+    backdrop-filter: blur(28px) saturate(120%);
+    -webkit-backdrop-filter: blur(28px) saturate(120%);
+  }
+
+  .sw-header.is-light {
+    background-color: var(--bg-veil-mobile);
+    backdrop-filter: blur(28px) saturate(120%);
+    -webkit-backdrop-filter: blur(28px) saturate(120%);
+  }
+
   .sw-header__menu-label {
     display: none;
   }

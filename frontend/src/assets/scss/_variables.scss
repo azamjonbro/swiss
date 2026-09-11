@@ -40,6 +40,7 @@
   --hairline: rgba(10, 10, 10, 0.09);
   // Translucent page surface — used by the header once it is past the hero.
   --bg-veil: rgba(253, 252, 250, 0.76);
+  --bg-veil-mobile: rgba(253, 252, 250, 0.92);
   --border-inverse: rgba(255, 255, 255, 0.16);
   --hairline-inverse: rgba(253, 252, 250, 0.14);
   --accent: var(--sw-burgundy);
@@ -132,6 +133,7 @@
   --border: rgba(255, 255, 255, 0.14);
   --hairline: rgba(255, 255, 255, 0.1);
   --bg-veil: rgba(20, 19, 17, 0.78);
+  --bg-veil-mobile: rgba(20, 19, 17, 0.92);
   --border-inverse: rgba(10, 10, 10, 0.16);
   --hairline-inverse: rgba(10, 10, 10, 0.12);
   --accent: var(--sw-burgundy-light);
