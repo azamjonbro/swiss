@@ -167,15 +167,51 @@ const specs = computed(() => {
   // join only the parts actually present so an empty caseMaterial/caseSize
   // pair never renders as a bare ", ".
   const caseValue = [w.caseMaterial, w.caseSize].filter(Boolean).join(', ');
+  // `key` picks the glyph the phone layout draws beside each row.
   return [
-    { label: locale.t('watchDetail.reference'), value: w.reference },
-    { label: locale.t('watchDetail.movement'), value: w.movement },
-    { label: locale.t('watchDetail.case'), value: caseValue },
-    { label: locale.t('watchDetail.dial'), value: w.dial },
-    { label: locale.t('watchDetail.bracelet'), value: w.bracelet },
-    { label: locale.t('watchDetail.waterResistance'), value: w.waterResistance },
+    { key: 'reference', label: locale.t('watchDetail.reference'), value: w.reference },
+    { key: 'movement', label: locale.t('watchDetail.movement'), value: w.movement },
+    { key: 'case', label: locale.t('watchDetail.case'), value: caseValue },
+    { key: 'dial', label: locale.t('watchDetail.dial'), value: w.dial },
+    { key: 'bracelet', label: locale.t('watchDetail.bracelet'), value: w.bracelet },
+    { key: 'waterResistance', label: locale.t('watchDetail.waterResistance'), value: w.waterResistance },
   ].filter((s) => s.value);
 });
+
+/**
+ * The phone's bottom bar: once the real "add to cart" has scrolled off the top
+ * of the screen, a compact copy of it rides above the tab bar so the visitor
+ * reading the story three screens down never has to scroll back for it.
+ * Desktop never shows it (CSS), so the observer costs nothing there.
+ */
+const purchaseRef = ref<HTMLElement | null>(null);
+const stickyVisible = ref(false);
+let purchaseObserver: IntersectionObserver | null = null;
+
+function observePurchase() {
+  purchaseObserver?.disconnect();
+  purchaseObserver = null;
+  if (!purchaseRef.value || typeof IntersectionObserver === 'undefined') return;
+  purchaseObserver = new IntersectionObserver(
+    ([entry]) => {
+      // The root is stretched a long way below the viewport, so "intersecting"
+      // means "not yet scrolled past" — the bar appears only once the block is
+      // above the screen, never while it is still coming up from below. A
+      // plain viewport root would also miss a jump (a fling, a restored scroll
+      // position) that carries the block from below to above between frames.
+      stickyVisible.value = !entry.isIntersecting;
+    },
+    { threshold: 0, rootMargin: '0px 0px 100000px 0px' },
+  );
+  purchaseObserver.observe(purchaseRef.value);
+}
+
+watch(purchaseRef, observePurchase);
+onUnmounted(() => purchaseObserver?.disconnect());
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
 const availabilityLabel = computed(() => {
   const map: Record<string, string> = {
@@ -462,7 +498,13 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
               :aria-pressed="v.colorSlug === selectedVariant?.colorSlug"
               @click="selectVariant(v.colorSlug)"
             >
-              <span :style="{ background: colorSwatchHex(v.colorSlug) }" />
+              <span class="sw-watch-detail__swatch-dot" :style="{ background: colorSwatchHex(v.colorSlug) }" />
+              <!-- The phone shows the colourway as its own photograph in a
+                   ring rather than a flat dot — the dot is what the desktop
+                   column keeps. Both are in the DOM; CSS picks one. -->
+              <span class="sw-watch-detail__swatch-shot" aria-hidden="true">
+                <SmartImage :src="v.images[0]" :alt="v.colorLabel" aspect-ratio="1 / 1" object-fit="contain" sizes="64px" />
+              </span>
             </button>
           </div>
         </div>
@@ -493,7 +535,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
           <span class="sw-label">{{ availabilityLabel }}</span>
         </div>
 
-        <div class="sw-watch-detail__purchase">
+        <div ref="purchaseRef" class="sw-watch-detail__purchase">
           <div class="sw-watch-detail__qty">
             <span class="sw-label">{{ locale.t('watchDetail.quantity') }}</span>
             <div class="sw-watch-detail__stepper">
@@ -519,6 +561,29 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
             <SaveButton :watch-id="watchDoc._id" variant="label" class="sw-watch-detail__save" />
           </div>
         </div>
+
+        <!-- The three things the shop actually promises (see the FAQ seed) —
+             the phone layout's reassurance row under the buy buttons. -->
+        <ul class="sw-watch-detail__trust" aria-label="">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 7.5h10v8H3zM13 10h4l3 3v2.5h-7z" /><circle cx="7" cy="17" r="1.6" /><circle cx="17" cy="17" r="1.6" />
+            </svg>
+            <span>{{ locale.t('watchDetail.trustDelivery') }}</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 3.5 5 6v5.5c0 4.2 2.9 7.6 7 9 4.1-1.4 7-4.8 7-9V6z" /><path d="m9.2 12 2 2 3.8-4" />
+            </svg>
+            <span>{{ locale.t('watchDetail.trustWarranty') }}</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M6 3.5h8l4 4V20a.5.5 0 0 1-.5.5h-11A.5.5 0 0 1 6 20z" /><path d="M14 3.5v4h4M9 12h6M9 15.5h6" />
+            </svg>
+            <span>{{ locale.t('watchDetail.trustAuthentic') }}</span>
+          </li>
+        </ul>
 
         <div v-if="watchDoc.accessories?.length" class="sw-watch-detail__pair">
           <span class="sw-label">{{ locale.t('watchDetail.pairItWith') }}</span>
@@ -554,6 +619,14 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
       <span class="sw-eyebrow">{{ locale.t('watchDetail.specifications') }}</span>
       <dl class="sw-watch-specs__grid">
         <div v-for="spec in specs" :key="spec.label" class="sw-watch-specs__row">
+          <span class="sw-watch-specs__icon" aria-hidden="true">
+            <svg v-if="spec.key === 'reference'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 7.5 20M16.5 4 15 20M4.5 9.5h16M3.5 15h16" /></svg>
+            <svg v-else-if="spec.key === 'movement'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3" /><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1" /></svg>
+            <svg v-else-if="spec.key === 'case'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="14" height="14" rx="3" /><circle cx="12" cy="12" r="4.5" /><path d="M9 2.5h6M9 21.5h6" /></svg>
+            <svg v-else-if="spec.key === 'dial'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5" /><path d="M12 7.5V12l3 2M12 3.5v1.5M12 19v1.5M3.5 12H5M19 12h1.5" /></svg>
+            <svg v-else-if="spec.key === 'bracelet'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6v18H9z" /><circle cx="12" cy="8" r="0.9" /><circle cx="12" cy="12" r="0.9" /><circle cx="12" cy="16" r="0.9" /></svg>
+            <svg v-else viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5s-6 6.6-6 11a6 6 0 0 0 12 0c0-4.4-6-11-6-11Z" /><path d="M9 14.5a3 3 0 0 0 3 3" /></svg>
+          </span>
           <dt class="sw-label">{{ spec.label }}</dt>
           <dd class="sw-body">{{ spec.value }}</dd>
         </div>
@@ -567,6 +640,27 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
 
     <ShopFaq />
   </template>
+
+  <!-- Phone only. Rides above the tab bar once the purchase block has
+       scrolled away; a second tap target for the same add-to-cart, plus the
+       way back up. -->
+  <div
+    v-if="watchDoc && selectedVariant"
+    class="sw-watch-sticky"
+    :class="{ 'is-visible': stickyVisible && !ui.isMenuOpen && !ui.isSearchOpen && !ui.isCartOpen && !ui.isInquiryOpen }"
+    :aria-hidden="!stickyVisible"
+    :inert="!stickyVisible || undefined"
+  >
+    <button class="sw-watch-sticky__cta" type="button" @click="addToCart">
+      <span>{{ justAdded ? locale.t('watchDetail.addedToCart') : locale.t('watchDetail.addToCart') }}</span>
+      <span v-if="SHOW_PRICES" class="sw-watch-sticky__price">{{ currency.format(watchDoc.price) }}</span>
+    </button>
+    <button class="sw-watch-sticky__top" type="button" :aria-label="locale.t('watchDetail.backToTop')" @click="scrollToTop">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 19V5M5.5 11.5 12 5l6.5 6.5" />
+      </svg>
+    </button>
+  </div>
 
   <transition name="sw-fade">
     <div
@@ -854,12 +948,17 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
   transition: border-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
 }
 
-.sw-watch-detail__swatch span {
+.sw-watch-detail__swatch-dot {
   display: block;
   width: 100%;
   height: 100%;
   border-radius: 50%;
   box-shadow: 0 0 0 1px var(--border) inset;
+}
+
+/* The photographic chip is the phone's; see the 640px block. */
+.sw-watch-detail__swatch-shot {
+  display: none;
 }
 
 .sw-watch-detail__swatch.is-active,
@@ -1042,6 +1141,12 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
   letter-spacing: 0.2em;
 }
 
+/* Phone-only reassurance row; the desktop column says the same things in the
+   FAQ and the about page, so it stays out of the way there. */
+.sw-watch-detail__trust {
+  display: none;
+}
+
 .sw-watch-detail__pair {
   margin-top: 36px;
   padding-top: 24px;
@@ -1150,6 +1255,10 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
   gap: 32px 28px;
 }
 
+.sw-watch-specs__icon {
+  display: none;
+}
+
 .sw-watch-specs__row dt {
   font-size: 0.75rem;
   letter-spacing: 0.16em;
@@ -1172,6 +1281,12 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
 .sw-watch-related-section > .sw-eyebrow {
   display: block;
   margin-bottom: 32px;
+}
+
+/* ---- Phone sticky bar ---- */
+
+.sw-watch-sticky {
+  display: none;
 }
 
 /* ---- Lightbox ---- */
@@ -1292,6 +1407,10 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
     margin-bottom: 18px;
   }
 
+  .sw-watch-detail {
+    padding-bottom: 36px;
+  }
+
   .sw-watch-detail__gallery {
     /* Edge to edge — the container padding is clawed back so the photograph
        gets the full width it needs at this size. */
@@ -1341,6 +1460,441 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
   .sw-lightbox__arrow {
     font-size: 1.25rem;
     padding: 8px;
+  }
+
+  /* -- Phone layout proper --
+     The reading column is re-cut on the pattern of the maison's own product
+     page: photographic colour chips, a boxed stepper, three stacked full-width
+     buttons, a card rail for the accessories, a reassurance row, icon-led
+     specs and a bar that follows the visitor down the page. The palette and
+     the type stay the site's own. */
+
+  .sw-watch-detail__thumbs {
+    gap: 10px;
+  }
+
+  .sw-watch-detail__thumb {
+    width: 72px;
+    opacity: 1;
+    border-color: var(--border);
+  }
+
+  .sw-watch-detail__thumb.is-active {
+    border-color: var(--text);
+    box-shadow: 0 0 0 1px var(--text) inset;
+  }
+
+  .sw-watch-detail__model {
+    font-weight: 600;
+    line-height: 1.15;
+  }
+
+  .sw-watch-detail__price {
+    font-size: 1.75rem;
+    margin-top: 12px;
+  }
+
+  .sw-watch-detail__desc {
+    margin-top: 14px;
+    font-size: 1rem;
+  }
+
+  /* Colour chips: the colourway's own photograph in a 64px ring, the active
+     one ringed in ink. The flat dot is the desktop's. */
+  .sw-watch-detail__colors {
+    margin-top: 22px;
+    padding-top: 20px;
+  }
+
+  .sw-watch-detail__swatches {
+    gap: 14px;
+    margin-top: 14px;
+  }
+
+  .sw-watch-detail__swatch {
+    width: 64px;
+    height: 64px;
+    padding: 3px;
+    border-width: 1.5px;
+    border-color: var(--border);
+    background: var(--surface-media-hi);
+  }
+
+  .sw-watch-detail__swatch.is-active {
+    border-color: var(--text);
+    transform: none;
+  }
+
+  .sw-watch-detail__swatch-dot {
+    display: none;
+  }
+
+  .sw-watch-detail__swatch-shot {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--surface-media-hi);
+  }
+
+  .sw-watch-detail__swatch-shot :deep(.sw-smart-image) {
+    background: transparent;
+  }
+
+  /* The model's other colourways: the same ring, one per sibling. */
+  .sw-watch-detail__colorways {
+    margin-top: 22px;
+    gap: 12px;
+  }
+
+  .sw-watch-detail__colorway-list {
+    gap: 14px;
+    padding-bottom: 2px;
+  }
+
+  .sw-watch-detail__colorway {
+    width: 64px;
+    height: 64px;
+    padding: 3px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    background: var(--surface-media-hi);
+  }
+
+  .sw-watch-detail__colorway:hover,
+  .sw-watch-detail__colorway:focus-visible {
+    transform: none;
+  }
+
+  .sw-watch-detail__colorway-shot {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  .sw-watch-detail__colorway-shot :deep(.sw-smart-image) {
+    background: transparent;
+  }
+
+  .sw-watch-detail__colorway-label,
+  .sw-watch-detail__colorway-price {
+    display: none;
+  }
+
+  .sw-watch-detail__availability {
+    margin-top: 20px;
+  }
+
+  /* Quantity: a boxed stepper with the count in its own cell, the label
+     alongside in the reading size rather than tracked caps. */
+  .sw-watch-detail__purchase {
+    margin-top: 20px;
+    padding-top: 22px;
+    gap: 18px;
+  }
+
+  .sw-watch-detail__qty .sw-label {
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .sw-watch-detail__qty .sw-label::after {
+    content: ' :';
+  }
+
+  .sw-watch-detail__stepper {
+    gap: 0;
+    height: 52px;
+  }
+
+  .sw-watch-detail__stepper button {
+    width: 52px;
+    height: 100%;
+    background: var(--surface-media);
+    font-size: 1.2rem;
+  }
+
+  .sw-watch-detail__stepper > span {
+    min-width: 76px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-inline: 1px solid var(--border);
+    font-size: 1.05rem;
+  }
+
+  /* Three full-width bars, stacked: solid, solid on the page's charcoal,
+     then an outline. The save link sits under them. */
+  .sw-watch-detail__actions {
+    gap: 12px;
+  }
+
+  .sw-watch-detail__cta,
+  .sw-watch-detail__buy,
+  .sw-watch-detail__inquire {
+    width: 100%;
+    min-width: 0;
+    padding: 19px 20px;
+    justify-content: center;
+    font-size: 0.8125rem;
+    letter-spacing: 0.14em;
+    font-weight: 600;
+  }
+
+  .sw-watch-detail__buy {
+    background: var(--sw-charcoal);
+    color: var(--sw-white);
+    border-color: var(--sw-charcoal);
+  }
+
+  .sw-watch-detail__secondary {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    margin-top: -6px;
+  }
+
+  .sw-watch-detail__inquire {
+    border: 1px solid var(--text);
+  }
+
+  .sw-watch-detail__inquire::before,
+  .sw-watch-detail__inquire::after {
+    display: none;
+  }
+
+  .sw-watch-detail__save {
+    align-self: center;
+  }
+
+  /* Reassurance row. */
+  .sw-watch-detail__trust {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 28px;
+    padding-top: 22px;
+    border-top: 1px solid var(--border);
+    list-style: none;
+    padding-inline: 0;
+  }
+
+  .sw-watch-detail__trust li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+    font-size: 0.75rem;
+    line-height: 1.35;
+    color: var(--text-muted);
+  }
+
+  .sw-watch-detail__trust svg {
+    width: 26px;
+    height: 26px;
+    color: var(--text);
+  }
+
+  /* Pair it with: a card rail, one accessory per card, swiped sideways. */
+  .sw-watch-detail__pair {
+    margin-top: 32px;
+  }
+
+  .sw-watch-detail__pair > .sw-label {
+    font-size: 1.35rem;
+    font-weight: 600;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .sw-watch-detail__pair-list {
+    flex-direction: row;
+    gap: 12px;
+    margin-top: 14px;
+    margin-inline: calc(var(--container-pad) * -1);
+    padding-inline: var(--container-pad);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    /* Without this the first card snaps to the scrollport's edge, not the
+       gutter, and the padding above is scrolled away on load. */
+    scroll-padding-inline: var(--container-pad);
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .sw-watch-detail__pair-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .sw-watch-detail__pair-item {
+    flex: 0 0 82%;
+    scroll-snap-align: start;
+    grid-template-columns: 42% minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    align-items: start;
+    gap: 10px 14px;
+    padding: 14px;
+    background: var(--surface-media);
+  }
+
+  .sw-watch-detail__pair-media {
+    grid-row: 1 / 3;
+    background: var(--surface-media-hi);
+  }
+
+  .sw-watch-detail__pair-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+
+  .sw-watch-detail__pair-price {
+    color: var(--text);
+    font-weight: 600;
+    font-size: 1.05rem;
+  }
+
+  .sw-watch-detail__pair-add {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: end;
+    background: var(--bg-inverse);
+    color: var(--text-inverse);
+    border-color: var(--bg-inverse);
+    padding: 12px 18px;
+  }
+
+  /* Story: the photograph edge to edge, the copy under it. */
+  .sw-watch-story {
+    padding: 40px 0 8px;
+    gap: 22px;
+  }
+
+  .sw-watch-story__media {
+    max-width: none;
+    width: calc(100% + var(--container-pad) * 2);
+    margin-inline: calc(var(--container-pad) * -1);
+  }
+
+  .sw-watch-story__body .sw-body-lg {
+    margin-top: 12px;
+    line-height: 1.65;
+  }
+
+  /* Specs: a glyph in a hairline box, the label muted above the value. */
+  .sw-watch-specs {
+    padding: 36px 0 48px;
+  }
+
+  .sw-watch-specs__grid {
+    gap: 18px;
+  }
+
+  .sw-watch-specs__row {
+    display: grid;
+    grid-template-columns: 64px minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    column-gap: 18px;
+    align-items: center;
+  }
+
+  .sw-watch-specs__icon {
+    grid-row: 1 / 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    border: 1px solid var(--text);
+    color: var(--text);
+  }
+
+  .sw-watch-specs__icon svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  .sw-watch-specs__row dt {
+    align-self: end;
+    font-size: 0.9rem;
+    letter-spacing: 0;
+    text-transform: none;
+    font-weight: 400;
+  }
+
+  .sw-watch-specs__row dd {
+    align-self: start;
+    margin-top: 4px;
+    font-size: 1.15rem;
+    font-weight: 600;
+  }
+
+  /* The bar. Above the tab bar, not instead of it — the tab bar is the site's
+     navigation at this width and the visitor is still mid-page. */
+  .sw-watch-sticky {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: calc(var(--tabbar-height) + env(safe-area-inset-bottom, 0px));
+    z-index: 89;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 58px;
+    height: 58px;
+    transform: translateY(calc(100% + var(--tabbar-height) + env(safe-area-inset-bottom, 0px)));
+    transition: transform 0.45s var(--ease-editorial);
+  }
+
+  .sw-watch-sticky.is-visible {
+    transform: none;
+  }
+
+  .sw-watch-sticky__cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding-inline: 20px;
+    background: var(--bg-inverse);
+    color: var(--text-inverse);
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .sw-watch-sticky__cta > span:first-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .sw-watch-sticky__price {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    font-size: 0.95rem;
+  }
+
+  .sw-watch-sticky__top {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    color: var(--text);
+    border-left: 1px solid var(--hairline);
+    border-top: 1px solid var(--hairline);
+  }
+
+  .sw-watch-sticky__top svg {
+    width: 22px;
+    height: 22px;
   }
 }
 

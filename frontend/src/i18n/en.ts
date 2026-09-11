@@ -212,6 +212,10 @@ const en = {
     faqTitle: 'Frequently asked questions',
     specifications: 'Specifications',
     theStory: 'The Story',
+    trustDelivery: 'Delivery across Uzbekistan',
+    trustWarranty: 'Warranty on every watch',
+    trustAuthentic: 'Original, with documents',
+    backToTop: 'Back to top',
   },
   brandList: {
     eyebrow: 'Brands We Represent',

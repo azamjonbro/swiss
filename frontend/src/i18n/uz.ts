@@ -211,6 +211,10 @@ const uz: Dictionary = {
     faqTitle: 'Ko‘p so‘raladigan savollar',
     specifications: 'Texnik xususiyatlar',
     theStory: 'Tarix',
+    trustDelivery: 'O‘zbekiston bo‘ylab yetkazib berish',
+    trustWarranty: 'Har bir soatga kafolat',
+    trustAuthentic: 'Original, hujjatlari bilan',
+    backToTop: 'Yuqoriga',
   },
   brandList: {
     eyebrow: 'Biz vakillik qiladigan brendlar',

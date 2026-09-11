@@ -212,6 +212,10 @@ const ru: Dictionary = {
     faqTitle: 'Часто задаваемые вопросы',
     specifications: 'Характеристики',
     theStory: 'История',
+    trustDelivery: 'Доставка по всему Узбекистану',
+    trustWarranty: 'Гарантия на каждые часы',
+    trustAuthentic: 'Оригинал, с документами',
+    backToTop: 'Наверх',
   },
   brandList: {
     eyebrow: 'Бренды, которые мы представляем',
