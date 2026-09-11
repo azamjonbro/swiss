@@ -115,7 +115,7 @@ export function scrollTo(target: string | number | HTMLElement, options?: Record
  * Long enough to outlast the browser's own restoration, short enough that a
  * reader who reaches for the wheel never races it.
  */
-const SCROLL_HOLD_MS = 600;
+const SCROLL_HOLD_MS = 1800;
 
 let holdArmed = false;
 let holdDeadline = 0;
@@ -188,6 +188,32 @@ function bindHoldListeners(): void {
   window.addEventListener('pointerdown', releaseScrollHold);
 }
 
+/**
+ * iOS Safari drops a programmatic scroll while a fling is still decelerating —
+ * and a tap on a card while the grid is still gliding is the ordinary way a
+ * phone opens a product. The reset ran, was ignored, and the glide carried the
+ * new page to wherever the old one would have stopped; the timers below fired
+ * inside the same glide and were dropped the same way. What does end a glide
+ * is the scroller ceasing to be one: the root is pinned for two frames (the
+ * document collapses, so there is nothing left to decelerate through), then
+ * released with the scroll re-applied on a scroller that is now at rest.
+ */
+let settling = false;
+function settleTouchScroll(): void {
+  if (settling) return;
+  settling = true;
+  const root = document.documentElement;
+  root.classList.add('sw-scroll-settling');
+  window.scrollTo(0, 0);
+  requestAnimationFrame(() =>
+    requestAnimationFrame(() => {
+      root.classList.remove('sw-scroll-settling');
+      settling = false;
+      window.scrollTo(0, 0);
+    }),
+  );
+}
+
 function scrollToTopNow(): void {
   // `force`, because Lenis ignores every programmatic scroll while it is
   // stopped — and a link tapped inside the open menu or the cart drawer
@@ -197,6 +223,9 @@ function scrollToTopNow(): void {
   // scrollTo returns early when its internal target already reads 0 while the
   // document itself sits further down.
   window.scrollTo(0, 0);
+  // Still not at the top after a synchronous scroll: the browser refused it,
+  // which on a phone means a glide is in progress (see settleTouchScroll).
+  if (!lenis && window.scrollY !== 0) settleTouchScroll();
   // The incoming page is a different height, and a stale scroll limit would
   // clamp the next scroll partway down the document.
   lenis?.resize();
@@ -221,7 +250,7 @@ export function resetScroll(): void {
   holdExtended = false;
   // A scroll event is the normal way the restored offset announces itself; the
   // timers are the belt to that brace, and the one thing that still runs in a
-  // tab which is not painting frames.
-  window.setTimeout(onHeldScroll, 80);
-  window.setTimeout(onHeldScroll, 320);
+  // tab which is not painting frames. The later ones outlast a phone's glide,
+  // which can run the better part of two seconds.
+  for (const delay of [80, 320, 700, 1200, 1700]) window.setTimeout(onHeldScroll, delay);
 }

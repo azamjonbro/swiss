@@ -51,6 +51,18 @@ html.sw-scroll-locked {
   height: 100%;
 }
 
+// Two frames on a route change, phones only — see settleTouchScroll() in
+// useLenis.ts. Pinning the body collapses the document, which is the one
+// thing that ends an iOS glide a programmatic scroll cannot interrupt.
+html.sw-scroll-settling {
+  overflow: hidden;
+
+  body {
+    position: fixed;
+    inset: 0;
+  }
+}
+
 .sw-visually-hidden {
   position: absolute;
   width: 1px;
