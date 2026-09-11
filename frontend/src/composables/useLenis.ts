@@ -215,6 +215,7 @@ function settleTouchScroll(): void {
 }
 
 function scrollToTopNow(): void {
+  const wasOffTop = window.scrollY !== 0;
   // `force`, because Lenis ignores every programmatic scroll while it is
   // stopped — and a link tapped inside the open menu or the cart drawer
   // navigates from exactly that state, where the reset was being dropped.
@@ -223,12 +224,27 @@ function scrollToTopNow(): void {
   // scrollTo returns early when its internal target already reads 0 while the
   // document itself sits further down.
   window.scrollTo(0, 0);
-  // Still not at the top after a synchronous scroll: the browser refused it,
-  // which on a phone means a glide is in progress (see settleTouchScroll).
-  if (!lenis && window.scrollY !== 0) settleTouchScroll();
+  // On a phone the pin is decided on where the document *was*, not on what it
+  // reads back now: iOS scrolls on a separate thread, so `scrollY` can report
+  // the reset as taken and the glide can overrule it a frame later. Reading 0
+  // here proves nothing; having been off the top a moment ago is the signal.
+  if (!lenis && isTouchOnly() && (wasOffTop || window.scrollY !== 0)) settleTouchScroll();
   // The incoming page is a different height, and a stale scroll limit would
   // clamp the next scroll partway down the document.
   lenis?.resize();
+}
+
+/**
+ * Re-applies the top if the hold is still on, and nothing otherwise — this is
+ * what the incoming page calls as it is inserted. `resetScroll` itself runs
+ * while the outgoing page is still in the DOM (the route transition is
+ * out-in), so the top it set is the old document's; the new one enters some
+ * 400ms later, and this is the one moment its offset can be pinned with
+ * certainty. Never re-arms: a reader who swiped during the transition has
+ * released the hold, and re-arming here would yank them back.
+ */
+export function reassertScrollTop(): void {
+  onHeldScroll();
 }
 
 /**

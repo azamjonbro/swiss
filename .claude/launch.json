@@ -4,23 +4,43 @@
     {
       "name": "frontend",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
       "cwd": "frontend",
       "port": 5173
     },
     {
       "name": "admin",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
       "cwd": "admin",
       "port": 5175
     },
     {
       "name": "backend",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
       "cwd": "backend",
       "port": 4000
+    },
+    {
+      "name": "frontend-live",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": [
+        "vite",
+        "--config",
+        "/private/tmp/claude-501/-Users-mac-Desktop-swisswatch/dece73aa-62b5-4608-ae5f-6fab9f775f7d/scratchpad/vite.verify.config.mts"
+      ],
+      "cwd": "frontend",
+      "port": 5180
     }
   ]
 }

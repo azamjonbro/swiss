@@ -3,6 +3,7 @@ import { onMounted, onUnmounted } from 'vue';
 import DefaultLayout from '@/layouts/DefaultLayout.vue';
 import { useUiStore } from '@/stores/ui';
 import { useSavedStore } from '@/stores/saved';
+import { reassertScrollTop } from '@/composables/useLenis';
 
 const ui = useUiStore();
 // Instantiated once here so its session watcher stays live for the whole app —
@@ -24,7 +25,10 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
 <template>
   <DefaultLayout>
     <router-view v-slot="{ Component, route: r }">
-      <transition name="sw-page" mode="out-in">
+      <!-- before-enter: the outgoing page is gone and the incoming one is
+           about to be inserted — the offset is pinned to the top at that exact
+           moment, not only at navigation time (see reassertScrollTop). -->
+      <transition name="sw-page" mode="out-in" @before-enter="reassertScrollTop">
         <component :is="Component" :key="(r.meta.transitionKey as string) ?? r.path" />
       </transition>
     </router-view>
