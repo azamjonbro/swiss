@@ -23,19 +23,21 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
 </script>
 
 <template>
-  <DefaultLayout>
+  <!-- <DefaultLayout>
     <router-view v-slot="{ Component, route: r }">
-      <!-- before-enter: the outgoing page is gone and the incoming one is
-           about to be inserted — the offset is pinned to the top at that exact
-           moment, not only at navigation time (see reassertScrollTop). -->
       <transition name="sw-page" mode="out-in" @before-enter="reassertScrollTop">
         <component :is="Component" :key="(r.meta.transitionKey as string) ?? r.path" />
       </transition>
     </router-view>
-  </DefaultLayout>
+  </DefaultLayout> -->
+  <h1 class="server-not-found">Server bilan aloqa yo'q</h1>
 </template>
 
 <style>
+.server-not-found{
+  color: black;
+  text-align: center;
+}
 /* Route change: the outgoing page settles away, the incoming one rises into
    place. Slow enough to read as a transition, short enough never to be a wait. */
 .sw-page-enter-active {
