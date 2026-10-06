@@ -1,7 +1,8 @@
-import { Schema, model, Document, Types } from 'mongoose';
+import { Schema, model, Document, Types } from "mongoose";
 
 export interface IWatchVariant {
   colorSlug: string;
+  color?: string;
   colorLabel: string;
   colorLabelRu?: string;
   colorLabelUz?: string;
@@ -41,10 +42,10 @@ export interface IWatch extends Document {
   currency: string;
   description: string;
   shortDescription: string;
-  type: 'watch' | 'accessory';
+  type: "watch" | "accessory";
   // A women's edition can sit inside a men's series (Light Matter TB8223 ships in
   // both), so the audience is a property of the watch, not only of its collection.
-  gender: 'men' | 'women';
+  gender: "men" | "women";
   variants: IWatchVariant[];
   category: Types.ObjectId;
   collectionRef?: Types.ObjectId;
@@ -54,7 +55,7 @@ export interface IWatch extends Document {
   dial: string;
   bracelet: string;
   waterResistance: string;
-  availability: 'in-stock' | 'reserved' | 'sold' | 'made-to-order';
+  availability: "in-stock" | "reserved" | "sold" | "made-to-order";
   featured: boolean;
   isNewArrival: boolean;
   isActive: boolean;
@@ -80,7 +81,8 @@ const LocalizedWatchFields = {
 const WatchVariantSchema = new Schema<IWatchVariant>(
   {
     colorSlug: { type: String, required: true },
-    colorLabel: { type: String, default: '' },
+    color: { type: String },
+    colorLabel: { type: String, default: "" },
     colorLabelRu: { type: String },
     colorLabelUz: { type: String },
     images: [{ type: String }],
@@ -91,42 +93,58 @@ const WatchVariantSchema = new Schema<IWatchVariant>(
 
 const WatchSchema = new Schema<IWatch>(
   {
-    brand: { type: Schema.Types.ObjectId, ref: 'Brand', required: true },
+    brand: { type: Schema.Types.ObjectId, ref: "Brand", required: true },
     name: { type: String, required: true, trim: true },
-    slug: { type: String, required: true, unique: true, lowercase: true, index: true },
-    modelGroup: { type: String, default: '', lowercase: true, index: true },
-    reference: { type: String, default: '' },
+    slug: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+      index: true,
+    },
+    modelGroup: { type: String, default: "", lowercase: true, index: true },
+    reference: { type: String, default: "" },
     price: { type: Number, required: true, min: 0 },
-    currency: { type: String, default: 'USD' },
-    description: { type: String, default: '' },
-    shortDescription: { type: String, default: '' },
-    type: { type: String, enum: ['watch', 'accessory'], default: 'watch', index: true },
-    gender: { type: String, enum: ['men', 'women'], default: 'men', index: true },
+    currency: { type: String, default: "USD" },
+    description: { type: String, default: "" },
+    shortDescription: { type: String, default: "" },
+    type: {
+      type: String,
+      enum: ["watch", "accessory"],
+      default: "watch",
+      index: true,
+    },
+    gender: {
+      type: String,
+      enum: ["men", "women"],
+      default: "men",
+      index: true,
+    },
     variants: {
       type: [WatchVariantSchema],
       validate: {
         validator: (v: IWatchVariant[]) => Array.isArray(v) && v.length > 0,
-        message: 'A product needs at least one variant (colorway) with media.',
+        message: "A product needs at least one variant (colorway) with media.",
       },
     },
-    category: { type: Schema.Types.ObjectId, ref: 'Category', required: true },
-    collectionRef: { type: Schema.Types.ObjectId, ref: 'Collection' },
-    movement: { type: String, default: '' },
-    caseMaterial: { type: String, default: '' },
-    caseSize: { type: String, default: '' },
-    dial: { type: String, default: '' },
-    bracelet: { type: String, default: '' },
-    waterResistance: { type: String, default: '' },
+    category: { type: Schema.Types.ObjectId, ref: "Category", required: true },
+    collectionRef: { type: Schema.Types.ObjectId, ref: "Collection" },
+    movement: { type: String, default: "" },
+    caseMaterial: { type: String, default: "" },
+    caseSize: { type: String, default: "" },
+    dial: { type: String, default: "" },
+    bracelet: { type: String, default: "" },
+    waterResistance: { type: String, default: "" },
     availability: {
       type: String,
-      enum: ['in-stock', 'reserved', 'sold', 'made-to-order'],
-      default: 'in-stock',
+      enum: ["in-stock", "reserved", "sold", "made-to-order"],
+      default: "in-stock",
     },
     featured: { type: Boolean, default: false },
     isNewArrival: { type: Boolean, default: false },
     isActive: { type: Boolean, default: true },
-    compatibleWith: [{ type: Schema.Types.ObjectId, ref: 'Watch' }],
-    relatedWatches: [{ type: Schema.Types.ObjectId, ref: 'Watch' }],
+    compatibleWith: [{ type: Schema.Types.ObjectId, ref: "Watch" }],
+    relatedWatches: [{ type: Schema.Types.ObjectId, ref: "Watch" }],
     translations: {
       ru: LocalizedWatchFields,
       uz: LocalizedWatchFields,
@@ -142,4 +160,4 @@ const WatchSchema = new Schema<IWatch>(
 //   db.watches.dropIndex('name_text_reference_text_shortDescription_text_variants.colorLabel_text')
 // so writes stop paying to maintain an index nothing reads.
 
-export const Watch = model<IWatch>('Watch', WatchSchema);
+export const Watch = model<IWatch>("Watch", WatchSchema);

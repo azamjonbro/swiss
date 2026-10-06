@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import type { Watch } from '@/types/models';
-import { fetchWatchBySlug } from '@/services/watches';
-import { fetchFaqs, type Faq } from '@/services/faqs';
-import { toBrandName, toBrandSlug, colorSwatchHex } from '@/utils/format';
-import { useUiStore } from '@/stores/ui';
-import { useLocaleStore } from '@/stores/locale';
-import { useCurrencyStore } from '@/stores/currency';
-import { SHOW_PRICES } from '@/config/pricing';
-import { useCartStore } from '@/stores/cart';
-import { applyJsonLd, applySeo, site } from '@/utils/seo';
-import type { CrumbItem } from '@/seo/schema.mjs';
+import { ref, computed, onMounted, onUnmounted, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import type { Watch } from "@/types/models";
+import { fetchWatchBySlug } from "@/services/watches";
+import { fetchFaqs, type Faq } from "@/services/faqs";
+import { toBrandName, toBrandSlug, colorSwatchHex } from "@/utils/format";
+import { useUiStore } from "@/stores/ui";
+import { useLocaleStore } from "@/stores/locale";
+import { useCurrencyStore } from "@/stores/currency";
+import { SHOW_PRICES } from "@/config/pricing";
+import { useCartStore } from "@/stores/cart";
+import { applyJsonLd, applySeo, site } from "@/utils/seo";
+import type { CrumbItem } from "@/seo/schema.mjs";
 import {
   breadcrumbSchema,
   faqSchema,
@@ -21,13 +21,13 @@ import {
   tidyDescription,
   watchImageAlt,
   watchSeo,
-} from '@/seo/schema.mjs';
-import SmartImage from '@/components/shared/SmartImage.vue';
-import SaveButton from '@/components/shared/SaveButton.vue';
-import SmartVideo from '@/components/shared/SmartVideo.vue';
-import RelatedProductsCarousel from '@/components/watch/RelatedProductsCarousel.vue';
-import ShopFaq from '@/components/shared/ShopFaq.vue';
-import Breadcrumbs from '@/components/shared/Breadcrumbs.vue';
+} from "@/seo/schema.mjs";
+import SmartImage from "@/components/shared/SmartImage.vue";
+import SaveButton from "@/components/shared/SaveButton.vue";
+import SmartVideo from "@/components/shared/SmartVideo.vue";
+import RelatedProductsCarousel from "@/components/watch/RelatedProductsCarousel.vue";
+import ShopFaq from "@/components/shared/ShopFaq.vue";
+import Breadcrumbs from "@/components/shared/Breadcrumbs.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -43,12 +43,16 @@ const notFound = ref(false);
 const activeIndex = ref(0);
 const isFullscreen = ref(false);
 const isZoomed = ref(false);
-const zoomOrigin = ref('50% 50%');
+const zoomOrigin = ref("50% 50%");
 const quantity = ref(1);
 const justAdded = ref(false);
 
-const brandName = computed(() => (watchDoc.value ? toBrandName(watchDoc.value.brand) : ''));
-const brandSlug = computed(() => (watchDoc.value ? toBrandSlug(watchDoc.value.brand) : ''));
+const brandName = computed(() =>
+  watchDoc.value ? toBrandName(watchDoc.value.brand) : "",
+);
+const brandSlug = computed(() =>
+  watchDoc.value ? toBrandSlug(watchDoc.value.brand) : "",
+);
 
 const variants = computed(() => watchDoc.value?.variants ?? []);
 const selectedVariant = computed(() => {
@@ -59,15 +63,17 @@ const selectedVariant = computed(() => {
 // The video, when the colorway has one, rides at the end of the same gallery
 // strip as extra slide(s) — one thumbnail rail, one active-index, rather than
 // a separate video widget bolted on beside it.
-type GalleryItem = { type: 'image' | 'video'; src: string };
+type GalleryItem = { type: "image" | "video"; src: string };
 const galleryItems = computed<GalleryItem[]>(() => {
   const v = selectedVariant.value;
   if (!v) return [];
-  const items: GalleryItem[] = v.images.map((src) => ({ type: 'image', src }));
-  for (const src of v.videos ?? []) items.push({ type: 'video', src });
+  const items: GalleryItem[] = v.images.map((src) => ({ type: "image", src }));
+  for (const src of v.videos ?? []) items.push({ type: "video", src });
   return items;
 });
-const activeItem = computed<GalleryItem | undefined>(() => galleryItems.value[activeIndex.value]);
+const activeItem = computed<GalleryItem | undefined>(
+  () => galleryItems.value[activeIndex.value],
+);
 
 /**
  * The model's other colourways.
@@ -96,8 +102,8 @@ const otherColorways = computed<ColorwayLink[]>(() =>
     const variant = sibling.variants?.[0];
     return {
       slug: sibling.slug,
-      label: variant?.colorLabel || '',
-      colorSlug: variant?.colorSlug || '',
+      label: variant?.colorLabel || "",
+      colorSlug: variant?.colorSlug || "",
       price: sibling.price,
       image: variant?.images?.[0],
     };
@@ -112,10 +118,10 @@ function selectVariant(colorSlug: string) {
 }
 
 function toggleZoom() {
-  if (activeItem.value?.type !== 'image') return;
+  if (activeItem.value?.type !== "image") return;
   // On touch the same tap is how the gallery is swiped, so zoom is reserved
   // for pointers that can hover — the lightbox covers phones instead.
-  if (window.matchMedia('(hover: none)').matches) return;
+  if (window.matchMedia("(hover: none)").matches) return;
   isZoomed.value = !isZoomed.value;
 }
 
@@ -128,14 +134,16 @@ function onMainMouseMove(event: MouseEvent) {
 }
 
 function openFullscreen() {
-  if (activeItem.value?.type !== 'image') return;
+  if (activeItem.value?.type !== "image") return;
   isFullscreen.value = true;
 }
 
 function stepGallery(direction: 1 | -1) {
   if (!galleryItems.value.length) return;
   isZoomed.value = false;
-  activeIndex.value = (activeIndex.value + direction + galleryItems.value.length) % galleryItems.value.length;
+  activeIndex.value =
+    (activeIndex.value + direction + galleryItems.value.length) %
+    galleryItems.value.length;
 }
 
 function selectItem(index: number) {
@@ -166,15 +174,31 @@ const specs = computed(() => {
   // Accessories (straps, crowns, clasps) leave several of these blank —
   // join only the parts actually present so an empty caseMaterial/caseSize
   // pair never renders as a bare ", ".
-  const caseValue = [w.caseMaterial, w.caseSize].filter(Boolean).join(', ');
+  const caseValue = [w.caseMaterial, w.caseSize].filter(Boolean).join(", ");
   // `key` picks the glyph the phone layout draws beside each row.
   return [
-    { key: 'reference', label: locale.t('watchDetail.reference'), value: w.reference },
-    { key: 'movement', label: locale.t('watchDetail.movement'), value: w.movement },
-    { key: 'case', label: locale.t('watchDetail.case'), value: caseValue },
-    { key: 'dial', label: locale.t('watchDetail.dial'), value: w.dial },
-    { key: 'bracelet', label: locale.t('watchDetail.bracelet'), value: w.bracelet },
-    { key: 'waterResistance', label: locale.t('watchDetail.waterResistance'), value: w.waterResistance },
+    {
+      key: "reference",
+      label: locale.t("watchDetail.reference"),
+      value: w.reference,
+    },
+    {
+      key: "movement",
+      label: locale.t("watchDetail.movement"),
+      value: w.movement,
+    },
+    { key: "case", label: locale.t("watchDetail.case"), value: caseValue },
+    { key: "dial", label: locale.t("watchDetail.dial"), value: w.dial },
+    {
+      key: "bracelet",
+      label: locale.t("watchDetail.bracelet"),
+      value: w.bracelet,
+    },
+    {
+      key: "waterResistance",
+      label: locale.t("watchDetail.waterResistance"),
+      value: w.waterResistance,
+    },
   ].filter((s) => s.value);
 });
 
@@ -191,7 +215,7 @@ let purchaseObserver: IntersectionObserver | null = null;
 function observePurchase() {
   purchaseObserver?.disconnect();
   purchaseObserver = null;
-  if (!purchaseRef.value || typeof IntersectionObserver === 'undefined') return;
+  if (!purchaseRef.value || typeof IntersectionObserver === "undefined") return;
   purchaseObserver = new IntersectionObserver(
     ([entry]) => {
       // The root is stretched a long way below the viewport, so "intersecting"
@@ -201,7 +225,7 @@ function observePurchase() {
       // position) that carries the block from below to above between frames.
       stickyVisible.value = !entry.isIntersecting;
     },
-    { threshold: 0, rootMargin: '0px 0px 100000px 0px' },
+    { threshold: 0, rootMargin: "0px 0px 100000px 0px" },
   );
   purchaseObserver.observe(purchaseRef.value);
 }
@@ -210,17 +234,19 @@ watch(purchaseRef, observePurchase);
 onUnmounted(() => purchaseObserver?.disconnect());
 
 function scrollToTop() {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 const availabilityLabel = computed(() => {
   const map: Record<string, string> = {
-    'in-stock': locale.t('watchDetail.available'),
-    reserved: locale.t('watchDetail.reserved'),
-    sold: locale.t('watchDetail.sold'),
-    'made-to-order': locale.t('watchDetail.madeToOrder'),
+    "in-stock": locale.t("watchDetail.available"),
+    reserved: locale.t("watchDetail.reserved"),
+    sold: locale.t("watchDetail.sold"),
+    "made-to-order": locale.t("watchDetail.madeToOrder"),
   };
-  return watchDoc.value ? map[watchDoc.value.availability] ?? watchDoc.value.availability : '';
+  return watchDoc.value
+    ? (map[watchDoc.value.availability] ?? watchDoc.value.availability)
+    : "";
 });
 
 const storyImage = computed(() => {
@@ -239,16 +265,23 @@ async function load(slug: string) {
     // Default the URL to an actual colorway so the page is shareable at a
     // specific variant even before anyone touches the swatches.
     const requested = route.query.variant as string | undefined;
-    const isValid = watchDoc.value.variants.some((v) => v.colorSlug === requested);
+    const isValid = watchDoc.value.variants.some(
+      (v) => v.colorSlug === requested,
+    );
     if (!isValid && watchDoc.value.variants[0]) {
-      router.replace({ query: { ...route.query, variant: watchDoc.value.variants[0].colorSlug } });
+      router.replace({
+        query: {
+          ...route.query,
+          variant: watchDoc.value.variants[0].colorSlug,
+        },
+      });
     }
     applyProductSeo(watchDoc.value);
   } catch {
     notFound.value = true;
     // A slug that no longer resolves must not leave the previous product's
     // title, canonical or Product schema standing — and must not be indexed.
-    const seo = staticSeo('not-found', site);
+    const seo = staticSeo("not-found", site);
     if (seo) applySeo({ ...seo, canonical: route.path });
     applyJsonLd([]);
   } finally {
@@ -260,11 +293,15 @@ async function load(slug: string) {
 const crumbs = computed<CrumbItem[]>(() => {
   if (!watchDoc.value) return [];
   const trail: CrumbItem[] = [
-    { name: locale.t('nav.home'), path: '/' },
-    { name: locale.t('nav.watches'), path: '/watches' },
+    { name: locale.t("nav.home"), path: "/" },
+    { name: locale.t("nav.watches"), path: "/watches" },
   ];
-  if (brandSlug.value) trail.push({ name: brandName.value, path: `/brands/${brandSlug.value}` });
-  trail.push({ name: watchDoc.value.name, path: productPath(watchDoc.value.slug) });
+  if (brandSlug.value)
+    trail.push({ name: brandName.value, path: `/brands/${brandSlug.value}` });
+  trail.push({
+    name: watchDoc.value.name,
+    path: productPath(watchDoc.value.slug),
+  });
   return trail;
 });
 
@@ -319,10 +356,13 @@ watch(
 
 function openInquiry() {
   if (!watchDoc.value) return;
-  ui.openInquiry({ id: watchDoc.value._id, name: `${brandName.value} ${watchDoc.value.name}` });
+  ui.openInquiry({
+    id: watchDoc.value._id,
+    name: `${brandName.value} ${watchDoc.value.name}`,
+  });
 }
 
-function cartItemFromCurrent(watch: Watch, variant: Watch['variants'][number]) {
+function cartItemFromCurrent(watch: Watch, variant: Watch["variants"][number]) {
   return {
     key: `${watch._id}:${variant.colorSlug}`,
     watchId: watch._id,
@@ -332,13 +372,16 @@ function cartItemFromCurrent(watch: Watch, variant: Watch['variants'][number]) {
     image: variant.images[0],
     price: watch.price,
     colorLabel: variant.colorLabel || undefined,
-    isAccessory: watch.type === 'accessory',
+    isAccessory: watch.type === "accessory",
   };
 }
 
 function addToCart() {
   if (!watchDoc.value || !selectedVariant.value) return;
-  cart.add(cartItemFromCurrent(watchDoc.value, selectedVariant.value), quantity.value);
+  cart.add(
+    cartItemFromCurrent(watchDoc.value, selectedVariant.value),
+    quantity.value,
+  );
   justAdded.value = true;
   window.setTimeout(() => (justAdded.value = false), 1600);
 }
@@ -346,7 +389,10 @@ function addToCart() {
 function buyNow() {
   if (!watchDoc.value || !selectedVariant.value) return;
   addToCart();
-  ui.openInquiry({ id: watchDoc.value._id, name: watchDoc.value.name }, cart.buildInquiryMessage());
+  ui.openInquiry(
+    { id: watchDoc.value._id, name: watchDoc.value.name },
+    cart.buildInquiryMessage(),
+  );
 }
 
 function addAccessoryToCart(accessory: Watch) {
@@ -356,116 +402,134 @@ function addAccessoryToCart(accessory: Watch) {
 }
 
 function onKeydown(event: KeyboardEvent) {
-  if (event.key === 'Escape') {
+  if (event.key === "Escape") {
     isFullscreen.value = false;
     return;
   }
   if (!isFullscreen.value) return;
-  if (event.key === 'ArrowRight') stepGallery(1);
-  else if (event.key === 'ArrowLeft') stepGallery(-1);
+  if (event.key === "ArrowRight") stepGallery(1);
+  else if (event.key === "ArrowLeft") stepGallery(-1);
 }
 
-onMounted(() => window.addEventListener('keydown', onKeydown));
-onUnmounted(() => window.removeEventListener('keydown', onKeydown));
+onMounted(() => window.addEventListener("keydown", onKeydown));
+onUnmounted(() => window.removeEventListener("keydown", onKeydown));
 </script>
 
 <template>
   <div class="sw-watch-detail-page">
-  <div v-if="notFound" class="sw-watch-detail__notfound">
-    <span class="sw-eyebrow">{{ locale.t('watchDetail.notFoundEyebrow') }}</span>
-    <h1 class="sw-h1">{{ locale.t('watchDetail.notFoundTitle') }}</h1>
-    <button class="sw-btn" type="button" @click="router.push('/watches')">{{ locale.t('watchDetail.backToCollection') }}</button>
-  </div>
+    <div v-if="notFound" class="sw-watch-detail__notfound">
+      <span class="sw-eyebrow">{{
+        locale.t("watchDetail.notFoundEyebrow")
+      }}</span>
+      <h1 class="sw-h1">{{ locale.t("watchDetail.notFoundTitle") }}</h1>
+      <button class="sw-btn" type="button" @click="router.push('/watches')">
+        {{ locale.t("watchDetail.backToCollection") }}
+      </button>
+    </div>
 
-  <template v-else-if="watchDoc">
-    <Breadcrumbs class="sw-watch-detail__breadcrumb" :items="crumbs" />
+    <template v-else-if="watchDoc">
+      <Breadcrumbs class="sw-watch-detail__breadcrumb" :items="crumbs" />
 
-    <article class="sw-watch-detail">
-      <div class="sw-watch-detail__gallery">
-        <div class="sw-watch-detail__stage">
-          <div
-            class="sw-watch-detail__main"
-            :class="{ 'is-video': activeItem?.type === 'video', 'is-zoomed': isZoomed }"
-            :style="isZoomed ? { '--zoom-origin': zoomOrigin } : undefined"
-            @click="toggleZoom"
-            @mousemove="onMainMouseMove"
-            @touchstart.passive="onTouchStart"
-            @touchend.passive="onTouchEnd"
-          >
-            <SmartVideo
-              v-if="activeItem?.type === 'video'"
-              :src="activeItem.src"
-              :poster="selectedVariant?.images[0]"
-              :alt="watchImageAlt(watchDoc)"
-              playback-strategy="manual"
-              object-fit="contain"
-            />
-            <SmartImage
-              v-else
-              :src="activeItem?.src"
-              :alt="watchImageAlt(watchDoc, activeIndex)"
-              eager
-              object-fit="contain"
-              sizes="(max-width: 1100px) 100vw, 640px"
-            />
+      <article class="sw-watch-detail">
+        <div class="sw-watch-detail__gallery">
+          <div class="sw-watch-detail__stage">
+            <div
+              class="sw-watch-detail__main"
+              :class="{
+                'is-video': activeItem?.type === 'video',
+                'is-zoomed': isZoomed,
+              }"
+              :style="isZoomed ? { '--zoom-origin': zoomOrigin } : undefined"
+              @click="toggleZoom"
+              @mousemove="onMainMouseMove"
+              @touchstart.passive="onTouchStart"
+              @touchend.passive="onTouchEnd"
+            >
+              <SmartVideo
+                v-if="activeItem?.type === 'video'"
+                :src="activeItem.src"
+                :poster="selectedVariant?.images[0]"
+                :alt="watchImageAlt(watchDoc)"
+                playback-strategy="manual"
+                object-fit="contain"
+              />
+              <SmartImage
+                v-else
+                :src="activeItem?.src"
+                :alt="watchImageAlt(watchDoc, activeIndex)"
+                eager
+                object-fit="contain"
+                sizes="(max-width: 1100px) 100vw, 640px"
+              />
+            </div>
+
+            <button
+              v-if="activeItem?.type === 'image'"
+              class="sw-watch-detail__expand"
+              type="button"
+              :aria-label="locale.t('watchDetail.close')"
+              @click.stop="openFullscreen"
+            >
+              &#x2922;
+            </button>
+
+            <template v-if="galleryItems.length > 1">
+              <button
+                class="sw-watch-detail__nav sw-watch-detail__nav--prev"
+                type="button"
+                aria-label="Previous"
+                @click.stop="stepGallery(-1)"
+              >
+                &larr;
+              </button>
+              <button
+                class="sw-watch-detail__nav sw-watch-detail__nav--next"
+                type="button"
+                aria-label="Next"
+                @click.stop="stepGallery(1)"
+              >
+                &rarr;
+              </button>
+              <span class="sw-watch-detail__counter" aria-hidden="true">
+                {{ activeIndex + 1 }} / {{ galleryItems.length }}
+              </span>
+            </template>
           </div>
 
-          <button
-            v-if="activeItem?.type === 'image'"
-            class="sw-watch-detail__expand"
-            type="button"
-            :aria-label="locale.t('watchDetail.close')"
-            @click.stop="openFullscreen"
-          >
-            &#x2922;
-          </button>
-
-          <template v-if="galleryItems.length > 1">
+          <div v-if="galleryItems.length > 1" class="sw-watch-detail__thumbs">
             <button
-              class="sw-watch-detail__nav sw-watch-detail__nav--prev"
+              v-for="(item, i) in galleryItems"
+              :key="item.src + i"
+              class="sw-watch-detail__thumb"
+              :class="{ 'is-active': i === activeIndex }"
               type="button"
-              aria-label="Previous"
-              @click.stop="stepGallery(-1)"
+              @click="selectItem(i)"
             >
-              &larr;
+              <SmartImage
+                :src="
+                  item.type === 'video' ? selectedVariant?.images[0] : item.src
+                "
+                :alt="
+                  item.type === 'video'
+                    ? `${watchImageAlt(watchDoc)} video`
+                    : watchImageAlt(watchDoc, i)
+                "
+                aspect-ratio="1 / 1"
+                object-fit="contain"
+                sizes="88px"
+              />
+              <span
+                v-if="item.type === 'video'"
+                class="sw-watch-detail__thumb-play"
+                aria-hidden="true"
+                >&#9654;</span
+              >
             </button>
-            <button
-              class="sw-watch-detail__nav sw-watch-detail__nav--next"
-              type="button"
-              aria-label="Next"
-              @click.stop="stepGallery(1)"
-            >
-              &rarr;
-            </button>
-            <span class="sw-watch-detail__counter" aria-hidden="true">
-              {{ activeIndex + 1 }} / {{ galleryItems.length }}
-            </span>
-          </template>
+          </div>
         </div>
 
-        <div v-if="galleryItems.length > 1" class="sw-watch-detail__thumbs">
-          <button
-            v-for="(item, i) in galleryItems"
-            :key="item.src + i"
-            class="sw-watch-detail__thumb"
-            :class="{ 'is-active': i === activeIndex }"
-            type="button"
-            @click="selectItem(i)"
-          >
-            <SmartImage
-              :src="item.type === 'video' ? selectedVariant?.images[0] : item.src"
-              :alt="item.type === 'video' ? `${watchImageAlt(watchDoc)} video` : watchImageAlt(watchDoc, i)"
-              aspect-ratio="1 / 1"
-              object-fit="contain"
-              sizes="88px"
-            />
-            <span v-if="item.type === 'video'" class="sw-watch-detail__thumb-play" aria-hidden="true">&#9654;</span>
-          </button>
-        </div>
-      </div>
-
-      <div class="sw-watch-detail__info">
-        <!-- Brand and model live in one <h1> so the heading reads as the whole
+        <div class="sw-watch-detail__info">
+          <!-- Brand and model live in one <h1> so the heading reads as the whole
              product name ("Tsar Bomba Atomic-TB8218"), matching the <title>,
              the Product schema `name` and the prerendered copy. The two lines
              are still styled separately, so nothing moves on screen, and the
@@ -475,209 +539,479 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
              heading's textContent reads "Tsar BombaAtomic-TB8218" — which is
              what a crawler extracts, and it disagreed with the prerendered
              copy. Verified in a real browser, not assumed. -->
-        <h1 class="sw-h1 sw-watch-detail__title">
-          <RouterLink
-            v-if="brandSlug"
-            :to="`/brands/${brandSlug}`"
-            class="sw-label sw-watch-detail__brand"
-          >{{ brandName }}</RouterLink>{{ ' ' }}<span class="sw-watch-detail__model">{{ watchDoc.name }}</span>
-        </h1>
-        <p v-if="SHOW_PRICES" class="sw-watch-detail__price">{{ currency.format(watchDoc.price) }}</p>
-        <p class="sw-body-lg sw-watch-detail__desc">{{ tidyDescription(watchDoc.shortDescription) }}</p>
+          <h1 class="sw-h1 sw-watch-detail__title">
+            <RouterLink
+              v-if="brandSlug"
+              :to="`/brands/${brandSlug}`"
+              class="sw-label sw-watch-detail__brand"
+              >{{ brandName }}</RouterLink
+            >{{ " "
+            }}<span class="sw-watch-detail__model">{{ watchDoc.name }}</span>
+          </h1>
+          <p v-if="SHOW_PRICES" class="sw-watch-detail__price">
+            {{ currency.format(watchDoc.price) }}
+          </p>
+          <p class="sw-body-lg sw-watch-detail__desc">
+            {{ tidyDescription(watchDoc.shortDescription) }}
+          </p>
 
-        <div v-if="variants.length > 1" class="sw-watch-detail__colors">
-          <span class="sw-label">{{ locale.t('watchDetail.color') }} — {{ selectedVariant?.colorLabel }}</span>
-          <div class="sw-watch-detail__swatches">
-            <button
-              v-for="v in variants"
-              :key="v.colorSlug"
-              class="sw-watch-detail__swatch"
-              :class="{ 'is-active': v.colorSlug === selectedVariant?.colorSlug }"
-              type="button"
-              :aria-label="v.colorLabel"
-              :aria-pressed="v.colorSlug === selectedVariant?.colorSlug"
-              @click="selectVariant(v.colorSlug)"
+          <div v-if="variants.length > 1" class="sw-watch-detail__colors">
+            <span class="sw-label"
+              >{{ locale.t("watchDetail.color") }} —
+              {{ selectedVariant?.colorLabel }}</span
             >
-              <span class="sw-watch-detail__swatch-dot" :style="{ background: colorSwatchHex(v.colorSlug) }" />
-              <!-- The phone shows the colourway as its own photograph in a
+            <div class="sw-watch-detail__swatches">
+              <button
+                v-for="v in variants"
+                :key="v.colorSlug"
+                class="sw-watch-detail__swatch"
+                :class="{
+                  'is-active': v.colorSlug === selectedVariant?.colorSlug,
+                }"
+                type="button"
+                :aria-label="v.colorLabel"
+                :aria-pressed="v.colorSlug === selectedVariant?.colorSlug"
+                @click="selectVariant(v.colorSlug)"
+              >
+                <span
+                  class="sw-watch-detail__swatch-dot"
+                  :style="{ background: colorSwatchHex(v.colorSlug, v.color) }"
+                />
+                <!-- The phone shows the colourway as its own photograph in a
                    ring rather than a flat dot — the dot is what the desktop
                    column keeps. Both are in the DOM; CSS picks one. -->
-              <span class="sw-watch-detail__swatch-shot" aria-hidden="true">
-                <SmartImage :src="v.images[0]" :alt="v.colorLabel" aspect-ratio="1 / 1" object-fit="contain" sizes="64px" />
-              </span>
-            </button>
-          </div>
-        </div>
-
-        <div v-if="otherColorways.length" class="sw-watch-detail__colorways">
-          <span class="sw-label">{{ locale.t('watchDetail.otherColorways') }}</span>
-          <ul class="sw-watch-detail__colorway-list" data-lenis-prevent>
-            <li v-for="c in otherColorways" :key="c.slug">
-              <RouterLink :to="productPath(c.slug)" class="sw-watch-detail__colorway" :title="c.label">
-                <span class="sw-watch-detail__colorway-shot">
+                <span class="sw-watch-detail__swatch-shot" aria-hidden="true">
                   <SmartImage
-                    :src="c.image"
-                    :alt="c.label"
+                    :src="v.images[0]"
+                    :alt="v.colorLabel"
+                    aspect-ratio="1 / 1"
+                    object-fit="contain"
+                    sizes="64px"
+                  />
+                </span>
+              </button>
+            </div>
+          </div>
+
+          <div v-if="otherColorways.length" class="sw-watch-detail__colorways">
+            <span class="sw-label">{{
+              locale.t("watchDetail.otherColorways")
+            }}</span>
+            <ul class="sw-watch-detail__colorway-list" data-lenis-prevent>
+              <li v-for="c in otherColorways" :key="c.slug">
+                <RouterLink
+                  :to="productPath(c.slug)"
+                  class="sw-watch-detail__colorway"
+                  :title="c.label"
+                >
+                  <span class="sw-watch-detail__colorway-shot">
+                    <SmartImage
+                      :src="c.image"
+                      :alt="c.label"
+                      aspect-ratio="1 / 1"
+                      object-fit="contain"
+                      sizes="72px"
+                    />
+                  </span>
+                  <span class="sw-watch-detail__colorway-label">{{
+                    c.label
+                  }}</span>
+                  <span
+                    v-if="SHOW_PRICES"
+                    class="sw-watch-detail__colorway-price"
+                    >{{ currency.format(c.price) }}</span
+                  >
+                </RouterLink>
+              </li>
+            </ul>
+          </div>
+
+          <div class="sw-watch-detail__availability">
+            <span
+              class="sw-watch-detail__dot"
+              :class="`is-${watchDoc.availability}`"
+            />
+            <span class="sw-label">{{ availabilityLabel }}</span>
+          </div>
+
+          <div ref="purchaseRef" class="sw-watch-detail__purchase">
+            <div class="sw-watch-detail__qty">
+              <span class="sw-label">{{
+                locale.t("watchDetail.quantity")
+              }}</span>
+              <div class="sw-watch-detail__stepper">
+                <button
+                  type="button"
+                  aria-label="-"
+                  @click="quantity = Math.max(1, quantity - 1)"
+                >
+                  &minus;
+                </button>
+                <span>{{ quantity }}</span>
+                <button
+                  type="button"
+                  aria-label="+"
+                  @click="quantity = Math.min(10, quantity + 1)"
+                >
+                  &plus;
+                </button>
+              </div>
+            </div>
+
+            <div class="sw-watch-detail__actions">
+              <button
+                class="sw-btn sw-btn--solid sw-watch-detail__cta"
+                type="button"
+                @click="addToCart"
+              >
+                {{
+                  justAdded
+                    ? locale.t("watchDetail.addedToCart")
+                    : locale.t("watchDetail.addToCart")
+                }}
+              </button>
+              <button
+                class="sw-btn sw-watch-detail__buy"
+                type="button"
+                @click="buyNow"
+              >
+                {{ locale.t("watchDetail.buyNow") }}
+              </button>
+            </div>
+
+            <div class="sw-watch-detail__secondary">
+              <button
+                class="sw-btn sw-watch-detail__inquire"
+                type="button"
+                @click="openInquiry"
+              >
+                {{ locale.t("watchDetail.requestInfo") }}
+              </button>
+              <SaveButton
+                :watch-id="watchDoc._id"
+                variant="label"
+                class="sw-watch-detail__save"
+              />
+            </div>
+          </div>
+
+          <!-- The three things the shop actually promises (see the FAQ seed) —
+             the phone layout's reassurance row under the buy buttons. -->
+          <ul class="sw-watch-detail__trust" aria-label="">
+            <li>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M3 7.5h10v8H3zM13 10h4l3 3v2.5h-7z" />
+                <circle cx="7" cy="17" r="1.6" />
+                <circle cx="17" cy="17" r="1.6" />
+              </svg>
+              <span>{{ locale.t("watchDetail.trustDelivery") }}</span>
+            </li>
+            <li>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path
+                  d="M12 3.5 5 6v5.5c0 4.2 2.9 7.6 7 9 4.1-1.4 7-4.8 7-9V6z"
+                />
+                <path d="m9.2 12 2 2 3.8-4" />
+              </svg>
+              <span>{{ locale.t("watchDetail.trustWarranty") }}</span>
+            </li>
+            <li>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path
+                  d="M6 3.5h8l4 4V20a.5.5 0 0 1-.5.5h-11A.5.5 0 0 1 6 20z"
+                />
+                <path d="M14 3.5v4h4M9 12h6M9 15.5h6" />
+              </svg>
+              <span>{{ locale.t("watchDetail.trustAuthentic") }}</span>
+            </li>
+          </ul>
+
+          <div
+            v-if="watchDoc.accessories?.length"
+            class="sw-watch-detail__pair"
+          >
+            <span class="sw-label">{{
+              locale.t("watchDetail.pairItWith")
+            }}</span>
+            <ul class="sw-watch-detail__pair-list">
+              <li
+                v-for="accessory in watchDoc.accessories"
+                :key="accessory._id"
+                class="sw-watch-detail__pair-item"
+              >
+                <RouterLink
+                  :to="productPath(accessory.slug)"
+                  class="sw-watch-detail__pair-media"
+                  tabindex="-1"
+                  aria-hidden="true"
+                >
+                  <SmartImage
+                    :src="accessory.variants[0]?.images[0]"
+                    :alt="watchImageAlt(accessory)"
                     aspect-ratio="1 / 1"
                     object-fit="contain"
                     sizes="72px"
                   />
-                </span>
-                <span class="sw-watch-detail__colorway-label">{{ c.label }}</span>
-                <span v-if="SHOW_PRICES" class="sw-watch-detail__colorway-price">{{ currency.format(c.price) }}</span>
-              </RouterLink>
-            </li>
-          </ul>
-        </div>
-
-        <div class="sw-watch-detail__availability">
-          <span class="sw-watch-detail__dot" :class="`is-${watchDoc.availability}`" />
-          <span class="sw-label">{{ availabilityLabel }}</span>
-        </div>
-
-        <div ref="purchaseRef" class="sw-watch-detail__purchase">
-          <div class="sw-watch-detail__qty">
-            <span class="sw-label">{{ locale.t('watchDetail.quantity') }}</span>
-            <div class="sw-watch-detail__stepper">
-              <button type="button" aria-label="-" @click="quantity = Math.max(1, quantity - 1)">&minus;</button>
-              <span>{{ quantity }}</span>
-              <button type="button" aria-label="+" @click="quantity = Math.min(10, quantity + 1)">&plus;</button>
-            </div>
-          </div>
-
-          <div class="sw-watch-detail__actions">
-            <button class="sw-btn sw-btn--solid sw-watch-detail__cta" type="button" @click="addToCart">
-              {{ justAdded ? locale.t('watchDetail.addedToCart') : locale.t('watchDetail.addToCart') }}
-            </button>
-            <button class="sw-btn sw-watch-detail__buy" type="button" @click="buyNow">
-              {{ locale.t('watchDetail.buyNow') }}
-            </button>
-          </div>
-
-          <div class="sw-watch-detail__secondary">
-            <button class="sw-btn sw-watch-detail__inquire" type="button" @click="openInquiry">
-              {{ locale.t('watchDetail.requestInfo') }}
-            </button>
-            <SaveButton :watch-id="watchDoc._id" variant="label" class="sw-watch-detail__save" />
+                </RouterLink>
+                <div class="sw-watch-detail__pair-body">
+                  <RouterLink
+                    :to="productPath(accessory.slug)"
+                    class="sw-watch-detail__pair-name"
+                    >{{ accessory.name }}</RouterLink
+                  >
+                  <span
+                    v-if="SHOW_PRICES"
+                    class="sw-watch-detail__pair-price"
+                    >{{ currency.format(accessory.price) }}</span
+                  >
+                </div>
+                <button
+                  class="sw-watch-detail__pair-add"
+                  type="button"
+                  @click="addAccessoryToCart(accessory)"
+                >
+                  {{ locale.t("watchDetail.add") }}
+                </button>
+              </li>
+            </ul>
           </div>
         </div>
+      </article>
 
-        <!-- The three things the shop actually promises (see the FAQ seed) —
-             the phone layout's reassurance row under the buy buttons. -->
-        <ul class="sw-watch-detail__trust" aria-label="">
-          <li>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M3 7.5h10v8H3zM13 10h4l3 3v2.5h-7z" /><circle cx="7" cy="17" r="1.6" /><circle cx="17" cy="17" r="1.6" />
-            </svg>
-            <span>{{ locale.t('watchDetail.trustDelivery') }}</span>
-          </li>
-          <li>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M12 3.5 5 6v5.5c0 4.2 2.9 7.6 7 9 4.1-1.4 7-4.8 7-9V6z" /><path d="m9.2 12 2 2 3.8-4" />
-            </svg>
-            <span>{{ locale.t('watchDetail.trustWarranty') }}</span>
-          </li>
-          <li>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M6 3.5h8l4 4V20a.5.5 0 0 1-.5.5h-11A.5.5 0 0 1 6 20z" /><path d="M14 3.5v4h4M9 12h6M9 15.5h6" />
-            </svg>
-            <span>{{ locale.t('watchDetail.trustAuthentic') }}</span>
-          </li>
-        </ul>
-
-        <div v-if="watchDoc.accessories?.length" class="sw-watch-detail__pair">
-          <span class="sw-label">{{ locale.t('watchDetail.pairItWith') }}</span>
-          <ul class="sw-watch-detail__pair-list">
-            <li v-for="accessory in watchDoc.accessories" :key="accessory._id" class="sw-watch-detail__pair-item">
-              <RouterLink :to="productPath(accessory.slug)" class="sw-watch-detail__pair-media" tabindex="-1" aria-hidden="true">
-                <SmartImage :src="accessory.variants[0]?.images[0]" :alt="watchImageAlt(accessory)" aspect-ratio="1 / 1" object-fit="contain" sizes="72px" />
-              </RouterLink>
-              <div class="sw-watch-detail__pair-body">
-                <RouterLink :to="productPath(accessory.slug)" class="sw-watch-detail__pair-name">{{ accessory.name }}</RouterLink>
-                <span v-if="SHOW_PRICES" class="sw-watch-detail__pair-price">{{ currency.format(accessory.price) }}</span>
-              </div>
-              <button class="sw-watch-detail__pair-add" type="button" @click="addAccessoryToCart(accessory)">
-                {{ locale.t('watchDetail.add') }}
-              </button>
-            </li>
-          </ul>
+      <section v-if="watchDoc.description" class="sw-watch-story">
+        <div class="sw-watch-story__media">
+          <SmartImage
+            :src="storyImage"
+            :alt="watchImageAlt(watchDoc, 1)"
+            aspect-ratio="4 / 5"
+            sizes="(max-width: 1100px) 92vw, 42vw"
+          />
         </div>
-      </div>
-    </article>
-
-    <section v-if="watchDoc.description" class="sw-watch-story">
-      <div class="sw-watch-story__media">
-        <SmartImage :src="storyImage" :alt="watchImageAlt(watchDoc, 1)" aspect-ratio="4 / 5" sizes="(max-width: 1100px) 92vw, 42vw" />
-      </div>
-      <div class="sw-watch-story__body">
-        <span class="sw-eyebrow">{{ locale.t('watchDetail.theStory') }}</span>
-        <p class="sw-body-lg">{{ tidyDescription(watchDoc.description) }}</p>
-      </div>
-    </section>
-
-    <section v-if="specs.length" class="sw-watch-specs">
-      <span class="sw-eyebrow">{{ locale.t('watchDetail.specifications') }}</span>
-      <dl class="sw-watch-specs__grid">
-        <div v-for="spec in specs" :key="spec.label" class="sw-watch-specs__row">
-          <span class="sw-watch-specs__icon" aria-hidden="true">
-            <svg v-if="spec.key === 'reference'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 7.5 20M16.5 4 15 20M4.5 9.5h16M3.5 15h16" /></svg>
-            <svg v-else-if="spec.key === 'movement'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3" /><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1" /></svg>
-            <svg v-else-if="spec.key === 'case'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="14" height="14" rx="3" /><circle cx="12" cy="12" r="4.5" /><path d="M9 2.5h6M9 21.5h6" /></svg>
-            <svg v-else-if="spec.key === 'dial'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5" /><path d="M12 7.5V12l3 2M12 3.5v1.5M12 19v1.5M3.5 12H5M19 12h1.5" /></svg>
-            <svg v-else-if="spec.key === 'bracelet'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6v18H9z" /><circle cx="12" cy="8" r="0.9" /><circle cx="12" cy="12" r="0.9" /><circle cx="12" cy="16" r="0.9" /></svg>
-            <svg v-else viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5s-6 6.6-6 11a6 6 0 0 0 12 0c0-4.4-6-11-6-11Z" /><path d="M9 14.5a3 3 0 0 0 3 3" /></svg>
-          </span>
-          <dt class="sw-label">{{ spec.label }}</dt>
-          <dd class="sw-body">{{ spec.value }}</dd>
+        <div class="sw-watch-story__body">
+          <span class="sw-eyebrow">{{ locale.t("watchDetail.theStory") }}</span>
+          <p class="sw-body-lg">{{ tidyDescription(watchDoc.description) }}</p>
         </div>
-      </dl>
-    </section>
+      </section>
 
-    <section v-if="watchDoc.related?.length" class="sw-watch-related-section">
-      <span class="sw-eyebrow">{{ locale.t('watchDetail.relatedTitle') }}</span>
-      <RelatedProductsCarousel :watches="watchDoc.related" />
-    </section>
+      <section v-if="specs.length" class="sw-watch-specs">
+        <span class="sw-eyebrow">{{
+          locale.t("watchDetail.specifications")
+        }}</span>
+        <dl class="sw-watch-specs__grid">
+          <div
+            v-for="spec in specs"
+            :key="spec.label"
+            class="sw-watch-specs__row"
+          >
+            <span class="sw-watch-specs__icon" aria-hidden="true">
+              <svg
+                v-if="spec.key === 'reference'"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M9 4 7.5 20M16.5 4 15 20M4.5 9.5h16M3.5 15h16" />
+              </svg>
+              <svg
+                v-else-if="spec.key === 'movement'"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="12" cy="12" r="3" />
+                <path
+                  d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"
+                />
+              </svg>
+              <svg
+                v-else-if="spec.key === 'case'"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="5" y="5" width="14" height="14" rx="3" />
+                <circle cx="12" cy="12" r="4.5" />
+                <path d="M9 2.5h6M9 21.5h6" />
+              </svg>
+              <svg
+                v-else-if="spec.key === 'dial'"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="12" cy="12" r="8.5" />
+                <path
+                  d="M12 7.5V12l3 2M12 3.5v1.5M12 19v1.5M3.5 12H5M19 12h1.5"
+                />
+              </svg>
+              <svg
+                v-else-if="spec.key === 'bracelet'"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M9 3h6v18H9z" />
+                <circle cx="12" cy="8" r="0.9" />
+                <circle cx="12" cy="12" r="0.9" />
+                <circle cx="12" cy="16" r="0.9" />
+              </svg>
+              <svg
+                v-else
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12 3.5s-6 6.6-6 11a6 6 0 0 0 12 0c0-4.4-6-11-6-11Z" />
+                <path d="M9 14.5a3 3 0 0 0 3 3" />
+              </svg>
+            </span>
+            <dt class="sw-label">{{ spec.label }}</dt>
+            <dd class="sw-body">{{ spec.value }}</dd>
+          </div>
+        </dl>
+      </section>
 
-    <ShopFaq />
-  </template>
+      <section v-if="watchDoc.related?.length" class="sw-watch-related-section">
+        <span class="sw-eyebrow">{{
+          locale.t("watchDetail.relatedTitle")
+        }}</span>
+        <RelatedProductsCarousel :watches="watchDoc.related" />
+      </section>
 
-  <!-- Phone only. Rides above the tab bar once the purchase block has
+      <ShopFaq />
+    </template>
+
+    <!-- Phone only. Rides above the tab bar once the purchase block has
        scrolled away; a second tap target for the same add-to-cart, plus the
        way back up. -->
-  <div
-    v-if="watchDoc && selectedVariant"
-    class="sw-watch-sticky"
-    :class="{ 'is-visible': stickyVisible && !ui.isMenuOpen && !ui.isSearchOpen && !ui.isCartOpen && !ui.isInquiryOpen }"
-    :aria-hidden="!stickyVisible"
-    :inert="!stickyVisible || undefined"
-  >
-    <button class="sw-watch-sticky__cta" type="button" @click="addToCart">
-      <span>{{ justAdded ? locale.t('watchDetail.addedToCart') : locale.t('watchDetail.addToCart') }}</span>
-      <span v-if="SHOW_PRICES" class="sw-watch-sticky__price">{{ currency.format(watchDoc.price) }}</span>
-    </button>
-    <button class="sw-watch-sticky__top" type="button" :aria-label="locale.t('watchDetail.backToTop')" @click="scrollToTop">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M12 19V5M5.5 11.5 12 5l6.5 6.5" />
-      </svg>
-    </button>
-  </div>
-
-  <transition name="sw-fade">
     <div
-      v-if="isFullscreen && watchDoc"
-      class="sw-lightbox"
-      @click.self="isFullscreen = false"
-      @touchstart.passive="onTouchStart"
-      @touchend.passive="onTouchEnd"
+      v-if="watchDoc && selectedVariant"
+      class="sw-watch-sticky"
+      :class="{
+        'is-visible':
+          stickyVisible &&
+          !ui.isMenuOpen &&
+          !ui.isSearchOpen &&
+          !ui.isCartOpen &&
+          !ui.isInquiryOpen,
+      }"
+      :aria-hidden="!stickyVisible"
+      :inert="!stickyVisible || undefined"
     >
-      <button class="sw-lightbox__close" type="button" :aria-label="locale.t('watchDetail.close')" @click="isFullscreen = false">
-        {{ locale.t('watchDetail.close') }}
+      <button class="sw-watch-sticky__cta" type="button" @click="addToCart">
+        <span>{{
+          justAdded
+            ? locale.t("watchDetail.addedToCart")
+            : locale.t("watchDetail.addToCart")
+        }}</span>
+        <span v-if="SHOW_PRICES" class="sw-watch-sticky__price">{{
+          currency.format(watchDoc.price)
+        }}</span>
       </button>
-      <button v-if="galleryItems.length > 1" class="sw-lightbox__arrow sw-lightbox__arrow--prev" type="button" aria-label="Previous" @click.stop="stepGallery(-1)">&larr;</button>
-      <SmartImage :src="activeItem?.src" :alt="watchImageAlt(watchDoc, activeIndex)" eager object-fit="contain" />
-      <button v-if="galleryItems.length > 1" class="sw-lightbox__arrow sw-lightbox__arrow--next" type="button" aria-label="Next" @click.stop="stepGallery(1)">&rarr;</button>
+      <button
+        class="sw-watch-sticky__top"
+        type="button"
+        :aria-label="locale.t('watchDetail.backToTop')"
+        @click="scrollToTop"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M12 19V5M5.5 11.5 12 5l6.5 6.5" />
+        </svg>
+      </button>
     </div>
-  </transition>
+
+    <transition name="sw-fade">
+      <div
+        v-if="isFullscreen && watchDoc"
+        class="sw-lightbox"
+        @click.self="isFullscreen = false"
+        @touchstart.passive="onTouchStart"
+        @touchend.passive="onTouchEnd"
+      >
+        <button
+          class="sw-lightbox__close"
+          type="button"
+          :aria-label="locale.t('watchDetail.close')"
+          @click="isFullscreen = false"
+        >
+          {{ locale.t("watchDetail.close") }}
+        </button>
+        <button
+          v-if="galleryItems.length > 1"
+          class="sw-lightbox__arrow sw-lightbox__arrow--prev"
+          type="button"
+          aria-label="Previous"
+          @click.stop="stepGallery(-1)"
+        >
+          &larr;
+        </button>
+        <SmartImage
+          :src="activeItem?.src"
+          :alt="watchImageAlt(watchDoc, activeIndex)"
+          eager
+          object-fit="contain"
+        />
+        <button
+          v-if="galleryItems.length > 1"
+          class="sw-lightbox__arrow sw-lightbox__arrow--next"
+          type="button"
+          aria-label="Next"
+          @click.stop="stepGallery(1)"
+        >
+          &rarr;
+        </button>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -781,7 +1115,9 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
   color: #111;
   font-size: 1.05rem;
   opacity: 0;
-  transition: opacity var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
+  transition:
+    opacity var(--dur-fast) var(--ease-out),
+    background var(--dur-fast) var(--ease-out);
 }
 
 .sw-watch-detail__nav:hover {
@@ -845,7 +1181,9 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
   border: 1px solid transparent;
   opacity: 0.62;
   scroll-snap-align: start;
-  transition: opacity var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+  transition:
+    opacity var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
 }
 
 .sw-watch-detail__thumb-play {
@@ -945,7 +1283,9 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
   border-radius: 50%;
   padding: 4px;
   border: 1px solid transparent;
-  transition: border-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
 }
 
 .sw-watch-detail__swatch-dot {
@@ -1201,7 +1541,9 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
   text-transform: uppercase;
   border: 1px solid var(--border);
   padding: 12px 20px;
-  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+  transition:
+    background var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
 }
 
 .sw-watch-detail__pair-add:hover {
@@ -1603,7 +1945,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
   }
 
   .sw-watch-detail__qty .sw-label::after {
-    content: ' :';
+    content: " :";
   }
 
   .sw-watch-detail__stepper {
@@ -1845,7 +2187,9 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
     display: grid;
     grid-template-columns: minmax(0, 1fr) 58px;
     height: 58px;
-    transform: translateY(calc(100% + var(--tabbar-height) + env(safe-area-inset-bottom, 0px)));
+    transform: translateY(
+      calc(100% + var(--tabbar-height) + env(safe-area-inset-bottom, 0px))
+    );
     transition: transform 0.45s var(--ease-editorial);
   }
 

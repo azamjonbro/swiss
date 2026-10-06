@@ -161,7 +161,9 @@ const hiddenColorCount = computed(() =>
           :key="variant.colorSlug"
           class="sw-watch-card__dot"
           :title="variant.colorLabel"
-          :style="{ background: colorSwatchHex(variant.colorSlug) }"
+          :style="{
+            background: colorSwatchHex(variant.colorSlug, variant.color),
+          }"
         />
         <span
           v-if="hiddenColorCount"

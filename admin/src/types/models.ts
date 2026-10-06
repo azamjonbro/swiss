@@ -1,5 +1,5 @@
-export type TranslationLang = 'ru' | 'uz';
-export const TRANSLATION_LANGS: TranslationLang[] = ['ru', 'uz'];
+export type TranslationLang = "ru" | "uz";
+export const TRANSLATION_LANGS: TranslationLang[] = ["ru", "uz"];
 
 /**
  * Per-language overrides for the base (English) text fields. The API overlays
@@ -16,7 +16,7 @@ export interface TranslationField {
   /** Key inside `translations.<lang>` — must match the model's localized field. */
   key: string;
   label: string;
-  type?: 'text' | 'textarea';
+  type?: "text" | "textarea";
   rows?: number;
 }
 
@@ -103,12 +103,13 @@ export interface CategoryRef {
   slug: string;
 }
 
-export type Availability = 'in-stock' | 'reserved' | 'sold' | 'made-to-order';
+export type Availability = "in-stock" | "reserved" | "sold" | "made-to-order";
 
-export type WatchType = 'watch' | 'accessory';
+export type WatchType = "watch" | "accessory";
 
 export interface WatchVariant {
   colorSlug: string;
+  color?: string;
   colorLabel: string;
   colorLabelRu?: string;
   colorLabelUz?: string;
@@ -168,7 +169,7 @@ export interface Paginated<T> {
   pages: number;
 }
 
-export type InquiryStatus = 'new' | 'contacted' | 'completed' | 'cancelled';
+export type InquiryStatus = "new" | "contacted" | "completed" | "cancelled";
 
 export interface Inquiry {
   _id: string;
@@ -185,5 +186,5 @@ export interface Admin {
   id: string;
   name: string;
   email: string;
-  role: 'superadmin' | 'admin';
+  role: "superadmin" | "admin";
 }

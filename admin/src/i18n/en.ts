@@ -337,6 +337,7 @@ const en = {
     colorLabel: "Color Name (EN)",
     colorLabelRu: "Color Name (RU)",
     colorLabelUz: "Color Name (UZ)",
+    colorPicker: "Swatch Color",
     backToWatches: "Back to watches",
 
     // Categories

@@ -337,6 +337,7 @@ const uz: Dictionary = {
     colorLabel: "Rang nomi (EN)",
     colorLabelRu: "Rang nomi (RU)",
     colorLabelUz: "Rang nomi (UZ)",
+    colorPicker: "Rang namunasi",
     backToWatches: "Soatlar ro‘yxatiga",
 
     // Categories

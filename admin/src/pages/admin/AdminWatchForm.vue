@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, computed, watch as watchRef, onMounted, onUnmounted } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { ref, computed, watch as watchRef, onMounted, onUnmounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import type {
   Watch,
   Category,
@@ -10,18 +10,24 @@ import type {
   TranslationField,
   Translations,
   WatchVariant,
-} from '@/types/models';
-import { adminFetchWatch, adminCreateWatch, adminUpdateWatch, adminFetchWatches } from '@/services/watches';
-import { adminFetchCategories } from '@/services/categories';
-import { adminFetchBrands } from '@/services/brands';
-import { adminFetchCollections } from '@/services/collections';
-import { useLocaleStore } from '@/stores/locale';
-import { useToastStore } from '@/stores/toast';
-import MediaUploader from '@/components/admin/MediaUploader.vue';
-import TranslationFields from '@/components/admin/TranslationFields.vue';
-import AdminIcon from '@/components/shared/AdminIcon.vue';
-import { resolveMediaUrl } from '@/utils/media';
-import { modelGroupKey } from '@/utils/modelGroup';
+} from "@/types/models";
+import {
+  adminFetchWatch,
+  adminCreateWatch,
+  adminUpdateWatch,
+  adminFetchWatches,
+} from "@/services/watches";
+import { adminFetchCategories } from "@/services/categories";
+import { adminFetchBrands } from "@/services/brands";
+import { adminFetchCollections } from "@/services/collections";
+import { useLocaleStore } from "@/stores/locale";
+import { useToastStore } from "@/stores/toast";
+import MediaUploader from "@/components/admin/MediaUploader.vue";
+import TranslationFields from "@/components/admin/TranslationFields.vue";
+import AdminIcon from "@/components/shared/AdminIcon.vue";
+import { resolveMediaUrl } from "@/utils/media";
+import { colorSwatchHex } from "@/utils/format";
+import { modelGroupKey } from "@/utils/modelGroup";
 
 const route = useRoute();
 const router = useRouter();
@@ -35,32 +41,39 @@ const brands = ref<Brand[]>([]);
 const collections = ref<Collection[]>([]);
 
 const translationFields = computed<TranslationField[]>(() => [
-  { key: 'name', label: locale.t('admin.name') },
-  { key: 'shortDescription', label: locale.t('admin.shortDescription') },
-  { key: 'description', label: locale.t('admin.fullDescription'), type: 'textarea', rows: 4 },
+  { key: "name", label: locale.t("admin.name") },
+  { key: "shortDescription", label: locale.t("admin.shortDescription") },
+  {
+    key: "description",
+    label: locale.t("admin.fullDescription"),
+    type: "textarea",
+    rows: 4,
+  },
 ]);
 
 const form = ref({
-  name: '',
-  reference: '',
-  brand: '',
-  category: '',
-  collectionRef: '',
+  name: "",
+  reference: "",
+  brand: "",
+  category: "",
+  collectionRef: "",
   // Preselected from the route: "New accessory" in the Accessories section
   // links here with ?type=accessory, so the type is already right rather than
   // being a dropdown someone has to remember to change.
-  type: (route.query.type === 'accessory' ? 'accessory' : 'watch') as 'watch' | 'accessory',
+  type: (route.query.type === "accessory" ? "accessory" : "watch") as
+    | "watch"
+    | "accessory",
   price: 0,
-  currency: 'USD',
-  shortDescription: '',
-  description: '',
-  movement: '',
-  caseMaterial: '',
-  caseSize: '',
-  dial: '',
-  bracelet: '',
-  waterResistance: '',
-  availability: 'in-stock' as Availability,
+  currency: "USD",
+  shortDescription: "",
+  description: "",
+  movement: "",
+  caseMaterial: "",
+  caseSize: "",
+  dial: "",
+  bracelet: "",
+  waterResistance: "",
+  availability: "in-stock" as Availability,
   featured: false,
   isNewArrival: false,
   isActive: true,
@@ -71,15 +84,18 @@ const form = ref({
 // separate pages. Every way out of here — back link, cancel, the redirect after
 // a save — has to lead to the list the product is actually on, or an edited
 // accessory appears to vanish into a Watches page that never shows it.
-const isAccessory = computed(() => form.value.type === 'accessory');
-const listPath = computed(() => (isAccessory.value ? '/accessories' : '/watches'));
+const isAccessory = computed(() => form.value.type === "accessory");
+const listPath = computed(() =>
+  isAccessory.value ? "/accessories" : "/watches",
+);
 
 const variants = ref<WatchVariant[]>([
   {
-    colorSlug: 'default',
-    colorLabel: '',
-    colorLabelRu: '',
-    colorLabelUz: '',
+    colorSlug: "default",
+    color: "",
+    colorLabel: "",
+    colorLabelRu: "",
+    colorLabelUz: "",
     images: [],
     videos: [],
   },
@@ -87,7 +103,7 @@ const variants = ref<WatchVariant[]>([
 
 const isSaving = ref(false);
 const isLoading = ref(false);
-const errorMessage = ref('');
+const errorMessage = ref("");
 
 // ---- Model group detection ----
 // When the name changes, check whether the product will join an existing model.
@@ -97,7 +113,10 @@ let modelDebounce: ReturnType<typeof setTimeout> | null = null;
 
 async function checkModelGroup(name: string) {
   const key = modelGroupKey(name);
-  if (!key) { modelMatch.value = null; return; }
+  if (!key) {
+    modelMatch.value = null;
+    return;
+  }
 
   modelCheckPending.value = true;
   try {
@@ -106,7 +125,9 @@ async function checkModelGroup(name: string) {
     // and filter client-side — the set is small enough.
     const data = await adminFetchWatches({ q: name, limit: 50 });
     const siblings = data.items.filter(
-      (w) => modelGroupKey(w.name) === key && (!isEdit.value || w._id !== route.params.id),
+      (w) =>
+        modelGroupKey(w.name) === key &&
+        (!isEdit.value || w._id !== route.params.id),
     );
     if (siblings.length > 0) {
       modelMatch.value = { name: siblings[0].name, count: siblings.length };
@@ -120,19 +141,27 @@ async function checkModelGroup(name: string) {
   }
 }
 
-watchRef(() => form.value.name, (name) => {
+watchRef(
+  () => form.value.name,
+  (name) => {
+    if (modelDebounce) clearTimeout(modelDebounce);
+    if (!name || name.length < 3) {
+      modelMatch.value = null;
+      return;
+    }
+    modelDebounce = setTimeout(() => checkModelGroup(name), 400);
+  },
+);
+
+onUnmounted(() => {
   if (modelDebounce) clearTimeout(modelDebounce);
-  if (!name || name.length < 3) { modelMatch.value = null; return; }
-  modelDebounce = setTimeout(() => checkModelGroup(name), 400);
 });
 
-onUnmounted(() => { if (modelDebounce) clearTimeout(modelDebounce); });
-
-function brandIdOf(brand: Watch['brand']): string {
-  return typeof brand === 'string' ? brand : brand._id;
+function brandIdOf(brand: Watch["brand"]): string {
+  return typeof brand === "string" ? brand : brand._id;
 }
-function categoryIdOf(category: Watch['category']): string {
-  return typeof category === 'string' ? category : category._id;
+function categoryIdOf(category: Watch["category"]): string {
+  return typeof category === "string" ? category : category._id;
 }
 
 async function loadWatch(id: string) {
@@ -142,8 +171,8 @@ async function loadWatch(id: string) {
     reference: watch.reference,
     brand: brandIdOf(watch.brand),
     category: categoryIdOf(watch.category),
-    collectionRef: watch.collectionRef ?? '',
-    type: watch.type ?? 'watch',
+    collectionRef: watch.collectionRef ?? "",
+    type: watch.type ?? "watch",
     price: watch.price,
     currency: watch.currency,
     shortDescription: watch.shortDescription,
@@ -166,20 +195,21 @@ async function loadWatch(id: string) {
 
   if (watch.variants && watch.variants.length > 0) {
     variants.value = watch.variants.map((v) => ({
-      colorSlug: v.colorSlug || 'default',
-      colorLabel: v.colorLabel || '',
-      colorLabelRu: v.colorLabelRu || '',
-      colorLabelUz: v.colorLabelUz || '',
+      colorSlug: v.colorSlug || "default",
+      color: v.color || "",
+      colorLabel: v.colorLabel || "",
+      colorLabelRu: v.colorLabelRu || "",
+      colorLabelUz: v.colorLabelUz || "",
       images: [...(v.images || [])],
       videos: [...(v.videos || [])],
     }));
   } else {
     variants.value = [
       {
-        colorSlug: 'default',
-        colorLabel: '',
-        colorLabelRu: '',
-        colorLabelUz: '',
+        colorSlug: "default",
+        colorLabel: "",
+        colorLabelRu: "",
+        colorLabelUz: "",
         images: [],
         videos: [],
       },
@@ -201,7 +231,7 @@ onMounted(async () => {
 
     if (isEdit.value) await loadWatch(route.params.id as string);
   } catch {
-    toasts.error(locale.t('admin.loadFailed'));
+    toasts.error(locale.t("admin.loadFailed"));
   } finally {
     isLoading.value = false;
   }
@@ -221,22 +251,31 @@ function removeVideo(vIndex: number, iIndex: number) {
 }
 function addVariant() {
   variants.value.push({
-    colorSlug: '',
-    colorLabel: '',
-    colorLabelRu: '',
-    colorLabelUz: '',
+    colorSlug: "",
+    color: "",
+    colorLabel: "",
+    colorLabelRu: "",
+    colorLabelUz: "",
     images: [],
     videos: [],
   });
+}
+function setVariantColor(vIndex: number, event: Event) {
+  variants.value[vIndex].color = (event.target as HTMLInputElement).value;
 }
 function removeVariant(vIndex: number) {
   variants.value.splice(vIndex, 1);
 }
 
 async function submit() {
-  errorMessage.value = '';
-  if (!form.value.name || !form.value.brand || !form.value.category || !form.value.price) {
-    errorMessage.value = locale.t('admin.requiredFields');
+  errorMessage.value = "";
+  if (
+    !form.value.name ||
+    !form.value.brand ||
+    !form.value.category ||
+    !form.value.price
+  ) {
+    errorMessage.value = locale.t("admin.requiredFields");
     return;
   }
 
@@ -252,11 +291,11 @@ async function submit() {
     } else {
       await adminCreateWatch(payload);
     }
-    toasts.success(locale.t('admin.watchSaved'));
+    toasts.success(locale.t("admin.watchSaved"));
     router.push(listPath.value);
   } catch {
-    errorMessage.value = locale.t('admin.saveFailed');
-    toasts.error(locale.t('admin.saveFailed'));
+    errorMessage.value = locale.t("admin.saveFailed");
+    toasts.error(locale.t("admin.saveFailed"));
   } finally {
     isSaving.value = false;
   }
@@ -267,7 +306,11 @@ async function submit() {
   <div>
     <RouterLink class="sw-wf__back" :to="listPath">
       <AdminIcon name="chevronLeft" :size="14" />
-      {{ isAccessory ? locale.t('admin.backToAccessories') : locale.t('admin.backToWatches') }}
+      {{
+        isAccessory
+          ? locale.t("admin.backToAccessories")
+          : locale.t("admin.backToWatches")
+      }}
     </RouterLink>
 
     <div class="sw-admin-page-head">
@@ -275,11 +318,17 @@ async function submit() {
         <h1 class="sw-admin-page-title">
           {{
             isAccessory
-              ? isEdit ? locale.t('admin.editAccessory') : locale.t('admin.newAccessory')
-              : isEdit ? locale.t('admin.editWatch') : locale.t('admin.newWatch')
+              ? isEdit
+                ? locale.t("admin.editAccessory")
+                : locale.t("admin.newAccessory")
+              : isEdit
+                ? locale.t("admin.editWatch")
+                : locale.t("admin.newWatch")
           }}
         </h1>
-        <p class="sw-admin-page-sub">{{ form.name || locale.t('admin.formBasicsSub') }}</p>
+        <p class="sw-admin-page-sub">
+          {{ form.name || locale.t("admin.formBasicsSub") }}
+        </p>
       </div>
     </div>
 
@@ -287,56 +336,79 @@ async function submit() {
       <div class="sw-wf__col">
         <section class="sw-admin-card sw-wf__card">
           <header class="sw-wf__card-head">
-            <h2 class="sw-wf__card-title">{{ locale.t('admin.formBasics') }}</h2>
+            <h2 class="sw-wf__card-title">
+              {{ locale.t("admin.formBasics") }}
+            </h2>
           </header>
 
           <div class="sw-admin-grid sw-admin-grid--2">
             <label class="sw-admin-field--wide">
-              <span>{{ locale.t('admin.name') }}</span>
+              <span>{{ locale.t("admin.name") }}</span>
               <input v-model="form.name" type="text" required />
-              <div v-if="modelMatch" class="sw-wf__model-hint sw-wf__model-hint--join">
+              <div
+                v-if="modelMatch"
+                class="sw-wf__model-hint sw-wf__model-hint--join"
+              >
                 <AdminIcon name="info" :size="14" />
                 <span>
-                  {{ locale.t('admin.modelGroupHint')
-                      .replace('{model}', modelMatch.name)
-                      .replace('{n}', String(modelMatch.count)) }}
+                  {{
+                    locale
+                      .t("admin.modelGroupHint")
+                      .replace("{model}", modelMatch.name)
+                      .replace("{n}", String(modelMatch.count))
+                  }}
                 </span>
               </div>
-              <div v-else-if="form.name.length >= 3 && !modelCheckPending" class="sw-wf__model-hint sw-wf__model-hint--new">
+              <div
+                v-else-if="form.name.length >= 3 && !modelCheckPending"
+                class="sw-wf__model-hint sw-wf__model-hint--new"
+              >
                 <AdminIcon name="info" :size="14" />
-                <span>{{ locale.t('admin.modelGroupNew') }}</span>
+                <span>{{ locale.t("admin.modelGroupNew") }}</span>
               </div>
             </label>
             <label>
-              <span>{{ locale.t('admin.reference') }}</span>
+              <span>{{ locale.t("admin.reference") }}</span>
               <input v-model="form.reference" type="text" />
             </label>
             <label>
-              <span>{{ locale.t('admin.type') }}</span>
+              <span>{{ locale.t("admin.type") }}</span>
               <select v-model="form.type">
-                <option value="watch">{{ locale.t('admin.typeWatch') }}</option>
-                <option value="accessory">{{ locale.t('admin.typeAccessory') }}</option>
+                <option value="watch">{{ locale.t("admin.typeWatch") }}</option>
+                <option value="accessory">
+                  {{ locale.t("admin.typeAccessory") }}
+                </option>
               </select>
             </label>
             <label>
-              <span>{{ locale.t('admin.brand') }}</span>
+              <span>{{ locale.t("admin.brand") }}</span>
               <select v-model="form.brand" required>
-                <option value="" disabled>{{ locale.t('admin.selectBrand') }}</option>
-                <option v-for="b in brands" :key="b._id" :value="b._id">{{ b.name }}</option>
+                <option value="" disabled>
+                  {{ locale.t("admin.selectBrand") }}
+                </option>
+                <option v-for="b in brands" :key="b._id" :value="b._id">
+                  {{ b.name }}
+                </option>
               </select>
             </label>
             <label>
-              <span>{{ locale.t('admin.category') }}</span>
+              <span>{{ locale.t("admin.category") }}</span>
               <select v-model="form.category" required>
-                <option value="" disabled>{{ locale.t('admin.selectCategory') }}</option>
-                <option v-for="c in categories" :key="c._id" :value="c._id">{{ c.name }}</option>
+                <option value="" disabled>
+                  {{ locale.t("admin.selectCategory") }}
+                </option>
+                <option v-for="c in categories" :key="c._id" :value="c._id">
+                  {{ c.name }}
+                </option>
               </select>
             </label>
             <label class="sw-admin-field--wide">
-              <span>{{ locale.t('admin.collection') }}</span>
+              <span>{{ locale.t("admin.collection") }}</span>
               <select v-model="form.collectionRef">
-                <option value="">{{ locale.t('admin.none') }}</option>
-                <option v-for="c in collections" :key="c._id" :value="c._id">{{ c.name }}</option>
+                <option value="">{{ locale.t("admin.none") }}</option>
+                <option v-for="c in collections" :key="c._id" :value="c._id">
+                  {{ c.name }}
+                </option>
               </select>
             </label>
           </div>
@@ -344,16 +416,16 @@ async function submit() {
 
         <section class="sw-admin-card sw-wf__card">
           <header class="sw-wf__card-head">
-            <h2 class="sw-wf__card-title">{{ locale.t('admin.formCopy') }}</h2>
-            <p class="sw-wf__card-sub">{{ locale.t('admin.formCopySub') }}</p>
+            <h2 class="sw-wf__card-title">{{ locale.t("admin.formCopy") }}</h2>
+            <p class="sw-wf__card-sub">{{ locale.t("admin.formCopySub") }}</p>
           </header>
 
           <label>
-            <span>{{ locale.t('admin.shortDescription') }}</span>
+            <span>{{ locale.t("admin.shortDescription") }}</span>
             <input v-model="form.shortDescription" type="text" />
           </label>
           <label>
-            <span>{{ locale.t('admin.fullDescription') }}</span>
+            <span>{{ locale.t("admin.fullDescription") }}</span>
             <textarea v-model="form.description" rows="5" />
           </label>
 
@@ -370,48 +442,69 @@ async function submit() {
 
         <section class="sw-admin-card sw-wf__card">
           <header class="sw-wf__card-head">
-            <h2 class="sw-wf__card-title">{{ locale.t('admin.formSpecs') }}</h2>
+            <h2 class="sw-wf__card-title">{{ locale.t("admin.formSpecs") }}</h2>
           </header>
 
           <div class="sw-admin-grid sw-admin-grid--2">
             <label>
-              <span>{{ locale.t('admin.movement') }}</span>
+              <span>{{ locale.t("admin.movement") }}</span>
               <input v-model="form.movement" type="text" />
             </label>
             <label>
-              <span>{{ locale.t('admin.caseMaterial') }}</span>
+              <span>{{ locale.t("admin.caseMaterial") }}</span>
               <input v-model="form.caseMaterial" type="text" />
             </label>
             <label>
-              <span>{{ locale.t('admin.caseSize') }}</span>
+              <span>{{ locale.t("admin.caseSize") }}</span>
               <input v-model="form.caseSize" type="text" />
             </label>
             <label>
-              <span>{{ locale.t('admin.dial') }}</span>
+              <span>{{ locale.t("admin.dial") }}</span>
               <input v-model="form.dial" type="text" />
             </label>
             <label>
-              <span>{{ locale.t('admin.bracelet') }}</span>
+              <span>{{ locale.t("admin.bracelet") }}</span>
               <input v-model="form.bracelet" type="text" />
             </label>
             <label>
-              <span>{{ locale.t('admin.waterResistance') }}</span>
+              <span>{{ locale.t("admin.waterResistance") }}</span>
               <input v-model="form.waterResistance" type="text" />
             </label>
           </div>
         </section>
 
         <div class="sw-wf__variants-header">
-          <h2 class="sw-wf__card-title">{{ locale.t('admin.variants') || 'Variants & Media' }}</h2>
-          <button type="button" class="sw-admin-btn sw-admin-btn--sm sw-admin-btn--ghost" @click="addVariant">
-            <AdminIcon name="plus" :size="14" /> {{ locale.t('admin.addVariant') || 'Add Variant' }}
+          <h2 class="sw-wf__card-title">
+            {{ locale.t("admin.variants") || "Variants & Media" }}
+          </h2>
+          <button
+            type="button"
+            class="sw-admin-btn sw-admin-btn--sm sw-admin-btn--ghost"
+            @click="addVariant"
+          >
+            <AdminIcon name="plus" :size="14" />
+            {{ locale.t("admin.addVariant") || "Add Variant" }}
           </button>
         </div>
 
-        <section v-for="(variant, vIndex) in variants" :key="vIndex" class="sw-admin-card sw-wf__card">
-          <header class="sw-wf__card-head" style="flex-direction: row; justify-content: space-between; align-items: center;">
-            <h3 class="sw-wf__card-title" style="margin: 0; color: var(--admin-text); font-size: 0.95rem;">
-              {{ locale.t('admin.variant') || 'Variant' }} {{ vIndex + 1 }}
+        <section
+          v-for="(variant, vIndex) in variants"
+          :key="vIndex"
+          class="sw-admin-card sw-wf__card"
+        >
+          <header
+            class="sw-wf__card-head"
+            style="
+              flex-direction: row;
+              justify-content: space-between;
+              align-items: center;
+            "
+          >
+            <h3
+              class="sw-wf__card-title"
+              style="margin: 0; color: var(--admin-text); font-size: 0.95rem"
+            >
+              {{ locale.t("admin.variant") || "Variant" }} {{ vIndex + 1 }}
             </h3>
             <button
               v-if="variants.length > 1"
@@ -419,33 +512,57 @@ async function submit() {
               class="sw-admin-btn sw-admin-btn--sm sw-admin-btn--danger"
               @click="removeVariant(vIndex)"
             >
-              <AdminIcon name="trash" :size="14" /> {{ locale.t('admin.remove') || 'Remove' }}
+              <AdminIcon name="trash" :size="14" />
+              {{ locale.t("admin.remove") || "Remove" }}
             </button>
           </header>
 
           <div class="sw-admin-grid sw-admin-grid--2">
             <label>
-              <span>{{ locale.t('admin.colorSlug') || 'Color Slug (e.g. blue-dial)' }}</span>
+              <span>{{
+                locale.t("admin.colorSlug") || "Color Slug (e.g. blue-dial)"
+              }}</span>
               <input v-model="variant.colorSlug" type="text" required />
             </label>
             <label>
-              <span>{{ locale.t('admin.colorLabel') || 'Color Name (EN)' }}</span>
+              <span>{{
+                locale.t("admin.colorLabel") || "Color Name (EN)"
+              }}</span>
               <input v-model="variant.colorLabel" type="text" />
             </label>
             <label>
-              <span>{{ locale.t('admin.colorLabelRu') || 'Color Name (RU)' }}</span>
+              <span>{{
+                locale.t("admin.colorLabelRu") || "Color Name (RU)"
+              }}</span>
               <input v-model="variant.colorLabelRu" type="text" />
             </label>
             <label>
-              <span>{{ locale.t('admin.colorLabelUz') || 'Color Name (UZ)' }}</span>
+              <span>{{
+                locale.t("admin.colorLabelUz") || "Color Name (UZ)"
+              }}</span>
               <input v-model="variant.colorLabelUz" type="text" />
+            </label>
+            <label class="sw-wf__color-field">
+              <span>{{ locale.t("admin.colorPicker") || "Swatch Color" }}</span>
+              <input
+                class="sw-wf__color-picker"
+                type="color"
+                :value="variant.color || colorSwatchHex(variant.colorSlug)"
+                @input="setVariantColor(vIndex, $event)"
+              />
             </label>
           </div>
 
           <div class="sw-wf__media-block">
-            <span class="sw-wf__media-label">{{ locale.t('admin.images') }}</span>
+            <span class="sw-wf__media-label">{{
+              locale.t("admin.images")
+            }}</span>
             <div v-if="variant.images.length" class="sw-wf__media-list">
-              <div v-for="(img, i) in variant.images" :key="img + i" class="sw-wf__media-item">
+              <div
+                v-for="(img, i) in variant.images"
+                :key="img + i"
+                class="sw-wf__media-item"
+              >
                 <img :src="resolveMediaUrl(img)" alt="" />
                 <button
                   class="sw-wf__media-remove"
@@ -465,9 +582,15 @@ async function submit() {
           </div>
 
           <div class="sw-wf__media-block">
-            <span class="sw-wf__media-label">{{ locale.t('admin.videos') }}</span>
+            <span class="sw-wf__media-label">{{
+              locale.t("admin.videos")
+            }}</span>
             <div v-if="variant.videos.length" class="sw-wf__media-list">
-              <div v-for="(vid, i) in variant.videos" :key="vid + i" class="sw-wf__media-item">
+              <div
+                v-for="(vid, i) in variant.videos"
+                :key="vid + i"
+                class="sw-wf__media-item"
+              >
                 <video :src="resolveMediaUrl(vid)" muted />
                 <button
                   class="sw-wf__media-remove"
@@ -491,56 +614,72 @@ async function submit() {
       <aside class="sw-wf__side">
         <section class="sw-admin-card sw-wf__card">
           <header class="sw-wf__card-head">
-            <h2 class="sw-wf__card-title">{{ locale.t('admin.formPricing') }}</h2>
+            <h2 class="sw-wf__card-title">
+              {{ locale.t("admin.formPricing") }}
+            </h2>
           </header>
 
           <div class="sw-wf__price-row">
             <label>
-              <span>{{ locale.t('admin.price') }}</span>
-              <input v-model.number="form.price" type="number" min="0" required />
+              <span>{{ locale.t("admin.price") }}</span>
+              <input
+                v-model.number="form.price"
+                type="number"
+                min="0"
+                required
+              />
             </label>
             <label class="sw-wf__currency">
-              <span>{{ locale.t('admin.currency') }}</span>
+              <span>{{ locale.t("admin.currency") }}</span>
               <input v-model="form.currency" type="text" />
             </label>
           </div>
           <label>
-            <span>{{ locale.t('admin.availability') }}</span>
+            <span>{{ locale.t("admin.availability") }}</span>
             <select v-model="form.availability">
-              <option value="in-stock">{{ locale.t('admin.inStock') }}</option>
-              <option value="reserved">{{ locale.t('admin.reserved') }}</option>
-              <option value="sold">{{ locale.t('admin.sold') }}</option>
-              <option value="made-to-order">{{ locale.t('admin.madeToOrder') }}</option>
+              <option value="in-stock">{{ locale.t("admin.inStock") }}</option>
+              <option value="reserved">{{ locale.t("admin.reserved") }}</option>
+              <option value="sold">{{ locale.t("admin.sold") }}</option>
+              <option value="made-to-order">
+                {{ locale.t("admin.madeToOrder") }}
+              </option>
             </select>
           </label>
         </section>
 
         <section class="sw-admin-card sw-wf__card">
           <header class="sw-wf__card-head">
-            <h2 class="sw-wf__card-title">{{ locale.t('admin.formFlags') }}</h2>
+            <h2 class="sw-wf__card-title">{{ locale.t("admin.formFlags") }}</h2>
           </header>
 
           <label class="sw-admin-check sw-admin-check--boxed">
             <input v-model="form.isActive" type="checkbox" />
-            <span>{{ locale.t('admin.activeOnSite') }}</span>
+            <span>{{ locale.t("admin.activeOnSite") }}</span>
           </label>
           <label class="sw-admin-check sw-admin-check--boxed">
             <input v-model="form.featured" type="checkbox" />
-            <span>{{ locale.t('admin.featured') }}</span>
+            <span>{{ locale.t("admin.featured") }}</span>
           </label>
           <label class="sw-admin-check sw-admin-check--boxed">
             <input v-model="form.isNewArrival" type="checkbox" />
-            <span>{{ locale.t('admin.newArrival') }}</span>
+            <span>{{ locale.t("admin.newArrival") }}</span>
           </label>
         </section>
 
         <div class="sw-wf__actions">
           <p v-if="errorMessage" class="sw-admin-error">{{ errorMessage }}</p>
-          <button class="sw-admin-btn sw-admin-btn--block" type="submit" :disabled="isSaving || isLoading">
-            {{ isSaving ? locale.t('admin.saving') : locale.t('admin.save') }}
+          <button
+            class="sw-admin-btn sw-admin-btn--block"
+            type="submit"
+            :disabled="isSaving || isLoading"
+          >
+            {{ isSaving ? locale.t("admin.saving") : locale.t("admin.save") }}
           </button>
-          <RouterLink class="sw-admin-btn sw-admin-btn--ghost sw-admin-btn--block" :to="listPath">
-            {{ locale.t('admin.cancel') }}
+          <RouterLink
+            class="sw-admin-btn sw-admin-btn--ghost sw-admin-btn--block"
+            :to="listPath"
+          >
+            {{ locale.t("admin.cancel") }}
           </RouterLink>
         </div>
       </aside>
@@ -590,6 +729,16 @@ async function submit() {
   align-items: center;
   justify-content: space-between;
   padding: 10px 0;
+}
+
+.sw-wf__color-picker {
+  width: 56px;
+  height: 40px;
+  padding: 4px;
+  border: 1px solid var(--admin-border);
+  border-radius: var(--radius-sm);
+  background: var(--admin-surface);
+  cursor: pointer;
 }
 
 .sw-wf__card {

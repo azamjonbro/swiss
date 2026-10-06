@@ -337,6 +337,7 @@ const ru: Dictionary = {
     colorLabel: "Название цвета (EN)",
     colorLabelRu: "Название цвета (RU)",
     colorLabelUz: "Название цвета (UZ)",
+    colorPicker: "Цвет образца",
     backToWatches: "К списку часов",
 
     // Categories

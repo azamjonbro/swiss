@@ -229,15 +229,16 @@ const colorScopeWatches = computed(() =>
 );
 
 const colorOptions = computed(() => {
-  const map = new Map<string, string>();
+  const map = new Map<string, { colorLabel: string; color?: string }>();
   for (const w of colorScopeWatches.value) {
     for (const v of modelColors(w)) {
-      if (v.colorLabel) map.set(v.colorSlug, v.colorLabel);
+      if (v.colorLabel)
+        map.set(v.colorSlug, { colorLabel: v.colorLabel, color: v.color });
     }
   }
-  return Array.from(map, ([colorSlug, colorLabel]) => ({
+  return Array.from(map, ([colorSlug, values]) => ({
     colorSlug,
-    colorLabel,
+    ...values,
   })).sort((a, b) => a.colorLabel.localeCompare(b.colorLabel));
 });
 
@@ -824,7 +825,9 @@ function selectSort(key: string) {
                   >
                     <span
                       class="sw-filterdrawer__swatch"
-                      :style="{ background: colorSwatchHex(c.colorSlug) }"
+                      :style="{
+                        background: colorSwatchHex(c.colorSlug, c.color),
+                      }"
                     />
                     {{ c.colorLabel }}
                     <span class="sw-filterdrawer__count">{{

@@ -40,11 +40,12 @@ export interface CategoryRef {
   slug: string;
 }
 
-export type Availability = 'in-stock' | 'reserved' | 'sold' | 'made-to-order';
-export type WatchType = 'watch' | 'accessory';
+export type Availability = "in-stock" | "reserved" | "sold" | "made-to-order";
+export type WatchType = "watch" | "accessory";
 
 export interface WatchVariant {
   colorSlug: string;
+  color?: string;
   colorLabel: string;
   images: string[];
   videos: string[];
@@ -69,7 +70,7 @@ export interface WatchSibling {
   movement?: string;
   caseMaterial?: string;
   availability?: Availability;
-  gender?: 'men' | 'women';
+  gender?: "men" | "women";
   isNewArrival?: boolean;
   collectionRef?: string;
   variants: WatchVariant[];
@@ -94,7 +95,7 @@ export interface Watch {
   description: string;
   shortDescription: string;
   type: WatchType;
-  gender: 'men' | 'women';
+  gender: "men" | "women";
   variants: WatchVariant[];
   category: CategoryRef | string;
   collectionRef?: string;
@@ -123,7 +124,7 @@ export interface Collection {
   slug: string;
   description: string;
   image: string;
-  gender: 'men' | 'women';
+  gender: "men" | "women";
   watches: Watch[] | string[];
   featured: boolean;
   isActive: boolean;
@@ -137,7 +138,7 @@ export interface Paginated<T> {
   pages: number;
 }
 
-export type InquiryStatus = 'new' | 'contacted' | 'completed' | 'cancelled';
+export type InquiryStatus = "new" | "contacted" | "completed" | "cancelled";
 
 export interface Inquiry {
   _id: string;
@@ -154,5 +155,5 @@ export interface Admin {
   id: string;
   name: string;
   email: string;
-  role: 'superadmin' | 'admin';
+  role: "superadmin" | "admin";
 }
