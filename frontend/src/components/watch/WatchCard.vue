@@ -1,18 +1,24 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
-import type { Watch } from '@/types/models';
-import { toBrandName, primaryImage, secondaryImage, colorSwatchHex, movementType } from '@/utils/format';
-import { modelColors, modelPriceRange } from '@/utils/modelGroup';
-import { useCurrencyStore } from '@/stores/currency';
-import { SHOW_PRICES } from '@/config/pricing';
-import { useLocaleStore } from '@/stores/locale';
-import SmartImage from '@/components/shared/SmartImage.vue';
-import SaveButton from '@/components/shared/SaveButton.vue';
-import { productPath, watchImageAlt } from '@/seo/schema.mjs';
+import { computed, ref } from "vue";
+import type { Watch } from "@/types/models";
+import {
+  toBrandName,
+  primaryImage,
+  secondaryImage,
+  colorSwatchHex,
+  movementType,
+} from "@/utils/format";
+import { modelColors, modelPriceRange } from "@/utils/modelGroup";
+import { useCurrencyStore } from "@/stores/currency";
+import { SHOW_PRICES } from "@/config/pricing";
+import { useLocaleStore } from "@/stores/locale";
+import SmartImage from "@/components/shared/SmartImage.vue";
+import SaveButton from "@/components/shared/SaveButton.vue";
+import { productPath, watchImageAlt } from "@/seo/schema.mjs";
 
 interface Props {
   watch: Watch;
-  size?: 'md' | 'lg';
+  size?: "md" | "lg";
   /**
    * Set on the handful of cards that are above the fold. Their photograph is
    * the first thing the page has to show, so it is fetched eagerly and at high
@@ -21,7 +27,10 @@ interface Props {
   priority?: boolean;
 }
 
-const props = withDefaults(defineProps<Props>(), { size: 'md', priority: false });
+const props = withDefaults(defineProps<Props>(), {
+  size: "md",
+  priority: false,
+});
 
 /**
  * The second angle is not loaded until the pointer arrives.
@@ -45,15 +54,17 @@ const movementLabel = computed(() => movementType(props.watch.movement));
 // in-stock default — printing "Available" on every single card is noise.
 const availabilityLabel = computed(() => {
   const a = props.watch.availability;
-  if (!a || a === 'in-stock') return '';
-  const key = a === 'made-to-order' ? 'madeToOrder' : a;
+  if (!a || a === "in-stock") return "";
+  const key = a === "made-to-order" ? "madeToOrder" : a;
   return locale.t(`watchDetail.${key}`);
 });
 
 const mainImage = computed(() => primaryImage(props.watch));
 // Prefer a second angle of the same colourway on hover; when a product has
 // none, fall back to the next color's shot rather than not swapping at all.
-const hoverImage = computed(() => secondaryImage(props.watch) ?? props.watch.variants?.[1]?.images?.[0]);
+const hoverImage = computed(
+  () => secondaryImage(props.watch) ?? props.watch.variants?.[1]?.images?.[0],
+);
 
 /**
  * The card speaks for the whole model, not for the one colourway the API sent
@@ -69,7 +80,9 @@ const priceRange = computed(() => modelPriceRange(props.watch));
 const priceLabel = computed(() => {
   const { min, max } = priceRange.value;
   const price = currency.format(min);
-  return min === max ? price : locale.t('watchCard.fromPrice').replace('{price}', price);
+  return min === max
+    ? price
+    : locale.t("watchCard.fromPrice").replace("{price}", price);
 });
 
 /**
@@ -79,7 +92,9 @@ const priceLabel = computed(() => {
  */
 const SWATCH_LIMIT = 6;
 const shownColors = computed(() => colors.value.slice(0, SWATCH_LIMIT));
-const hiddenColorCount = computed(() => Math.max(0, colors.value.length - SWATCH_LIMIT));
+const hiddenColorCount = computed(() =>
+  Math.max(0, colors.value.length - SWATCH_LIMIT),
+);
 </script>
 
 <template>
@@ -122,14 +137,24 @@ const hiddenColorCount = computed(() => Math.max(0, colors.value.length - SWATCH
     <div class="sw-watch-card__info">
       <span class="sw-watch-card__brand">{{ brandName }}</span>
       <h3 class="sw-watch-card__name">{{ watch.name }}</h3>
-      <span v-if="movementLabel" class="sw-watch-card__type">{{ movementLabel }}</span>
-      <span v-if="SHOW_PRICES" class="sw-watch-card__price">{{ priceLabel }}</span>
-      <span v-if="availabilityLabel" class="sw-watch-card__availability">{{ availabilityLabel }}</span>
+      <span v-if="movementLabel" class="sw-watch-card__type">{{
+        movementLabel
+      }}</span>
+      <span v-if="SHOW_PRICES" class="sw-watch-card__price">{{
+        priceLabel
+      }}</span>
+      <span v-if="availabilityLabel" class="sw-watch-card__availability">{{
+        availabilityLabel
+      }}</span>
 
       <span
         v-if="colors.length > 1"
         class="sw-watch-card__colors"
-        :aria-label="locale.t('watchCard.colorCount').replace('{count}', String(colors.length))"
+        :aria-label="
+          locale
+            .t('watchCard.colorCount')
+            .replace('{count}', String(colors.length))
+        "
       >
         <span
           v-for="variant in shownColors"
@@ -138,13 +163,17 @@ const hiddenColorCount = computed(() => Math.max(0, colors.value.length - SWATCH
           :title="variant.colorLabel"
           :style="{ background: colorSwatchHex(variant.colorSlug) }"
         />
-        <span v-if="hiddenColorCount" class="sw-watch-card__dot-more" aria-hidden="true">
+        <span
+          v-if="hiddenColorCount"
+          class="sw-watch-card__dot-more"
+          aria-hidden="true"
+        >
           +{{ hiddenColorCount }}
         </span>
       </span>
 
       <span class="sw-watch-card__cta">
-        {{ locale.t('watchCard.view') }}
+        {{ locale.t("watchCard.view") }}
         <span class="sw-watch-card__arrow" aria-hidden="true">&rarr;</span>
       </span>
     </div>
@@ -268,6 +297,7 @@ const hiddenColorCount = computed(() => Math.max(0, colors.value.length - SWATCH
   line-height: 1.18;
   letter-spacing: -0.008em;
   font-variant-numeric: lining-nums;
+  overflow-wrap: anywhere;
 }
 
 .sw-watch-card__type {
@@ -331,6 +361,12 @@ const hiddenColorCount = computed(() => Math.max(0, colors.value.length - SWATCH
 
 .sw-watch-card.is-lg .sw-watch-card__name {
   font-size: clamp(1.625rem, 2vw, 2rem);
+}
+
+@media (max-width: 460px) {
+  .sw-watch-card__name {
+    font-size: 1.25rem;
+  }
 }
 
 /* Touch devices never fire hover, so the CTA would stay invisible. */
