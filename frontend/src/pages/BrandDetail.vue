@@ -1,16 +1,23 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, watch } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import type { Brand, Watch } from '@/types/models';
-import { fetchBrandBySlug } from '@/services/brands';
-import { fetchWatches } from '@/services/watches';
-import { applyJsonLd, applySeo, site } from '@/utils/seo';
-import type { CrumbItem } from '@/seo/schema.mjs';
-import { brandSeo, breadcrumbSchema, itemListSchema, productPath, staticSeo, watchFullName } from '@/seo/schema.mjs';
-import { useLocaleStore } from '@/stores/locale';
-import SmartImage from '@/components/shared/SmartImage.vue';
-import WatchCard from '@/components/watch/WatchCard.vue';
-import Breadcrumbs from '@/components/shared/Breadcrumbs.vue';
+import { ref, computed, onMounted, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import type { Brand, Watch } from "@/types/models";
+import { fetchBrandBySlug } from "@/services/brands";
+import { fetchWatches } from "@/services/watches";
+import { applyJsonLd, applySeo, site } from "@/utils/seo";
+import type { CrumbItem } from "@/seo/schema.mjs";
+import {
+  brandSeo,
+  breadcrumbSchema,
+  itemListSchema,
+  productPath,
+  staticSeo,
+  watchFullName,
+} from "@/seo/schema.mjs";
+import { useLocaleStore } from "@/stores/locale";
+import SmartImage from "@/components/shared/SmartImage.vue";
+import WatchCard from "@/components/watch/WatchCard.vue";
+import Breadcrumbs from "@/components/shared/Breadcrumbs.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -30,8 +37,8 @@ const hasMore = computed(() => watches.value.length < total.value);
 const crumbs = computed<CrumbItem[]>(() =>
   brand.value
     ? [
-        { name: locale.t('nav.home'), path: '/' },
-        { name: locale.t('nav.brands'), path: '/brands' },
+        { name: locale.t("nav.home"), path: "/" },
+        { name: locale.t("nav.brands"), path: "/brands" },
         { name: brand.value.name, path: `/brands/${brand.value.slug}` },
       ]
     : [],
@@ -40,11 +47,17 @@ const crumbs = computed<CrumbItem[]>(() =>
 /** Metadata for the maison, plus the trail and the list of pieces it holds. */
 function applyBrandSeo() {
   if (!brand.value) return;
-  applySeo({ ...brandSeo(brand.value, site), imageAlt: `${brand.value.name} watches` });
+  applySeo({
+    ...brandSeo(brand.value, site),
+    imageAlt: `${brand.value.name} watches`,
+  });
   applyJsonLd([
     breadcrumbSchema(crumbs.value, site),
     itemListSchema(
-      watches.value.map((w) => ({ name: watchFullName(w) || w.name, path: productPath(w.slug) })),
+      watches.value.map((w) => ({
+        name: watchFullName(w) || w.name,
+        path: productPath(w.slug),
+      })),
       site,
       `${brand.value.name} watches`,
     ),
@@ -56,13 +69,17 @@ async function load(slug: string) {
   page.value = 1;
   try {
     brand.value = await fetchBrandBySlug(slug);
-    const data = await fetchWatches({ brand: brand.value._id, page: page.value, limit: PAGE_SIZE });
+    const data = await fetchWatches({
+      brand: brand.value._id,
+      page: page.value,
+      limit: PAGE_SIZE,
+    });
     watches.value = data.items;
     total.value = data.total;
     applyBrandSeo();
   } catch {
     notFound.value = true;
-    const seo = staticSeo('not-found', site);
+    const seo = staticSeo("not-found", site);
     if (seo) applySeo({ ...seo, canonical: route.path });
     applyJsonLd([]);
   }
@@ -73,7 +90,11 @@ async function loadMore() {
   isLoadingMore.value = true;
   try {
     page.value += 1;
-    const data = await fetchWatches({ brand: brand.value._id, page: page.value, limit: PAGE_SIZE });
+    const data = await fetchWatches({
+      brand: brand.value._id,
+      page: page.value,
+      limit: PAGE_SIZE,
+    });
     watches.value = [...watches.value, ...data.items];
     total.value = data.total;
   } finally {
@@ -94,15 +115,24 @@ watch(
 
 <template>
   <div v-if="notFound" class="sw-brand-detail__notfound">
-    <span class="sw-eyebrow">{{ locale.t('brandDetail.notFoundEyebrow') }}</span>
-    <h1 class="sw-h1">{{ locale.t('brandDetail.notFoundTitle') }}</h1>
-    <button class="sw-btn" type="button" @click="router.push('/brands')">{{ locale.t('brandDetail.backToBrands') }}</button>
+    <span class="sw-eyebrow">{{
+      locale.t("brandDetail.notFoundEyebrow")
+    }}</span>
+    <h1 class="sw-h1">{{ locale.t("brandDetail.notFoundTitle") }}</h1>
+    <button class="sw-btn" type="button" @click="router.push('/brands')">
+      {{ locale.t("brandDetail.backToBrands") }}
+    </button>
   </div>
 
   <article v-else-if="brand" class="sw-brand-detail">
     <section class="sw-brand-detail__hero">
       <div class="sw-brand-detail__hero-media">
-        <SmartImage :src="brand.image" :alt="`${brand.name} watches`" eager sizes="100vw" />
+        <SmartImage
+          :src="brand.image"
+          :alt="`${brand.name} watches`"
+          eager
+          sizes="100vw"
+        />
       </div>
       <div class="sw-brand-detail__hero-overlay" />
       <div class="sw-brand-detail__hero-content">
@@ -112,8 +142,10 @@ watch(
         <span v-if="brand.country || brand.founded" class="sw-eyebrow"
           ><template v-if="brand.country">{{ brand.country }}</template
           ><template v-if="brand.country && brand.founded"> &middot; </template
-          ><template v-if="brand.founded">{{ locale.t('brandDetail.est') }} {{ brand.founded }}</template
-        ></span>
+          ><template v-if="brand.founded"
+            >{{ locale.t("brandDetail.est") }} {{ brand.founded }}</template
+          ></span
+        >
         <h1 class="sw-display">{{ brand.name }}</h1>
       </div>
     </section>
@@ -124,15 +156,28 @@ watch(
     </section>
 
     <section v-if="watches.length" class="sw-brand-detail__watches">
-      <span class="sw-eyebrow">{{ locale.t('brandDetail.availableTimepieces') }}</span>
+      <span class="sw-eyebrow">{{
+        locale.t("brandDetail.availableTimepieces")
+      }}</span>
       <div class="sw-brand-detail__grid">
         <WatchCard v-for="watch in watches" :key="watch._id" :watch="watch" />
       </div>
 
       <div v-if="hasMore" class="sw-brand-detail__more">
-        <button class="sw-btn" type="button" :disabled="isLoadingMore" @click="loadMore">
-          {{ isLoadingMore ? locale.t('watchList.loading') : locale.t('watchList.loadMore') }}
-          <span v-if="!isLoadingMore" class="sw-btn__arrow" aria-hidden="true">&darr;</span>
+        <button
+          class="sw-btn"
+          type="button"
+          :disabled="isLoadingMore"
+          @click="loadMore"
+        >
+          {{
+            isLoadingMore
+              ? locale.t("watchList.loading")
+              : locale.t("watchList.loadMore")
+          }}
+          <span v-if="!isLoadingMore" class="sw-btn__arrow" aria-hidden="true"
+            >&darr;</span
+          >
         </button>
       </div>
     </section>
@@ -141,19 +186,36 @@ watch(
   <!-- Pending. Without a placeholder the route rendered nothing at all, so a
        reader arriving on a maison page met an empty screen with the footer
        sitting at the fold — and then the whole page arriving underneath it. -->
-  <div v-else class="sw-brand-detail sw-brand-detail--pending" aria-hidden="true">
+  <div
+    v-else
+    class="sw-brand-detail sw-brand-detail--pending"
+    aria-hidden="true"
+  >
     <div class="sw-brand-detail__hero">
       <div class="sw-brand-detail__hero-media sw-brand-detail__skel" />
     </div>
     <section class="sw-brand-detail__body sw-brand-detail__skel-body">
-      <span class="sw-brand-detail__skel sw-brand-detail__skel-line" style="width: 82%" />
-      <span class="sw-brand-detail__skel sw-brand-detail__skel-line" style="width: 94%" />
-      <span class="sw-brand-detail__skel sw-brand-detail__skel-line" style="width: 46%" />
+      <span
+        class="sw-brand-detail__skel sw-brand-detail__skel-line"
+        style="width: 82%"
+      />
+      <span
+        class="sw-brand-detail__skel sw-brand-detail__skel-line"
+        style="width: 94%"
+      />
+      <span
+        class="sw-brand-detail__skel sw-brand-detail__skel-line"
+        style="width: 46%"
+      />
     </section>
     <section class="sw-brand-detail__watches">
       <span class="sw-brand-detail__skel sw-brand-detail__skel-eyebrow" />
       <div class="sw-brand-detail__grid">
-        <div v-for="n in 6" :key="n" class="sw-brand-detail__skel sw-brand-detail__skel-card" />
+        <div
+          v-for="n in 6"
+          :key="n"
+          class="sw-brand-detail__skel sw-brand-detail__skel-card"
+        />
       </div>
     </section>
   </div>
@@ -192,7 +254,12 @@ watch(
   /* Maison "photography" is in practice the house logo on its own ground, and
      the name sits over it — so the foot of the scrim carries most of the
      weight, leaving the artwork legible above it. */
-  background: linear-gradient(180deg, rgba(10, 10, 10, 0.18) 0%, rgba(10, 10, 10, 0.42) 52%, rgba(10, 10, 10, 0.86) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(10, 10, 10, 0.18) 0%,
+    rgba(10, 10, 10, 0.42) 52%,
+    rgba(10, 10, 10, 0.86) 100%
+  );
 }
 
 .sw-brand-detail__hero-content {
@@ -246,7 +313,12 @@ watch(
 }
 
 .sw-brand-detail__skel {
-  background: linear-gradient(120deg, var(--surface-media) 0%, var(--surface-media-hi) 50%, var(--surface-media) 100%);
+  background: linear-gradient(
+    120deg,
+    var(--surface-media) 0%,
+    var(--surface-media-hi) 50%,
+    var(--surface-media) 100%
+  );
   background-size: 200% 100%;
   animation: sw-brand-skel 1.8s ease-in-out infinite;
 }
@@ -301,7 +373,8 @@ watch(
 
 @media (max-width: 560px) {
   .sw-brand-detail__grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px 12px;
   }
 }
 </style>

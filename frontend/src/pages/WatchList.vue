@@ -1,18 +1,23 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import type { Watch, Collection } from '@/types/models';
-import { fetchWatches } from '@/services/watches';
-import { fetchCollections } from '@/services/collections';
-import { useLocaleStore } from '@/stores/locale';
-import { useCurrencyStore } from '@/stores/currency';
-import { SHOW_PRICES } from '@/config/pricing';
-import { colorSwatchHex, movementType } from '@/utils/format';
-import { modelColors, modelMembers, modelPriceRange } from '@/utils/modelGroup';
-import { useLockBodyScroll } from '@/composables/useLockBodyScroll';
-import { applyJsonLd, applySeo, site } from '@/utils/seo';
-import { itemListSchema, productPath, staticSeo, watchFullName } from '@/seo/schema.mjs';
-import WatchCard from '@/components/watch/WatchCard.vue';
+import { ref, computed, onMounted, onUnmounted, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import type { Watch, Collection } from "@/types/models";
+import { fetchWatches } from "@/services/watches";
+import { fetchCollections } from "@/services/collections";
+import { useLocaleStore } from "@/stores/locale";
+import { useCurrencyStore } from "@/stores/currency";
+import { SHOW_PRICES } from "@/config/pricing";
+import { colorSwatchHex, movementType } from "@/utils/format";
+import { modelColors, modelMembers, modelPriceRange } from "@/utils/modelGroup";
+import { useLockBodyScroll } from "@/composables/useLockBodyScroll";
+import { applyJsonLd, applySeo, site } from "@/utils/seo";
+import {
+  itemListSchema,
+  productPath,
+  staticSeo,
+  watchFullName,
+} from "@/seo/schema.mjs";
+import WatchCard from "@/components/watch/WatchCard.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -36,35 +41,37 @@ const allWatches = ref<Watch[]>([]);
 const collections = ref<Collection[]>([]);
 const isLoading = ref(true);
 
-const selectedGender = ref((route.query.gender as string) ?? '');
-const selectedCollection = ref((route.query.collection as string) ?? '');
+const selectedGender = ref((route.query.gender as string) ?? "");
+const selectedCollection = ref((route.query.collection as string) ?? "");
 // Watches are the catalogue; straps, bezels and crowns are opt-in from this facet
 // rather than something a visitor has to filter back out of the grid.
-const selectedType = ref((route.query.type as string) || 'watch');
-const selectedColor = ref((route.query.color as string) ?? '');
+const selectedType = ref((route.query.type as string) || "watch");
+const selectedColor = ref((route.query.color as string) ?? "");
 // Local UI state only — never synced to the URL. The catalog carries 80+
 // distinct color names (Tsar Bomba's variant naming is far from consistent),
 // too many to browse as a flat list, so the color section gets a type-to-filter
 // search on top of it.
-const colorSearch = ref('');
-const selectedMovement = ref((route.query.movement as string) ?? '');
+const colorSearch = ref("");
+const selectedMovement = ref((route.query.movement as string) ?? "");
 // Ignored outright while prices are hidden: a `?price=under-500` left in a
 // bookmark would otherwise go on quietly removing two thirds of the catalogue
 // with nothing on screen to say why, and no control to undo it.
-const selectedPriceBand = ref(SHOW_PRICES ? ((route.query.price as string) ?? '') : '');
-const selectedAvailability = ref((route.query.availability as string) ?? '');
-const isNewOnly = ref(route.query.isNew === 'true');
+const selectedPriceBand = ref(
+  SHOW_PRICES ? ((route.query.price as string) ?? "") : "",
+);
+const selectedAvailability = ref((route.query.availability as string) ?? "");
+const isNewOnly = ref(route.query.isNew === "true");
 // The two price sorts would order the grid on a number the cards no longer
 // print — the results reshuffling for no visible reason. They come back with
 // the prices.
-const ALL_SORT_KEYS = ['newest', 'price-asc', 'price-desc'] as const;
-const SORT_KEYS = SHOW_PRICES ? ALL_SORT_KEYS : (['newest'] as const);
+const ALL_SORT_KEYS = ["newest", "price-asc", "price-desc"] as const;
+const SORT_KEYS = SHOW_PRICES ? ALL_SORT_KEYS : (["newest"] as const);
 
 function normalizeSort(key: string): string {
-  return (SORT_KEYS as readonly string[]).includes(key) ? key : 'newest';
+  return (SORT_KEYS as readonly string[]).includes(key) ? key : "newest";
 }
 
-const sortKey = ref(normalizeSort((route.query.sort as string) || 'newest'));
+const sortKey = ref(normalizeSort((route.query.sort as string) || "newest"));
 
 /**
  * Rows of the grid, not a network page: the whole catalogue already arrives in
@@ -90,53 +97,56 @@ const sortWrapRef = ref<HTMLElement | null>(null);
 useLockBodyScroll(isFilterOpen);
 
 function onWindowClick(event: MouseEvent) {
-  if (isSortOpen.value && sortWrapRef.value && !sortWrapRef.value.contains(event.target as Node)) {
+  if (
+    isSortOpen.value &&
+    sortWrapRef.value &&
+    !sortWrapRef.value.contains(event.target as Node)
+  ) {
     isSortOpen.value = false;
   }
 }
 function onWindowKeydown(event: KeyboardEvent) {
-  if (event.key !== 'Escape') return;
+  if (event.key !== "Escape") return;
   if (isFilterOpen.value) isFilterOpen.value = false;
   if (isSortOpen.value) isSortOpen.value = false;
 }
 onMounted(() => {
-  window.addEventListener('click', onWindowClick);
-  window.addEventListener('keydown', onWindowKeydown);
+  window.addEventListener("click", onWindowClick);
+  window.addEventListener("keydown", onWindowKeydown);
 });
 onUnmounted(() => {
-  window.removeEventListener('click', onWindowClick);
-  window.removeEventListener('keydown', onWindowKeydown);
+  window.removeEventListener("click", onWindowClick);
+  window.removeEventListener("keydown", onWindowKeydown);
 });
 
 const PRICE_BANDS = [
-  { key: 'under-500', test: (p: number) => p < 500 },
-  { key: '500-1500', test: (p: number) => p >= 500 && p < 1500 },
-  { key: '1500-3000', test: (p: number) => p >= 1500 && p < 3000 },
-  { key: '3000-plus', test: (p: number) => p >= 3000 },
+  { key: "under-500", test: (p: number) => p < 500 },
+  { key: "500-1500", test: (p: number) => p >= 500 && p < 1500 },
+  { key: "1500-3000", test: (p: number) => p >= 1500 && p < 3000 },
+  { key: "3000-plus", test: (p: number) => p >= 3000 },
 ];
 
 function priceBandLabel(key: string): string {
   switch (key) {
-    case 'under-500':
-      return `${locale.t('common.under')} ${currency.format(500)}`;
-    case '500-1500':
+    case "under-500":
+      return `${locale.t("common.under")} ${currency.format(500)}`;
+    case "500-1500":
       return `${currency.format(500)} – ${currency.format(1500)}`;
-    case '1500-3000':
+    case "1500-3000":
       return `${currency.format(1500)} – ${currency.format(3000)}`;
     default:
       return `${currency.format(3000)}+`;
   }
 }
 
-
 function sortLabel(key: string): string {
   switch (key) {
-    case 'price-asc':
-      return locale.t('watchList.sortPriceAsc');
-    case 'price-desc':
-      return locale.t('watchList.sortPriceDesc');
+    case "price-asc":
+      return locale.t("watchList.sortPriceAsc");
+    case "price-desc":
+      return locale.t("watchList.sortPriceDesc");
     default:
-      return locale.t('watchList.sortNewest');
+      return locale.t("watchList.sortNewest");
   }
 }
 
@@ -151,7 +161,7 @@ async function load() {
       // the colourways attached, and the facets below read the whole model.
       // It is also what keeps the catalogue inside CATALOG_LIMIT — ungrouped
       // it is past 900 rows and this fetch was silently losing the tail.
-      fetchWatches({ type: 'all', limit: CATALOG_LIMIT, group: 'model' }),
+      fetchWatches({ type: "all", limit: CATALOG_LIMIT, group: "model" }),
       fetchCollections(),
     ]);
     allWatches.value = data.items;
@@ -171,7 +181,7 @@ watch(() => locale.lang, load);
 // quartz may well also come as a women's automatic, and offering to filter
 // only by the representative's own values would hide it from both searches.
 const genderOptions = computed(() =>
-  (['men', 'women'] as const).filter((g) =>
+  (["men", "women"] as const).filter((g) =>
     allWatches.value.some((w) => modelMembers(w).some((m) => m.gender === g)),
   ),
 );
@@ -182,20 +192,23 @@ const genderOptions = computed(() =>
 const collectionOptions = computed(() => {
   const present = new Set<string>();
   for (const w of allWatches.value) {
-    for (const m of modelMembers(w)) if (m.collectionRef) present.add(m.collectionRef);
+    for (const m of modelMembers(w))
+      if (m.collectionRef) present.add(m.collectionRef);
   }
   return collections.value.filter((c) => present.has(c._id));
 });
 
 const typeOptions = computed(() => {
-  const present = (['watch', 'accessory'] as const).filter((t) =>
-    allWatches.value.some((w) => (w.type ?? 'watch') === t),
+  const present = (["watch", "accessory"] as const).filter((t) =>
+    allWatches.value.some((w) => (w.type ?? "watch") === t),
   );
-  return present.length > 1 ? [...present, 'all' as const] : present;
+  return present.length > 1 ? [...present, "all" as const] : present;
 });
 
 function typeLabel(t: string): string {
-  return t === 'all' ? locale.t('watchList.allTypes') : locale.t(`watchList.type_${t}`);
+  return t === "all"
+    ? locale.t("watchList.allTypes")
+    : locale.t(`watchList.type_${t}`);
 }
 
 function collectionLabel(id: string): string {
@@ -208,9 +221,11 @@ function collectionLabel(id: string): string {
 // felt overgrown, so the facet is scoped to whatever product type is
 // currently in view rather than built from the full unfiltered catalog.
 const colorScopeWatches = computed(() =>
-  selectedType.value === 'all'
+  selectedType.value === "all"
     ? allWatches.value
-    : allWatches.value.filter((w) => (w.type ?? 'watch') === selectedType.value),
+    : allWatches.value.filter(
+        (w) => (w.type ?? "watch") === selectedType.value,
+      ),
 );
 
 const colorOptions = computed(() => {
@@ -220,15 +235,18 @@ const colorOptions = computed(() => {
       if (v.colorLabel) map.set(v.colorSlug, v.colorLabel);
     }
   }
-  return Array.from(map, ([colorSlug, colorLabel]) => ({ colorSlug, colorLabel })).sort((a, b) =>
-    a.colorLabel.localeCompare(b.colorLabel),
-  );
+  return Array.from(map, ([colorSlug, colorLabel]) => ({
+    colorSlug,
+    colorLabel,
+  })).sort((a, b) => a.colorLabel.localeCompare(b.colorLabel));
 });
 
 const filteredColorOptions = computed(() => {
   const q = colorSearch.value.trim().toLowerCase();
   if (!q) return colorOptions.value;
-  return colorOptions.value.filter((c) => c.colorLabel.toLowerCase().includes(q));
+  return colorOptions.value.filter((c) =>
+    c.colorLabel.toLowerCase().includes(q),
+  );
 });
 
 // Counted in models, not in colourways — the number next to "Green" is how
@@ -236,7 +254,8 @@ const filteredColorOptions = computed(() => {
 const colorCounts = computed(() => {
   const counts = new Map<string, number>();
   for (const w of colorScopeWatches.value) {
-    for (const v of modelColors(w)) counts.set(v.colorSlug, (counts.get(v.colorSlug) ?? 0) + 1);
+    for (const v of modelColors(w))
+      counts.set(v.colorSlug, (counts.get(v.colorSlug) ?? 0) + 1);
   }
   return counts;
 });
@@ -255,19 +274,24 @@ const movementOptions = computed(() => {
 const availabilityOptions = computed(() => {
   const set = new Set<string>();
   for (const w of allWatches.value) {
-    for (const m of modelMembers(w)) if (m.availability) set.add(m.availability);
+    for (const m of modelMembers(w))
+      if (m.availability) set.add(m.availability);
   }
   return Array.from(set);
 });
 
 const priceBandOptions = computed(() =>
   PRICE_BANDS.filter((band) =>
-    allWatches.value.some((w) => modelMembers(w).some((m) => band.test(m.price))),
+    allWatches.value.some((w) =>
+      modelMembers(w).some((m) => band.test(m.price)),
+    ),
   ).map((band) => band.key),
 );
 
 function availabilityLabel(a: string): string {
-  return locale.t(`watchDetail.${a === 'in-stock' ? 'available' : a === 'made-to-order' ? 'madeToOrder' : a}`);
+  return locale.t(
+    `watchDetail.${a === "in-stock" ? "available" : a === "made-to-order" ? "madeToOrder" : a}`,
+  );
 }
 
 /**
@@ -287,15 +311,36 @@ const filteredWatches = computed(() => {
   return allWatches.value.filter((w) => {
     // Type is a property of the model as a whole — it is part of what the API
     // grouped on, so every colourway shares it.
-    if (selectedType.value !== 'all' && (w.type ?? 'watch') !== selectedType.value) return false;
+    if (
+      selectedType.value !== "all" &&
+      (w.type ?? "watch") !== selectedType.value
+    )
+      return false;
 
     return modelMembers(w).some((m) => {
-      if (selectedGender.value && m.gender !== selectedGender.value) return false;
-      if (selectedCollection.value && m.collectionRef !== selectedCollection.value) return false;
+      if (selectedGender.value && m.gender !== selectedGender.value)
+        return false;
+      if (
+        selectedCollection.value &&
+        m.collectionRef !== selectedCollection.value
+      )
+        return false;
       if (isNewOnly.value && !m.isNewArrival) return false;
-      if (selectedColor.value && !m.variants.some((v) => v.colorSlug === selectedColor.value)) return false;
-      if (selectedMovement.value && movementType(m.movement) !== selectedMovement.value) return false;
-      if (selectedAvailability.value && m.availability !== selectedAvailability.value) return false;
+      if (
+        selectedColor.value &&
+        !m.variants.some((v) => v.colorSlug === selectedColor.value)
+      )
+        return false;
+      if (
+        selectedMovement.value &&
+        movementType(m.movement) !== selectedMovement.value
+      )
+        return false;
+      if (
+        selectedAvailability.value &&
+        m.availability !== selectedAvailability.value
+      )
+        return false;
       if (band && !band.test(m.price)) return false;
       return true;
     });
@@ -306,12 +351,16 @@ const filteredWatches = computed(() => {
 // representative's own, so the column reads in the order the numbers do.
 const sortedWatches = computed(() => {
   const list = filteredWatches.value.slice();
-  if (sortKey.value === 'price-asc') list.sort((a, b) => modelPriceRange(a).min - modelPriceRange(b).min);
-  else if (sortKey.value === 'price-desc') list.sort((a, b) => modelPriceRange(b).min - modelPriceRange(a).min);
+  if (sortKey.value === "price-asc")
+    list.sort((a, b) => modelPriceRange(a).min - modelPriceRange(b).min);
+  else if (sortKey.value === "price-desc")
+    list.sort((a, b) => modelPriceRange(b).min - modelPriceRange(a).min);
   return list;
 });
 
-const pageCount = computed(() => Math.max(1, Math.ceil(sortedWatches.value.length / PAGE_SIZE)));
+const pageCount = computed(() =>
+  Math.max(1, Math.ceil(sortedWatches.value.length / PAGE_SIZE)),
+);
 
 const pagedWatches = computed(() => {
   const start = (page.value - 1) * PAGE_SIZE;
@@ -324,7 +373,7 @@ const pagedWatches = computed(() => {
  * is fine at five pages and unusable at forty, and the catalogue is already
  * past thirty.
  */
-const pageItems = computed<(number | 'gap')[]>(() => {
+const pageItems = computed<(number | "gap")[]>(() => {
   const last = pageCount.value;
   if (last <= 7) return Array.from({ length: last }, (_, i) => i + 1);
 
@@ -333,12 +382,15 @@ const pageItems = computed<(number | 'gap')[]>(() => {
   // Keep the row a constant width, so the numbers do not shuffle sideways as
   // the reader walks through the pages.
   if (current <= 3) [2, 3, 4].forEach((n) => wanted.add(n));
-  if (current >= last - 2) [last - 3, last - 2, last - 1].forEach((n) => wanted.add(n));
+  if (current >= last - 2)
+    [last - 3, last - 2, last - 1].forEach((n) => wanted.add(n));
 
-  const numbers = [...wanted].filter((n) => n >= 1 && n <= last).sort((a, b) => a - b);
-  const out: (number | 'gap')[] = [];
+  const numbers = [...wanted]
+    .filter((n) => n >= 1 && n <= last)
+    .sort((a, b) => a - b);
+  const out: (number | "gap")[] = [];
   numbers.forEach((n, i) => {
-    if (i > 0 && n - numbers[i - 1] > 1) out.push('gap');
+    if (i > 0 && n - numbers[i - 1] > 1) out.push("gap");
     out.push(n);
   });
   return out;
@@ -381,44 +433,62 @@ const activeFilterChips = computed<FilterChip[]>(() => {
   const chips: FilterChip[] = [];
   if (selectedGender.value) {
     chips.push({
-      key: 'gender',
+      key: "gender",
       label: locale.t(`watchList.gender_${selectedGender.value}`),
-      clear: () => (selectedGender.value = ''),
+      clear: () => (selectedGender.value = ""),
     });
   }
   if (selectedCollection.value) {
     chips.push({
-      key: 'collection',
+      key: "collection",
       label: collectionLabel(selectedCollection.value),
-      clear: () => (selectedCollection.value = ''),
+      clear: () => (selectedCollection.value = ""),
     });
   }
-  if (selectedType.value !== 'watch') {
+  if (selectedType.value !== "watch") {
     chips.push({
-      key: 'type',
+      key: "type",
       label: typeLabel(selectedType.value),
-      clear: () => (selectedType.value = 'watch'),
+      clear: () => (selectedType.value = "watch"),
     });
   }
   if (selectedColor.value) {
-    const c = colorOptions.value.find((c) => c.colorSlug === selectedColor.value);
-    chips.push({ key: 'color', label: c?.colorLabel ?? selectedColor.value, clear: () => (selectedColor.value = '') });
+    const c = colorOptions.value.find(
+      (c) => c.colorSlug === selectedColor.value,
+    );
+    chips.push({
+      key: "color",
+      label: c?.colorLabel ?? selectedColor.value,
+      clear: () => (selectedColor.value = ""),
+    });
   }
   if (selectedPriceBand.value) {
-    chips.push({ key: 'price', label: priceBandLabel(selectedPriceBand.value), clear: () => (selectedPriceBand.value = '') });
+    chips.push({
+      key: "price",
+      label: priceBandLabel(selectedPriceBand.value),
+      clear: () => (selectedPriceBand.value = ""),
+    });
   }
   if (selectedMovement.value) {
-    chips.push({ key: 'movement', label: selectedMovement.value, clear: () => (selectedMovement.value = '') });
+    chips.push({
+      key: "movement",
+      label: selectedMovement.value,
+      clear: () => (selectedMovement.value = ""),
+    });
   }
   if (selectedAvailability.value) {
     chips.push({
-      key: 'availability',
+      key: "availability",
       label: availabilityLabel(selectedAvailability.value),
-      clear: () => (selectedAvailability.value = ''),
+      clear: () => (selectedAvailability.value = ""),
     });
   }
   if (isNewOnly.value) {
-    chips.push({ key: 'new', label: locale.t('nav.newArrivals'), clear: () => (isNewOnly.value = false) });
+    chips.push({
+      key: "new",
+      label: locale.t("nav.newArrivals"),
+      clear: () => (isNewOnly.value = false),
+    });
   }
   return chips;
 });
@@ -431,13 +501,13 @@ function syncQuery() {
     query: {
       gender: selectedGender.value || undefined,
       collection: selectedCollection.value || undefined,
-      type: selectedType.value !== 'watch' ? selectedType.value : undefined,
+      type: selectedType.value !== "watch" ? selectedType.value : undefined,
       color: selectedColor.value || undefined,
       movement: selectedMovement.value || undefined,
       price: selectedPriceBand.value || undefined,
       availability: selectedAvailability.value || undefined,
-      isNew: isNewOnly.value ? 'true' : undefined,
-      sort: sortKey.value !== 'newest' ? sortKey.value : undefined,
+      isNew: isNewOnly.value ? "true" : undefined,
+      sort: sortKey.value !== "newest" ? sortKey.value : undefined,
       page: page.value > 1 ? String(page.value) : undefined,
     },
   });
@@ -455,7 +525,7 @@ const filterState = computed(() =>
     selectedAvailability.value,
     String(isNewOnly.value),
     sortKey.value,
-  ].join('|'),
+  ].join("|"),
 );
 
 // A new filter is a new result set, so the old offset means nothing — page 4 of
@@ -486,45 +556,53 @@ watch(
  * crawled.
  */
 function applyListSeo() {
-  const seo = staticSeo('watches', site);
+  const seo = staticSeo("watches", site);
   if (!seo) return;
-  const isFiltered = hasActiveFilters.value || sortKey.value !== 'newest';
+  const isFiltered = hasActiveFilters.value || sortKey.value !== "newest";
   // Pagination is the exception to the rule above: page 2 is not a slice of
   // page 1's content, it is the next fifteen products, and each such page is
   // worth its own entry. So a paginated view canonicalises to *itself* and
   // stays indexable — the numbers are real <a> links (see the template), so
   // this is also how a crawler reaches everything past the first page. A
   // filtered view is still one thin combination of eight facets and stays out.
-  const paged = page.value > 1 ? `/watches?page=${page.value}` : '/watches';
+  const paged = page.value > 1 ? `/watches?page=${page.value}` : "/watches";
   applySeo({
     ...seo,
     // Page 1 keeps the plain title; deeper pages say where they are, so the
     // result rows in search are not thirty copies of one string.
-    title: page.value > 1 ? `${seo.title} — ${locale.t('watchList.page')} ${page.value}` : seo.title,
-    canonical: isFiltered ? '/watches' : paged,
-    robots: isFiltered ? 'noindex, follow' : 'index, follow',
+    title:
+      page.value > 1
+        ? `${seo.title} — ${locale.t("watchList.page")} ${page.value}`
+        : seo.title,
+    canonical: isFiltered ? "/watches" : paged,
+    robots: isFiltered ? "noindex, follow" : "index, follow",
   });
   applyJsonLd([
     // What this page actually lists, in the order it lists it — not a 60-item
     // digest of a list the visitor cannot see.
     itemListSchema(
-      pagedWatches.value.map((w) => ({ name: watchFullName(w) || w.name, path: productPath(w.slug) })),
+      pagedWatches.value.map((w) => ({
+        name: watchFullName(w) || w.name,
+        path: productPath(w.slug),
+      })),
       site,
-      'Timepieces',
+      "Timepieces",
     ),
   ]);
 }
 
-watch([hasActiveFilters, sortKey, pagedWatches, page], applyListSeo, { immediate: true });
+watch([hasActiveFilters, sortKey, pagedWatches, page], applyListSeo, {
+  immediate: true,
+});
 
 function clearFilters() {
-  selectedGender.value = '';
-  selectedCollection.value = '';
-  selectedType.value = 'watch';
-  selectedColor.value = '';
-  selectedMovement.value = '';
-  selectedPriceBand.value = '';
-  selectedAvailability.value = '';
+  selectedGender.value = "";
+  selectedCollection.value = "";
+  selectedType.value = "watch";
+  selectedColor.value = "";
+  selectedMovement.value = "";
+  selectedPriceBand.value = "";
+  selectedAvailability.value = "";
   isNewOnly.value = false;
 }
 
@@ -538,19 +616,26 @@ function selectSort(key: string) {
   <div class="sw-watchlist">
     <header class="sw-watchlist__header">
       <div class="sw-watchlist__heading">
-        <span class="sw-eyebrow">{{ locale.t('watchList.eyebrow') }}</span>
-        <h1 class="sw-h1">{{ locale.t('watchList.title') }}</h1>
+        <span class="sw-eyebrow">{{ locale.t("watchList.eyebrow") }}</span>
+        <h1 class="sw-h1">{{ locale.t("watchList.title") }}</h1>
       </div>
       <p class="sw-watchlist__result-count sw-meta">
-        <template v-if="pageCount > 1">{{ shownRange }} {{ locale.t('common.of') }} </template
-        >{{ sortedWatches.length }} {{ locale.t('watchList.count') }}
+        <template v-if="pageCount > 1"
+          >{{ shownRange }} {{ locale.t("common.of") }} </template
+        >{{ sortedWatches.length }} {{ locale.t("watchList.count") }}
       </p>
     </header>
 
     <div class="sw-watchlist__toolbar">
-      <button class="sw-watchlist__toolbar-btn" type="button" @click="isFilterOpen = true">
-        {{ locale.t('watchList.filters') }}
-        <span v-if="activeFilterCount" class="sw-watchlist__toolbar-count">· {{ activeFilterCount }}</span>
+      <button
+        class="sw-watchlist__toolbar-btn"
+        type="button"
+        @click="isFilterOpen = true"
+      >
+        {{ locale.t("watchList.filters") }}
+        <span v-if="activeFilterCount" class="sw-watchlist__toolbar-count"
+          >· {{ activeFilterCount }}</span
+        >
       </button>
 
       <div class="sw-watchlist__sort" ref="sortWrapRef">
@@ -560,7 +645,7 @@ function selectSort(key: string) {
           :aria-expanded="isSortOpen"
           @click="isSortOpen = !isSortOpen"
         >
-          {{ locale.t('watchList.sort') }}
+          {{ locale.t("watchList.sort") }}
         </button>
         <transition name="sw-fade">
           <div v-if="isSortOpen" class="sw-watchlist__sort-menu" role="menu">
@@ -582,16 +667,29 @@ function selectSort(key: string) {
     </div>
 
     <div v-if="hasActiveFilters" class="sw-watchlist__active">
-      <button v-for="chip in activeFilterChips" :key="chip.key" type="button" class="sw-watchlist__chip" @click="chip.clear()">
+      <button
+        v-for="chip in activeFilterChips"
+        :key="chip.key"
+        type="button"
+        class="sw-watchlist__chip"
+        @click="chip.clear()"
+      >
         {{ chip.label }} <span aria-hidden="true">&times;</span>
       </button>
-      <button type="button" class="sw-watchlist__clear-all" @click="clearFilters">
-        {{ locale.t('watchList.clearFilters') }}
+      <button
+        type="button"
+        class="sw-watchlist__clear-all"
+        @click="clearFilters"
+      >
+        {{ locale.t("watchList.clearFilters") }}
       </button>
     </div>
 
-    <p v-if="!isLoading && !sortedWatches.length" class="sw-body sw-watchlist__empty">
-      {{ locale.t('watchList.empty') }}
+    <p
+      v-if="!isLoading && !sortedWatches.length"
+      class="sw-body sw-watchlist__empty"
+    >
+      {{ locale.t("watchList.empty") }}
     </p>
 
     <template v-else>
@@ -608,7 +706,11 @@ function selectSort(key: string) {
         />
       </div>
 
-      <nav v-if="pageCount > 1" class="sw-pager" :aria-label="locale.t('watchList.pagination')">
+      <nav
+        v-if="pageCount > 1"
+        class="sw-pager"
+        :aria-label="locale.t('watchList.pagination')"
+      >
         <RouterLink
           v-if="page > 1"
           :to="pageLink(page - 1)"
@@ -616,16 +718,24 @@ function selectSort(key: string) {
           :aria-label="locale.t('watchList.prevPage')"
           rel="prev"
         >
-          <span aria-hidden="true">&larr;</span> {{ locale.t('watchList.prevPage') }}
+          <span aria-hidden="true">&larr;</span>
+          {{ locale.t("watchList.prevPage") }}
         </RouterLink>
         <span v-else class="sw-pager__step is-disabled" aria-hidden="true">
-          <span>&larr;</span> {{ locale.t('watchList.prevPage') }}
+          <span>&larr;</span> {{ locale.t("watchList.prevPage") }}
         </span>
 
         <ol class="sw-pager__numbers">
           <li v-for="(item, i) in pageItems" :key="`${item}-${i}`">
-            <span v-if="item === 'gap'" class="sw-pager__gap" aria-hidden="true">&hellip;</span>
-            <span v-else-if="item === page" class="sw-pager__num is-current" aria-current="page">{{ item }}</span>
+            <span v-if="item === 'gap'" class="sw-pager__gap" aria-hidden="true"
+              >&hellip;</span
+            >
+            <span
+              v-else-if="item === page"
+              class="sw-pager__num is-current"
+              aria-current="page"
+              >{{ item }}</span
+            >
             <RouterLink
               v-else
               :to="pageLink(item)"
@@ -643,17 +753,22 @@ function selectSort(key: string) {
           :aria-label="locale.t('watchList.nextPage')"
           rel="next"
         >
-          {{ locale.t('watchList.nextPage') }} <span aria-hidden="true">&rarr;</span>
+          {{ locale.t("watchList.nextPage") }}
+          <span aria-hidden="true">&rarr;</span>
         </RouterLink>
         <span v-else class="sw-pager__step is-disabled" aria-hidden="true">
-          {{ locale.t('watchList.nextPage') }} <span>&rarr;</span>
+          {{ locale.t("watchList.nextPage") }} <span>&rarr;</span>
         </span>
       </nav>
     </template>
 
     <teleport to="body">
       <transition name="sw-fade">
-        <div v-if="isFilterOpen" class="sw-filterdrawer-backdrop" @click.self="isFilterOpen = false">
+        <div
+          v-if="isFilterOpen"
+          class="sw-filterdrawer-backdrop"
+          @click.self="isFilterOpen = false"
+        >
           <aside
             class="sw-filterdrawer"
             data-lenis-prevent
@@ -662,15 +777,23 @@ function selectSort(key: string) {
             :aria-label="locale.t('watchList.filters')"
           >
             <div class="sw-filterdrawer__head">
-              <span class="sw-eyebrow">{{ locale.t('watchList.filters') }}</span>
-              <button class="sw-filterdrawer__close" type="button" @click="isFilterOpen = false">
-                {{ locale.t('watchList.closeFilters') }}
+              <span class="sw-eyebrow">{{
+                locale.t("watchList.filters")
+              }}</span>
+              <button
+                class="sw-filterdrawer__close"
+                type="button"
+                @click="isFilterOpen = false"
+              >
+                {{ locale.t("watchList.closeFilters") }}
               </button>
             </div>
 
             <div class="sw-filterdrawer__body">
               <details class="sw-filterdrawer__section" open>
-                <summary class="sw-label">{{ locale.t('watchList.filterColor') }}</summary>
+                <summary class="sw-label">
+                  {{ locale.t("watchList.filterColor") }}
+                </summary>
                 <input
                   v-model="colorSearch"
                   type="text"
@@ -686,8 +809,10 @@ function selectSort(key: string) {
                     type="button"
                     @click="selectedColor = ''"
                   >
-                    <span class="sw-filterdrawer__swatch sw-filterdrawer__swatch--all" />
-                    {{ locale.t('watchList.allColors') }}
+                    <span
+                      class="sw-filterdrawer__swatch sw-filterdrawer__swatch--all"
+                    />
+                    {{ locale.t("watchList.allColors") }}
                   </button>
                   <button
                     v-for="c in filteredColorOptions"
@@ -697,18 +822,28 @@ function selectSort(key: string) {
                     type="button"
                     @click="selectedColor = c.colorSlug"
                   >
-                    <span class="sw-filterdrawer__swatch" :style="{ background: colorSwatchHex(c.colorSlug) }" />
+                    <span
+                      class="sw-filterdrawer__swatch"
+                      :style="{ background: colorSwatchHex(c.colorSlug) }"
+                    />
                     {{ c.colorLabel }}
-                    <span class="sw-filterdrawer__count">{{ colorCounts.get(c.colorSlug) ?? 0 }}</span>
+                    <span class="sw-filterdrawer__count">{{
+                      colorCounts.get(c.colorSlug) ?? 0
+                    }}</span>
                   </button>
-                  <p v-if="colorSearch && filteredColorOptions.length === 0" class="sw-filterdrawer__colorempty">
-                    {{ locale.t('watchList.noColorResults') }}
+                  <p
+                    v-if="colorSearch && filteredColorOptions.length === 0"
+                    class="sw-filterdrawer__colorempty"
+                  >
+                    {{ locale.t("watchList.noColorResults") }}
                   </p>
                 </div>
               </details>
 
               <details class="sw-filterdrawer__section" open>
-                <summary class="sw-label">{{ locale.t('watchList.filterGender') }}</summary>
+                <summary class="sw-label">
+                  {{ locale.t("watchList.filterGender") }}
+                </summary>
                 <div class="sw-filterdrawer__list">
                   <button
                     class="sw-filterdrawer__option"
@@ -716,7 +851,7 @@ function selectSort(key: string) {
                     type="button"
                     @click="selectedGender = ''"
                   >
-                    {{ locale.t('watchList.allGenders') }}
+                    {{ locale.t("watchList.allGenders") }}
                   </button>
                   <button
                     v-for="g in genderOptions"
@@ -732,7 +867,9 @@ function selectSort(key: string) {
               </details>
 
               <details class="sw-filterdrawer__section" open>
-                <summary class="sw-label">{{ locale.t('watchList.filterCollection') }}</summary>
+                <summary class="sw-label">
+                  {{ locale.t("watchList.filterCollection") }}
+                </summary>
                 <div class="sw-filterdrawer__list">
                   <button
                     class="sw-filterdrawer__option"
@@ -740,7 +877,7 @@ function selectSort(key: string) {
                     type="button"
                     @click="selectedCollection = ''"
                   >
-                    {{ locale.t('watchList.allCollections') }}
+                    {{ locale.t("watchList.allCollections") }}
                   </button>
                   <button
                     v-for="c in collectionOptions"
@@ -756,7 +893,9 @@ function selectSort(key: string) {
               </details>
 
               <details class="sw-filterdrawer__section" open>
-                <summary class="sw-label">{{ locale.t('watchList.filterType') }}</summary>
+                <summary class="sw-label">
+                  {{ locale.t("watchList.filterType") }}
+                </summary>
                 <div class="sw-filterdrawer__list">
                   <button
                     v-for="t in typeOptions"
@@ -772,7 +911,9 @@ function selectSort(key: string) {
               </details>
 
               <details v-if="SHOW_PRICES" class="sw-filterdrawer__section" open>
-                <summary class="sw-label">{{ locale.t('watchList.filterPrice') }}</summary>
+                <summary class="sw-label">
+                  {{ locale.t("watchList.filterPrice") }}
+                </summary>
                 <div class="sw-filterdrawer__list">
                   <button
                     class="sw-filterdrawer__option"
@@ -780,7 +921,7 @@ function selectSort(key: string) {
                     type="button"
                     @click="selectedPriceBand = ''"
                   >
-                    {{ locale.t('watchList.allPrices') }}
+                    {{ locale.t("watchList.allPrices") }}
                   </button>
                   <button
                     v-for="key in priceBandOptions"
@@ -796,7 +937,9 @@ function selectSort(key: string) {
               </details>
 
               <details class="sw-filterdrawer__section" open>
-                <summary class="sw-label">{{ locale.t('watchList.filterMovement') }}</summary>
+                <summary class="sw-label">
+                  {{ locale.t("watchList.filterMovement") }}
+                </summary>
                 <div class="sw-filterdrawer__list">
                   <button
                     class="sw-filterdrawer__option"
@@ -804,7 +947,7 @@ function selectSort(key: string) {
                     type="button"
                     @click="selectedMovement = ''"
                   >
-                    {{ locale.t('watchList.allMovements') }}
+                    {{ locale.t("watchList.allMovements") }}
                   </button>
                   <button
                     v-for="m in movementOptions"
@@ -820,7 +963,9 @@ function selectSort(key: string) {
               </details>
 
               <details class="sw-filterdrawer__section" open>
-                <summary class="sw-label">{{ locale.t('watchList.filterAvailability') }}</summary>
+                <summary class="sw-label">
+                  {{ locale.t("watchList.filterAvailability") }}
+                </summary>
                 <div class="sw-filterdrawer__list">
                   <button
                     class="sw-filterdrawer__option"
@@ -828,7 +973,7 @@ function selectSort(key: string) {
                     type="button"
                     @click="selectedAvailability = ''"
                   >
-                    {{ locale.t('watchList.allAvailability') }}
+                    {{ locale.t("watchList.allAvailability") }}
                   </button>
                   <button
                     v-for="a in availabilityOptions"
@@ -845,11 +990,21 @@ function selectSort(key: string) {
             </div>
 
             <div class="sw-filterdrawer__foot">
-              <button v-if="hasActiveFilters" class="sw-filterdrawer__clear" type="button" @click="clearFilters">
-                {{ locale.t('watchList.clearFilters') }}
+              <button
+                v-if="hasActiveFilters"
+                class="sw-filterdrawer__clear"
+                type="button"
+                @click="clearFilters"
+              >
+                {{ locale.t("watchList.clearFilters") }}
               </button>
-              <button class="sw-btn sw-btn--solid sw-filterdrawer__apply" type="button" @click="isFilterOpen = false">
-                {{ locale.t('watchList.applyFilters') }} — {{ sortedWatches.length }}
+              <button
+                class="sw-btn sw-btn--solid sw-filterdrawer__apply"
+                type="button"
+                @click="isFilterOpen = false"
+              >
+                {{ locale.t("watchList.applyFilters") }} —
+                {{ sortedWatches.length }}
               </button>
             </div>
           </aside>
@@ -931,7 +1086,9 @@ function selectSort(key: string) {
   font-family: var(--font-sans);
   font-size: 0.8rem;
   color: var(--text-muted);
-  transition: color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
+  transition:
+    color var(--dur-fast) var(--ease-out),
+    background var(--dur-fast) var(--ease-out);
 }
 
 .sw-watchlist__sort-option:hover,
@@ -1103,11 +1260,11 @@ function selectSort(key: string) {
   }
 }
 
-/* Narrow phones only — everything from tablet down to here stays 2-up. */
+/* Keep the catalogue two-up on narrow phones as well. */
 @media (max-width: 460px) {
   .sw-watchlist__grid {
-    grid-template-columns: 1fr;
-    gap: 36px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px 12px;
   }
 }
 
@@ -1171,7 +1328,7 @@ function selectSort(key: string) {
 }
 
 .sw-filterdrawer__section summary::after {
-  content: '+';
+  content: "+";
   font-family: var(--font-sans);
   font-size: 0.9rem;
   color: var(--text-muted);
@@ -1179,7 +1336,7 @@ function selectSort(key: string) {
 }
 
 .sw-filterdrawer__section[open] summary::after {
-  content: '−';
+  content: "−";
 }
 
 .sw-filterdrawer__colorsearch {
@@ -1245,7 +1402,15 @@ function selectSort(key: string) {
 }
 
 .sw-filterdrawer__swatch--all {
-  background: conic-gradient(from 0deg, #1a1a1a, #b89652, #2f4a6b, #8c2b2b, #f2efe8, #1a1a1a);
+  background: conic-gradient(
+    from 0deg,
+    #1a1a1a,
+    #b89652,
+    #2f4a6b,
+    #8c2b2b,
+    #f2efe8,
+    #1a1a1a
+  );
 }
 
 .sw-filterdrawer__count {
