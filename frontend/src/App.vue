@@ -23,14 +23,13 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown));
 </script>
 
 <template>
-  <!-- <DefaultLayout>
+  <DefaultLayout>
     <router-view v-slot="{ Component, route: r }">
       <transition name="sw-page" mode="out-in" @before-enter="reassertScrollTop">
         <component :is="Component" :key="(r.meta.transitionKey as string) ?? r.path" />
       </transition>
     </router-view>
-  </DefaultLayout> -->
-  <h1 class="server-not-found">Server bilan aloqa yo'q</h1>
+  </DefaultLayout>
 </template>
 
 <style>
