@@ -183,6 +183,7 @@ const hiddenColorCount = computed(() =>
 <style scoped>
 .sw-watch-card {
   display: block;
+  min-width: 0;
 }
 
 /* Deliberately matches the page background, not --surface-media (a
@@ -270,6 +271,7 @@ const hiddenColorCount = computed(() =>
 
 .sw-watch-card__info {
   display: grid;
+  min-width: 0;
   gap: 0;
   padding-top: 26px;
   transition: transform 0.55s var(--ease-editorial);
