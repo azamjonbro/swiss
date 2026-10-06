@@ -26,7 +26,6 @@ import MediaUploader from "@/components/admin/MediaUploader.vue";
 import TranslationFields from "@/components/admin/TranslationFields.vue";
 import AdminIcon from "@/components/shared/AdminIcon.vue";
 import { resolveMediaUrl } from "@/utils/media";
-import { colorSwatchHex } from "@/utils/format";
 import { modelGroupKey } from "@/utils/modelGroup";
 
 const route = useRoute();
@@ -547,7 +546,7 @@ async function submit() {
               <input
                 class="sw-wf__color-picker"
                 type="color"
-                :value="variant.color || colorSwatchHex(variant.colorSlug)"
+                :value="variant.color || '#9a958a'"
                 @input="setVariantColor(vIndex, $event)"
               />
             </label>
